@@ -1,0 +1,147 @@
+[
+    {
+        "code": "0000",
+        "name": "MANIFESTED OR RECORDED",
+        "spanish": "MANIFESTADO O GRABADO"
+    },
+    {
+        "code": "0010",
+        "name": "PROVISIONAL RECEPTION",
+        "spanish": "RECEPCIÓN PROVISIONAL"
+    },
+    {
+        "code": "0020",
+        "name": "PENDING TO BE DEPOSITED AT CTT POINT",
+        "spanish": "PENDIENTE DE DEPOSITAR EN PUNTO CTT"
+    },
+    {
+        "code": "0030",
+        "name": "DEPOSITED AT CTT POINT PENDING TO BE COLLECTED",
+        "spanish": "DEPOSITADO EN PUNTO PENDIENTE DE RECOGER"
+    },
+    {
+        "code": "0300",
+        "name": "PICK-UP ASSIGNED",
+        "spanish": "RECOGIDA ASIGNADA"
+    },
+    {
+        "code": "0400",
+        "name": "PICK-UP CANCELLED",
+        "spanish": "RECOGIDA ANULADA"
+    },
+    {
+        "code": "0500",
+        "name": "SHIPMENT COLLECTED",
+        "spanish": "ENVÍO RECOGIDO"
+    },
+    {
+        "code": "0600",
+        "name": "FAILED PICK-UP",
+        "spanish": "RECOGIDA FALLIDA"
+    },
+    {
+        "code": "0700",
+        "name": "ORIGIN HUB",
+        "spanish": "DELEGACIÓN DE ORIGEN"
+    },
+    {
+        "code": "0900",
+        "name": "IN TRANSIT",
+        "spanish": "EN TRÁNSITO"
+    },
+    {
+        "code": "1000",
+        "name": "TRNSIT HUB",
+        "spanish": "DELEGACIÓN DE TRÁNSITO"
+    },
+    {
+        "code": "1100",
+        "name": "POORLY TRAVELED",
+        "spanish": "MAL TRANSITADO"
+    },
+    {
+        "code": "1200",
+        "name": "DESTIN HUB",
+        "spanish": "DELEGACIÓN DESTINO"
+    },
+    {
+        "code": "1500",
+        "name": "IN DELIVERY",
+        "spanish": "EN REPARTO"
+    },
+    {
+        "code": "1600",
+        "name": "FAILED DELIVERY",
+        "spanish": "REPARTO FALLIDO"
+    },
+    {
+        "code": "1700",
+        "name": "STATIONED SHIPMENT",
+        "spanish": "ENVÍO ESTACIONADO"
+    },
+    {
+        "code": "1800",
+        "name": "STATIONED LOCATED",
+        "spanish": "ESTACIONADO UBICADO"
+    },
+    {
+        "code": "1900",
+        "name": "PENDING REMOVAL",
+        "spanish": "PENDIENTE DE EXTRACCIÓN"
+    },
+    {
+        "code": "2100",
+        "name": "DELIVERED",
+        "spanish": "ENTREGADO"
+    },
+    {
+        "code": "2200",
+        "name": "PARTIAL DELIVERY",
+        "spanish": "ENTREGA PARCIAL"
+    },
+    {
+        "code": "2300",
+        "name": "DEPOSITED AT CTT POINT",
+        "spanish": "DESPOSITADO EN PUNTO CTT"
+    },
+    {
+        "code": "2310",
+        "name": "AVAILABLE AT CTT POINT FOR DELIVERY",
+        "spanish": "DISPONIBLE EN PUNTO CTT PARA ENTREGA"
+    },
+    {
+        "code": "2400",
+        "name": "NEW DELIVERY",
+        "spanish": "NUEVO REPARTO"
+    },
+    {
+        "code": "2500",
+        "name": "RETURN",
+        "spanish": "DEVOLUCIÓN"
+    },
+    {
+        "code": "2600",
+        "name": "REEXPEDITION",
+        "spanish": "REEXPEDICIÓN"
+    },
+    {
+        "code": "2700",
+        "name": "DELIVERED TO CONTROLER WAREHOUSE",
+        "spanish": "ENTREGADO ALMACEN REGULADOR"
+    },
+    {
+        "code": "2900",
+        "name": "PICK UP IN DELEGATION",
+        "spanish": "RECOGER EN DELEGACIÓN"
+    },
+    {
+        "code": "3000",
+        "name": "CANCELLED SHIPMENT",
+        "spanish": "ENVÍO ANULADO"
+    },
+    {
+        "code": "3900",
+        "name": "INTERNATIONAL TRANSIT",
+        "spanish": "TRÁNSITO INTERNACIONAL"
+    }
+]

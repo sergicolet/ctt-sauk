@@ -1,0 +1,68 @@
+====================================================================================================================================
+                            PROCESO DE SEGUIMIENTO AUTOMÁTICO: CTT EXPRESS
+====================================================================================================================================
+
+¿EL PEDIDO TIENE ALGUNA INCIDENCIA?
+   |
+   |---( SÍ )---> ¿ES LA PRIMERA VEZ QUE OCURRE?
+   |                         |
+   |                         |---( SÍ )---> ACCIÓN SEGÚN EL CASO:
+   |                         |               |-- Si faltan datos/documentación -> Alerta a Soporte Interno
+   |                         |               |-- Si falló el reparto           -> Pide a CTT 2º intento de entrega
+   |                         |               |-- Si falló la recogida          -> Pide a CTT 2º intento de recogida
+   |                         |               |-- Si es robo, pérdida o daño    -> Pide a CTT apertura de siniestro
+   |                         |               |-- Si hay instrucciones de fecha -> Informa la nueva fecha a CTT
+   |                         |
+   |                         |---( NO )---> Se deja para revisión manual (ya se notificó antes)
+   |
+   |---( NO )---> REVISIÓN POR DÍAS DESDE EL ENVÍO:
+                        |
+                  ¿LLEVA 1 DÍA? --------( Si el estado es "Pendiente" )--> Alerta a Soporte Interno
+                        |
+                  ¿LLEVA 2 DÍAS? -------( Si sigue en sucursal )----------> Pide a CTT agilizar el reparto
+                        |
+                  ¿LLEVA 3 DÍAS? -------( Si no se ha entregado aún )-----> Pide a CTT agilizar el reparto
+                        |
+                  OTRAS SITUACIONES DETECTADAS:
+                        |-- Si es "0030" -> Pide a CTT que recoja el paquete en el punto
+                        |-- Si es "0600" -> Pide a CTT que reintente la recogida fallida
+                        |-- Si es "2310" -> Pide a CTT la dirección exacta del punto
+                        |-- Si es "2500" -> Alerta a Soporte Interno por Devolución
+
+====================================================================================================================================
+PLANTILLAS DE LOS CORREOS (FORMATO TEXTO PROFESIONAL)
+====================================================================================================================================
+
+A. CORREOS PARA SOPORTE INTERNO (soporte@tuempresa.com):
+-------------------------------------------------------
+- ALERTA PENDIENTE (0000):
+  "Hola, se ha detectado que el siguiente envío lleva más de 24 horas en estado 0000. Por favor, revisadlo.
+   PEDIDO: - [Número del pedido]"
+
+- ALERTA INCIDENCIA:
+  "Alerta de Incidencia Urgente. Se requiere validación manual para el siguiente envío.
+   PEDIDO: [Número] | INCIDENCIA: [Código]"
+
+- ALERTA DEVOLUCIÓN (2500):
+  "Estimados, el siguiente pedido ha entrado en proceso de devolución. Iniciamos seguimiento manual.
+   CÓDIGO: - [Número del pedido]"
+
+B. CORREOS PARA EL TRANSPORTISTA (ctt@cttexpress.com):
+------------------------------------------------------
+- SOLICITAR RECOGIDA / AGILIZAR REPARTO:
+  "Hola equipo de CTT, solicitamos agilizar la gestión (recogida o entrega) del siguiente envío parado:
+   LISTADO DE ENVÍOS: - [Número del pedido]. Gracias."
+
+- SEGUNDO INTENTO (AUTOMÁTICO):
+  "Hola CTT, tras la incidencia en el primer intento, solicitamos automáticamente un segundo intento para mañana:
+   EXPEDICIÓN: - [Número del pedido]. Gracias."
+
+- PEDIR DIRECCIÓN DE PUNTO:
+  "Hola equipo de CTT, necesitamos la dirección detallada del punto de recogida para el siguiente envío:
+   EXPEDICIÓN: - [Número del pedido]. Gracias de antemano."
+
+- APERTURA DE SINIESTRO:
+  "Hola CTT, solicitamos la apertura oficial de expediente de siniestro por pérdida/daño para el envío:
+   REFERENCIA: - [Número del pedido]. Quedamos a la espera del número de expediente."
+
+====================================================================================================================================

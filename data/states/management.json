@@ -1,0 +1,17 @@
+[
+    {
+        "code": "71_INAT",
+        "name": "NEW DELIVERY DATE (WEB): 20XX-XX-XX",
+        "spanish": "NUEVA FECHA ENTREGA (WEB): 20XX-XX-XX"
+    },
+    {
+        "code": "5_INAT",
+        "name": "CHANGE OF DISTRIBUTION DATE",
+        "spanish": "CAMBIO DE FECHA DE DISTRIBUICION"
+    },
+    {
+        "code": "75_INAT",
+        "name": "CHANGE OF ADDRESS PACT NEW DELIVERY DATE",
+        "spanish": "CAMBIO DIRECCIÓN PACTO NUEVO DÍA ENTREGA"
+    }
+]

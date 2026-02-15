@@ -1,0 +1,142 @@
+{
+    "nodes": [
+        {
+            "parameters": {
+                "conditions": {
+                    "options": {
+                        "caseSensitive": true,
+                        "leftValue": "",
+                        "typeValidation": "strict",
+                        "version": 3
+                    },
+                    "conditions": [
+                        {
+                            "id": "f1",
+                            "leftValue": "={{ $json.shipping_status_code }}",
+                            "operator": {
+                                "type": "string",
+                                "operation": "notEquals"
+                            },
+                            "rightValue": "2100"
+                        },
+                        {
+                            "id": "f2",
+                            "leftValue": "={{ $json.shipping_status_code }}",
+                            "operator": {
+                                "type": "string",
+                                "operation": "notEquals"
+                            },
+                            "rightValue": "3000"
+                        },
+                        {
+                            "id": "f3",
+                            "leftValue": "={{ $json.shipping_status_code }}",
+                            "operator": {
+                                "type": "string",
+                                "operation": "notEquals"
+                            },
+                            "rightValue": "2310"
+                        },
+                        {
+                            "id": "f4",
+                            "leftValue": "={{ $json.shipping_status_code }}",
+                            "operator": {
+                                "type": "string",
+                                "operation": "notEquals"
+                            },
+                            "rightValue": "2500"
+                        }
+                    ],
+                    "combinator": "and"
+                }
+            },
+            "id": "4",
+            "name": "Filtrar_Estados_Activos_Optimizado",
+            "type": "n8n-nodes-base.filter",
+            "typeVersion": 2,
+            "position": [
+                450,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "jsCode": "// Código Robusto para el nodo \"Merge History1\"\nconst item = $('Switch').item.json;\nconst history = $json; \n\n// 1. Buscamos el array de eventos en todas las rutas posibles de CTT\nlet events = [];\nif (Array.isArray(history)) {\n    events = history;\n} else if (history.data && history.data.shipping_history && Array.isArray(history.data.shipping_history.events)) {\n    // Ruta detectada: data -> shipping_history -> events\n    events = history.data.shipping_history.events;\n} else if (history.data && Array.isArray(history.data)) {\n    events = history.data;\n} else if (history.events && Array.isArray(history.events)) {\n    events = history.events;\n} else if (history.shipping_history && Array.isArray(history.shipping_history)) {\n    events = history.shipping_history;\n}\n\n// 2. Buscamos el código 1600 de forma segura (usando field 'code')\nconst has1600 = events.some(event => event.code === \"1600\" || event.event_code === \"1600\" || event.status_code === \"1600\");\n\nreturn {\n  ...item,\n  status_history: events,\n  history_has_1600: has1600\n};"
+            },
+            "id": "merge-history-opt",
+            "name": "Merge_History_Robust",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                650,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "conditions": {
+                    "options": {
+                        "caseSensitive": true,
+                        "leftValue": "",
+                        "typeValidation": "strict",
+                        "version": 3
+                    },
+                    "conditions": [
+                        {
+                            "id": "c1",
+                            "leftValue": "={{ $json.incident_type_code }}",
+                            "operator": {
+                                "type": "string",
+                                "operation": "notEmpty"
+                            }
+                        },
+                        {
+                            "id": "c2",
+                            "leftValue": "={{ $json.history_has_1600 }}",
+                            "operator": {
+                                "type": "boolean",
+                                "operation": "true"
+                            }
+                        }
+                    ],
+                    "combinator": "or"
+                }
+            },
+            "id": "if-routing",
+            "name": "IF_Incident_or_1600",
+            "type": "n8n-nodes-base.if",
+            "typeVersion": 2,
+            "position": [
+                850,
+                300
+            ]
+        }
+    ],
+    "connections": {
+        "Filtrar_Estados_Activos_Optimizado": {
+            "main": [
+                [
+                    {
+                        "node": "Merge_History_Robust",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Merge_History_Robust": {
+            "main": [
+                [
+                    {
+                        "node": "IF_Incident_or_1600",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        }
+    },
+    "meta": {
+        "instanceId": "optimized-v1"
+    }
+}

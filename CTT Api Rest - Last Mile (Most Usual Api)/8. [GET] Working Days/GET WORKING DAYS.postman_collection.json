@@ -1,0 +1,56 @@
+{
+	"info": {
+		"_postman_id": "fc203b92-e083-4aba-b61b-4b0a72a78704",
+		"name": "GET WORKING DAYS",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "1195010"
+	},
+	"item": [
+		{
+			"name": "working days Integracion",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJraWQiOiJDSXo4cU0xcmRxbmxUVlE2a2pydms2dE02WjRmYk53dzNYUk56VzNwOXdzPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiIybjY5ZmNsaXVzM2F1NTJubWo5dWoxcWNmbiIsInRva2VuX3VzZSI6ImFjY2VzcyIsInNjb3BlIjoidXJuOmNvbTpjdHQtZXhwcmVzczppbnRlZ3JhdGlvbi1jbGllbnRzOnNjb3Blczpjb21tb25cL0FMTCIsImF1dGhfdGltZSI6MTY5NjUwNjk1NywiaXNzIjoiaHR0cHM6XC9cL2NvZ25pdG8taWRwLmV1LXdlc3QtMS5hbWF6b25hd3MuY29tXC9ldS13ZXN0LTFfQzdkWUttNHFGIiwiZXhwIjoxNjk2NTkzMzU3LCJpYXQiOjE2OTY1MDY5NTcsInZlcnNpb24iOjIsImp0aSI6ImU5ZDYyNzI5LWU5YjUtNDdiOC04YmFhLTMyNzZmNWE3ZDZiZCIsImNsaWVudF9pZCI6IjJuNjlmY2xpdXMzYXU1Mm5tajl1ajFxY2ZuIn0.mpE7Xm85TpPaN1UUNF5TWnjBjwJyi_xJYCaIVFK33HFQRQzQxqYEt0NXRRSnjODQWHHvHmRE6cPhDSwu6Z3x_svvR9ukXbUlHQYY2fiiOPhaowc1ld3HvX7sCp6z-TzPIAXcZeWGVw1eBQwASlIwVsxC7YHvkwycInducib0ct_DzxjbYbr10c8G_uyppOa3L5jYXlu-ZRbIiFgAtRDiyeE6KMTKps6xAszyxM_C0KizU_mNeOnr_hc-QwUsLHMn4rDgONb_H6MQpCLZB3FYqOs-ed8Z4hAS5JNNPzla0N_VSX_vCg1tOtvjHnl9OT1WawmAAcDHosQvwbJobF1UYQ"
+					}
+				],
+				"url": {
+					"raw": "https://api-test.cttexpress.com/integrations/css/v1.0/rpc-get-working-days?from_date=2023-10-10&working_days=0&working_dates_count=7&postal_code=28050,49026",
+					"protocol": "https",
+					"host": [
+						"api-test",
+						"cttexpress",
+						"com"
+					],
+					"path": [
+						"integrations",
+						"css",
+						"v1.0",
+						"rpc-get-working-days"
+					],
+					"query": [
+						{
+							"key": "from_date",
+							"value": "2023-10-10"
+						},
+						{
+							"key": "working_days",
+							"value": "0"
+						},
+						{
+							"key": "working_dates_count",
+							"value": "7"
+						},
+						{
+							"key": "postal_code",
+							"value": "28050,49026"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

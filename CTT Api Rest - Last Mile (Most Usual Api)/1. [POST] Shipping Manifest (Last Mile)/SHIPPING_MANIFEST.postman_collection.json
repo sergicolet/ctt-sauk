@@ -1,0 +1,61 @@
+{
+	"info": {
+		"_postman_id": "524153dc-7084-4b57-b9cc-436d7a49edc8",
+		"name": "SHIPPING  MANIFEST (LAST MILE)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "3155866"
+	},
+	"item": [
+		{
+			"name": "SHIPPING MANIFEST LAST MILE TEST",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "user_name",
+						"value": "user1",
+						"type": "text"
+					},
+					{
+						"key": "password",
+						"value": "passw0rd$.",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJraWQiOiJDSXo4cU0xcmRxbmxUVlE2a2pydms2dE02WjRmYk53dzNYUk56VzNwOXdzPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiJpbTFnazFkNHU1NjQycjhtZ2s1bDVrZ211IiwidG9rZW5fdXNlIjoiYWNjZXNzIiwic2NvcGUiOiJ1cm46Y29tOmN0dC1leHByZXNzOmludGVncmF0aW9uLWNsaWVudHM6c2NvcGVzOmNvbW1vblwvQUxMIiwiYXV0aF90aW1lIjoxNjgxMTI3NDE3LCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuZXUtd2VzdC0xLmFtYXpvbmF3cy5jb21cL2V1LXdlc3QtMV9DN2RZS200cUYiLCJleHAiOjE2ODEyMTM4MTcsImlhdCI6MTY4MTEyNzQxNywidmVyc2lvbiI6MiwianRpIjoiYjY1ZjFiZGMtZDVmMi00MTA0LTkwOWYtZDg3NmQ5MmQwOGUxIiwiY2xpZW50X2lkIjoiaW0xZ2sxZDR1NTY0MnI4bWdrNWw1a2dtdSJ9.QzjL52M0hqJX56yU-LfTGfC5s8b3oQWYYyavjKOMRnZFYF0svquQcXkoXBH3m4D1gA_fTKcLBOLOro7DgCkMVroFVjOo10P-RDtwu42oo_0sk2QdxSObY0LvWbF-ZOH72wBsnXDnw-scd8XsrR7161a8rVF0UFkl6OBUkUD00TkEdx6we7DLQQfz7w1mMkfnuPTYdpil0OGjHZS-okrtFZOZBULIIQgC2REeTCxOpeaOYa2j_egT8EAIdjLNXG_QeE5VpIZskgWRWH-4tOmAdQsA8gNeptcrHFK1fedEgJi3fdbnhILif7ih9frb_d7cpP6HjU5J_4_3x2XZNLMJZg",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"shipping_code\": \"008280008280XXXXXXXXX1\",\r\n    \"client_center_code\": \"00002XXXXX\",\r\n    \"shipping_type_code\": \"19H\",\r\n    \"department_code\": \"1\",\r\n   \"client_bar_code\": \"ABCD\",\r\n    \"client_references\": [\r\n        \"REF123121311\",\r\n        \"ref2\"\r\n    ],\r\n    \"shipping_weight_declared\": 4,\r\n    \"item_count\": 1,\r\n    \"custom_origin_name\": \"B\",\r\n    \"custom_origin_country_code\": \"ES\",\r\n    \"custom_origin_postal_code\": \"28821\",\r\n    \"custom_origin_address\": \"Otra dirección\",\r\n    \"custom_origin_town\": \"Coslada\",\r\n    \"sender_name\": \"Nombre Remitente\",\r\n    \"sender_country_code\": \"ES\",\r\n    \"sender_postal_code\": \"28821\",\r\n    \"sender_address\": \"calle Mayor J25\",\r\n    \"sender_town\": \"COSLADA\",\r\n    \"sender_email_notify_address\": \"unusuario@example.com\",\r\n    \"sender_phones\": [\r\n        \"+34 999999999\",\r\n        \"+34 999999999\"\r\n    ],\r\n    \"recipient_name\": \"TEST GRABACIÓN ENVÍOS\",\r\n    \"recipient_country_code\": \"ES\",\r\n    \"recipient_postal_code\": \"08850\",\r\n    \"recipient_address\": \"E.N 125 VALE DE EGUAS CARPINTARIA MIHAI\",\r\n    \"recipient_town\": \"GAVA\",\r\n    \"recipient_email_notify_address\": \"otro@example.com\",\r\n    \"recipient_phones\": [\r\n        \"+34 999999999\",\r\n        \"+34 999999999\"\r\n    ],\r\n    \"shipping_date\": \"2022-03-17\",\r\n   \"pickup\": {\r\n        \"has_pickup_asap\": false,\r\n        \"comments\": \"Pickup in the street\",\r\n        \"date\": \"2023-03-01\",\r\n        \"time\": [\r\n        {\r\n        \"min_hourminute\": \"12:00\",\r\n        \"max_hourminute\": \"18:00\"\r\n        }\r\n  ]\r\n    },\r\n    \"delivery\": {\r\n        \"contact_name\": \"Pedro\",\r\n        \"referral_name\": \"Conserje\",\r\n        \"comments\": \"Envío de prueba\",\r\n        \"delivery_longitude_gps\": 2,\r\n        \"delivery_latitude_gps\": 1\r\n    },\r\n    \"items\": [\r\n        {\r\n            \"item_code\": \"008280008280XXXXXXXXX1001\",\r\n            \"item_synonym_code\": \"ABC22225555\",\r\n            \"item_external_code\": \"DA456665515PT\",\r\n            \"item_weight_declared\": 4,\r\n            \"item_length_declared\": 23,\r\n            \"item_width_declared\": 18,\r\n            \"item_height_declared\": 30,\r\n            \"item_comments\": \"comentario 1\"\r\n        }\r\n    ],\r\n    \"additionals\": [\r\n        {\r\n            \"additional_code\": \"REE\",\r\n            \"additional_value\": 100,\r\n            \"additional_flag\": true,\r\n            \"additional_text\": \"An additional service description example\",\r\n            \"additional_sub_code\": \"\"\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api-test.cttexpress.com/integrations/manifest/v2.0/shippings",
+					"protocol": "https",
+					"host": [
+						"api-test",
+						"cttexpress",
+						"com"
+					],
+					"path": [
+						"integrations",
+						"manifest",
+						"v2.0",
+						"shippings"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -1,0 +1,65 @@
+{
+	"info": {
+		"_postman_id": "d1e79fb3-e54c-4db7-ac59-80f76ba12f8b",
+		"name": "CONTAINERISATION Copy",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "1195010"
+	},
+	"item": [
+		{
+			"name": "REGISTER BATCH CONTAINERS TEST",
+			"item": [
+				{
+					"name": "REGISTER BATCH CONTAINERS TEST",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "user_name",
+								"value": "user1",
+								"type": "text"
+							},
+							{
+								"key": "password",
+								"value": "passw0rd$.",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJraWQiOiJDSXo4cU0xcmRxbmxUVlE2a2pydms2dE02WjRmYk53dzNYUk56VzNwOXdzPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiI1ZWc2a2k5dWpwdTNtbDZwdXNhNzE5OGFxOCIsInRva2VuX3VzZSI6ImFjY2VzcyIsInNjb3BlIjoidXJuOmNvbTpjdHQtZXhwcmVzczppbnRlZ3JhdGlvbi1jbGllbnRzOnNjb3Blczpjb21tb25cL0FMTCIsImF1dGhfdGltZSI6MTY4OTkxNjE3NiwiaXNzIjoiaHR0cHM6XC9cL2NvZ25pdG8taWRwLmV1LXdlc3QtMS5hbWF6b25hd3MuY29tXC9ldS13ZXN0LTFfQzdkWUttNHFGIiwiZXhwIjoxNjkwMDAyNTc2LCJpYXQiOjE2ODk5MTYxNzYsInZlcnNpb24iOjIsImp0aSI6ImZjMGVlYjNlLTcyZmMtNGYxYi04YzgxLTdiZTY5NTY1NjZiOCIsImNsaWVudF9pZCI6IjVlZzZraTl1anB1M21sNnB1c2E3MTk4YXE4In0.FcWuN1zjdNX3YxPeoxolr5sem7OU2-AFQAyskmpUzuYX3Gkbe778KK8rxtqH_h030tTxOlpgCS_bMdQp2UCvFYtWvziNhBaxMC_dwQmTwqgkpBTD8I0aXZMkLqygxKFEGx6R0VwhqubgdiPJ3aITHsWkI9gj0y6lq1mZerefVTHYHvN-JGhNZqTewNxZIwAnK897VSESa6o_HqKi3YmqHHsO-SvgKXEzu7e9ms_uoVS41EPGZ-l1DqGuLuI1kdnA9vmFQE8_KVbLMZNYU1xq3nu_5DdFPhT56kv08bsyOeiE7FFupEHiQzCnr_6XWvTBGUQaFuJGDwDzw_aLTHCG_w",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"masterClientCode\": \"XXXXX\",\r\n    \"containers\": [\r\n        {\r\n            \"containerId\": \"CN6456645456\",\r\n            \"packages\": [\r\n                { \r\n                    \"packageId\": \"0000020082809511338836001\"\r\n                },\r\n                { \r\n                    \"packageId\": \"0000020082809511338854001\"\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"containerId\": \"CN65456454688\",\r\n            \"packages\": [\r\n                { \r\n                    \"packageId\": \"0000020082809511338836001\"\r\n                },\r\n                { \r\n                    \"packageId\": \"0000020082809511338854001\"\r\n                }\r\n            ]\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api-test.cttexpress.com/integrations/trf/client-containers",
+							"protocol": "https",
+							"host": [
+								"api-test",
+								"cttexpress",
+								"com"
+							],
+							"path": [
+								"integrations",
+								"trf",
+								"client-containers"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

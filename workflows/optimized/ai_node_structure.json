@@ -1,0 +1,34 @@
+{
+    "nodes": [
+        {
+            "parameters": {
+                "model": "gpt-4o",
+                "options": {
+                    "temperature": 0
+                }
+            },
+            "id": "openai-node",
+            "name": "Decision_AI_Logistics",
+            "type": "@n8n/n8n-nodes-langchain.openAi",
+            "typeVersion": 1,
+            "position": [
+                400,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "context": "={{ $json.AI_SYSTEM_MESSAGE }}",
+                "prompt": "Analiza este envío:\nHistorial: {{ $json.history }}\nEstado: {{ $json.shipping_status_code }}\nSLA Laboral: {{ $json.hours_in_status }}h\nCentro: {{ $json.client_center_code }}\n\n¿Debemos reclamar a CTT? Devuelve el JSON de justificación."
+            },
+            "id": "ai-agent",
+            "name": "AI_Agent_Logic",
+            "type": "@n8n/n8n-nodes-langchain.agent",
+            "typeVersion": 1,
+            "position": [
+                600,
+                300
+            ]
+        }
+    ]
+}

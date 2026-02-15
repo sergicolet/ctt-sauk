@@ -1,0 +1,207 @@
+[
+    {
+        "code": "1_INCT",
+        "name": "INCOMPLETE / INCORRECT ADDRESS",
+        "spanish": "DIRECCIÓN INCOMPLETA / INCORRECTA"
+    },
+    {
+        "code": "1001_INCT",
+        "name": "EXPEDITION ASSIGNED TO INCORRECT ROUTE",
+        "spanish": "EXPEDICIÓN ASIGNADA A RUTA INCORRECTA"
+    },
+    {
+        "code": "1002_INCT",
+        "name": "INCORRECT/INSUFFICIENT PACKAGING",
+        "spanish": "EMBALAJE INCORRECTO/INSUFICIENTE"
+    },
+    {
+        "code": "1003_INCT",
+        "name": "GOODS ALREADY PICKED UP",
+        "spanish": "MERCANCIA YA RECOGIDA"
+    },
+    {
+        "code": "1004_INCT",
+        "name": "EXCESSIVE WAITING TIME TO PERFORM THE SERVICE",
+        "spanish": "TIEMPO ESPERA EXCESIVO PARA EFECTUAR EL SERVICIO"
+    },
+    {
+        "code": "1005_INCT",
+        "name": "NO CASH ON DELIVERY",
+        "spanish": "SIN EFECTIVO EN LA ENTREGA"
+    },
+    {
+        "code": "1006_INCT",
+        "name": "CUSTOMER HAS NO MERCHANDISE",
+        "spanish": "CLIENTE NO TIENE MERCANCÍA"
+    },
+    {
+        "code": "1007_INCT",
+        "name": "LACK OF DISTRIBUTION ROUTE CAPACITY",
+        "spanish": "FALTA CAPACIDAD RUTA DE DISTRIBUCIÓN"
+    },
+    {
+        "code": "101_INCT",
+        "name": "NO TIME TO PERFORM THE SERVICE",
+        "spanish": "SIN TIEMPO PARA EFECTUAR EL SERVICIO"
+    },
+    {
+        "code": "1010_INCT",
+        "name": "RECIPIENT DOES NOT RECEIVE IN THE AFTERNOON",
+        "spanish": "DESTINATARIO NO RECEPCIONA EN HORARIO DE TARDE"
+    },
+    {
+        "code": "1012_INCT",
+        "name": "LOST MERCHANDISE",
+        "spanish": "MERCANCÍA EXTRAVIADA"
+    },
+    {
+        "code": "102_INCT",
+        "name": "DISTRIBUTION VEHICLE BREAKDOWN",
+        "spanish": "AVERÍA VEHÍCULO DE DISTRIBUCIÓN"
+    },
+    {
+        "code": "1020_INCT",
+        "name": "INCOMPLETE EXPEDITION",
+        "spanish": "EXPEDICIÓN INCOMPLETA"
+    },
+    {
+        "code": "1030_INCT",
+        "name": "CUSTOMS INSPECTION",
+        "spanish": "INSPECCIÓN ADUANERA"
+    },
+    {
+        "code": "1034_INCT",
+        "name": "CLIMATOLOGICAL PROBLEMS",
+        "spanish": "PROBLEMAS CLIMATOLÓGICOS"
+    },
+    {
+        "code": "1035_INCT",
+        "name": "FORCE MAJEURE",
+        "spanish": "FUERZA MAYOR"
+    },
+    {
+        "code": "12_INCT",
+        "name": "LACKING CONTENT",
+        "spanish": "FALTA CONTENIDO"
+    },
+    {
+        "code": "13_INCT",
+        "name": "PENDING DISTRIBUTION",
+        "spanish": "PENDIENTE DE REPARTO"
+    },
+    {
+        "code": "14_INCT",
+        "name": "EXCEEDS DIMENSIONS/WEIGHT",
+        "spanish": "EXCEDE DIMENSIONES/PESO"
+    },
+    {
+        "code": "17_INCT",
+        "name": "PLANE/BOAT DELAY",
+        "spanish": "RETRASO AVIÓN/BARCO"
+    },
+    {
+        "code": "19_INCT",
+        "name": "MERCHANDISE NOT ALLOWED",
+        "spanish": "MERCANCÍA NO PERMITIDA"
+    },
+    {
+        "code": "2_INCT",
+        "name": "RECIPIENT DOES NOT REPLY",
+        "spanish": "DESTINATARIO NO CONTESTA"
+    },
+    {
+        "code": "21_INCT",
+        "name": "MISSING/INCOMPLETE DOCUMENTATION",
+        "spanish": "FALTA DOCUMENTACIÓN/INCOMPLETA"
+    },
+    {
+        "code": "25_INCT",
+        "name": "CUSTOMER DOES NOT HAVE MERCHANDISE READY",
+        "spanish": "CLIENTE NO TIENE PREPARADA MERCANCÍA"
+    },
+    {
+        "code": "27_INCT",
+        "name": "DNI NOT MATCHING/ WITHOUT DNI / DNI INVALID",
+        "spanish": "DNI NO COINCIDENTE/ SIN DNI / DNI NO VÁLIDO"
+    },
+    {
+        "code": "30_INCT",
+        "name": "REQUEST FOR APPOINTMENT/SPECIAL HANDLING",
+        "spanish": "SOLICITUD DE CITA PREVIA/MANIPULACIÓN ESPECIAL"
+    },
+    {
+        "code": "31_INCT",
+        "name": "LOCAL HOLIDAY",
+        "spanish": "FIESTA LOCAL"
+    },
+    {
+        "code": "32_INCT",
+        "name": "CLOSED HOLIDAYS",
+        "spanish": "CERRADO VACACIONES"
+    },
+    {
+        "code": "34_INCT",
+        "name": "CHANGE OF DATE BY THE RECIPIENT",
+        "spanish": "CAMBIO DE FECHA POR EL DESTINATARIO"
+    },
+    {
+        "code": "37_INCT",
+        "name": "INACCESSIBLE/RESTRICTED AREA",
+        "spanish": "ÁREA INACCESIBLE/RESTRINGIDA"
+    },
+    {
+        "code": "4_INCT",
+        "name": "PACKAGE REFUSED",
+        "spanish": "PAQUETE REHUSADO"
+    },
+    {
+        "code": "46_INCT",
+        "name": "NOT ADMITTED TO CTT POINT",
+        "spanish": "NO ADMITIDO EN PUNTO CTT"
+    },
+    {
+        "code": "47_INCT",
+        "name": "CTT POINT CLOSED",
+        "spanish": "PUNTO CTT CERRADO"
+    },
+    {
+        "code": "48_INCT",
+        "name": "PUNTO CTT HAS NO GOODS",
+        "spanish": "PUNTO CTT NO TIENE MERCANCIA"
+    },
+    {
+        "code": "5_INCT",
+        "name": "POORLY TRAVELED",
+        "spanish": "MAL TRANSITADO"
+    },
+    {
+        "code": "50_INCT",
+        "name": "CHANGE MANAGEMENT INCIDENT",
+        "spanish": "INCIDENCIA GESTION DE CAMBIOS"
+    },
+    {
+        "code": "6_INCT",
+        "name": "DAMAGED",
+        "spanish": "DAÑADO"
+    },
+    {
+        "code": "8_INCT",
+        "name": "THEFT",
+        "spanish": "ROBO"
+    },
+    {
+        "code": "9_INCT",
+        "name": "EXCEEDED STORAGE TIME",
+        "spanish": "EXCEDIDO TIEMPO DE ALMACENAMIENTE"
+    },
+    {
+        "code": "97_INCT",
+        "name": "SHIPPING STATUS ERROR",
+        "spanish": "ERROR ESTADO ENVIO"
+    },
+    {
+        "code": "P9_INCT",
+        "name": "REFUSED DOES NOT PAY AMOUNT",
+        "spanish": "REHUSADO NO PAGA IMPORTE"
+    }
+]

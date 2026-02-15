@@ -1,0 +1,78 @@
+{
+	"info": {
+		"_postman_id": "d76882b0-ee1b-4668-a2e2-3a331f24673c",
+		"name": "CANCEL SHIPPING",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "3053504"
+	},
+	"item": [
+		{
+			"name": "CANCEL SHIPPING TEST",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "user_name",
+						"value": "user1",
+						"type": "text"
+					},
+					{
+						"key": "password",
+						"value": "passw0rd$.",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJraWQiOiJDSXo4cU0xcmRxbmxUVlE2a2pydms2dE02WjRmYk53dzNYUk56VzNwOXdzPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiI1ZWc2a2k5dWpwdTNtbDZwdXNhNzE5OGFxOCIsInRva2VuX3VzZSI6ImFjY2VzcyIsInNjb3BlIjoidXJuOmNvbTpjdHQtZXhwcmVzczppbnRlZ3JhdGlvbi1jbGllbnRzOnNjb3Blczpjb21tb25cL0FMTCIsImF1dGhfdGltZSI6MTY4OTc3MjkyNiwiaXNzIjoiaHR0cHM6XC9cL2NvZ25pdG8taWRwLmV1LXdlc3QtMS5hbWF6b25hd3MuY29tXC9ldS13ZXN0LTFfQzdkWUttNHFGIiwiZXhwIjoxNjg5ODU5MzI2LCJpYXQiOjE2ODk3NzI5MjYsInZlcnNpb24iOjIsImp0aSI6IjUzODc4MWZhLWVhYzMtNDM0Ny05ZDNhLTNjNDRkNTA4ZjBlNiIsImNsaWVudF9pZCI6IjVlZzZraTl1anB1M21sNnB1c2E3MTk4YXE4In0.IFwrA78eAdijV3F-k4CleW6VShbnjxXWVxZjvfWU8ezscFUPTtZX22GRjhbnwWcYV5H6e6TsmluO9hPuPxpK166HodhgBb1W5bT6i7MY1b7LBlp7UAFsu6fEW7tCCdk50O_dWfLmIa6z6fKjJ0egvkdPs4Vgv8cSUXJ1zFeEepEXRV3iK2Y8gBDZP5-y9em9ezNNieXTbHuPWoTrI4v2Wl3u-ijtGWiLisnD511uk_ENOTNgBlFOuAw4NvmlNrt7NoBFMadK1NSqQTLt7cb7hWs56gLVx1QmvZs6hV3V6VIEHJwKDmI1Fql0TYRByyz4S9nqliKHdcCmTw3XhUb70A",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{}"
+				},
+				"url": {
+					"raw": "https://api-test.cttexpress.com/integrations/manifest/v1.0/rpc-cancel-shipping-by-shipping-code/0031020031029541174805",
+					"protocol": "https",
+					"host": [
+						"api-test",
+						"cttexpress",
+						"com"
+					],
+					"path": [
+						"integrations",
+						"manifest",
+						"v1.0",
+						"rpc-cancel-shipping-by-shipping-code",
+						"0031020031029541174805"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

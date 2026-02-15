@@ -1,0 +1,60 @@
+{
+	"info": {
+		"_postman_id": "d99d125b-4453-4a69-b2bc-5dcc8c346a8d",
+		"name": "GET SHIPPING TRACKING",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "3053504"
+	},
+	"item": [
+		{
+			"name": "GET SHIPPING TRACKING TEST",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJraWQiOiJDSXo4cU0xcmRxbmxUVlE2a2pydms2dE02WjRmYk53dzNYUk56VzNwOXdzPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiI1ZWc2a2k5dWpwdTNtbDZwdXNhNzE5OGFxOCIsInRva2VuX3VzZSI6ImFjY2VzcyIsInNjb3BlIjoidXJuOmNvbTpjdHQtZXhwcmVzczppbnRlZ3JhdGlvbi1jbGllbnRzOnNjb3Blczpjb21tb25cL0FMTCIsImF1dGhfdGltZSI6MTY5MDM3NDUwMCwiaXNzIjoiaHR0cHM6XC9cL2NvZ25pdG8taWRwLmV1LXdlc3QtMS5hbWF6b25hd3MuY29tXC9ldS13ZXN0LTFfQzdkWUttNHFGIiwiZXhwIjoxNjkwNDYwOTAwLCJpYXQiOjE2OTAzNzQ1MDAsInZlcnNpb24iOjIsImp0aSI6ImE3ZDA5OWNiLTcyM2QtNDUwMS1iZTg5LTE2NzE5Y2IzZGY3ZSIsImNsaWVudF9pZCI6IjVlZzZraTl1anB1M21sNnB1c2E3MTk4YXE4In0.ivvZom0xhvYmyXP8xxgqY_KKr5fjgeYRVJ892vvr1QtZASjRhSyYo-ExPeDKauLXIN7Dq_HmlztN_YWLi8pHnmFrv4TZIaBlKaEiHH9t4sTG17HzKntIMs0zJgA-XickpDp67UlVASYyxGpL_HjUTonymXcGwf-n-tKA0sYl-lhOMm0npmvY5PtWA_VOXRVyFq0nUTdUMYkxEgTsVFDWISCYCTIh5w806i3knrV3vjf4KYMb4xwLudfBLC6lXYa6ZUg75eG3bl9NJOk_4z3nZmNLBEsuKOckGFbnLu9DtGefXcnAbXhsdHjVjLlUrjYsr5ORvq2JBk2WbSjhHBQlYg"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"shipping_code\": \"0082800082809800279628\"\n\n}"
+				},
+				"url": {
+					"raw": "https://api-test.cttexpress.com/integrations-info/trf/item-history-api/history/0078710082809800000001?view=APITRACK&showItems=false",
+					"protocol": "https",
+					"host": [
+						"api-test",
+						"cttexpress",
+						"com"
+					],
+					"path": [
+						"integrations-info",
+						"trf",
+						"item-history-api",
+						"history",
+						"0078710082809800000001"
+					],
+					"query": [
+						{
+							"key": "view",
+							"value": "APITRACK"
+						},
+						{
+							"key": "showItems",
+							"value": "false"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

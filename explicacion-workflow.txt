@@ -1,0 +1,106 @@
+DESCRIPCIÓN DEL PROCESO DE GESTIÓN DE INCIDENCIAS CTT (PASO A PASO)
+
+Objetivo del proceso
+
+Automatizar la revisión diaria de los estados de envío proporcionados por CTT Express, detectar incidencias o retrasos según reglas de tiempo y estatus, y generar automáticamente alertas internas o correos a la transportadora, sin intervención manual.
+
+
+📦 Estados iniciales del envío (Día 0)
+Cuando se genera la etiqueta del envío, CTT Express puede mostrar los siguientes estatus iniciales:
+* “Grabado”
+* “Recogida sin programar”
+👉 Estos estados indican que la transportadora aún no ha escaneado físicamente el paquete.
+👉 Se consideran estatus válidos solo durante el primer día del envío.
+
+
+🗓️ Día 1 – Validación de activación del envío
+Regla 1 – Alerta interna
+* Si al día siguiente de la creación del envío (Día 1) el estatus NO ha cambiado a:
+    * “Tránsito”
+    * “Reparto”
+* Y continúa en:
+    * “Grabado” o
+    * “Recogida sin programar”
+📩 Acción automática:
+* Generar una alerta o notificación interna por correo al equipo de servicio al cliente.
+* Objetivo: que el equipo esté atento al envío, pero NO se envía correo a CTT aún.
+
+
+
+🗓️ Día 2 – Control de avance a reparto
+Regla 2 – Solicitud de salida a reparto
+* Si el envío:
+    * En el Día 1 estuvo en estatus “Tránsito”
+    * Y en el Día 2 NO cambia a estatus “Reparto”
+📩 Acción automática:
+* Enviar correo automático a CTT Express
+* Contenido del correo:
+    * Número de seguimiento
+    * Solicitud de que el envío salga a reparto al día siguiente
+
+
+🗓️ Día 3 – Pedido estancado en reparto
+Regla 3 – Reintento de reparto
+* Si el envío:
+    * En el Día 2 se encuentra en estatus “Reparto”
+    * Y en el Día 3 permanece en el mismo estatus, sin cambio
+📩 Acción automática:
+* Enviar correo automático a CTT Express
+* Contenido del correo:
+    * Número de seguimiento
+    * Solicitud de que el pedido sea sacado nuevamente a reparto
+
+
+
+
+⚠️ Incidencias logísticas
+Regla 4 – Primera incidencia
+* Cuando un envío cambia su estatus a “Incidencia” por primera vez
+ Acción automática:
+* Enviar correo automático a CTT Express
+* Solicitar explícitamente:
+    * Segundo intento de reparto al día siguiente
+🚫 Importante:
+* Esta regla SOLO aplica para la PRIMERA incidencia
+* Si el envío entra en segunda incidencia o más,
+👉 NO se envía ningún correo automático
+👉 El seguimiento queda fuera de la automatización
+
+
+
+DIAGRAMA DE FLUJO:
+
+INICIO
+  │
+  ├── Obtener estatus del envío desde CTT Express
+  │
+  ├── ¿Día 0?
+  │     └── Estatus esperado: "Grabado" / "Recogida sin programar"
+  │
+  ├── ¿Día 1?
+  │     ├── ¿Estatus sigue en "Grabado" o "Recogida sin programar"?
+  │     │       └── Sí → Enviar ALERTA INTERNA por correo
+  │     │       └── No → Continuar flujo
+  │
+  ├── ¿Día 2?
+  │     ├── ¿Día 1 fue "Tránsito"?
+  │     │       ├── Sí
+  │     │       │    └── ¿Estatus actual ≠ "Reparto"?
+  │     │       │           └── Sí → Enviar correo a CTT solicitando salida a reparto
+  │     │       │           └── No → Continuar flujo
+  │     │       └── No → Continuar flujo
+  │
+  ├── ¿Día 3?
+  │     ├── ¿Día 2 fue "Reparto"?
+  │     │       ├── Sí
+  │     │       │    └── ¿Estatus sigue en "Reparto"?
+  │     │       │           └── Sí → Enviar correo a CTT solicitando nuevo reparto
+  │     │       │           └── No → Fin del flujo
+  │     │       └── No → Fin del flujo
+  │
+  ├── ¿Estatus = "Incidencia"?
+  │     ├── ¿Es la PRIMERA incidencia?
+  │     │       └── Sí → Enviar correo a CTT solicitando segundo reparto
+  │     │       └── No → No hacer ninguna acción automática
+  │
+FIN

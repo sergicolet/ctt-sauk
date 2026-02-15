@@ -1,0 +1,42 @@
+[
+    {
+        "code": "3901",
+        "name": "PROVISIONAL RECEPCION CUSTOMS CLEARANCE",
+        "spanish": "EN GESTION ADUANERA"
+    },
+    {
+        "code": "3800",
+        "name": "NOTIFY",
+        "spanish": "NOA"
+    },
+    {
+        "code": "3810",
+        "name": "SUMARY ACTIVE",
+        "spanish": "SUMARIA ACTIVA"
+    },
+    {
+        "code": "3840",
+        "name": "LOADING VEHICLE",
+        "spanish": "CARGANDO VEHICULO"
+    },
+    {
+        "code": "3850",
+        "name": "AWB CLOSED",
+        "spanish": "MASTER CERRADO"
+    },
+    {
+        "code": "3920",
+        "name": "DISPATCH - DISTRIBUTION",
+        "spanish": "DESPACHADO - DISTRIBUCIÓN"
+    },
+    {
+        "code": "3921",
+        "name": "DISPATCH - INSPECTION",
+        "spanish": "DESPACHADO - INSPECCIÓN (ROJO)"
+    },
+    {
+        "code": "3922",
+        "name": "DISPATCHED FOR STORAGE",
+        "spanish": "DESPACHADO PARA ALMACENAJE (NARANJA)"
+    }
+]

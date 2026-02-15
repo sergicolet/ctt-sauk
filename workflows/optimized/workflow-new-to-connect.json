@@ -1,0 +1,3906 @@
+    {
+        "nodes": [
+            {
+                "parameters": {
+                    "inputSource": "passthrough"
+                },
+                "type": "n8n-nodes-base.executeWorkflowTrigger",
+                "typeVersion": 1.1,
+                "position": [
+                    -1680,
+                    6064
+                ],
+                "id": "4cbeb45a-051a-4627-83ca-039c238e6d8d",
+                "name": "When Executed by Another Workflow"
+            },
+            {
+                "parameters": {
+                    "options": {}
+                },
+                "type": "n8n-nodes-base.splitInBatches",
+                "typeVersion": 3,
+                "position": [
+                    -1456,
+                    6064
+                ],
+                "id": "7297c645-5a7b-46d6-9341-e41b62d9713d",
+                "name": "Loop Over Items"
+            },
+            {
+                "parameters": {
+                    "rules": {
+                        "values": [
+                            {
+                                "conditions": {
+                                    "options": {
+                                        "caseSensitive": true,
+                                        "leftValue": "",
+                                        "typeValidation": "strict",
+                                        "version": 3
+                                    },
+                                    "conditions": [
+                                        {
+                                            "leftValue": "={{ $('Loop Over Items').item.json.client_center_code }}",
+                                            "rightValue": "4863000001",
+                                            "operator": {
+                                                "type": "string",
+                                                "operation": "equals"
+                                            },
+                                            "id": "h"
+                                        }
+                                    ],
+                                    "combinator": "and"
+                                },
+                                "renameOutput": true,
+                                "outputKey": "H"
+                            },
+                            {
+                                "conditions": {
+                                    "options": {
+                                        "caseSensitive": true,
+                                        "leftValue": "",
+                                        "typeValidation": "strict",
+                                        "version": 3
+                                    },
+                                    "conditions": [
+                                        {
+                                            "id": "m",
+                                            "leftValue": "={{ $('Loop Over Items').item.json.client_center_code }}",
+                                            "rightValue": "^(4768500001|4768500002|4768500003)$",
+                                            "operator": {
+                                                "type": "string",
+                                                "operation": "regex"
+                                            }
+                                        }
+                                    ],
+                                    "combinator": "and"
+                                },
+                                "renameOutput": true,
+                                "outputKey": "M"
+                            },
+                            {
+                                "conditions": {
+                                    "options": {
+                                        "caseSensitive": true,
+                                        "leftValue": "",
+                                        "typeValidation": "strict",
+                                        "version": 3
+                                    },
+                                    "conditions": [
+                                        {
+                                            "id": "k",
+                                            "leftValue": "={{ $('Loop Over Items').item.json.client_center_code }}",
+                                            "rightValue": "^(4541600001|4541600002)$",
+                                            "operator": {
+                                                "type": "string",
+                                                "operation": "regex"
+                                            }
+                                        }
+                                    ],
+                                    "combinator": "and"
+                                },
+                                "renameOutput": true,
+                                "outputKey": "K"
+                            },
+                            {
+                                "conditions": {
+                                    "options": {
+                                        "caseSensitive": true,
+                                        "leftValue": "",
+                                        "typeValidation": "strict",
+                                        "version": 3
+                                    },
+                                    "conditions": [
+                                        {
+                                            "id": "s",
+                                            "leftValue": "={{ $('Loop Over Items').item.json.client_center_code }}",
+                                            "rightValue": "^(4735200001|4735200002|4735200003|4735200004)$",
+                                            "operator": {
+                                                "type": "string",
+                                                "operation": "regex"
+                                            }
+                                        }
+                                    ],
+                                    "combinator": "and"
+                                },
+                                "renameOutput": true,
+                                "outputKey": "S"
+                            }
+                        ]
+                    },
+                    "options": {}
+                },
+                "type": "n8n-nodes-base.switch",
+                "typeVersion": 3.4,
+                "position": [
+                    -560,
+                    224
+                ],
+                "id": "d98640ad-e20f-473b-8f9d-cea812661d23",
+                "name": "SW Grabado"
+            },
+            {
+                "parameters": {
+                    "rules": {
+                        "values": [
+                            {
+                                "conditions": {
+                                    "options": {
+                                        "caseSensitive": true,
+                                        "leftValue": "",
+                                        "typeValidation": "strict",
+                                        "version": 3
+                                    },
+                                    "conditions": [
+                                        {
+                                            "leftValue": "={{ $('Loop Over Items').item.json.client_center_code }}",
+                                            "rightValue": "4863000001",
+                                            "operator": {
+                                                "type": "string",
+                                                "operation": "equals"
+                                            },
+                                            "id": "h"
+                                        }
+                                    ],
+                                    "combinator": "and"
+                                },
+                                "renameOutput": true,
+                                "outputKey": "H"
+                            },
+                            {
+                                "conditions": {
+                                    "options": {
+                                        "caseSensitive": true,
+                                        "leftValue": "",
+                                        "typeValidation": "strict",
+                                        "version": 3
+                                    },
+                                    "conditions": [
+                                        {
+                                            "id": "m",
+                                            "leftValue": "={{ $('Loop Over Items').item.json.client_center_code }}",
+                                            "rightValue": "^(4768500001|4768500002|4768500003)$",
+                                            "operator": {
+                                                "type": "string",
+                                                "operation": "regex"
+                                            }
+                                        }
+                                    ],
+                                    "combinator": "and"
+                                },
+                                "renameOutput": true,
+                                "outputKey": "M"
+                            },
+                            {
+                                "conditions": {
+                                    "options": {
+                                        "caseSensitive": true,
+                                        "leftValue": "",
+                                        "typeValidation": "strict",
+                                        "version": 3
+                                    },
+                                    "conditions": [
+                                        {
+                                            "id": "k",
+                                            "leftValue": "={{ $('Loop Over Items').item.json.client_center_code }}",
+                                            "rightValue": "^(4541600001|4541600002)$",
+                                            "operator": {
+                                                "type": "string",
+                                                "operation": "regex"
+                                            }
+                                        }
+                                    ],
+                                    "combinator": "and"
+                                },
+                                "renameOutput": true,
+                                "outputKey": "K"
+                            },
+                            {
+                                "conditions": {
+                                    "options": {
+                                        "caseSensitive": true,
+                                        "leftValue": "",
+                                        "typeValidation": "strict",
+                                        "version": 3
+                                    },
+                                    "conditions": [
+                                        {
+                                            "id": "s",
+                                            "leftValue": "={{ $('Loop Over Items').item.json.client_center_code }}",
+                                            "rightValue": "^(4735200001|4735200002|4735200003|4735200004)$",
+                                            "operator": {
+                                                "type": "string",
+                                                "operation": "regex"
+                                            }
+                                        }
+                                    ],
+                                    "combinator": "and"
+                                },
+                                "renameOutput": true,
+                                "outputKey": "S"
+                            }
+                        ]
+                    },
+                    "options": {}
+                },
+                "type": "n8n-nodes-base.switch",
+                "typeVersion": 3.4,
+                "position": [
+                    -560,
+                    992
+                ],
+                "id": "34d28839-a5aa-41c2-a28f-75d0e64c7aab",
+                "name": "SW Punto24"
+            },
+            {
+                "parameters": {
+                    "rules": {
+                        "values": [
+                            {
+                                "conditions": {
+                                    "options": {
+                                        "caseSensitive": true,
+                                        "leftValue": "",
+                                        "typeValidation": "strict",
+                                        "version": 3
+                                    },
+                                    "conditions": [
+                                        {
+                                            "leftValue": "={{ $('Loop Over Items').item.json.client_center_code }}",
+                                            "rightValue": "4863000001",
+                                            "operator": {
+                                                "type": "string",
+                                                "operation": "equals"
+                                            },
+                                            "id": "h"
+                                        }
+                                    ],
+                                    "combinator": "and"
+                                },
+                                "renameOutput": true,
+                                "outputKey": "H"
+                            },
+                            {
+                                "conditions": {
+                                    "options": {
+                                        "caseSensitive": true,
+                                        "leftValue": "",
+                                        "typeValidation": "strict",
+                                        "version": 3
+                                    },
+                                    "conditions": [
+                                        {
+                                            "id": "m",
+                                            "leftValue": "={{ $('Loop Over Items').item.json.client_center_code }}",
+                                            "rightValue": "^(4768500001|4768500002|4768500003)$",
+                                            "operator": {
+                                                "type": "string",
+                                                "operation": "regex"
+                                            }
+                                        }
+                                    ],
+                                    "combinator": "and"
+                                },
+                                "renameOutput": true,
+                                "outputKey": "M"
+                            },
+                            {
+                                "conditions": {
+                                    "options": {
+                                        "caseSensitive": true,
+                                        "leftValue": "",
+                                        "typeValidation": "strict",
+                                        "version": 3
+                                    },
+                                    "conditions": [
+                                        {
+                                            "id": "k",
+                                            "leftValue": "={{ $('Loop Over Items').item.json.client_center_code }}",
+                                            "rightValue": "^(4541600001|4541600002)$",
+                                            "operator": {
+                                                "type": "string",
+                                                "operation": "regex"
+                                            }
+                                        }
+                                    ],
+                                    "combinator": "and"
+                                },
+                                "renameOutput": true,
+                                "outputKey": "K"
+                            },
+                            {
+                                "conditions": {
+                                    "options": {
+                                        "caseSensitive": true,
+                                        "leftValue": "",
+                                        "typeValidation": "strict",
+                                        "version": 3
+                                    },
+                                    "conditions": [
+                                        {
+                                            "id": "s",
+                                            "leftValue": "={{ $('Loop Over Items').item.json.client_center_code }}",
+                                            "rightValue": "^(4735200001|4735200002|4735200003|4735200004)$",
+                                            "operator": {
+                                                "type": "string",
+                                                "operation": "regex"
+                                            }
+                                        }
+                                    ],
+                                    "combinator": "and"
+                                },
+                                "renameOutput": true,
+                                "outputKey": "S"
+                            }
+                        ]
+                    },
+                    "options": {}
+                },
+                "type": "n8n-nodes-base.switch",
+                "typeVersion": 3.4,
+                "position": [
+                    -560,
+                    1760
+                ],
+                "id": "a400b86c-3d78-4b6a-b28e-ccdf64a7cec6",
+                "name": "SW Punto72"
+            },
+            {
+                "parameters": {
+                    "rules": {
+                        "values": [
+                            {
+                                "conditions": {
+                                    "options": {
+                                        "caseSensitive": true,
+                                        "leftValue": "",
+                                        "typeValidation": "strict",
+                                        "version": 3
+                                    },
+                                    "conditions": [
+                                        {
+                                            "leftValue": "={{ $('Loop Over Items').item.json.client_center_code }}",
+                                            "rightValue": "4863000001",
+                                            "operator": {
+                                                "type": "string",
+                                                "operation": "equals"
+                                            },
+                                            "id": "h"
+                                        }
+                                    ],
+                                    "combinator": "and"
+                                },
+                                "renameOutput": true,
+                                "outputKey": "H"
+                            },
+                            {
+                                "conditions": {
+                                    "options": {
+                                        "caseSensitive": true,
+                                        "leftValue": "",
+                                        "typeValidation": "strict",
+                                        "version": 3
+                                    },
+                                    "conditions": [
+                                        {
+                                            "id": "m",
+                                            "leftValue": "={{ $('Loop Over Items').item.json.client_center_code }}",
+                                            "rightValue": "^(4768500001|4768500002|4768500003)$",
+                                            "operator": {
+                                                "type": "string",
+                                                "operation": "regex"
+                                            }
+                                        }
+                                    ],
+                                    "combinator": "and"
+                                },
+                                "renameOutput": true,
+                                "outputKey": "M"
+                            },
+                            {
+                                "conditions": {
+                                    "options": {
+                                        "caseSensitive": true,
+                                        "leftValue": "",
+                                        "typeValidation": "strict",
+                                        "version": 3
+                                    },
+                                    "conditions": [
+                                        {
+                                            "id": "k",
+                                            "leftValue": "={{ $('Loop Over Items').item.json.client_center_code }}",
+                                            "rightValue": "^(4541600001|4541600002)$",
+                                            "operator": {
+                                                "type": "string",
+                                                "operation": "regex"
+                                            }
+                                        }
+                                    ],
+                                    "combinator": "and"
+                                },
+                                "renameOutput": true,
+                                "outputKey": "K"
+                            },
+                            {
+                                "conditions": {
+                                    "options": {
+                                        "caseSensitive": true,
+                                        "leftValue": "",
+                                        "typeValidation": "strict",
+                                        "version": 3
+                                    },
+                                    "conditions": [
+                                        {
+                                            "id": "s",
+                                            "leftValue": "={{ $('Loop Over Items').item.json.client_center_code }}",
+                                            "rightValue": "^(4735200001|4735200002|4735200003|4735200004)$",
+                                            "operator": {
+                                                "type": "string",
+                                                "operation": "regex"
+                                            }
+                                        }
+                                    ],
+                                    "combinator": "and"
+                                },
+                                "renameOutput": true,
+                                "outputKey": "S"
+                            }
+                        ]
+                    },
+                    "options": {}
+                },
+                "type": "n8n-nodes-base.switch",
+                "typeVersion": 3.4,
+                "position": [
+                    -560,
+                    2528
+                ],
+                "id": "d2e263cf-3e00-4c32-8bfd-8218e2bef12c",
+                "name": "SW RecFallida"
+            },
+            {
+                "parameters": {
+                    "rules": {
+                        "values": [
+                            {
+                                "conditions": {
+                                    "options": {
+                                        "caseSensitive": true,
+                                        "leftValue": "",
+                                        "typeValidation": "strict",
+                                        "version": 3
+                                    },
+                                    "conditions": [
+                                        {
+                                            "leftValue": "={{ $('Loop Over Items').item.json.client_center_code }}",
+                                            "rightValue": "4863000001",
+                                            "operator": {
+                                                "type": "string",
+                                                "operation": "equals"
+                                            },
+                                            "id": "h"
+                                        }
+                                    ],
+                                    "combinator": "and"
+                                },
+                                "renameOutput": true,
+                                "outputKey": "H"
+                            },
+                            {
+                                "conditions": {
+                                    "options": {
+                                        "caseSensitive": true,
+                                        "leftValue": "",
+                                        "typeValidation": "strict",
+                                        "version": 3
+                                    },
+                                    "conditions": [
+                                        {
+                                            "id": "m",
+                                            "leftValue": "={{ $('Loop Over Items').item.json.client_center_code }}",
+                                            "rightValue": "^(4768500001|4768500002|4768500003)$",
+                                            "operator": {
+                                                "type": "string",
+                                                "operation": "regex"
+                                            }
+                                        }
+                                    ],
+                                    "combinator": "and"
+                                },
+                                "renameOutput": true,
+                                "outputKey": "M"
+                            },
+                            {
+                                "conditions": {
+                                    "options": {
+                                        "caseSensitive": true,
+                                        "leftValue": "",
+                                        "typeValidation": "strict",
+                                        "version": 3
+                                    },
+                                    "conditions": [
+                                        {
+                                            "id": "k",
+                                            "leftValue": "={{ $('Loop Over Items').item.json.client_center_code }}",
+                                            "rightValue": "^(4541600001|4541600002)$",
+                                            "operator": {
+                                                "type": "string",
+                                                "operation": "regex"
+                                            }
+                                        }
+                                    ],
+                                    "combinator": "and"
+                                },
+                                "renameOutput": true,
+                                "outputKey": "K"
+                            },
+                            {
+                                "conditions": {
+                                    "options": {
+                                        "caseSensitive": true,
+                                        "leftValue": "",
+                                        "typeValidation": "strict",
+                                        "version": 3
+                                    },
+                                    "conditions": [
+                                        {
+                                            "id": "s",
+                                            "leftValue": "={{ $('Loop Over Items').item.json.client_center_code }}",
+                                            "rightValue": "^(4735200001|4735200002|4735200003|4735200004)$",
+                                            "operator": {
+                                                "type": "string",
+                                                "operation": "regex"
+                                            }
+                                        }
+                                    ],
+                                    "combinator": "and"
+                                },
+                                "renameOutput": true,
+                                "outputKey": "S"
+                            }
+                        ]
+                    },
+                    "options": {}
+                },
+                "type": "n8n-nodes-base.switch",
+                "typeVersion": 3.4,
+                "position": [
+                    -560,
+                    3296
+                ],
+                "id": "937c053c-d6f7-4965-976d-c345356cb5ce",
+                "name": "SW Transito"
+            },
+            {
+                "parameters": {
+                    "rules": {
+                        "values": [
+                            {
+                                "conditions": {
+                                    "options": {
+                                        "caseSensitive": true,
+                                        "leftValue": "",
+                                        "typeValidation": "strict",
+                                        "version": 3
+                                    },
+                                    "conditions": [
+                                        {
+                                            "leftValue": "={{ $('Loop Over Items').item.json.client_center_code }}",
+                                            "rightValue": "4863000001",
+                                            "operator": {
+                                                "type": "string",
+                                                "operation": "equals"
+                                            },
+                                            "id": "h"
+                                        }
+                                    ],
+                                    "combinator": "and"
+                                },
+                                "renameOutput": true,
+                                "outputKey": "H"
+                            },
+                            {
+                                "conditions": {
+                                    "options": {
+                                        "caseSensitive": true,
+                                        "leftValue": "",
+                                        "typeValidation": "strict",
+                                        "version": 3
+                                    },
+                                    "conditions": [
+                                        {
+                                            "id": "m",
+                                            "leftValue": "={{ $('Loop Over Items').item.json.client_center_code }}",
+                                            "rightValue": "^(4768500001|4768500002|4768500003)$",
+                                            "operator": {
+                                                "type": "string",
+                                                "operation": "regex"
+                                            }
+                                        }
+                                    ],
+                                    "combinator": "and"
+                                },
+                                "renameOutput": true,
+                                "outputKey": "M"
+                            },
+                            {
+                                "conditions": {
+                                    "options": {
+                                        "caseSensitive": true,
+                                        "leftValue": "",
+                                        "typeValidation": "strict",
+                                        "version": 3
+                                    },
+                                    "conditions": [
+                                        {
+                                            "id": "k",
+                                            "leftValue": "={{ $('Loop Over Items').item.json.client_center_code }}",
+                                            "rightValue": "^(4541600001|4541600002)$",
+                                            "operator": {
+                                                "type": "string",
+                                                "operation": "regex"
+                                            }
+                                        }
+                                    ],
+                                    "combinator": "and"
+                                },
+                                "renameOutput": true,
+                                "outputKey": "K"
+                            },
+                            {
+                                "conditions": {
+                                    "options": {
+                                        "caseSensitive": true,
+                                        "leftValue": "",
+                                        "typeValidation": "strict",
+                                        "version": 3
+                                    },
+                                    "conditions": [
+                                        {
+                                            "id": "s",
+                                            "leftValue": "={{ $('Loop Over Items').item.json.client_center_code }}",
+                                            "rightValue": "^(4735200001|4735200002|4735200003|4735200004)$",
+                                            "operator": {
+                                                "type": "string",
+                                                "operation": "regex"
+                                            }
+                                        }
+                                    ],
+                                    "combinator": "and"
+                                },
+                                "renameOutput": true,
+                                "outputKey": "S"
+                            }
+                        ]
+                    },
+                    "options": {}
+                },
+                "type": "n8n-nodes-base.switch",
+                "typeVersion": 3.4,
+                "position": [
+                    -560,
+                    4064
+                ],
+                "id": "47d2e0af-b028-47e7-bce8-a3621a293f7a",
+                "name": "SW Reparto"
+            },
+            {
+                "parameters": {
+                    "rules": {
+                        "values": [
+                            {
+                                "conditions": {
+                                    "options": {
+                                        "caseSensitive": true,
+                                        "leftValue": "",
+                                        "typeValidation": "strict",
+                                        "version": 3
+                                    },
+                                    "conditions": [
+                                        {
+                                            "leftValue": "={{ $('Loop Over Items').item.json.client_center_code }}",
+                                            "rightValue": "4863000001",
+                                            "operator": {
+                                                "type": "string",
+                                                "operation": "equals"
+                                            },
+                                            "id": "h"
+                                        }
+                                    ],
+                                    "combinator": "and"
+                                },
+                                "renameOutput": true,
+                                "outputKey": "H"
+                            },
+                            {
+                                "conditions": {
+                                    "options": {
+                                        "caseSensitive": true,
+                                        "leftValue": "",
+                                        "typeValidation": "strict",
+                                        "version": 3
+                                    },
+                                    "conditions": [
+                                        {
+                                            "id": "m",
+                                            "leftValue": "={{ $('Loop Over Items').item.json.client_center_code }}",
+                                            "rightValue": "^(4768500001|4768500002|4768500003)$",
+                                            "operator": {
+                                                "type": "string",
+                                                "operation": "regex"
+                                            }
+                                        }
+                                    ],
+                                    "combinator": "and"
+                                },
+                                "renameOutput": true,
+                                "outputKey": "M"
+                            },
+                            {
+                                "conditions": {
+                                    "options": {
+                                        "caseSensitive": true,
+                                        "leftValue": "",
+                                        "typeValidation": "strict",
+                                        "version": 3
+                                    },
+                                    "conditions": [
+                                        {
+                                            "id": "k",
+                                            "leftValue": "={{ $('Loop Over Items').item.json.client_center_code }}",
+                                            "rightValue": "^(4541600001|4541600002)$",
+                                            "operator": {
+                                                "type": "string",
+                                                "operation": "regex"
+                                            }
+                                        }
+                                    ],
+                                    "combinator": "and"
+                                },
+                                "renameOutput": true,
+                                "outputKey": "K"
+                            },
+                            {
+                                "conditions": {
+                                    "options": {
+                                        "caseSensitive": true,
+                                        "leftValue": "",
+                                        "typeValidation": "strict",
+                                        "version": 3
+                                    },
+                                    "conditions": [
+                                        {
+                                            "id": "s",
+                                            "leftValue": "={{ $('Loop Over Items').item.json.client_center_code }}",
+                                            "rightValue": "^(4735200001|4735200002|4735200003|4735200004)$",
+                                            "operator": {
+                                                "type": "string",
+                                                "operation": "regex"
+                                            }
+                                        }
+                                    ],
+                                    "combinator": "and"
+                                },
+                                "renameOutput": true,
+                                "outputKey": "S"
+                            }
+                        ]
+                    },
+                    "options": {}
+                },
+                "type": "n8n-nodes-base.switch",
+                "typeVersion": 3.4,
+                "position": [
+                    -560,
+                    4832
+                ],
+                "id": "cd1215f8-6b69-4a9e-9b45-c3545c860a88",
+                "name": "SW PuntoCTT"
+            },
+            {
+                "parameters": {
+                    "rules": {
+                        "values": [
+                            {
+                                "conditions": {
+                                    "options": {
+                                        "caseSensitive": true,
+                                        "leftValue": "",
+                                        "typeValidation": "strict",
+                                        "version": 3
+                                    },
+                                    "conditions": [
+                                        {
+                                            "leftValue": "={{ $('Loop Over Items').item.json.client_center_code }}",
+                                            "rightValue": "4863000001",
+                                            "operator": {
+                                                "type": "string",
+                                                "operation": "equals"
+                                            },
+                                            "id": "h"
+                                        }
+                                    ],
+                                    "combinator": "and"
+                                },
+                                "renameOutput": true,
+                                "outputKey": "H"
+                            },
+                            {
+                                "conditions": {
+                                    "options": {
+                                        "caseSensitive": true,
+                                        "leftValue": "",
+                                        "typeValidation": "strict",
+                                        "version": 3
+                                    },
+                                    "conditions": [
+                                        {
+                                            "id": "m",
+                                            "leftValue": "={{ $('Loop Over Items').item.json.client_center_code }}",
+                                            "rightValue": "^(4768500001|4768500002|4768500003)$",
+                                            "operator": {
+                                                "type": "string",
+                                                "operation": "regex"
+                                            }
+                                        }
+                                    ],
+                                    "combinator": "and"
+                                },
+                                "renameOutput": true,
+                                "outputKey": "M"
+                            },
+                            {
+                                "conditions": {
+                                    "options": {
+                                        "caseSensitive": true,
+                                        "leftValue": "",
+                                        "typeValidation": "strict",
+                                        "version": 3
+                                    },
+                                    "conditions": [
+                                        {
+                                            "id": "k",
+                                            "leftValue": "={{ $('Loop Over Items').item.json.client_center_code }}",
+                                            "rightValue": "^(4541600001|4541600002)$",
+                                            "operator": {
+                                                "type": "string",
+                                                "operation": "regex"
+                                            }
+                                        }
+                                    ],
+                                    "combinator": "and"
+                                },
+                                "renameOutput": true,
+                                "outputKey": "K"
+                            },
+                            {
+                                "conditions": {
+                                    "options": {
+                                        "caseSensitive": true,
+                                        "leftValue": "",
+                                        "typeValidation": "strict",
+                                        "version": 3
+                                    },
+                                    "conditions": [
+                                        {
+                                            "id": "s",
+                                            "leftValue": "={{ $('Loop Over Items').item.json.client_center_code }}",
+                                            "rightValue": "^(4735200001|4735200002|4735200003|4735200004)$",
+                                            "operator": {
+                                                "type": "string",
+                                                "operation": "regex"
+                                            }
+                                        }
+                                    ],
+                                    "combinator": "and"
+                                },
+                                "renameOutput": true,
+                                "outputKey": "S"
+                            }
+                        ]
+                    },
+                    "options": {}
+                },
+                "type": "n8n-nodes-base.switch",
+                "typeVersion": 3.4,
+                "position": [
+                    -560,
+                    5600
+                ],
+                "id": "78987894-6155-4755-9504-1764a68fdceb",
+                "name": "SW Devolucion"
+            },
+            {
+                "parameters": {
+                    "resource": "draft",
+                    "subject": "=Alerta: Envío Grabado +24h | {{ $('Loop Over Items').item.json.shipping_code }}",
+                    "message": "=Envío en estado Grabado por +24h. Realizar seguimiento.\n\nSEG: {{ $('Loop Over Items').item.json.shipping_code }}\nPED: {{ $('Loop Over Items').item.json.client_references[0] }}",
+                    "options": {}
+                },
+                "id": "27214974-6830-4995-ade7-5f9be09915e2",
+                "name": "Grab H",
+                "type": "n8n-nodes-base.gmail",
+                "typeVersion": 2.2,
+                "position": [
+                    -336,
+                    -32
+                ],
+                "webhookId": "7a8467db-ba7b-4847-83cb-a2dcbfbbb45b",
+                "credentials": {
+                    "gmailOAuth2": {
+                        "id": "xvnQhr5hfD4gc3Uk",
+                        "name": "HAMINOS"
+                    }
+                }
+            },
+            {
+                "parameters": {
+                    "resource": "draft",
+                    "subject": "=Alerta: Envío Grabado +24h | {{ $('Loop Over Items').item.json.shipping_code }}",
+                    "message": "=Envío en estado Grabado por +24h. Realizar seguimiento.\n\nSEG: {{ $('Loop Over Items').item.json.shipping_code }}\nPED: {{ $('Loop Over Items').item.json.client_references[0] }}",
+                    "options": {}
+                },
+                "id": "0d848719-89b2-42d1-9f63-c7725b6ae5ef",
+                "name": "Grab M",
+                "type": "n8n-nodes-base.gmail",
+                "typeVersion": 2.2,
+                "position": [
+                    -336,
+                    160
+                ],
+                "webhookId": "5073db28-f294-4474-bc43-8e236e50763c",
+                "credentials": {
+                    "gmailOAuth2": {
+                        "id": "QJJKjkTiSoxnKucv",
+                        "name": "MIESTERY / SERVICE CORP WORLD"
+                    }
+                }
+            },
+            {
+                "parameters": {
+                    "resource": "draft",
+                    "subject": "=Alerta: Envío Grabado +24h | {{ $('Loop Over Items').item.json.shipping_code }}",
+                    "message": "=Envío en estado Grabado por +24h. Realizar seguimiento.\n\nSEG: {{ $('Loop Over Items').item.json.shipping_code }}\nPED: {{ $('Loop Over Items').item.json.client_references[0] }}",
+                    "options": {}
+                },
+                "id": "55fd187e-51e0-4cfd-8c57-5280814a1c29",
+                "name": "Grab K",
+                "type": "n8n-nodes-base.gmail",
+                "typeVersion": 2.2,
+                "position": [
+                    -336,
+                    352
+                ],
+                "webhookId": "82af4905-4acd-4e26-ad0f-bce2e536da78",
+                "credentials": {
+                    "gmailOAuth2": {
+                        "id": "I8iOQCCkF5dchDft",
+                        "name": "KULTURDENDA"
+                    }
+                }
+            },
+            {
+                "parameters": {
+                    "resource": "draft",
+                    "subject": "=Alerta: Envío Grabado +24h | {{ $('Loop Over Items').item.json.shipping_code }}",
+                    "message": "={{ $json.email_body }}\n\nSEG: {{ $('Loop Over Items').item.json.shipping_code }}\nPED: {{ $('Loop Over Items').item.json.client_references[0] }}",
+                    "options": {}
+                },
+                "id": "1c0a0942-3a08-4814-b00f-dd3be02668cc",
+                "name": "Grab S",
+                "type": "n8n-nodes-base.gmail",
+                "typeVersion": 2.2,
+                "position": [
+                    -336,
+                    544
+                ],
+                "webhookId": "b332ab76-c685-41d8-b588-4ef65e95c65d",
+                "credentials": {
+                    "gmailOAuth2": {
+                        "id": "ATDngCzgo2CXlgvv",
+                        "name": "SNAPPY"
+                    }
+                }
+            },
+            {
+                "parameters": {
+                    "resource": "draft",
+                    "subject": "=Solicitud Recogida en Punto | {{ $('Loop Over Items').item.json.shipping_code }}",
+                    "message": "={{ $json.email_body }}\n\nSEG: {{ $('Loop Over Items').item.json.shipping_code }}\nPED: {{ $('Loop Over Items').item.json.client_references[0] }}",
+                    "options": {}
+                },
+                "id": "b8358b2c-1842-40fd-8507-3bbfd4ca2e0a",
+                "name": "Pto24 H",
+                "type": "n8n-nodes-base.gmail",
+                "typeVersion": 2.2,
+                "position": [
+                    -336,
+                    736
+                ],
+                "webhookId": "70319aee-df74-44b5-af86-6fec58e944da",
+                "credentials": {
+                    "gmailOAuth2": {
+                        "id": "xvnQhr5hfD4gc3Uk",
+                        "name": "HAMINOS"
+                    }
+                }
+            },
+            {
+                "parameters": {
+                    "resource": "draft",
+                    "subject": "=Solicitud Recogida en Punto | {{ $('Loop Over Items').item.json.shipping_code }}",
+                    "message": "={{ $json.email_body }}\n\nSEG: {{ $('Loop Over Items').item.json.shipping_code }}\nPED: {{ $('Loop Over Items').item.json.client_references[0] }}",
+                    "options": {}
+                },
+                "id": "c559b71c-b21c-41a8-a4b4-97966009f1b2",
+                "name": "Pto24 M",
+                "type": "n8n-nodes-base.gmail",
+                "typeVersion": 2.2,
+                "position": [
+                    -336,
+                    928
+                ],
+                "webhookId": "b815cee7-7342-43cf-8928-9779ff8779a2",
+                "credentials": {
+                    "gmailOAuth2": {
+                        "id": "QJJKjkTiSoxnKucv",
+                        "name": "MIESTERY / SERVICE CORP WORLD"
+                    }
+                }
+            },
+            {
+                "parameters": {
+                    "resource": "draft",
+                    "subject": "=Solicitud Recogida en Punto | {{ $('Loop Over Items').item.json.shipping_code }}",
+                    "message": "={{ $json.email_body }}\n\nSEG: {{ $('Loop Over Items').item.json.shipping_code }}\nPED: {{ $('Loop Over Items').item.json.client_references[0] }}",
+                    "options": {}
+                },
+                "id": "018667fa-53b2-461b-b701-932dacd62f46",
+                "name": "Pto24 K",
+                "type": "n8n-nodes-base.gmail",
+                "typeVersion": 2.2,
+                "position": [
+                    -336,
+                    1120
+                ],
+                "webhookId": "91e8b95c-bb94-4b90-a8be-a5cc580441cc",
+                "credentials": {
+                    "gmailOAuth2": {
+                        "id": "I8iOQCCkF5dchDft",
+                        "name": "KULTURDENDA"
+                    }
+                }
+            },
+            {
+                "parameters": {
+                    "resource": "draft",
+                    "subject": "=Solicitud Recogida en Punto | {{ $('Loop Over Items').item.json.shipping_code }}",
+                    "message": "={{ $json.email_body }}\n\nSEG: {{ $('Loop Over Items').item.json.shipping_code }}\nPED: {{ $('Loop Over Items').item.json.client_references[0] }}",
+                    "options": {}
+                },
+                "id": "bc0d750e-5703-41ab-87df-ea3227af8ea0",
+                "name": "Pto24 S",
+                "type": "n8n-nodes-base.gmail",
+                "typeVersion": 2.2,
+                "position": [
+                    -336,
+                    1312
+                ],
+                "webhookId": "9eb2380b-4456-4bab-9a2e-37e6f309d5ec",
+                "credentials": {
+                    "gmailOAuth2": {
+                        "id": "ATDngCzgo2CXlgvv",
+                        "name": "SNAPPY"
+                    }
+                }
+            },
+            {
+                "parameters": {
+                    "resource": "draft",
+                    "subject": "=Alerta: Estancado Punto +72h | {{ $('Loop Over Items').item.json.shipping_code }}",
+                    "message": "={{ $json.email_body }}\n\nSEG: {{ $('Loop Over Items').item.json.shipping_code }}\nPED: {{ $('Loop Over Items').item.json.client_references[0] }}",
+                    "options": {}
+                },
+                "id": "a9b270c3-1b1d-446a-9027-dfb652df3ddb",
+                "name": "Pto72 H",
+                "type": "n8n-nodes-base.gmail",
+                "typeVersion": 2.2,
+                "position": [
+                    -336,
+                    1504
+                ],
+                "webhookId": "39d32ba3-08c5-4b67-9d07-5b65b9fa384f",
+                "credentials": {
+                    "gmailOAuth2": {
+                        "id": "xvnQhr5hfD4gc3Uk",
+                        "name": "HAMINOS"
+                    }
+                }
+            },
+            {
+                "parameters": {
+                    "resource": "draft",
+                    "subject": "=Alerta: Estancado Punto +72h | {{ $('Loop Over Items').item.json.shipping_code }}",
+                    "message": "={{ $json.email_body }}\n\nSEG: {{ $('Loop Over Items').item.json.shipping_code }}\nPED: {{ $('Loop Over Items').item.json.client_references[0] }}",
+                    "options": {}
+                },
+                "id": "da9edccc-d851-45e8-a379-85e2bb596ae5",
+                "name": "Pto72 M",
+                "type": "n8n-nodes-base.gmail",
+                "typeVersion": 2.2,
+                "position": [
+                    -336,
+                    1696
+                ],
+                "webhookId": "f6efb3a8-5651-4810-b25a-014d75050311",
+                "credentials": {
+                    "gmailOAuth2": {
+                        "id": "QJJKjkTiSoxnKucv",
+                        "name": "MIESTERY / SERVICE CORP WORLD"
+                    }
+                }
+            },
+            {
+                "parameters": {
+                    "resource": "draft",
+                    "subject": "=Alerta: Estancado Punto +72h | {{ $('Loop Over Items').item.json.shipping_code }}",
+                    "message": "={{ $json.email_body }}\n\nSEG: {{ $('Loop Over Items').item.json.shipping_code }}\nPED: {{ $('Loop Over Items').item.json.client_references[0] }}",
+                    "options": {}
+                },
+                "id": "7e9e13eb-68e7-460d-bda8-1898e25fbeb1",
+                "name": "Pto72 K",
+                "type": "n8n-nodes-base.gmail",
+                "typeVersion": 2.2,
+                "position": [
+                    -336,
+                    1888
+                ],
+                "webhookId": "bf1327fe-fe8a-4bf2-8da4-6247d30777ab",
+                "credentials": {
+                    "gmailOAuth2": {
+                        "id": "I8iOQCCkF5dchDft",
+                        "name": "KULTURDENDA"
+                    }
+                }
+            },
+            {
+                "parameters": {
+                    "resource": "draft",
+                    "subject": "=Alerta: Estancado Punto +72h | {{ $('Loop Over Items').item.json.shipping_code }}",
+                    "message": "={{ $json.email_body }}\n\nSEG: {{ $('Loop Over Items').item.json.shipping_code }}\nPED: {{ $('Loop Over Items').item.json.client_references[0] }}",
+                    "options": {}
+                },
+                "id": "69c50411-f45f-4125-aaa4-0f6cbfb2beeb",
+                "name": "Pto72 S",
+                "type": "n8n-nodes-base.gmail",
+                "typeVersion": 2.2,
+                "position": [
+                    -336,
+                    2080
+                ],
+                "webhookId": "57bc56c4-926f-49a2-bf4c-ebd464196cc0",
+                "credentials": {
+                    "gmailOAuth2": {
+                        "id": "ATDngCzgo2CXlgvv",
+                        "name": "SNAPPY"
+                    }
+                }
+            },
+            {
+                "parameters": {
+                    "resource": "draft",
+                    "subject": "=Solicitud Reintento Recogida | {{ $('Loop Over Items').item.json.shipping_code }}",
+                    "message": "={{ $json.email_body }}\n\nSEG: {{ $('Loop Over Items').item.json.shipping_code }}\nPED: {{ $('Loop Over Items').item.json.client_references[0] }}",
+                    "options": {}
+                },
+                "id": "d94060f7-e0e4-4ce6-9be5-6844dc102067",
+                "name": "RecF H",
+                "type": "n8n-nodes-base.gmail",
+                "typeVersion": 2.2,
+                "position": [
+                    -336,
+                    2272
+                ],
+                "webhookId": "3ad74d79-5931-4b92-9d6a-137b416fc99e",
+                "credentials": {
+                    "gmailOAuth2": {
+                        "id": "xvnQhr5hfD4gc3Uk",
+                        "name": "HAMINOS"
+                    }
+                }
+            },
+            {
+                "parameters": {
+                    "resource": "draft",
+                    "subject": "=Solicitud Reintento Recogida | {{ $('Loop Over Items').item.json.shipping_code }}",
+                    "message": "={{ $json.email_body }}\n\nSEG: {{ $('Loop Over Items').item.json.shipping_code }}\nPED: {{ $('Loop Over Items').item.json.client_references[0] }}",
+                    "options": {}
+                },
+                "id": "96af38ff-0cec-42fb-8aad-da3a0aad0924",
+                "name": "RecF M",
+                "type": "n8n-nodes-base.gmail",
+                "typeVersion": 2.2,
+                "position": [
+                    -336,
+                    2464
+                ],
+                "webhookId": "4d77cb21-87e5-4c2b-99f7-5b06379212bf",
+                "credentials": {
+                    "gmailOAuth2": {
+                        "id": "QJJKjkTiSoxnKucv",
+                        "name": "MIESTERY / SERVICE CORP WORLD"
+                    }
+                }
+            },
+            {
+                "parameters": {
+                    "resource": "draft",
+                    "subject": "=Solicitud Reintento Recogida | {{ $('Loop Over Items').item.json.shipping_code }}",
+                    "message": "={{ $json.email_body }}\n\nSEG: {{ $('Loop Over Items').item.json.shipping_code }}\nPED: {{ $('Loop Over Items').item.json.client_references[0] }}",
+                    "options": {}
+                },
+                "id": "87501594-a803-4506-9531-7e74450104ad",
+                "name": "RecF K",
+                "type": "n8n-nodes-base.gmail",
+                "typeVersion": 2.2,
+                "position": [
+                    -336,
+                    2656
+                ],
+                "webhookId": "14aeca9a-182a-433d-b01a-a513b20e1dc2",
+                "credentials": {
+                    "gmailOAuth2": {
+                        "id": "I8iOQCCkF5dchDft",
+                        "name": "KULTURDENDA"
+                    }
+                }
+            },
+            {
+                "parameters": {
+                    "resource": "draft",
+                    "subject": "=Solicitud Reintento Recogida | {{ $('Loop Over Items').item.json.shipping_code }}",
+                    "message": "={{ $json.email_body }}\n\nSEG: {{ $('Loop Over Items').item.json.shipping_code }}\nPED: {{ $('Loop Over Items').item.json.client_references[0] }}",
+                    "options": {}
+                },
+                "id": "4efba77c-a81b-4398-8958-c596e90ff1e6",
+                "name": "RecF S",
+                "type": "n8n-nodes-base.gmail",
+                "typeVersion": 2.2,
+                "position": [
+                    -336,
+                    2848
+                ],
+                "webhookId": "0a66204b-ee5c-4293-a841-bae1f686dd1c",
+                "credentials": {
+                    "gmailOAuth2": {
+                        "id": "ATDngCzgo2CXlgvv",
+                        "name": "SNAPPY"
+                    }
+                }
+            },
+            {
+                "parameters": {
+                    "resource": "draft",
+                    "subject": "=Solicitud Agilizar Tránsito | {{ $('Loop Over Items').item.json.shipping_code }}",
+                    "message": "={{ $json.email_body }}\n\nSEG: {{ $('Loop Over Items').item.json.shipping_code }}\nPED: {{ $('Loop Over Items').item.json.client_references[0] }}",
+                    "options": {}
+                },
+                "id": "b66241ae-0899-4b1a-ae8c-3e3dc3a65681",
+                "name": "Trans H",
+                "type": "n8n-nodes-base.gmail",
+                "typeVersion": 2.2,
+                "position": [
+                    -336,
+                    3040
+                ],
+                "webhookId": "264c3d66-6b5e-4079-b392-c8b69961716b",
+                "credentials": {
+                    "gmailOAuth2": {
+                        "id": "xvnQhr5hfD4gc3Uk",
+                        "name": "HAMINOS"
+                    }
+                }
+            },
+            {
+                "parameters": {
+                    "resource": "draft",
+                    "subject": "=Solicitud Agilizar Tránsito | {{ $('Loop Over Items').item.json.shipping_code }}",
+                    "message": "={{ $json.email_body }}\n\nSEG: {{ $('Loop Over Items').item.json.shipping_code }}\nPED: {{ $('Loop Over Items').item.json.client_references[0] }}",
+                    "options": {}
+                },
+                "id": "ebaeab3c-7afb-4daf-a765-da4e5391d81e",
+                "name": "Trans M",
+                "type": "n8n-nodes-base.gmail",
+                "typeVersion": 2.2,
+                "position": [
+                    -336,
+                    3232
+                ],
+                "webhookId": "c4e53e46-dfe7-4d84-a389-0bf9dc444ce0",
+                "credentials": {
+                    "gmailOAuth2": {
+                        "id": "QJJKjkTiSoxnKucv",
+                        "name": "MIESTERY / SERVICE CORP WORLD"
+                    }
+                }
+            },
+            {
+                "parameters": {
+                    "resource": "draft",
+                    "subject": "=Solicitud Agilizar Tránsito | {{ $('Loop Over Items').item.json.shipping_code }}",
+                    "message": "={{ $json.email_body }}\n\nSEG: {{ $('Loop Over Items').item.json.shipping_code }}\nPED: {{ $('Loop Over Items').item.json.client_references[0] }}",
+                    "options": {}
+                },
+                "id": "9b57a52b-17d8-44be-a3d2-607b84c952c2",
+                "name": "Trans K",
+                "type": "n8n-nodes-base.gmail",
+                "typeVersion": 2.2,
+                "position": [
+                    -336,
+                    3424
+                ],
+                "webhookId": "34e0f7f7-d566-46a1-bb02-500d1bfe9775",
+                "credentials": {
+                    "gmailOAuth2": {
+                        "id": "I8iOQCCkF5dchDft",
+                        "name": "KULTURDENDA"
+                    }
+                }
+            },
+            {
+                "parameters": {
+                    "resource": "draft",
+                    "subject": "=Solicitud Agilizar Tránsito | {{ $('Loop Over Items').item.json.shipping_code }}",
+                    "message": "={{ $json.email_body }}\n\nSEG: {{ $('Loop Over Items').item.json.shipping_code }}\nPED: {{ $('Loop Over Items').item.json.client_references[0] }}",
+                    "options": {}
+                },
+                "id": "127b9881-e8ca-4ff8-81c1-cdd9b6212064",
+                "name": "Trans S",
+                "type": "n8n-nodes-base.gmail",
+                "typeVersion": 2.2,
+                "position": [
+                    -336,
+                    3616
+                ],
+                "webhookId": "62c44e66-6d3e-46a6-9360-975ef1702719",
+                "credentials": {
+                    "gmailOAuth2": {
+                        "id": "ATDngCzgo2CXlgvv",
+                        "name": "SNAPPY"
+                    }
+                }
+            },
+            {
+                "parameters": {
+                    "resource": "draft",
+                    "subject": "=Solicitud Agilizar Reparto | {{ $('Loop Over Items').item.json.shipping_code }}",
+                    "message": "={{ $json.email_body }}\n\nSEG: {{ $('Loop Over Items').item.json.shipping_code }}\nPED: {{ $('Loop Over Items').item.json.client_references[0] }}",
+                    "options": {}
+                },
+                "id": "8dd4359d-840b-4d4b-868e-fc7bcb2077ae",
+                "name": "Rpto H",
+                "type": "n8n-nodes-base.gmail",
+                "typeVersion": 2.2,
+                "position": [
+                    -336,
+                    3808
+                ],
+                "webhookId": "4c73ae5d-76fc-43d4-a87d-b158d77c90bd",
+                "credentials": {
+                    "gmailOAuth2": {
+                        "id": "xvnQhr5hfD4gc3Uk",
+                        "name": "HAMINOS"
+                    }
+                }
+            },
+            {
+                "parameters": {
+                    "resource": "draft",
+                    "subject": "=Solicitud Agilizar Reparto | {{ $('Loop Over Items').item.json.shipping_code }}",
+                    "message": "={{ $json.email_body }}\n\nSEG: {{ $('Loop Over Items').item.json.shipping_code }}\nPED: {{ $('Loop Over Items').item.json.client_references[0] }}",
+                    "options": {}
+                },
+                "id": "e98fee60-7fde-49dc-9fb6-784104a7e617",
+                "name": "Rpto M",
+                "type": "n8n-nodes-base.gmail",
+                "typeVersion": 2.2,
+                "position": [
+                    -336,
+                    4000
+                ],
+                "webhookId": "9d661e57-d14e-4da2-9acf-ec25acc0ed1e",
+                "credentials": {
+                    "gmailOAuth2": {
+                        "id": "QJJKjkTiSoxnKucv",
+                        "name": "MIESTERY / SERVICE CORP WORLD"
+                    }
+                }
+            },
+            {
+                "parameters": {
+                    "resource": "draft",
+                    "subject": "=Solicitud Agilizar Reparto | {{ $('Loop Over Items').item.json.shipping_code }}",
+                    "message": "={{ $json.email_body }}\n\nSEG: {{ $('Loop Over Items').item.json.shipping_code }}\nPED: {{ $('Loop Over Items').item.json.client_references[0] }}",
+                    "options": {}
+                },
+                "id": "8413c926-9a9c-4bc5-87f1-64916478196f",
+                "name": "Rpto K",
+                "type": "n8n-nodes-base.gmail",
+                "typeVersion": 2.2,
+                "position": [
+                    -336,
+                    4192
+                ],
+                "webhookId": "88e6725c-3907-44d7-bb48-8f6644bbc774",
+                "credentials": {
+                    "gmailOAuth2": {
+                        "id": "I8iOQCCkF5dchDft",
+                        "name": "KULTURDENDA"
+                    }
+                }
+            },
+            {
+                "parameters": {
+                    "resource": "draft",
+                    "subject": "=Solicitud Agilizar Reparto | {{ $('Loop Over Items').item.json.shipping_code }}",
+                    "message": "={{ $json.email_body }}\n\nSEG: {{ $('Loop Over Items').item.json.shipping_code }}\nPED: {{ $('Loop Over Items').item.json.client_references[0] }}",
+                    "options": {}
+                },
+                "id": "6811560e-5338-45aa-accc-869c27db25ae",
+                "name": "Rpto S",
+                "type": "n8n-nodes-base.gmail",
+                "typeVersion": 2.2,
+                "position": [
+                    -336,
+                    4384
+                ],
+                "webhookId": "c50fa12d-f380-428f-8a3b-d75b5c954e1c",
+                "credentials": {
+                    "gmailOAuth2": {
+                        "id": "ATDngCzgo2CXlgvv",
+                        "name": "SNAPPY"
+                    }
+                }
+            },
+            {
+                "parameters": {
+                    "resource": "draft",
+                    "subject": "=Solicitud Info Punto CTT | {{ $('Loop Over Items').item.json.shipping_code }}",
+                    "message": "={{ $json.email_body }}\n\nSEG: {{ $('Loop Over Items').item.json.shipping_code }}\nPED: {{ $('Loop Over Items').item.json.client_references[0] }}",
+                    "options": {}
+                },
+                "id": "98511a9a-8eba-4f72-aebf-17caec448a2a",
+                "name": "PtoCTT H",
+                "type": "n8n-nodes-base.gmail",
+                "typeVersion": 2.2,
+                "position": [
+                    -336,
+                    4576
+                ],
+                "webhookId": "d7ac1390-4d02-4a51-82ae-bcc0b47c5d19",
+                "credentials": {
+                    "gmailOAuth2": {
+                        "id": "xvnQhr5hfD4gc3Uk",
+                        "name": "HAMINOS"
+                    }
+                }
+            },
+            {
+                "parameters": {
+                    "resource": "draft",
+                    "subject": "=Solicitud Info Punto CTT | {{ $('Loop Over Items').item.json.shipping_code }}",
+                    "message": "={{ $json.email_body }}\n\nSEG: {{ $('Loop Over Items').item.json.shipping_code }}\nPED: {{ $('Loop Over Items').item.json.client_references[0] }}",
+                    "options": {}
+                },
+                "id": "334bc810-94e2-43b7-bcb9-01d8ac9dd0b8",
+                "name": "PtoCTT M",
+                "type": "n8n-nodes-base.gmail",
+                "typeVersion": 2.2,
+                "position": [
+                    -336,
+                    4768
+                ],
+                "webhookId": "8722b000-25e2-4e52-a365-f9f73a332163",
+                "credentials": {
+                    "gmailOAuth2": {
+                        "id": "QJJKjkTiSoxnKucv",
+                        "name": "MIESTERY / SERVICE CORP WORLD"
+                    }
+                }
+            },
+            {
+                "parameters": {
+                    "resource": "draft",
+                    "subject": "=Solicitud Info Punto CTT | {{ $('Loop Over Items').item.json.shipping_code }}",
+                    "message": "={{ $json.email_body }}\n\nSEG: {{ $('Loop Over Items').item.json.shipping_code }}\nPED: {{ $('Loop Over Items').item.json.client_references[0] }}",
+                    "options": {}
+                },
+                "id": "606c6fd8-7e1c-4d94-9749-a4c993d663dc",
+                "name": "PtoCTT K",
+                "type": "n8n-nodes-base.gmail",
+                "typeVersion": 2.2,
+                "position": [
+                    -336,
+                    4960
+                ],
+                "webhookId": "e65caa76-681c-4a97-96ab-9939a99e9638",
+                "credentials": {
+                    "gmailOAuth2": {
+                        "id": "I8iOQCCkF5dchDft",
+                        "name": "KULTURDENDA"
+                    }
+                }
+            },
+            {
+                "parameters": {
+                    "resource": "draft",
+                    "subject": "=Solicitud Info Punto CTT | {{ $('Loop Over Items').item.json.shipping_code }}",
+                    "message": "={{ $json.email_body }}\n\nSEG: {{ $('Loop Over Items').item.json.shipping_code }}\nPED: {{ $('Loop Over Items').item.json.client_references[0] }}",
+                    "options": {}
+                },
+                "id": "a7a1abbd-6cef-4a67-963a-ab649b7acff5",
+                "name": "PtoCTT S",
+                "type": "n8n-nodes-base.gmail",
+                "typeVersion": 2.2,
+                "position": [
+                    -336,
+                    5152
+                ],
+                "webhookId": "a1b6b435-e3e2-4614-9220-62a3bad81afa",
+                "credentials": {
+                    "gmailOAuth2": {
+                        "id": "ATDngCzgo2CXlgvv",
+                        "name": "SNAPPY"
+                    }
+                }
+            },
+            {
+                "parameters": {
+                    "resource": "draft",
+                    "subject": "=Alerta: Devolución | {{ $('Loop Over Items').item.json.shipping_code }}",
+                    "message": "={{ $json.email_body }}\n\nSEG: {{ $('Loop Over Items').item.json.shipping_code }}\nPED: {{ $('Loop Over Items').item.json.client_references[0] }}",
+                    "options": {}
+                },
+                "id": "8e44b5c4-0d02-4883-8314-3fc654885a14",
+                "name": "Aviso Devolución [H]",
+                "type": "n8n-nodes-base.gmail",
+                "typeVersion": 2.2,
+                "position": [
+                    -336,
+                    5344
+                ],
+                "webhookId": "8f9642ab-913f-473a-9489-3c3b4dae15c2",
+                "credentials": {
+                    "gmailOAuth2": {
+                        "id": "xvnQhr5hfD4gc3Uk",
+                        "name": "HAMINOS"
+                    }
+                }
+            },
+            {
+                "parameters": {
+                    "resource": "draft",
+                    "subject": "=Alerta: Devolución | {{ $('Loop Over Items').item.json.shipping_code }}",
+                    "message": "={{ $json.email_body }}\n\nSEG: {{ $('Loop Over Items').item.json.shipping_code }}\nPED: {{ $('Loop Over Items').item.json.client_references[0] }}",
+                    "options": {}
+                },
+                "id": "5ec16433-dd33-40eb-90d3-c619d7fd3d84",
+                "name": "Aviso Devolución [M]",
+                "type": "n8n-nodes-base.gmail",
+                "typeVersion": 2.2,
+                "position": [
+                    -336,
+                    5536
+                ],
+                "webhookId": "cdb7ecbe-135b-4044-a980-ea04f209434a",
+                "credentials": {
+                    "gmailOAuth2": {
+                        "id": "QJJKjkTiSoxnKucv",
+                        "name": "MIESTERY / SERVICE CORP WORLD"
+                    }
+                }
+            },
+            {
+                "parameters": {
+                    "resource": "draft",
+                    "subject": "=Alerta: Devolución | {{ $('Loop Over Items').item.json.shipping_code }}",
+                    "message": "={{ $json.email_body }}\n\nSEG: {{ $('Loop Over Items').item.json.shipping_code }}\nPED: {{ $('Loop Over Items').item.json.client_references[0] }}",
+                    "options": {}
+                },
+                "id": "2d9edb8a-f0f8-4486-bf44-9b7fbcafab30",
+                "name": "Aviso Devolución [K]",
+                "type": "n8n-nodes-base.gmail",
+                "typeVersion": 2.2,
+                "position": [
+                    -336,
+                    5728
+                ],
+                "webhookId": "161a491e-1c99-4a5a-966c-0cb3b32b547f",
+                "credentials": {
+                    "gmailOAuth2": {
+                        "id": "I8iOQCCkF5dchDft",
+                        "name": "KULTURDENDA"
+                    }
+                }
+            },
+            {
+                "parameters": {
+                    "resource": "draft",
+                    "subject": "=Alerta: Devolución | {{ $('Loop Over Items').item.json.shipping_code }}",
+                    "message": "={{ $json.email_body }}\n\nSEG: {{ $('Loop Over Items').item.json.shipping_code }}\nPED: {{ $('Loop Over Items').item.json.client_references[0] }}",
+                    "options": {}
+                },
+                "id": "808bb7df-7608-4214-8e0b-8157c189a1b7",
+                "name": "Aviso Devolución [S]",
+                "type": "n8n-nodes-base.gmail",
+                "typeVersion": 2.2,
+                "position": [
+                    -336,
+                    5920
+                ],
+                "webhookId": "c7acee54-039a-4ff0-ae71-432192607697",
+                "credentials": {
+                    "gmailOAuth2": {
+                        "id": "ATDngCzgo2CXlgvv",
+                        "name": "SNAPPY"
+                    }
+                }
+            },
+            {
+                "parameters": {
+                    "operation": "append",
+                    "documentId": {
+                        "__rl": true,
+                        "value": "1MzLQ4PuK5i4cYJhV2yrezJSoTwse7FsnpX2VcWl65yk",
+                        "mode": "list",
+                        "cachedResultName": "CTT Tracking Log"
+                    },
+                    "sheetName": {
+                        "__rl": true,
+                        "value": 751381048,
+                        "mode": "list",
+                        "cachedResultName": "Test IA",
+                        "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MzLQ4PuK5i4cYJhV2yrezJSoTwse7FsnpX2VcWl65yk/edit#gid=751381048"
+                    },
+                    "columns": {
+                        "mappingMode": "defineBelow",
+                        "value": {
+                            "FECHA PROCESADO": "={{ $now.toFormat('dd-MM-yyyy HH:mm:ss') }}",
+                            "NUMERO DE ENVIO": "={{ $('Loop Over Items').item.json.shipping_code }}",
+                            "NUMERO DE PEDIDO": "={{ $('Loop Over Items').item.json.client_references[0] }}",
+                            "TIENDA": "={{ $('Loop Over Items').item.json.client_center_code == '4863000001' ? 'HAMINOS' : ($('Loop Over Items').item.json.client_center_code.match(/^476850000[1-3]$/) ? 'MIESTERY' : ($('Loop Over Items').item.json.client_center_code.match(/^454160000[1-2]$/) ? 'KULTUDENDA' : 'SNAPPY')) }}",
+                            "CENTRO": "={{ $('Loop Over Items').item.json.client_center_code }}",
+                            "ESTADO": "={{ $('Loop Over Items').item.json.shipping_status_code }}",
+                            "FECHA ESTADO": "={{ $('Loop Over Items').item.json.shipping_status_datetime ? DateTime.fromISO($('Loop Over Items').item.json.shipping_status_datetime).setZone('Europe/Madrid').toFormat('dd-MM-yyyy HH:mm') : '' }}",
+                            "H EN ESTADO": "={{ $('Loop Over Items').item.json.hours_in_status }}",
+                            "EMAIL ENVIADO": "=TRUE",
+                            "TIPO EMAIL": "={{ $prevNode.name }}",
+                            "RAZON": "=Estado {{ $('Loop Over Items').item.json.shipping_status_code }} hace {{ $('Loop Over Items').item.json.hours_in_status }}h, enviamos email",
+                            "DESTINATARIO": "={{ $('Loop Over Items').item.json.client_center_code.match(/^454160000[1-2]$/) ? 'cca.z2@cttexpress.com' : 'cca.z3@cttexpress.com' }}",
+                            "CREDENCIAL": "={{ $('Loop Over Items').item.json.client_center_code == '4863000001' ? 'HAMINOS' : ($('Loop Over Items').item.json.client_center_code.match(/^476850000[1-3]$/) ? 'MIESTERY' : ($('Loop Over Items').item.json.client_center_code.match(/^454160000[1-2]$/) ? 'KULTUDENDA' : 'SNAPPY')) }}"
+                        },
+                        "matchingColumns": [],
+                        "schema": [
+                            {
+                                "id": "FECHA PROCESADO",
+                                "displayName": "FECHA PROCESADO",
+                                "required": false,
+                                "defaultMatch": false,
+                                "display": true,
+                                "type": "string",
+                                "canBeUsedToMatch": true
+                            },
+                            {
+                                "id": "NUMERO DE ENVIO",
+                                "displayName": "NUMERO DE ENVIO",
+                                "required": false,
+                                "defaultMatch": false,
+                                "display": true,
+                                "type": "string",
+                                "canBeUsedToMatch": true
+                            },
+                            {
+                                "id": "NUMERO DE PEDIDO",
+                                "displayName": "NUMERO DE PEDIDO",
+                                "required": false,
+                                "defaultMatch": false,
+                                "display": true,
+                                "type": "string",
+                                "canBeUsedToMatch": true
+                            },
+                            {
+                                "id": "TIENDA",
+                                "displayName": "TIENDA",
+                                "required": false,
+                                "defaultMatch": false,
+                                "display": true,
+                                "type": "string",
+                                "canBeUsedToMatch": true
+                            },
+                            {
+                                "id": "CENTRO",
+                                "displayName": "CENTRO",
+                                "required": false,
+                                "defaultMatch": false,
+                                "display": true,
+                                "type": "string",
+                                "canBeUsedToMatch": true
+                            },
+                            {
+                                "id": "ESTADO",
+                                "displayName": "ESTADO",
+                                "required": false,
+                                "defaultMatch": false,
+                                "display": true,
+                                "type": "string",
+                                "canBeUsedToMatch": true
+                            },
+                            {
+                                "id": "FECHA ESTADO",
+                                "displayName": "FECHA ESTADO",
+                                "required": false,
+                                "defaultMatch": false,
+                                "display": true,
+                                "type": "string",
+                                "canBeUsedToMatch": true
+                            },
+                            {
+                                "id": "H EN ESTADO",
+                                "displayName": "H EN ESTADO",
+                                "required": false,
+                                "defaultMatch": false,
+                                "display": true,
+                                "type": "string",
+                                "canBeUsedToMatch": true
+                            },
+                            {
+                                "id": "EMAIL ENVIADO",
+                                "displayName": "EMAIL ENVIADO",
+                                "required": false,
+                                "defaultMatch": false,
+                                "display": true,
+                                "type": "string",
+                                "canBeUsedToMatch": true
+                            },
+                            {
+                                "id": "TIPO EMAIL",
+                                "displayName": "TIPO EMAIL",
+                                "required": false,
+                                "defaultMatch": false,
+                                "display": true,
+                                "type": "string",
+                                "canBeUsedToMatch": true
+                            },
+                            {
+                                "id": "RAZON",
+                                "displayName": "RAZON",
+                                "required": false,
+                                "defaultMatch": false,
+                                "display": true,
+                                "type": "string",
+                                "canBeUsedToMatch": true
+                            },
+                            {
+                                "id": "DESTINATARIO",
+                                "displayName": "DESTINATARIO",
+                                "required": false,
+                                "defaultMatch": false,
+                                "display": true,
+                                "type": "string",
+                                "canBeUsedToMatch": true
+                            },
+                            {
+                                "id": "CREDENCIAL",
+                                "displayName": "CREDENCIAL",
+                                "required": false,
+                                "defaultMatch": false,
+                                "display": true,
+                                "type": "string",
+                                "canBeUsedToMatch": true
+                            }
+                        ],
+                        "attemptToConvertTypes": false,
+                        "convertFieldsToString": false
+                    },
+                    "options": {}
+                },
+                "id": "e164d031-91fb-4f3b-b2e4-8c7176e8e4fa",
+                "name": "Log Estados",
+                "type": "n8n-nodes-base.googleSheets",
+                "typeVersion": 4.7,
+                "position": [
+                    -112,
+                    2992
+                ],
+                "retryOnFail": true,
+                "maxRetries": 3,
+                "retryDelay": 5000,
+                "alwaysOutputData": true,
+                "credentials": {
+                    "googleSheetsOAuth2Api": {
+                        "id": "vUMIiZSNk60SoDGg",
+                        "name": "Google Sheets account"
+                    }
+                },
+                "onError": "continueRegularOutput"
+            },
+            {
+                "parameters": {
+                    "operation": "append",
+                    "documentId": {
+                        "__rl": true,
+                        "value": "1MzLQ4PuK5i4cYJhV2yrezJSoTwse7FsnpX2VcWl65yk",
+                        "mode": "list",
+                        "cachedResultName": "CTT Tracking Log"
+                    },
+                    "sheetName": {
+                        "__rl": true,
+                        "value": 751381048,
+                        "mode": "list",
+                        "cachedResultName": "Test IA",
+                        "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MzLQ4PuK5i4cYJhV2yrezJSoTwse7FsnpX2VcWl65yk/edit#gid=751381048"
+                    },
+                    "columns": {
+                        "mappingMode": "defineBelow",
+                        "value": {
+                            "FECHA PROCESADO": "={{ $now.toFormat('dd-MM-yyyy HH:mm:ss') }}",
+                            "NUMERO DE ENVIO": "={{ $('Loop Over Items').item.json.shipping_code }}",
+                            "NUMERO DE PEDIDO": "={{ $('Loop Over Items').item.json.client_references[0] }}",
+                            "TIENDA": "={{ $('Loop Over Items').item.json.client_center_code == '4863000001' ? 'HAMINOS' : ($('Loop Over Items').item.json.client_center_code.match(/^476850000[1-3]$/) ? 'MIESTERY' : ($('Loop Over Items').item.json.client_center_code.match(/^454160000[1-2]$/) ? 'KULTUDENDA' : 'SNAPPY')) }}",
+                            "CENTRO": "={{ $('Loop Over Items').item.json.client_center_code }}",
+                            "ESTADO": "={{ $('Loop Over Items').item.json.shipping_status_code }}",
+                            "FECHA ESTADO": "={{ $('Loop Over Items').item.json.shipping_status_datetime ? DateTime.fromISO($('Loop Over Items').item.json.shipping_status_datetime).setZone('Europe/Madrid').toFormat('dd-MM-yyyy HH:mm') : '' }}",
+                            "H EN ESTADO": "={{ $('Loop Over Items').item.json.hours_in_status }}",
+                            "EMAIL ENVIADO": "=FALSE",
+                            "TIPO EMAIL": "=N/A",
+                            "RAZON": "=Estado {{ $('Loop Over Items').item.json.shipping_status_code }} con {{ $('Loop Over Items').item.json.hours_in_status }}h (no cumple el mínimo de 24h/72h), no enviamos email",
+                            "DESTINATARIO": "={{ $('Loop Over Items').item.json.client_center_code.match(/^454160000[1-2]$/) ? 'cca.z2@cttexpress.com' : 'cca.z3@cttexpress.com' }}",
+                            "CREDENCIAL": "={{ $('Loop Over Items').item.json.client_center_code == '4863000001' ? 'HAMINOS' : ($('Loop Over Items').item.json.client_center_code.match(/^476850000[1-3]$/) ? 'MIESTERY' : ($('Loop Over Items').item.json.client_center_code.match(/^454160000[1-2]$/) ? 'KULTUDENDA' : 'SNAPPY')) }}"
+                        },
+                        "matchingColumns": [],
+                        "schema": [
+                            {
+                                "id": "FECHA PROCESADO",
+                                "displayName": "FECHA PROCESADO",
+                                "required": false,
+                                "defaultMatch": false,
+                                "display": true,
+                                "type": "string",
+                                "canBeUsedToMatch": true
+                            },
+                            {
+                                "id": "NUMERO DE ENVIO",
+                                "displayName": "NUMERO DE ENVIO",
+                                "required": false,
+                                "defaultMatch": false,
+                                "display": true,
+                                "type": "string",
+                                "canBeUsedToMatch": true
+                            },
+                            {
+                                "id": "NUMERO DE PEDIDO",
+                                "displayName": "NUMERO DE PEDIDO",
+                                "required": false,
+                                "defaultMatch": false,
+                                "display": true,
+                                "type": "string",
+                                "canBeUsedToMatch": true
+                            },
+                            {
+                                "id": "TIENDA",
+                                "displayName": "TIENDA",
+                                "required": false,
+                                "defaultMatch": false,
+                                "display": true,
+                                "type": "string",
+                                "canBeUsedToMatch": true
+                            },
+                            {
+                                "id": "CENTRO",
+                                "displayName": "CENTRO",
+                                "required": false,
+                                "defaultMatch": false,
+                                "display": true,
+                                "type": "string",
+                                "canBeUsedToMatch": true
+                            },
+                            {
+                                "id": "ESTADO",
+                                "displayName": "ESTADO",
+                                "required": false,
+                                "defaultMatch": false,
+                                "display": true,
+                                "type": "string",
+                                "canBeUsedToMatch": true
+                            },
+                            {
+                                "id": "FECHA ESTADO",
+                                "displayName": "FECHA ESTADO",
+                                "required": false,
+                                "defaultMatch": false,
+                                "display": true,
+                                "type": "string",
+                                "canBeUsedToMatch": true
+                            },
+                            {
+                                "id": "H EN ESTADO",
+                                "displayName": "H EN ESTADO",
+                                "required": false,
+                                "defaultMatch": false,
+                                "display": true,
+                                "type": "string",
+                                "canBeUsedToMatch": true
+                            },
+                            {
+                                "id": "EMAIL ENVIADO",
+                                "displayName": "EMAIL ENVIADO",
+                                "required": false,
+                                "defaultMatch": false,
+                                "display": true,
+                                "type": "string",
+                                "canBeUsedToMatch": true
+                            },
+                            {
+                                "id": "TIPO EMAIL",
+                                "displayName": "TIPO EMAIL",
+                                "required": false,
+                                "defaultMatch": false,
+                                "display": true,
+                                "type": "string",
+                                "canBeUsedToMatch": true
+                            },
+                            {
+                                "id": "RAZON",
+                                "displayName": "RAZON",
+                                "required": false,
+                                "defaultMatch": false,
+                                "display": true,
+                                "type": "string",
+                                "canBeUsedToMatch": true
+                            },
+                            {
+                                "id": "DESTINATARIO",
+                                "displayName": "DESTINATARIO",
+                                "required": false,
+                                "defaultMatch": false,
+                                "display": true,
+                                "type": "string",
+                                "canBeUsedToMatch": true
+                            },
+                            {
+                                "id": "CREDENCIAL",
+                                "displayName": "CREDENCIAL",
+                                "required": false,
+                                "defaultMatch": false,
+                                "display": true,
+                                "type": "string",
+                                "canBeUsedToMatch": true
+                            }
+                        ],
+                        "attemptToConvertTypes": false,
+                        "convertFieldsToString": false
+                    },
+                    "options": {}
+                },
+                "id": "803de047-ac28-4415-8e52-2f808cf4957b",
+                "name": "Log No Enviado",
+                "type": "n8n-nodes-base.googleSheets",
+                "typeVersion": 4.7,
+                "position": [
+                    -832,
+                    3776
+                ],
+                "retryOnFail": true,
+                "maxRetries": 3,
+                "retryDelay": 5000,
+                "credentials": {
+                    "googleSheetsOAuth2Api": {
+                        "id": "vUMIiZSNk60SoDGg",
+                        "name": "Google Sheets account"
+                    }
+                }
+            },
+            {
+                "parameters": {
+                    "modelId": {
+                        "__rl": true,
+                        "value": "models/gemini-2.5-flash",
+                        "mode": "list",
+                        "cachedResultName": "models/gemini-2.5-flash"
+                    },
+                    "messages": {
+                        "values": [
+                            {
+                                "content": "=Historial del pedido: {{ $json.status_history.toJsonString() }}\n\nHora actual: {{ $now }}"
+                            }
+                        ]
+                    },
+                    "jsonOutput": true,
+                    "builtInTools": {},
+                    "options": {
+                        "systemMessage": "### MISION\nEres un Experto en Auditoria Logistica para CTT Express. Tu tarea es analizar el historial de un envio, comprender el significado tecnico de cada codigo y decidir si se requiere una notificacion automatica siguiendo un proceso estricto.\n\n### PASO A PASO: COMO DEBES PENSAR\n1. **Analisis Cronologico**: Lee el `status_history` del mas antiguo al mas reciente. Entiende el \"viaje\" del paquete.\n2. **Identificacion de Incidencias**: Busca codigos que terminen en `_INCT` o estados criticos (como `0600` o `1600`).\n3. **Validacion de Persistencia**: Si encuentras una incidencia, verifica si los estados posteriores indican que se ha resuelto (ej: si despues de una incidencia hay un `2100 - Entregado`, la incidencia ya no importa).\n4. **Regla Anti-Spam (Agrupacion)**:\n    * Agrupa las incidencias por TIPO (Reparto, Recogida, Direccion).\n    * Si el historial ya tiene una incidencia del MISMO TIPO anteriormente, marca `is_first_incident: false` y `should_notify: false`.\n5. **Evaluacion de Tiempos**: Si el estado actual es uno de los \"Estados de Alerta\" (0000, 0030, 0900, 1000, 1500) y las `hours_in_status` superan el limite (24h/72h), prepara la notificacion.\n6. **Seleccion de Plantilla**: Elige la plantilla que coincida EXACTAMENTE con el codigo detectado.\n7. **Generacion de Justificacion**: Explica tu razonamiento usando los nombres humanos del diccionario.\n\n--- \n\n### INSTRUCCIONES DE ACCION\n* **Logica de Tiempos**:\n    * 0000 > 24h -> Notificar (Nosotros).\n    * 0030 > 24h -> Notificar (Ctt).\n    * 0900 / 1000 / 1500 estancados -> Notificar (Ctt).\n* **Logica de Incidencias**:\n    * **RECUERDA**: Solo notifica si es la PRIMERA vez que ocurre ese TIPO de incidencia en el historial.\n    * **Excepcion Critica**: Si el codigo es 1012 (Extravio), 6 (Dañado) u 8 (Robo), notifica SIEMPRE a Ctt y Nosotros, sin importar el historial.\n\n--- \n\n### CATALOGO DE PLANTILLAS\nUtiliza el texto exacto segun el codigo:\n\n#### ESTADOS\n* **0000**: \"Buen dia. Este envio se encuentra en estado “Grabado” por +24 horas habiles. Por favor realizar seguimiento.\" (Nosotros)\n* **0030**: \"Buen dia. Este envio fue depositado por nuestro cliente en el punto Ctt asignado. Por favor programar su recogida el siguiente dia habil. Gracias.\" (Ctt)\n* **0600**: \"Buen dia. Por favor programar una nueva recogida el siguiente dia habil. Gracias.\" (Ctt)\n* **0900/1000**: \"Buen dia. Este envio aun se encuentra “En transito”. Por favor sacar a reparto el siguiente dia habil. Gracias.\" (Ctt)\n* **1500**: \"Buen dia. Este envio continua “En reparto”. Por favor gestionar la entrega el siguiente dia habil. Gracias.\" (Ctt)\n* **2310/2900**: \"Buen dia. Por favor brindar la informacion y direccion completa sobre el punto/delegacion en donde se encuentra disponible el envio. Gracias.\" (Ctt)\n* **2500**: \"Buen dia. Este envio se encuentra en estado “Devolucion”. Por favor realizar seguimiento.\" (Nosotros)\n\n#### INCIDENCIAS\n* **1_INCT**: \"Buen dia. Este envio presenta incidencia por direccion incompleta/incorrecta. Por favor contactar al cliente.\" (Nosotros)\n* **1001, 1004, 1005, 1007, 101, 1034, 2, 30, 31, 32, 37, 4, P9**: \"Buen dia. Por favor programar un nuevo reparto para el siguiente dia habil. Gracias.\" (Ctt)\n* **1006, 25**: \"Buen dia. Por favor programar una nueva recogida para el siguiente dia habil. Gracias.\" (Ctt)\n* **1012, 6, 8**: \n    - Correo Ctt: \"Buen dia. Por favor abrir siniestro [Añadir detalles] e indicar el proceso para reclamar. Gracias.\"\n    - Correo Nosotros: \"Buen dia. Este envio presenta incidencia por [Extravio/Dañado/Robo] realizar seguimiento y gestiones pertinentes.\"\n* **9_INCT**: \"Buen dia. Este envio se encuentra en estado “Excedido tiempo de almacenamiento” y sera enviado a devolucion. Por favor realizar seguimiento.\" (Nosotros)\n* **21_INCT**: \"Buen dia. Este envio se encuentra en estado “Falta documentacion/ incompleta” validar cobertura y realizar seguimiento.\" (Nosotros)\n* **34_INCT**: \"Buen dia. Por favor confirmar la nueva fecha de entrega solicitada por el cliente. Gracias.\" (Ctt)\n\n--- \n\n### DICCIONARIO COMPLETO DE CODIGOS\n\n#### LAST MILE (ESTADOS)\n0000: Manifestado o Grabado | 0010: Recepcion provisional | 0020: Pendiente depositar punto | 0030: Depositado punto pendiente recoger | 0300: Recogida asignada | 0400: Recogida anulada | 0500: Envio recogido | 0600: Recogida fallida | 0700: Delegacion origen | 0900: En transito | 1000: Delegacion transito | 1100: Mal transitado | 1200: Delegacion destino | 1500: En reparto | 1600: Reparto fallido | 1700: Envio estacionado | 1800: Estacionado ubicado | 1900: Pendiente extraccion | 2100: Entregado | 2200: Entrega parcial | 2300: Depositado punto CTT | 2310: Disponible punto CTT para entrega | 2400: Nuevo reparto | 2500: Devolucion | 2600: Reexpedicion | 2700: Entregado almacen regulador | 2900: Recoger en delegacion | 3000: Envio anulado | 3900: Transito internacional\n\n#### INCIDENCIAS (_INCT)\n1: Direccion incompleta/incorrecta | 1001: Ruta incorrecta | 1002: Embalaje insuficiente | 1003: Mercancia ya recogida | 1004: Tiempo espera excesivo | 1005: Sin efectivo | 1006: Cliente no tiene mercancia | 1007: Falta capacidad ruta | 101: Sin tiempo para servicio | 1010: Destinatario no recibe tarde | 1012: Mercancia extraviada | 102: Averia vehiculo | 1020: Expedicion incompleta | 1030: Inspeccion aduanera | 1034: Problemas climatologicos | 1035: Fuerza mayor | 12: Falta contenido | 13: Pendiente reparto | 14: Excede dimensiones | 17: Retraso avion/barco | 19: Mercancia no permitida | 2: Destinatario no contesta | 21: Falta documentacion | 25: Cliente no tiene preparada mercancia | 27: DNI no coincidente | 30: Cita previa/manipulacion especial | 31: Fiesta local | 32: Cerrado vacaciones | 34: Cambio fecha por destinatario | 37: Area inaccesible | 4: Paquete rehusado | 46: No admitido punto CTT | 47: Punto CTT cerrado | 48: Punto CTT no tiene mercancia | 5: Mal transitado | 50: Incidencia gestion cambios | 6: Dañado | 8: Robo | 9: Excedido tiempo almacenaje | 97: Error estado envio | P9: Rehusado no paga\n\n#### GESTION Y ADUANAS\n71_INAT: Nueva fecha entrega web | 5_INAT: Cambio fecha distribucion | 75_INAT: Cambio direccion pacto entrega | 3901: En gestion aduanera | 3800: NOA | 3810: Sumaria activa | 3840: Cargando vehiculo | 3850: Master cerrado | 3920: Despachado - Distribucion | 3921: Despachado - Inspeccion (Rojo) | 3922: Despachado almacenaje (Naranja)\n\n--- \n\n### FORMATO DE SALIDA (JSON)\nDevolver UNICAMENTE un objeto JSON:\n{\n  \"analysis\": {\n    \"detected_incident\": \"Nombre humano segun diccionario\",\n    \"hours_in_status\": number,\n    \"is_first_incident\": boolean,\n    \"justification\": \"Paso a paso del razonamiento. IMPORTANTE: Al mencionar fechas y horas de eventos, utiliza un formato humano en español: 'Día de la semana, día de Mes a las HH:mmh' (ej: Lunes 10 de Febrero a las 12:00h).\"\n  },\n  \"decision\": {\n    \"should_notify\": boolean,\n    \"target_branch\": \"Codigo o Tag exacto\",\n    \"template_id\": \"Codigo\",\n    \"email_body\": \"Texto exacto de la plantilla\"\n  }\n}\n\n### NORMAS CRITICAS\n* **Cero Invento**: Si no hay una plantilla, should_notify: false.\n* **Precision**: Usa el Diccionario para dar nombres humanos en la justificacion.\n* **Idempotencia**: Si el historial muestra que ya se aviso de este TIPO de problema, no repitas.\n"
+                    }
+                },
+                "type": "@n8n/n8n-nodes-langchain.googleGemini",
+                "typeVersion": 1.1,
+                "position": [
+                    -1328,
+                    3328
+                ],
+                "id": "b7fb33af-05c9-4a7d-9209-dab7ec960150",
+                "name": "Message a model",
+                "credentials": {
+                    "googlePalmApi": {
+                        "id": "ML7KcA8XW03k9hdz",
+                        "name": "haminos"
+                    }
+                }
+            },
+            {
+                "parameters": {
+                    "jsCode": "// 1. Accedemos al texto que devuelve Gemini (dentro de content.parts)\nconst rawText = $input.first().json.content.parts[0].text;\n\n// 2. Limpiamos el texto eliminando los bloques de markdown\nconst cleanJsonString = rawText.replace(/```json|```/g, \"\").trim();\n\ntry {\n    // 3. Convertimos el texto a un objeto JSON real\n    const aiResult = JSON.parse(cleanJsonString);\n\n    // 4. Devolvemos la decisión y el análisis para que n8n los use\n    return {\n        should_notify: aiResult.decision.should_notify,\n        target_branch: aiResult.decision.target_branch,\n        priority: aiResult.decision.priority,\n        template_id: aiResult.decision.template_id,\n        email_body: aiResult.decision.email_body, // Añadimos el cuerpo del correo dinámico\n        ai_justification: aiResult.analysis.justification,\n        ai_incident_detected: aiResult.analysis.detected_incident\n    };\n} catch (error) {\n    return {\n        should_notify: false,\n        target_branch: \"NONE\",\n        error: \"Error al parsear el resultado de la IA\",\n        raw_text: rawText\n    };\n}"
+                },
+                "type": "n8n-nodes-base.code",
+                "typeVersion": 2,
+                "position": [
+                    -976,
+                    3344
+                ],
+                "id": "cea147e2-6b81-4b0a-a84e-c293623d5ff1",
+                "name": "Code in JavaScript"
+            },
+            {
+                "parameters": {
+                    "rules": {
+                        "values": [
+                            {
+                                "conditions": {
+                                    "options": {
+                                        "caseSensitive": true,
+                                        "leftValue": "",
+                                        "typeValidation": "strict",
+                                        "version": 3
+                                    },
+                                    "conditions": [
+                                        {
+                                            "leftValue": "={{ $json.target_branch }}",
+                                            "rightValue": "Grabado24h",
+                                            "operator": {
+                                                "type": "string",
+                                                "operation": "equals"
+                                            }
+                                        }
+                                    ],
+                                    "combinator": "and"
+                                },
+                                "renameOutput": true,
+                                "outputKey": "Grabado24h"
+                            },
+                            {
+                                "conditions": {
+                                    "options": {
+                                        "caseSensitive": true,
+                                        "leftValue": "",
+                                        "typeValidation": "strict",
+                                        "version": 3
+                                    },
+                                    "conditions": [
+                                        {
+                                            "leftValue": "={{ $json.target_branch }}",
+                                            "rightValue": "Punto24h",
+                                            "operator": {
+                                                "type": "string",
+                                                "operation": "equals"
+                                            }
+                                        }
+                                    ],
+                                    "combinator": "and"
+                                },
+                                "renameOutput": true,
+                                "outputKey": "Punto24h"
+                            },
+                            {
+                                "conditions": {
+                                    "options": {
+                                        "caseSensitive": true,
+                                        "leftValue": "",
+                                        "typeValidation": "strict",
+                                        "version": 3
+                                    },
+                                    "conditions": [
+                                        {
+                                            "leftValue": "={{ $json.target_branch }}",
+                                            "rightValue": "Punto72h",
+                                            "operator": {
+                                                "type": "string",
+                                                "operation": "equals"
+                                            }
+                                        }
+                                    ],
+                                    "combinator": "and"
+                                },
+                                "renameOutput": true,
+                                "outputKey": "Punto72h"
+                            },
+                            {
+                                "conditions": {
+                                    "options": {
+                                        "caseSensitive": true,
+                                        "leftValue": "",
+                                        "typeValidation": "strict",
+                                        "version": 3
+                                    },
+                                    "conditions": [
+                                        {
+                                            "leftValue": "={{ $json.target_branch }}",
+                                            "rightValue": "RecFallida",
+                                            "operator": {
+                                                "type": "string",
+                                                "operation": "equals"
+                                            }
+                                        }
+                                    ],
+                                    "combinator": "and"
+                                },
+                                "renameOutput": true,
+                                "outputKey": "RecFallida"
+                            },
+                            {
+                                "conditions": {
+                                    "options": {
+                                        "caseSensitive": true,
+                                        "leftValue": "",
+                                        "typeValidation": "strict",
+                                        "version": 3
+                                    },
+                                    "conditions": [
+                                        {
+                                            "leftValue": "={{ $json.target_branch }}",
+                                            "rightValue": "Transito24h",
+                                            "operator": {
+                                                "type": "string",
+                                                "operation": "equals"
+                                            }
+                                        }
+                                    ],
+                                    "combinator": "and"
+                                },
+                                "renameOutput": true,
+                                "outputKey": "Transito24h"
+                            },
+                            {
+                                "conditions": {
+                                    "options": {
+                                        "caseSensitive": true,
+                                        "leftValue": "",
+                                        "typeValidation": "strict",
+                                        "version": 3
+                                    },
+                                    "conditions": [
+                                        {
+                                            "leftValue": "={{ $json.target_branch }}",
+                                            "rightValue": "Reparto24h",
+                                            "operator": {
+                                                "type": "string",
+                                                "operation": "equals"
+                                            }
+                                        }
+                                    ],
+                                    "combinator": "and"
+                                },
+                                "renameOutput": true,
+                                "outputKey": "Reparto24h"
+                            },
+                            {
+                                "conditions": {
+                                    "options": {
+                                        "caseSensitive": true,
+                                        "leftValue": "",
+                                        "typeValidation": "strict",
+                                        "version": 3
+                                    },
+                                    "conditions": [
+                                        {
+                                            "leftValue": "={{ $json.target_branch }}",
+                                            "rightValue": "PuntoCTT",
+                                            "operator": {
+                                                "type": "string",
+                                                "operation": "equals"
+                                            }
+                                        }
+                                    ],
+                                    "combinator": "and"
+                                },
+                                "renameOutput": true,
+                                "outputKey": "PuntoCTT"
+                            },
+                            {
+                                "conditions": {
+                                    "options": {
+                                        "caseSensitive": true,
+                                        "leftValue": "",
+                                        "typeValidation": "strict",
+                                        "version": 3
+                                    },
+                                    "conditions": [
+                                        {
+                                            "leftValue": "={{ $json.target_branch }}",
+                                            "rightValue": "Devolucion",
+                                            "operator": {
+                                                "type": "string",
+                                                "operation": "equals"
+                                            }
+                                        }
+                                    ],
+                                    "combinator": "and"
+                                },
+                                "renameOutput": true,
+                                "outputKey": "Devolucion"
+                            },
+                            {
+                                "conditions": {
+                                    "options": {
+                                        "caseSensitive": true,
+                                        "leftValue": "",
+                                        "typeValidation": "strict",
+                                        "version": 3
+                                    },
+                                    "conditions": [
+                                        {
+                                            "leftValue": "={{ $json.target_branch }}",
+                                            "rightValue": "SINIESTRO",
+                                            "operator": {
+                                                "type": "string",
+                                                "operation": "equals"
+                                            }
+                                        }
+                                    ],
+                                    "combinator": "and"
+                                },
+                                "renameOutput": true,
+                                "outputKey": "SINIESTRO"
+                            },
+                            {
+                                "conditions": {
+                                    "options": {
+                                        "caseSensitive": true,
+                                        "leftValue": "",
+                                        "typeValidation": "strict",
+                                        "version": 3
+                                    },
+                                    "conditions": [
+                                        {
+                                            "leftValue": "={{ $json.target_branch }}",
+                                            "rightValue": "DIRECCION",
+                                            "operator": {
+                                                "type": "string",
+                                                "operation": "equals"
+                                            }
+                                        }
+                                    ],
+                                    "combinator": "and"
+                                },
+                                "renameOutput": true,
+                                "outputKey": "DIRECCION"
+                            }
+                        ]
+                    },
+                    "options": {
+                        "fallbackOutput": "extra"
+                    }
+                },
+                "id": "43dbe2ad-abb5-43b7-8930-1f2c66932c84",
+                "name": "Switch IA Granular",
+                "type": "n8n-nodes-base.switch",
+                "typeVersion": 3.4,
+                "position": [
+                    -800,
+                    3152
+                ]
+            },
+            {
+                "parameters": {
+                    "rules": {
+                        "values": [
+                            {
+                                "conditions": {
+                                    "options": {
+                                        "caseSensitive": true,
+                                        "leftValue": "",
+                                        "typeValidation": "strict",
+                                        "version": 3
+                                    },
+                                    "conditions": [
+                                        {
+                                            "leftValue": "={{ $('Loop Over Items').item.json.client_center_code }}",
+                                            "rightValue": "4863000001",
+                                            "operator": {
+                                                "type": "string",
+                                                "operation": "equals"
+                                            },
+                                            "id": "h"
+                                        }
+                                    ],
+                                    "combinator": "and"
+                                },
+                                "renameOutput": true,
+                                "outputKey": "H"
+                            },
+                            {
+                                "conditions": {
+                                    "options": {
+                                        "caseSensitive": true,
+                                        "leftValue": "",
+                                        "typeValidation": "strict",
+                                        "version": 3
+                                    },
+                                    "conditions": [
+                                        {
+                                            "id": "m",
+                                            "leftValue": "={{ $('Loop Over Items').item.json.client_center_code }}",
+                                            "rightValue": "^(4768500001|4768500002|4768500003)$",
+                                            "operator": {
+                                                "type": "string",
+                                                "operation": "regex"
+                                            }
+                                        }
+                                    ],
+                                    "combinator": "and"
+                                },
+                                "renameOutput": true,
+                                "outputKey": "M"
+                            },
+                            {
+                                "conditions": {
+                                    "options": {
+                                        "caseSensitive": true,
+                                        "leftValue": "",
+                                        "typeValidation": "strict",
+                                        "version": 3
+                                    },
+                                    "conditions": [
+                                        {
+                                            "id": "k",
+                                            "leftValue": "={{ $('Loop Over Items').item.json.client_center_code }}",
+                                            "rightValue": "^(4541600001|4541600002)$",
+                                            "operator": {
+                                                "type": "string",
+                                                "operation": "regex"
+                                            }
+                                        }
+                                    ],
+                                    "combinator": "and"
+                                },
+                                "renameOutput": true,
+                                "outputKey": "K"
+                            },
+                            {
+                                "conditions": {
+                                    "options": {
+                                        "caseSensitive": true,
+                                        "leftValue": "",
+                                        "typeValidation": "strict",
+                                        "version": 3
+                                    },
+                                    "conditions": [
+                                        {
+                                            "id": "s",
+                                            "leftValue": "={{ $('Loop Over Items').item.json.client_center_code }}",
+                                            "rightValue": "^(4735200001|4735200002|4735200003|4735200004)$",
+                                            "operator": {
+                                                "type": "string",
+                                                "operation": "regex"
+                                            }
+                                        }
+                                    ],
+                                    "combinator": "and"
+                                },
+                                "renameOutput": true,
+                                "outputKey": "S"
+                            }
+                        ]
+                    },
+                    "options": {}
+                },
+                "type": "n8n-nodes-base.switch",
+                "typeVersion": 3.4,
+                "position": [
+                    -560,
+                    6368
+                ],
+                "id": "7c8e9b0a-1a2b-3c4d-5e6f-7a8b9c0d1e2f",
+                "name": "SW Siniestro"
+            },
+            {
+                "parameters": {
+                    "rules": {
+                        "values": [
+                            {
+                                "conditions": {
+                                    "options": {
+                                        "caseSensitive": true,
+                                        "leftValue": "",
+                                        "typeValidation": "strict",
+                                        "version": 3
+                                    },
+                                    "conditions": [
+                                        {
+                                            "leftValue": "={{ $('Loop Over Items').item.json.client_center_code }}",
+                                            "rightValue": "4863000001",
+                                            "operator": {
+                                                "type": "string",
+                                                "operation": "equals"
+                                            },
+                                            "id": "h"
+                                        }
+                                    ],
+                                    "combinator": "and"
+                                },
+                                "renameOutput": true,
+                                "outputKey": "H"
+                            },
+                            {
+                                "conditions": {
+                                    "options": {
+                                        "caseSensitive": true,
+                                        "leftValue": "",
+                                        "typeValidation": "strict",
+                                        "version": 3
+                                    },
+                                    "conditions": [
+                                        {
+                                            "id": "m",
+                                            "leftValue": "={{ $('Loop Over Items').item.json.client_center_code }}",
+                                            "rightValue": "^(4768500001|4768500002|4768500003)$",
+                                            "operator": {
+                                                "type": "string",
+                                                "operation": "regex"
+                                            }
+                                        }
+                                    ],
+                                    "combinator": "and"
+                                },
+                                "renameOutput": true,
+                                "outputKey": "M"
+                            },
+                            {
+                                "conditions": {
+                                    "options": {
+                                        "caseSensitive": true,
+                                        "leftValue": "",
+                                        "typeValidation": "strict",
+                                        "version": 3
+                                    },
+                                    "conditions": [
+                                        {
+                                            "id": "k",
+                                            "leftValue": "={{ $('Loop Over Items').item.json.client_center_code }}",
+                                            "rightValue": "^(4541600001|4541600002)$",
+                                            "operator": {
+                                                "type": "string",
+                                                "operation": "regex"
+                                            }
+                                        }
+                                    ],
+                                    "combinator": "and"
+                                },
+                                "renameOutput": true,
+                                "outputKey": "K"
+                            },
+                            {
+                                "conditions": {
+                                    "options": {
+                                        "caseSensitive": true,
+                                        "leftValue": "",
+                                        "typeValidation": "strict",
+                                        "version": 3
+                                    },
+                                    "conditions": [
+                                        {
+                                            "id": "s",
+                                            "leftValue": "={{ $('Loop Over Items').item.json.client_center_code }}",
+                                            "rightValue": "^(4735200001|4735200002|4735200003|4735200004)$",
+                                            "operator": {
+                                                "type": "string",
+                                                "operation": "regex"
+                                            }
+                                        }
+                                    ],
+                                    "combinator": "and"
+                                },
+                                "renameOutput": true,
+                                "outputKey": "S"
+                            }
+                        ]
+                    },
+                    "options": {}
+                },
+                "type": "n8n-nodes-base.switch",
+                "typeVersion": 3.4,
+                "position": [
+                    -560,
+                    7136
+                ],
+                "id": "8d9e0f1a-2b3c-4d5e-6f7a-8b9c0d1e2f3a",
+                "name": "SW Direccion"
+            },
+            {
+                "parameters": {
+                    "resource": "draft",
+                    "subject": "=URGENTE: Incidencia Siniestro | {{ $('Loop Over Items').item.json.shipping_code }}",
+                    "message": "={{ $json.email_body }}\n\nSEG: {{ $('Loop Over Items').item.json.shipping_code }}\nPED: {{ $('Loop Over Items').item.json.client_references[0] }}",
+                    "options": {}
+                },
+                "id": "a1b2c3d4-e5f6-a7b8-c9d0-e1f2a3b4c5d6",
+                "name": "Siniestro H",
+                "type": "n8n-nodes-base.gmail",
+                "typeVersion": 2.2,
+                "position": [
+                    -336,
+                    6112
+                ],
+                "credentials": {
+                    "gmailOAuth2": {
+                        "id": "xvnQhr5hfD4gc3Uk",
+                        "name": "HAMINOS"
+                    }
+                }
+            },
+            {
+                "parameters": {
+                    "resource": "draft",
+                    "subject": "=URGENTE: Incidencia Siniestro | {{ $('Loop Over Items').item.json.shipping_code }}",
+                    "message": "={{ $json.email_body }}\n\nSEG: {{ $('Loop Over Items').item.json.shipping_code }}\nPED: {{ $('Loop Over Items').item.json.client_references[0] }}",
+                    "options": {}
+                },
+                "id": "b2c3d4e5-f6a7-b8c9-d0e1-f2a3b4c5d6e7",
+                "name": "Siniestro M",
+                "type": "n8n-nodes-base.gmail",
+                "typeVersion": 2.2,
+                "position": [
+                    -336,
+                    6304
+                ],
+                "credentials": {
+                    "gmailOAuth2": {
+                        "id": "QJJKjkTiSoxnKucv",
+                        "name": "MIESTERY / SERVICE CORP WORLD"
+                    }
+                }
+            },
+            {
+                "parameters": {
+                    "resource": "draft",
+                    "subject": "=URGENTE: Incidencia Siniestro | {{ $('Loop Over Items').item.json.shipping_code }}",
+                    "message": "={{ $json.email_body }}\n\nSEG: {{ $('Loop Over Items').item.json.shipping_code }}\nPED: {{ $('Loop Over Items').item.json.client_references[0] }}",
+                    "options": {}
+                },
+                "id": "c3d4e5f6-a7b8-c9d0-e1f2-a3b4c5d6e7f8",
+                "name": "Siniestro K",
+                "type": "n8n-nodes-base.gmail",
+                "typeVersion": 2.2,
+                "position": [
+                    -336,
+                    6496
+                ],
+                "credentials": {
+                    "gmailOAuth2": {
+                        "id": "I8iOQCCkF5dchDft",
+                        "name": "KULTURDENDA"
+                    }
+                }
+            },
+            {
+                "parameters": {
+                    "resource": "draft",
+                    "subject": "=URGENTE: Incidencia Siniestro | {{ $('Loop Over Items').item.json.shipping_code }}",
+                    "message": "={{ $json.email_body }}\n\nSEG: {{ $('Loop Over Items').item.json.shipping_code }}\nPED: {{ $('Loop Over Items').item.json.client_references[0] }}",
+                    "options": {}
+                },
+                "id": "d4e5f6a7-b8c9-d0e1-f2a3-b4c5d6e7f8a9",
+                "name": "Siniestro S",
+                "type": "n8n-nodes-base.gmail",
+                "typeVersion": 2.2,
+                "position": [
+                    -336,
+                    6688
+                ],
+                "credentials": {
+                    "gmailOAuth2": {
+                        "id": "ATDngCzgo2CXlgvv",
+                        "name": "SNAPPY"
+                    }
+                }
+            },
+            {
+                "parameters": {
+                    "resource": "draft",
+                    "subject": "=Acción requerida: Error en Dirección | {{ $('Loop Over Items').item.json.shipping_code }}",
+                    "message": "={{ $json.email_body }}\n\nSEG: {{ $('Loop Over Items').item.json.shipping_code }}\nPED: {{ $('Loop Over Items').item.json.client_references[0] }}",
+                    "options": {}
+                },
+                "id": "e5f6a7b8-c9d0-e1f2-a3b4-c5d6e7f8a9b0",
+                "name": "Direccion H",
+                "type": "n8n-nodes-base.gmail",
+                "typeVersion": 2.2,
+                "position": [
+                    -336,
+                    6880
+                ],
+                "credentials": {
+                    "gmailOAuth2": {
+                        "id": "xvnQhr5hfD4gc3Uk",
+                        "name": "HAMINOS"
+                    }
+                }
+            },
+            {
+                "parameters": {
+                    "resource": "draft",
+                    "subject": "=Acción requerida: Error en Dirección | {{ $('Loop Over Items').item.json.shipping_code }}",
+                    "message": "={{ $json.email_body }}\n\nSEG: {{ $('Loop Over Items').item.json.shipping_code }}\nPED: {{ $('Loop Over Items').item.json.client_references[0] }}",
+                    "options": {}
+                },
+                "id": "f6a7b8c9-d0e1-f2a3-b4c5-d6e7f8a9b0c1",
+                "name": "Direccion M",
+                "type": "n8n-nodes-base.gmail",
+                "typeVersion": 2.2,
+                "position": [
+                    -336,
+                    7072
+                ],
+                "credentials": {
+                    "gmailOAuth2": {
+                        "id": "QJJKjkTiSoxnKucv",
+                        "name": "MIESTERY / SERVICE CORP WORLD"
+                    }
+                }
+            },
+            {
+                "parameters": {
+                    "resource": "draft",
+                    "subject": "=Acción requerida: Error en Dirección | {{ $('Loop Over Items').item.json.shipping_code }}",
+                    "message": "={{ $json.email_body }}\n\nSEG: {{ $('Loop Over Items').item.json.shipping_code }}\nPED: {{ $('Loop Over Items').item.json.client_references[0] }}",
+                    "options": {}
+                },
+                "id": "a7b8c9d0-e1f2-a3b4-c5d6-e7f8a9b0c1d2",
+                "name": "Direccion K",
+                "type": "n8n-nodes-base.gmail",
+                "typeVersion": 2.2,
+                "position": [
+                    -336,
+                    7264
+                ],
+                "credentials": {
+                    "gmailOAuth2": {
+                        "id": "I8iOQCCkF5dchDft",
+                        "name": "KULTURDENDA"
+                    }
+                }
+            },
+            {
+                "parameters": {
+                    "resource": "draft",
+                    "subject": "=Acción requerida: Error en Dirección | {{ $('Loop Over Items').item.json.shipping_code }}",
+                    "message": "={{ $json.ai_justification }}",
+                    "options": {}
+                },
+                "id": "b8c9d0e1-f2a3-b4c5-d6e7-f8a9b0c1d2e3",
+                "name": "Direccion S",
+                "type": "n8n-nodes-base.gmail",
+                "typeVersion": 2.2,
+                "position": [
+                    -336,
+                    7456
+                ],
+                "credentials": {
+                    "gmailOAuth2": {
+                        "id": "ATDngCzgo2CXlgvv",
+                        "name": "SNAPPY"
+                    }
+                }
+            }
+        ],
+        "connections": {
+            "When Executed by Another Workflow": {
+                "main": [
+                    [
+                        {
+                            "node": "Loop Over Items",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ]
+                ]
+            },
+            "Loop Over Items": {
+                "main": [
+                    [],
+                    [
+                        {
+                            "node": "Message a model",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ]
+                ]
+            },
+            "SW Grabado": {
+                "main": [
+                    [
+                        {
+                            "node": "Grab H",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ],
+                    [
+                        {
+                            "node": "Grab M",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ],
+                    [
+                        {
+                            "node": "Grab K",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ],
+                    [
+                        {
+                            "node": "Grab S",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ]
+                ]
+            },
+            "SW Punto24": {
+                "main": [
+                    [
+                        {
+                            "node": "Pto24 H",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ],
+                    [
+                        {
+                            "node": "Pto24 M",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ],
+                    [
+                        {
+                            "node": "Pto24 K",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ],
+                    [
+                        {
+                            "node": "Pto24 S",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ]
+                ]
+            },
+            "SW Punto72": {
+                "main": [
+                    [
+                        {
+                            "node": "Pto72 H",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ],
+                    [
+                        {
+                            "node": "Pto72 M",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ],
+                    [
+                        {
+                            "node": "Pto72 K",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ],
+                    [
+                        {
+                            "node": "Pto72 S",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ]
+                ]
+            },
+            "SW RecFallida": {
+                "main": [
+                    [
+                        {
+                            "node": "RecF H",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ],
+                    [
+                        {
+                            "node": "RecF M",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ],
+                    [
+                        {
+                            "node": "RecF K",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ],
+                    [
+                        {
+                            "node": "RecF S",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ]
+                ]
+            },
+            "SW Transito": {
+                "main": [
+                    [
+                        {
+                            "node": "Trans H",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ],
+                    [
+                        {
+                            "node": "Trans M",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ],
+                    [
+                        {
+                            "node": "Trans K",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ],
+                    [
+                        {
+                            "node": "Trans S",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ]
+                ]
+            },
+            "SW Reparto": {
+                "main": [
+                    [
+                        {
+                            "node": "Rpto H",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ],
+                    [
+                        {
+                            "node": "Rpto M",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ],
+                    [
+                        {
+                            "node": "Rpto K",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ],
+                    [
+                        {
+                            "node": "Rpto S",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ]
+                ]
+            },
+            "SW PuntoCTT": {
+                "main": [
+                    [
+                        {
+                            "node": "PtoCTT H",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ],
+                    [
+                        {
+                            "node": "PtoCTT M",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ],
+                    [
+                        {
+                            "node": "PtoCTT K",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ],
+                    [
+                        {
+                            "node": "PtoCTT S",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ]
+                ]
+            },
+            "SW Devolucion": {
+                "main": [
+                    [
+                        {
+                            "node": "Aviso Devolución [H]",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ],
+                    [
+                        {
+                            "node": "Aviso Devolución [M]",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ],
+                    [
+                        {
+                            "node": "Aviso Devolución [K]",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ],
+                    [
+                        {
+                            "node": "Aviso Devolución [S]",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ]
+                ]
+            },
+            "Grab H": {
+                "main": [
+                    [
+                        {
+                            "node": "Log Estados",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ]
+                ]
+            },
+            "Grab M": {
+                "main": [
+                    [
+                        {
+                            "node": "Log Estados",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ]
+                ]
+            },
+            "Grab K": {
+                "main": [
+                    [
+                        {
+                            "node": "Log Estados",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ]
+                ]
+            },
+            "Grab S": {
+                "main": [
+                    [
+                        {
+                            "node": "Log Estados",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ]
+                ]
+            },
+            "Pto24 H": {
+                "main": [
+                    [
+                        {
+                            "node": "Log Estados",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ]
+                ]
+            },
+            "Pto24 M": {
+                "main": [
+                    [
+                        {
+                            "node": "Log Estados",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ]
+                ]
+            },
+            "Pto24 K": {
+                "main": [
+                    [
+                        {
+                            "node": "Log Estados",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ]
+                ]
+            },
+            "Pto24 S": {
+                "main": [
+                    [
+                        {
+                            "node": "Log Estados",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ]
+                ]
+            },
+            "Pto72 H": {
+                "main": [
+                    [
+                        {
+                            "node": "Log Estados",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ]
+                ]
+            },
+            "Pto72 M": {
+                "main": [
+                    [
+                        {
+                            "node": "Log Estados",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ]
+                ]
+            },
+            "Pto72 K": {
+                "main": [
+                    [
+                        {
+                            "node": "Log Estados",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ]
+                ]
+            },
+            "Pto72 S": {
+                "main": [
+                    [
+                        {
+                            "node": "Log Estados",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ]
+                ]
+            },
+            "RecF H": {
+                "main": [
+                    [
+                        {
+                            "node": "Log Estados",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ]
+                ]
+            },
+            "RecF M": {
+                "main": [
+                    [
+                        {
+                            "node": "Log Estados",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ]
+                ]
+            },
+            "RecF K": {
+                "main": [
+                    [
+                        {
+                            "node": "Log Estados",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ]
+                ]
+            },
+            "RecF S": {
+                "main": [
+                    [
+                        {
+                            "node": "Log Estados",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ]
+                ]
+            },
+            "Trans H": {
+                "main": [
+                    [
+                        {
+                            "node": "Log Estados",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ]
+                ]
+            },
+            "Trans M": {
+                "main": [
+                    [
+                        {
+                            "node": "Log Estados",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ]
+                ]
+            },
+            "Trans K": {
+                "main": [
+                    [
+                        {
+                            "node": "Log Estados",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ]
+                ]
+            },
+            "Trans S": {
+                "main": [
+                    [
+                        {
+                            "node": "Log Estados",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ]
+                ]
+            },
+            "Rpto H": {
+                "main": [
+                    [
+                        {
+                            "node": "Log Estados",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ]
+                ]
+            },
+            "Rpto M": {
+                "main": [
+                    [
+                        {
+                            "node": "Log Estados",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ]
+                ]
+            },
+            "Rpto K": {
+                "main": [
+                    [
+                        {
+                            "node": "Log Estados",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ]
+                ]
+            },
+            "Rpto S": {
+                "main": [
+                    [
+                        {
+                            "node": "Log Estados",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ]
+                ]
+            },
+            "PtoCTT H": {
+                "main": [
+                    [
+                        {
+                            "node": "Log Estados",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ]
+                ]
+            },
+            "PtoCTT M": {
+                "main": [
+                    [
+                        {
+                            "node": "Log Estados",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ]
+                ]
+            },
+            "PtoCTT K": {
+                "main": [
+                    [
+                        {
+                            "node": "Log Estados",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ]
+                ]
+            },
+            "PtoCTT S": {
+                "main": [
+                    [
+                        {
+                            "node": "Log Estados",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ]
+                ]
+            },
+            "Aviso Devolución [H]": {
+                "main": [
+                    [
+                        {
+                            "node": "Log Estados",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ]
+                ]
+            },
+            "Aviso Devolución [M]": {
+                "main": [
+                    [
+                        {
+                            "node": "Log Estados",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ]
+                ]
+            },
+            "Aviso Devolución [K]": {
+                "main": [
+                    [
+                        {
+                            "node": "Log Estados",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ]
+                ]
+            },
+            "Aviso Devolución [S]": {
+                "main": [
+                    [
+                        {
+                            "node": "Log Estados",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ]
+                ]
+            },
+            "Log Estados": {
+                "main": [
+                    [
+                        {
+                            "node": "Loop Over Items",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ]
+                ]
+            },
+            "Log No Enviado": {
+                "main": [
+                    [
+                        {
+                            "node": "Loop Over Items",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ]
+                ]
+            },
+            "Message a model": {
+                "main": [
+                    [
+                        {
+                            "node": "Code in JavaScript",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ]
+                ]
+            },
+            "Code in JavaScript": {
+                "main": [
+                    [
+                        {
+                            "node": "Switch IA Granular",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ]
+                ]
+            },
+            "Switch IA Granular": {
+                "main": [
+                    [
+                        {
+                            "node": "SW Grabado",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ],
+                    [
+                        {
+                            "node": "SW Punto24",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ],
+                    [
+                        {
+                            "node": "SW Punto72",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ],
+                    [
+                        {
+                            "node": "SW RecFallida",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ],
+                    [
+                        {
+                            "node": "SW Transito",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ],
+                    [
+                        {
+                            "node": "SW Reparto",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ],
+                    [
+                        {
+                            "node": "SW PuntoCTT",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ],
+                    [
+                        {
+                            "node": "SW Devolucion",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ],
+                    [
+                        {
+                            "node": "SW Siniestro",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ],
+                    [
+                        {
+                            "node": "SW Direccion",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ],
+                    [
+                        {
+                            "node": "Log No Enviado",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ]
+                ]
+            },
+            "SW Siniestro": {
+                "main": [
+                    [
+                        {
+                            "node": "Siniestro H",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ],
+                    [
+                        {
+                            "node": "Siniestro M",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ],
+                    [
+                        {
+                            "node": "Siniestro K",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ],
+                    [
+                        {
+                            "node": "Siniestro S",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ]
+                ]
+            },
+            "SW Direccion": {
+                "main": [
+                    [
+                        {
+                            "node": "Direccion H",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ],
+                    [
+                        {
+                            "node": "Direccion M",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ],
+                    [
+                        {
+                            "node": "Direccion K",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ],
+                    [
+                        {
+                            "node": "Direccion S",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ]
+                ]
+            },
+            "Siniestro H": {
+                "main": [
+                    [
+                        {
+                            "node": "Log Estados",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ]
+                ]
+            },
+            "Siniestro M": {
+                "main": [
+                    [
+                        {
+                            "node": "Log Estados",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ]
+                ]
+            },
+            "Siniestro K": {
+                "main": [
+                    [
+                        {
+                            "node": "Log Estados",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ]
+                ]
+            },
+            "Siniestro S": {
+                "main": [
+                    [
+                        {
+                            "node": "Log Estados",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ]
+                ]
+            },
+            "Direccion H": {
+                "main": [
+                    [
+                        {
+                            "node": "Log Estados",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ]
+                ]
+            },
+            "Direccion M": {
+                "main": [
+                    [
+                        {
+                            "node": "Log Estados",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ]
+                ]
+            },
+            "Direccion K": {
+                "main": [
+                    [
+                        {
+                            "node": "Log Estados",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ]
+                ]
+            },
+            "Direccion S": {
+                "main": [
+                    [
+                        {
+                            "node": "Log Estados",
+                            "type": "main",
+                            "index": 0
+                        }
+                    ]
+                ]
+            }
+        },
+        "pinData": {
+            "When Executed by Another Workflow": [
+                {
+                    "committed_delivery_datetime": "2026-02-09T23:30:00.000000001",
+                    "additionals": [
+                        {
+                            "additional_code": "REE",
+                            "additional_flag": true,
+                            "additional_text": null,
+                            "additional_value": 29.9
+                        }
+                    ],
+                    "delivery": {
+                        "comments": null,
+                        "contact_name": "Antonio Jesus Moreno Fernandez",
+                        "referral_name": null,
+                        "delivery_longitude_gps": -2.9545,
+                        "delivery_latitude_gps": 37.2945
+                    },
+                    "items": [
+                        {
+                            "item_code": "0080530080539700918078001",
+                            "item_comments": "x1",
+                            "item_external_code": null,
+                            "item_height_declared": 5,
+                            "item_length_declared": 5,
+                            "item_other_code": null,
+                            "item_synonym_code": null,
+                            "item_weight_declared": 1,
+                            "item_width_declared": 5
+                        }
+                    ],
+                    "pickup": null,
+                    "sender_postal_code": "08859",
+                    "shipping_code": "0080530080539700918078",
+                    "shipping_date": "2026-02-06",
+                    "shipping_status_code": "1800",
+                    "shipping_status_datetime": "2026-02-10T17:56:28.917000Z",
+                    "shipping_sub_code": "9700918078",
+                    "shipping_weight_declared": 1,
+                    "best_shipping_type_code": "C24",
+                    "client_bar_code": null,
+                    "client_center_code": "4768500003",
+                    "client_code": "47685",
+                    "ctt_prime_shipping_code": null,
+                    "custom_destin_address": null,
+                    "custom_destin_address_2": null,
+                    "custom_destin_country_code": null,
+                    "custom_destin_name": null,
+                    "custom_destin_postal_code": null,
+                    "custom_origin_address": null,
+                    "custom_origin_address_2": null,
+                    "custom_origin_country_code": null,
+                    "custom_origin_name": null,
+                    "custom_origin_postal_code": null,
+                    "declared_shipping_type_code": "C24",
+                    "destin_address": "calle horno viejo n8",
+                    "destin_country_code": "ES",
+                    "destin_postal_code": "18511",
+                    "destin_town_name": "VALLE DEL ZALABI",
+                    "incident_type_code": null,
+                    "incident_type_desc": null,
+                    "item_count": 1,
+                    "manifest_datetime": "2026-02-06T03:29:02.581000Z",
+                    "origin_address": "Polígono",
+                    "origin_country_code": "ES",
+                    "origin_postal_code": "08859",
+                    "origin_town_name": "BEGUES",
+                    "previous_shipping_code": null,
+                    "provider_code": "CTTEXPRESS",
+                    "recipient_address": "calle horno viejo n8",
+                    "recipient_address_2": "Valle Del Zalabi",
+                    "recipient_country_code": "ES",
+                    "recipient_email_notify_address": "piedadfernandezcontreras32@gmail.com",
+                    "recipient_name": "Antonio Jesus Moreno Fernandez",
+                    "recipient_national_id_number": null,
+                    "recipient_postal_code": "18511",
+                    "sender_address": "Polígono",
+                    "sender_address_2": "Begues",
+                    "sender_country_code": "ES",
+                    "sender_email_notify_address": "info@luxoraes.com",
+                    "sender_name": "Mistery",
+                    "client_references": [
+                        "AM1322ZD"
+                    ],
+                    "recipient_phones": [
+                        "+34666626127"
+                    ],
+                    "sender_phones": [
+                        "646659372"
+                    ],
+                    "related_services": null,
+                    "status_history": [
+                        {
+                            "code": "0000",
+                            "description": "Manifestado",
+                            "type": "STATUS",
+                            "source": "ITEM_STATUS_V2",
+                            "event_date": "2026-02-06T03:29:02.581+00:00",
+                            "detail": {
+                                "event_longitude_gps": "null",
+                                "event_courier_code": "null",
+                                "item_event_datetime": "2026-02-06T03:29:02.581Z",
+                                "signee_id": "null",
+                                "event_latitude_gps": "null",
+                                "signee_name": "null"
+                            }
+                        },
+                        {
+                            "code": "0900",
+                            "description": "En Tránsito",
+                            "type": "STATUS",
+                            "source": "ITEM_STATUS_V2",
+                            "event_date": "2026-02-06T15:52:25.967+00:00",
+                            "detail": {
+                                "event_longitude_gps": "null",
+                                "External_event_text": "null",
+                                "event_courier_code": "null",
+                                "item_event_datetime": "2026-02-06T15:52:25.967Z",
+                                "signee_id": "null",
+                                "item_event_text": "null",
+                                "event_latitude_gps": "null",
+                                "signee_name": "null"
+                            }
+                        },
+                        {
+                            "code": "1000",
+                            "description": "Delegación de tránsito",
+                            "type": "STATUS",
+                            "source": "ITEM_STATUS_V2",
+                            "event_date": "2026-02-08T07:19:10.530+00:00",
+                            "detail": {
+                                "event_longitude_gps": "null",
+                                "event_courier_code": "null",
+                                "item_event_datetime": "2026-02-08T07:19:10.530Z",
+                                "signee_id": "null",
+                                "event_latitude_gps": "null",
+                                "signee_name": "null"
+                            }
+                        },
+                        {
+                            "code": "1200",
+                            "description": "Delegación destino",
+                            "type": "STATUS",
+                            "source": "ITEM_STATUS_V2",
+                            "event_date": "2026-02-09T04:11:05.480+00:00",
+                            "detail": {
+                                "event_longitude_gps": "null",
+                                "External_event_text": "null",
+                                "event_courier_code": "null",
+                                "item_event_datetime": "2026-02-09T04:11:05.480Z",
+                                "signee_id": "null",
+                                "item_event_text": "null",
+                                "event_latitude_gps": "null",
+                                "signee_name": "null"
+                            }
+                        },
+                        {
+                            "code": "1500",
+                            "description": "En reparto",
+                            "type": "STATUS",
+                            "source": "ITEM_STATUS_V2",
+                            "event_date": "2026-02-09T06:38:32.941+00:00",
+                            "detail": {
+                                "event_longitude_gps": "-3.7258972",
+                                "External_event_text": "180P0048",
+                                "event_courier_code": "180P0048",
+                                "item_event_datetime": "2026-02-09T06:38:32.941Z",
+                                "signee_id": "null",
+                                "item_event_text": "180P0048",
+                                "event_latitude_gps": "37.1908279",
+                                "signee_name": "null"
+                            }
+                        },
+                        {
+                            "code": "1600",
+                            "description": "Reparto fallido",
+                            "type": "STATUS",
+                            "source": "ITEM_STATUS_V2",
+                            "event_date": "2026-02-09T09:29:25.579+00:00",
+                            "detail": {
+                                "event_longitude_gps": "-3.0972683",
+                                "External_event_text": "180P0048",
+                                "event_courier_code": "180P0048",
+                                "item_event_datetime": "2026-02-09T09:29:25.579Z",
+                                "signee_id": "null",
+                                "item_event_text": "180P0048",
+                                "incident_type_name": "DESTINATARIO NO CONTESTA",
+                                "incident_type_code": "2_INCT",
+                                "incident_type_desc": "El destinatario no está accesible en la dirección de entrega",
+                                "incident_type_desc_ext_code": "El destinatario no está accesible en la dirección de entrega",
+                                "event_latitude_gps": "37.2540618",
+                                "signee_name": "null"
+                            }
+                        },
+                        {
+                            "code": "1500",
+                            "description": "En reparto",
+                            "type": "STATUS",
+                            "source": "ITEM_STATUS_V2",
+                            "event_date": "2026-02-10T06:51:37.085+00:00",
+                            "detail": {
+                                "event_longitude_gps": "-3.7278711",
+                                "External_event_text": "180P0048",
+                                "event_courier_code": "180P0048",
+                                "item_event_datetime": "2026-02-10T06:51:37.085Z",
+                                "signee_id": "null",
+                                "item_event_text": "180P0048",
+                                "event_latitude_gps": "37.1926318",
+                                "signee_name": "null"
+                            }
+                        },
+                        {
+                            "code": "1600",
+                            "description": "Reparto fallido",
+                            "type": "STATUS",
+                            "source": "ITEM_STATUS_V2",
+                            "event_date": "2026-02-10T09:07:17.310+00:00",
+                            "detail": {
+                                "event_longitude_gps": "-3.0983612",
+                                "External_event_text": "180P0048",
+                                "event_courier_code": "180P0048",
+                                "item_event_datetime": "2026-02-10T09:07:17.310Z",
+                                "signee_id": "null",
+                                "item_event_text": "180P0048",
+                                "incident_type_name": "PAQUETE REHUSADO",
+                                "incident_type_code": "4_INCT",
+                                "incident_type_desc": " ",
+                                "incident_type_desc_ext_code": " ",
+                                "event_latitude_gps": "37.2567755",
+                                "signee_name": "null"
+                            }
+                        },
+                        {
+                            "code": "1700",
+                            "description": "Envío estacionado",
+                            "type": "STATUS",
+                            "source": "ITEM_STATUS_V2",
+                            "event_date": "2026-02-10T17:46:23.062+00:00",
+                            "detail": {
+                                "event_longitude_gps": "null",
+                                "event_courier_code": "null",
+                                "item_event_datetime": "2026-02-10T17:46:23.062Z",
+                                "signee_id": "null",
+                                "event_latitude_gps": "null",
+                                "signee_name": "null"
+                            }
+                        },
+                        {
+                            "code": "1800",
+                            "description": "Estacionado ubicado",
+                            "type": "STATUS",
+                            "source": "ITEM_STATUS_V2",
+                            "event_date": "2026-02-10T17:56:28.917+00:00",
+                            "detail": {
+                                "event_longitude_gps": "null",
+                                "event_courier_code": "null",
+                                "item_event_datetime": "2026-02-10T17:56:28.917Z",
+                                "signee_id": "null",
+                                "event_latitude_gps": "null",
+                                "signee_name": "null"
+                            }
+                        }
+                    ],
+                    "history_has_1600": true
+                }
+            ]
+        },
+        "meta": {
+            "templateCredsSetupCompleted": true,
+            "instanceId": "1c2aee663286167ca5973273ceb0c60aa2fcbae95195db0810f62f8c4797daff"
+        }
+    }

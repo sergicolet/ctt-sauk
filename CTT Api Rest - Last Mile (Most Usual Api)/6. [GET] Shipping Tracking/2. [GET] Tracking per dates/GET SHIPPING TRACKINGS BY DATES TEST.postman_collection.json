@@ -1,0 +1,66 @@
+{
+	"info": {
+		"_postman_id": "f610937b-bd6b-44a9-ae50-62ba94c07523",
+		"name": "GET SHIPPING TRACKINGS BY DATES TEST",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "3672471"
+	},
+	"item": [
+		{
+			"name": "GET SHIPPING TRACKINGS BY DATES TEST",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJraWQiOiJDSXo4cU0xcmRxbmxUVlE2a2pydms2dE02WjRmYk53dzNYUk56VzNwOXdzPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiIybjY5ZmNsaXVzM2F1NTJubWo5dWoxcWNmbiIsInRva2VuX3VzZSI6ImFjY2VzcyIsInNjb3BlIjoidXJuOmNvbTpjdHQtZXhwcmVzczppbnRlZ3JhdGlvbi1jbGllbnRzOnNjb3Blczpjb21tb25cL0FMTCIsImF1dGhfdGltZSI6MTcyODU2MjUxNSwiaXNzIjoiaHR0cHM6XC9cL2NvZ25pdG8taWRwLmV1LXdlc3QtMS5hbWF6b25hd3MuY29tXC9ldS13ZXN0LTFfQzdkWUttNHFGIiwiZXhwIjoxNzI4NjQ4OTE1LCJpYXQiOjE3Mjg1NjI1MTUsInZlcnNpb24iOjIsImp0aSI6ImFhMjAxOTZkLWY2ZGItNDBiMi1hMjI4LTdmMzk5YTAzZmY4MCIsImNsaWVudF9pZCI6IjJuNjlmY2xpdXMzYXU1Mm5tajl1ajFxY2ZuIn0.e52jfCcZ1t2jh7uU9DDXlBH3jW2RVHFgMBGk5eHVrVAgD0uMBuTV-Ikcj2O_Mmzj0lo_JndlVKruj6sVFbXLLArg1-qWMOhMeE6mb--pcHPBLgnmuIDxYUkInp8usFqXhTkMWCPT6bLjFrKwWL6RSc9ah046ODqd17Qphs2KUktVmIYs4gwPVyfnenen0JVry8dpG_1RccxztM87UhV5DAp7cfBT-AbCU6n8mFwmhrptROLEUsjVzHwNkcasniyVhggs5G03x9BQlgB5_X449lBuYv87QQ3DPX-Sv53zG4Qnt8RMNfTO_oTf2SUMaub8vTsi-rUgcvYBSH1xja9Icg",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://api-test.cttexpress.com/integrations/trf/web-tracking/v1.0/shippings?page_limit=50&page_offsets=1&mapping_table_code=APITRACK&order_by=-shipping_date&client_center_code=1234500001&shipping_date=2024-10-01",
+					"protocol": "https",
+					"host": [
+						"api-test",
+						"cttexpress",
+						"com"
+					],
+					"path": [
+						"integrations",
+						"trf",
+						"web-tracking",
+						"v1.0",
+						"shippings"
+					],
+					"query": [
+						{
+							"key": "page_limit",
+							"value": "50"
+						},
+						{
+							"key": "page_offsets",
+							"value": "1"
+						},
+						{
+							"key": "mapping_table_code",
+							"value": "APITRACK"
+						},
+						{
+							"key": "order_by",
+							"value": "-shipping_date"
+						},
+						{
+							"key": "client_center_code",
+							"value": "1234500001"
+						},
+						{
+							"key": "shipping_date",
+							"value": "2024-10-01"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

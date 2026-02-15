@@ -1,0 +1,80 @@
+{
+	"info": {
+		"_postman_id": "2327f521-cffb-4bcc-a434-8bc7a168d484",
+		"name": "GET SHIPPING LABELS",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "3053504"
+	},
+	"item": [
+		{
+			"name": "GET SHIPPING LABELS TEST",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "user_name",
+						"value": "user1",
+						"type": "text"
+					},
+					{
+						"key": "password",
+						"value": "passw0rd$.",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJraWQiOiJDSXo4cU0xcmRxbmxUVlE2a2pydms2dE02WjRmYk53dzNYUk56VzNwOXdzPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiJpbTFnazFkNHU1NjQycjhtZ2s1bDVrZ211IiwidG9rZW5fdXNlIjoiYWNjZXNzIiwic2NvcGUiOiJ1cm46Y29tOmN0dC1leHByZXNzOmludGVncmF0aW9uLWNsaWVudHM6c2NvcGVzOmNvbW1vblwvQUxMIiwiYXV0aF90aW1lIjoxNjgxNzI1OTUzLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuZXUtd2VzdC0xLmFtYXpvbmF3cy5jb21cL2V1LXdlc3QtMV9DN2RZS200cUYiLCJleHAiOjE2ODE4MTIzNTMsImlhdCI6MTY4MTcyNTk1MywidmVyc2lvbiI6MiwianRpIjoiNDQ3ZTBhOTctZmZjYi00NjE3LWIyOTgtZjBlMWNhNDk4NWM1IiwiY2xpZW50X2lkIjoiaW0xZ2sxZDR1NTY0MnI4bWdrNWw1a2dtdSJ9.UEHn5D-23FbREGu1277gxFx1XGbC7f1kG5piUe71Syr_BIRa3lHVMCl7_x7Ews-CStoJ1pIZmtzjwKGCG5mPLkaIFjM9CX098Ou51UjaTI3yymPY8FdjoZnU2llA25aGJ68cOYZvh6hlj2lsInZIXph_OkwVDGDcKyEc98vk3i-IsIrqwdtWhHR8Fh5IAoif01xq87CY37MZFdEy6epiM3QIXTI07bgdN__wln38d6euStQsMkbwc_E5kg3chVSYCTJCxJy-s0dLWOKQvyvGDhenQQJusl9K_A4ains5Aq1w78oAjPLVSfk61G5-UnupHG47lZPD6Lkzl8qnbTVuPg",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://api-test.cttexpress.com/integrations/trf/labelling/v1.0/shippings/0082800045229800000017/shipping-labels?label_type_code=PDF&model_type_code=MULTI4&label_offset=1",
+					"protocol": "https",
+					"host": [
+						"api-test",
+						"cttexpress",
+						"com"
+					],
+					"path": [
+						"integrations",
+						"trf",
+						"labelling",
+						"v1.0",
+						"shippings",
+						"0082800045229800000017",
+						"shipping-labels"
+					],
+					"query": [
+						{
+							"key": "label_type_code",
+							"value": "PDF"
+						},
+						{
+							"key": "model_type_code",
+							"value": "MULTI4"
+						},
+						{
+							"key": "label_offset",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

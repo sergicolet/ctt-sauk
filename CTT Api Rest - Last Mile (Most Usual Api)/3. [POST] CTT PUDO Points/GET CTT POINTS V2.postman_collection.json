@@ -1,0 +1,72 @@
+{
+	"info": {
+		"_postman_id": "7682044c-0443-49d0-acc0-645451667700",
+		"name": "GET CTT POINTS V2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "1195010"
+	},
+	"item": [
+		{
+			"name": "GET CTT POINTS V2",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "user_name",
+						"value": "user1"
+					},
+					{
+						"key": "password",
+						"value": "passw0rd$."
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJraWQiOiJXcXFtQ2Rpam1ybXJIRFFjblo0NVdmelpoVDBKZ3FQUmhKVXRXRVg1eDVvPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiI3ZTM3djZyamw3ZTk2YTByY2RjZDBtYjE2ZyIsInRva2VuX3VzZSI6ImFjY2VzcyIsInNjb3BlIjoidXJuOmNvbTpjdHQtZXhwcmVzczppbnRlZ3JhdGlvbi1jbGllbnRzOnNjb3Blczpjb21tb25cL0FMTCIsImF1dGhfdGltZSI6MTc0MzA2Njg4OCwiaXNzIjoiaHR0cHM6XC9cL2NvZ25pdG8taWRwLmV1LWNlbnRyYWwtMS5hbWF6b25hd3MuY29tXC9ldS1jZW50cmFsLTFfaG9YS2ZtYXl0IiwiZXhwIjoxNzQzMTUzMjg4LCJpYXQiOjE3NDMwNjY4ODgsInZlcnNpb24iOjIsImp0aSI6IjljMTM2MGJjLWRiZjUtNDMxZC1hMWViLTQwNjJlNDFhMjg3YyIsImNsaWVudF9pZCI6IjdlMzd2NnJqbDdlOTZhMHJjZGNkMG1iMTZnIn0.ClDjJK_dLZ2pvOsQZ3AmyPqa_7nls3gwN_ZyFqrpoTPf5OeFft6bIjxPjSaJdZcJr8khV6LPNKjH5e0bZ10iz0eUCsYI3IUHrJ8F79Z4Q3mKRGmqSU8FFnm6lwCY9KJIp1fXAW4SjRumX2R9P_geAhX2zY8KJWC4khIAelDIZZLbWnpsCIG9SGLfZpIAox8g389Z4KD8o57A2J_C1XhN5pr-Y50y9Ih4f55yJpDhTleiqVIBaAInQ9EgjTKXqShPszHADn0qGSz_CVU9H8Dw0I9Xi_N4X8rbKQIZ8C8JE7Z1LPgtEqfrjpbnqBmB2mbgf8depfaBFpHYqJ06mXm1mg"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"area\": {\r\n\r\n    \"postal_code\": \"28\",\r\n    \"country_code\": \"ES\"\r\n\r\n  },\r\n  \r\n  \"type\": \"OFFLINE\",\r\n  \"services\": []\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.cttexpress.com/integrations/delivery/v1.0/distribution-points/v2.0/search?page_limit=2&page_offsets=3",
+					"protocol": "https",
+					"host": [
+						"api",
+						"cttexpress",
+						"com"
+					],
+					"path": [
+						"integrations",
+						"delivery",
+						"v1.0",
+						"distribution-points",
+						"v2.0",
+						"search"
+					],
+					"query": [
+						{
+							"key": "page_limit",
+							"value": "2"
+						},
+						{
+							"key": "page_offsets",
+							"value": "3"
+						}
+					]
+				},
+				"description": "Generated from cURL: curl --location 'https://api.cttexpress.com/integrations/delivery/v1.0/distribution-points/v2.0/search?page_limit=2&page_offsets=3' \\\r\n--header 'user_name: user1' \\\r\n--header 'password: passw0rd$.' \\\r\n--header 'Authorization: Bearer eyJraWQiOiJXcXFtQ2Rpam1ybXJIRFFjblo0NVdmelpoVDBKZ3FQUmhKVXRXRVg1eDVvPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiI3ZTM3djZyamw3ZTk2YTByY2RjZDBtYjE2ZyIsInRva2VuX3VzZSI6ImFjY2VzcyIsInNjb3BlIjoidXJuOmNvbTpjdHQtZXhwcmVzczppbnRlZ3JhdGlvbi1jbGllbnRzOnNjb3Blczpjb21tb25cL0FMTCIsImF1dGhfdGltZSI6MTc0MzA2Njg4OCwiaXNzIjoiaHR0cHM6XC9cL2NvZ25pdG8taWRwLmV1LWNlbnRyYWwtMS5hbWF6b25hd3MuY29tXC9ldS1jZW50cmFsLTFfaG9YS2ZtYXl0IiwiZXhwIjoxNzQzMTUzMjg4LCJpYXQiOjE3NDMwNjY4ODgsInZlcnNpb24iOjIsImp0aSI6IjljMTM2MGJjLWRiZjUtNDMxZC1hMWViLTQwNjJlNDFhMjg3YyIsImNsaWVudF9pZCI6IjdlMzd2NnJqbDdlOTZhMHJjZGNkMG1iMTZnIn0.ClDjJK_dLZ2pvOsQZ3AmyPqa_7nls3gwN_ZyFqrpoTPf5OeFft6bIjxPjSaJdZcJr8khV6LPNKjH5e0bZ10iz0eUCsYI3IUHrJ8F79Z4Q3mKRGmqSU8FFnm6lwCY9KJIp1fXAW4SjRumX2R9P_geAhX2zY8KJWC4khIAelDIZZLbWnpsCIG9SGLfZpIAox8g389Z4KD8o57A2J_C1XhN5pr-Y50y9Ih4f55yJpDhTleiqVIBaAInQ9EgjTKXqShPszHADn0qGSz_CVU9H8Dw0I9Xi_N4X8rbKQIZ8C8JE7Z1LPgtEqfrjpbnqBmB2mbgf8depfaBFpHYqJ06mXm1mg' \\\r\n--header 'Content-Type: application/json' \\\r\n--data '{\r\n  \"area\": {\r\n\r\n    \"postal_code\": \"28\",\r\n    \"country_code\": \"ES\"\r\n\r\n  },\r\n  \r\n  \"type\": \"OFFLINE\",\r\n  \"services\": []\r\n}'"
+			},
+			"response": []
+		}
+	]
+}
