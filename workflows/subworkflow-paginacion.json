@@ -1,0 +1,372 @@
+{
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "012a6b68-5ef8-4c60-9323-1e8083ad449a",
+      "name": "Execute Workflow Trigger",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1,
+      "position": [
+        6656,
+        -160
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\nif (items.length > 0 && items[0].json.centers && Array.isArray(items[0].json.centers)) {\n  return items[0].json.centers.map(center => ({ json: { center_code: center, shop_name: \"DYNAMIC_\" + center } }));\n}\n\n// Fallback to old behavior just in case\nreturn [\n  { json: { center_code: \"4735200001\", shop_name: \"SNAPPYS\" } },\n  { json: { center_code: \"4735200002\", shop_name: \"SNAPPYBLUEIMPER AMZ\" } },\n  { json: { center_code: \"4735200003\", shop_name: \"LEROY MERLIN\" } },\n  { json: { center_code: \"4735200004\", shop_name: \"AMARTO SL\" } },\n  { json: { center_code: \"4735200005\", shop_name: \"AMARTO AMZ\" } }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        6880,
+        -176
+      ],
+      "id": "6307e37a-5cb1-4ef7-954c-138465061d8f",
+      "name": "2.CodeTiendas_Sub"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "58a122d3-6ea3-4481-81df-23f33d620d80",
+      "name": "3.LoopTiendas_Sub",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        7104,
+        -176
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://api.cttexpress.com/integrations/trf/web-tracking/v1.0/shippings",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "mapping_table_code",
+              "value": "APITRACK"
+            },
+            {
+              "name": "client_center_code",
+              "value": "={{ $json.center_code }}"
+            },
+            {
+              "name": "shipping_date",
+              "value": "={{ $now.minus({days: 30}).toFormat('yyyy-MM-dd') }}[range]{{ $now.toFormat('yyyy-MM-dd') }}"
+            },
+            {
+              "name": "page_limit",
+              "value": "={{ $('Execute Workflow Trigger').first().json.pageLimit || 50 }}"
+            },
+            {
+              "name": "page_offsets",
+              "value": "1"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $('Execute Workflow Trigger').first().json.access_token }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "26f459fc-3292-4e0e-8611-12dc961b4b6a",
+      "name": "4.LeerPágina_Sub",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        7328,
+        -240
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "cond-1",
+              "leftValue": "={{ $json.pagination?.page_offsets?.current ?? 1 }}",
+              "rightValue": "={{ $json.pagination?.page_offsets?.last ?? 1 }}",
+              "operator": {
+                "type": "number",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        7552,
+        -240
+      ],
+      "id": "ff9c642c-3cc6-4839-872c-048ff920da1f",
+      "name": "5.¿ÚltimaPágina?_Sub"
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\nconst result = [];\nfor (const item of items) {\n  const data = item.json.data;\n  if (!data || !Array.isArray(data)) continue;\n  for (const shipping of data) {\n    if (shipping && shipping.shipping_code) {\n      result.push({ json: shipping });\n    }\n  }\n}\nreturn result;"
+      },
+      "id": "65dcb0f4-88f6-4b88-987e-2466ad00f83d",
+      "name": "6.SepararPágina_Sub",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        8224,
+        -336
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const item = $input.first().json;\nconst lastPage = item.pagination?.page_offsets?.last ?? 1;\nconst centerCode = item.data?.[0]?.client_center_code || '';\n\nconst pages = [];\nfor (let i = 2; i <= lastPage; i++) {\n  pages.push({ json: { page: i, center_code: centerCode } });\n}\nreturn pages;"
+      },
+      "id": "e495f4a6-d6e1-4f1c-aec6-55de9443e00e",
+      "name": "7.GenerarPáginasExtra_Sub",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        7776,
+        -144
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://api.cttexpress.com/integrations/trf/web-tracking/v1.0/shippings",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "mapping_table_code",
+              "value": "APITRACK"
+            },
+            {
+              "name": "client_center_code",
+              "value": "={{ $json.center_code }}"
+            },
+            {
+              "name": "shipping_date",
+              "value": "={{ $now.minus({days: 30}).toFormat('yyyy-MM-dd') }}[range]{{ $now.toFormat('yyyy-MM-dd') }}"
+            },
+            {
+              "name": "page_limit",
+              "value": "={{ $('Execute Workflow Trigger').first().json.pageLimit || 50 }}"
+            },
+            {
+              "name": "page_offsets",
+              "value": "={{ $json.page }}"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $('Execute Workflow Trigger').first().json.access_token }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "822814fe-cb86-41a6-9e41-c1c73b24e6be",
+      "name": "8.LeerRestoPáginas_Sub",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        8000,
+        -144
+      ]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "data",
+        "options": {}
+      },
+      "id": "25e18d59-0073-4c07-83cb-672e8127609c",
+      "name": "9.SepararResto_Sub",
+      "type": "n8n-nodes-base.itemLists",
+      "typeVersion": 3,
+      "position": [
+        8224,
+        -144
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "c28ca768-1a0a-4011-906f-39716c699d22",
+      "name": "0.MergePedidos_Sub",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        8448,
+        -240
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "b329c9b8-1005-4d86-92b8-82c5e9ba2ebb",
+      "name": "11.VolverLoop_Sub",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        8672,
+        -176
+      ]
+    }
+  ],
+  "connections": {
+    "Execute Workflow Trigger": {
+      "main": [
+        [
+          {
+            "node": "2.CodeTiendas_Sub",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "2.CodeTiendas_Sub": {
+      "main": [
+        [
+          {
+            "node": "3.LoopTiendas_Sub",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "3.LoopTiendas_Sub": {
+      "main": [
+        [],
+        [
+          {
+            "node": "4.LeerPágina_Sub",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "4.LeerPágina_Sub": {
+      "main": [
+        [
+          {
+            "node": "5.¿ÚltimaPágina?_Sub",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "5.¿ÚltimaPágina?_Sub": {
+      "main": [
+        [
+          {
+            "node": "6.SepararPágina_Sub",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "6.SepararPágina_Sub",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "7.GenerarPáginasExtra_Sub",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "6.SepararPágina_Sub": {
+      "main": [
+        [
+          {
+            "node": "0.MergePedidos_Sub",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "7.GenerarPáginasExtra_Sub": {
+      "main": [
+        [
+          {
+            "node": "8.LeerRestoPáginas_Sub",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "8.LeerRestoPáginas_Sub": {
+      "main": [
+        [
+          {
+            "node": "9.SepararResto_Sub",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "9.SepararResto_Sub": {
+      "main": [
+        [
+          {
+            "node": "0.MergePedidos_Sub",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "0.MergePedidos_Sub": {
+      "main": [
+        [
+          {
+            "node": "11.VolverLoop_Sub",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "11.VolverLoop_Sub": {
+      "main": [
+        [
+          {
+            "node": "3.LoopTiendas_Sub",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "instanceId": "1c2aee663286167ca5973273ceb0c60aa2fcbae95195db0810f62f8c4797daff"
+  }
+}
