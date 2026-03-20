@@ -11,13 +11,13 @@
           ]
         }
       },
-      "id": "43f32243-8909-45d9-bad1-0f1a59c2ce44",
+      "id": "ddf16a08-ed34-4694-9e07-0b20eea5e5db",
       "name": "Trigger 12h",
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.2,
       "position": [
-        -2816,
-        1200
+        -7248,
+        1344
       ]
     },
     {
@@ -37,13 +37,13 @@
         },
         "options": {}
       },
-      "id": "0270bb0f-699d-4a26-8ee4-d8b3c6cffbbb",
+      "id": "110286c0-ec86-4cd4-825a-4a78b647dfcd",
       "name": "Leer Incidencias",
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        -2592,
-        1200
+        -6128,
+        1344
       ],
       "credentials": {
         "googleSheetsOAuth2Api": {
@@ -103,26 +103,26 @@
         },
         "options": {}
       },
-      "id": "e2bed637-3429-4ec0-8789-c69f7ac26b68",
+      "id": "756ed08c-448c-4a60-8955-27bacb146466",
       "name": "Filtrar Incidencias Ayer",
       "type": "n8n-nodes-base.filter",
       "typeVersion": 2,
       "position": [
-        -2368,
-        1200
+        -5904,
+        1344
       ]
     },
     {
       "parameters": {
         "options": {}
       },
-      "id": "b5dd8e18-978f-4d10-a469-96318e96f971",
+      "id": "3ebbb091-5a19-40e5-8752-e30007a54d96",
       "name": "Loop Followup",
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
       "position": [
-        -2144,
-        1200
+        -5680,
+        1344
       ]
     },
     {
@@ -153,13 +153,13 @@
         },
         "options": {}
       },
-      "id": "453101ec-2d12-4b5a-b002-3b83b7548595",
+      "id": "eff4fc45-1be0-47e5-a494-426c6e6e68d9",
       "name": "Token HAMINOS FW",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        -1696,
-        480
+        -7024,
+        1344
       ]
     },
     {
@@ -190,13 +190,13 @@
         },
         "options": {}
       },
-      "id": "c3d5860f-14eb-435c-adc4-4af5bd61fb4f",
+      "id": "e92718ae-c547-4533-9cec-1f3647bd986a",
       "name": "Token MIESTERY FW",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        -1696,
-        800
+        -6800,
+        1344
       ]
     },
     {
@@ -227,13 +227,13 @@
         },
         "options": {}
       },
-      "id": "f6a4e78f-aab3-4a58-8fb0-c01a9117dd8c",
+      "id": "47a02d81-29e3-4966-a671-0af2770b08eb",
       "name": "Token KULTUDENDA FW",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        -1696,
-        1104
+        -6576,
+        1344
       ]
     },
     {
@@ -264,13 +264,13 @@
         },
         "options": {}
       },
-      "id": "b941fe89-b225-4b48-a546-daadfac79e95",
+      "id": "b25064b3-c0d6-4db1-9e15-ae01b5f3fb5e",
       "name": "Token SNAPPY FW",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        -1696,
-        1296
+        -6352,
+        1344
       ]
     },
     {
@@ -298,31 +298,30 @@
             }
           ]
         },
-        "options": {},
-        "authentication": "predefinedCredentialType"
+        "options": {}
       },
-      "id": "3da5c93f-9eb6-44ca-b7e6-b68dd7656d4a",
+      "id": "e95e655b-7e82-45a3-82bc-0f83fc1f1a2c",
       "name": "Obtener Historial FW",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        -1472,
-        576
+        -5456,
+        960
       ],
       "retryOnFail": true,
       "waitBetweenTries": 5000
     },
     {
       "parameters": {
-        "jsCode": "try {\n  const incidencia = $('Loop Followup').first().json;\n  const history = $input.item.json;\n  let events = [];\n  if (history?.data?.shipping_history?.events) {\n    events = history.data.shipping_history.events;\n  }\n  let formattedHistory = 'Sin eventos disponibles';\n  if (events.length > 0) {\n    formattedHistory = events.map(e => {\n      let date = e.event_date || e.item_event_date || '';\n      if (date) {\n        try {\n          const d = new Date(date);\n          d.setHours(d.getHours() + 1);\n          date = d.toISOString().replace('T', ' ').substring(0, 16);\n        } catch(x) {}\n      }\n      const code = e.code || e.event_code || 'N/A';\n      const desc = e.description || e.event_description || '';\n      const detail = e.detail?.External_event_text || e.detail?.item_event_text || '';\n      return `${date} - [${code}] ${desc} (${detail})`;\n    }).join('\\n');\n  }\n  return {\n    json: {\n      shipping_code: incidencia['NUMERO DE ENVIO'],\n      numero_pedido: incidencia['NUMERO DE PEDIDO'],\n      tienda: incidencia['TIENDA'],\n      credencial: incidencia['CREDENCIAL'],\n      incidencia_registrada: incidencia['INCIDENCIA'],\n      fecha_incidencia_original: incidencia['FECHA PROCESADO'],\n      formatted_history: formattedHistory\n    }\n  };\n} catch(error) {\n  throw new Error(`[Code FW JS3] ${error.message}`);\n}"
+        "jsCode": "try {\n  const incidencia = $('Loop Followup').first().json;\n  const history = $input.item.json;\n  let events = [];\n\n  if (history?.data?.shipping_history?.events) {\n    events = history.data.shipping_history.events;\n  }\n\n  // ─── PARSEO Y FORMATO DEL HISTORIAL ────────────────────────────────────────\n  let parsedEvents = []; // { date: Date, code: string }\n  let formattedHistory = 'Sin eventos disponibles';\n\n  if (events.length > 0) {\n    formattedHistory = events.map(e => {\n      let date = e.event_date || e.item_event_date || '';\n      let parsedDate = null;\n\n      if (date) {\n        try {\n          const d = new Date(date);\n          d.setHours(d.getHours() + 1); // UTC+1 Madrid\n          parsedDate = d;\n          date = d.toISOString().replace('T', ' ').substring(0, 16);\n        } catch (x) {}\n      }\n\n      const code = e.code || e.event_code || 'N/A';\n      const desc = e.description || e.event_description || '';\n      const detail = e.detail?.External_event_text || e.detail?.item_event_text || '';\n\n      if (parsedDate) {\n        parsedEvents.push({ date: parsedDate, code });\n      }\n\n      return `${date} - [${code}] ${desc} (${detail})`;\n    }).join('\\n');\n  }\n\n  // ─── CÁLCULO DE HORAS LABORABLES ───────────────────────────────────────────\n  function businessHours(startDate, endDate) {\n    if (!startDate || !endDate || endDate <= startDate) return 0;\n    let hours = 0;\n    let cur = new Date(startDate.getTime());\n\n    while (cur < endDate) {\n      const dow = cur.getDay(); // 0=Dom, 6=Sab\n      if (dow !== 0 && dow !== 6) {\n        const y = cur.getFullYear(), m = cur.getMonth(), d = cur.getDate();\n        const nextMidnight = new Date(y, m, d + 1);\n        const seg = endDate < nextMidnight ? endDate : nextMidnight;\n        hours += (seg - cur) / 3600000;\n      }\n      const y = cur.getFullYear(), m = cur.getMonth(), d = cur.getDate();\n      cur = new Date(y, m, d + 1);\n    }\n\n    return parseFloat(hours.toFixed(1));\n  }\n\n  const now = new Date();\n\n  const TRANSIT    = ['0900', '1000'];\n  const DELIVERY   = ['1200', '1500'];\n  const STATIONARY = ['1700', '1800'];\n  const MANIFEST   = ['0000', '0030'];\n\n  // TRÁNSITO: desde el primer 0900/1000, solo si no hay 1200/1500 posterior\n  const firstTransit = parsedEvents.find(e => TRANSIT.includes(e.code));\n  let transitHours = 0;\n  if (firstTransit) {\n    const hasDeliveryAfter = parsedEvents.some(\n      e => DELIVERY.includes(e.code) && e.date > firstTransit.date\n    );\n    if (!hasDeliveryAfter) {\n      transitHours = businessHours(firstTransit.date, now);\n    }\n  }\n\n  // MANIFESTADO: desde primer 0000/0030, solo si no hay tránsito\n  const firstManifest = parsedEvents.find(e => MANIFEST.includes(e.code));\n  let manifestHours = 0;\n  if (firstManifest && !firstTransit) {\n    manifestHours = businessHours(firstManifest.date, now);\n  }\n\n  // CICLO REPARTO: reset en cada 1000 después de 1200/1500\n  let deliveryCycleStart = null;\n  let inDelivery = false;\n  for (const event of parsedEvents) {\n    if (DELIVERY.includes(event.code)) {\n      if (!inDelivery) {\n        deliveryCycleStart = event.date;\n        inDelivery = true;\n      }\n    } else if (event.code === '1000' && inDelivery) {\n      deliveryCycleStart = null;\n      inDelivery = false;\n    }\n  }\n  let deliveryHours = 0;\n  if (deliveryCycleStart) {\n    deliveryHours = businessHours(deliveryCycleStart, now);\n  }\n\n  // ESTACIONADO: desde el último 1700/1800\n  const lastStationary = [...parsedEvents].reverse().find(e => STATIONARY.includes(e.code));\n  let stationaryHours = 0;\n  if (lastStationary) {\n    stationaryHours = businessHours(lastStationary.date, now);\n  }\n\n  // ─── OUTPUT ────────────────────────────────────────────────────────────────\n  return {\n    json: {\n      shipping_code:              incidencia['NUMERO DE ENVIO'],\n      numero_pedido:              incidencia['NUMERO DE PEDIDO'],\n      tienda:                     incidencia['TIENDA'],\n      credencial:                 incidencia['CREDENCIAL'],\n      incidencia_registrada:      incidencia['INCIDENCIA'],\n      fecha_incidencia_original:  incidencia['FECHA PROCESADO'],\n      formatted_history:          formattedHistory,\n      // Horas precalculadas para la IA\n      transit_hours:              transitHours,\n      manifest_hours:             manifestHours,\n      delivery_hours:             deliveryHours,\n      stationary_hours:           stationaryHours\n    }\n  };\n\n} catch (error) {\n  throw new Error(`[Code FW JS3] ${error.message}`);\n}"
       },
-      "id": "fb200a44-eb7e-4b07-9d43-d1d0c248260e",
+      "id": "e5b711be-1109-4bca-b604-f950ff1abb6f",
       "name": "Code FW JS3",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -1248,
-        576
+        -5232,
+        960
       ]
     },
     {
@@ -336,11 +335,11 @@
         "responses": {
           "values": [
             {
-              "content": "=Incidencia registrada ayer: {{ $json.incidencia_registrada }}\n\nHistorial actual:\n{{ $json.formatted_history }}\n\nNumero de Pedido: {{ $json.shipping_code }}\nHora actual: {{ $now.toFormat('yyyy-MM-dd HH:mm') }} ({{ ['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo'][$now.weekday - 1] }})"
+              "content": "=Incidencia registrada ayer: {{ $json.incidencia_registrada }}\n \nHistorial actual:\n{{ $json.formatted_history }}\n \nNumero de Pedido: {{ $json.shipping_code }}\nHora actual: {{ $now.toFormat('yyyy-MM-dd HH:mm') }} ({{ ['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo'][$now.weekday - 1] }})\n \n--- HORAS PRECALCULADAS (USA ESTOS VALORES DIRECTAMENTE, NO RECALCULES) ---\nHoras en tránsito desde primer 0900/1000 (sin reparto posterior): {{ $json.transit_hours }}\nHoras en grabación desde primer 0000/0030 (sin tránsito posterior): {{ $json.manifest_hours }}\nHoras en ciclo de reparto actual desde primer 1200/1500: {{ $json.delivery_hours }}\nHoras estacionado desde último 1700/1800: {{ $json.stationary_hours }}"
             },
             {
               "role": "system",
-              "content": "Eres un auditor logistico de CTT Express. Se te proporciona una incidencia registrada ayer y el historial actual del envio. Determina si la incidencia sigue activa o se ha resuelto. RESPONDE SOLO CON JSON PURO, SIN MARKDOWN.\n\n### FUENTE DE VERDAD\nLee el historial de arriba a abajo. El ultimo evento es el estado actual.\nCompara el estado actual con la incidencia registrada ayer.\n\n### RESOLUCION\nLa incidencia se considera RESUELTA si:\n- El envio ha sido entregado (estado 2000 o delivery_date informado)\n- Una incidencia de reparto fallido (1600/2300/2400/2600/2700) fue seguida de 1500 activo\n- El envio ya no presenta el codigo de incidencia original\n\nLa incidencia SIGUE ACTIVA si:\n- El ultimo evento sigue siendo un codigo de incidencia\n- No ha habido avance significativo desde ayer\n- El envio sigue bloqueado en el mismo estado\n\n\n### REGLAS PARA EMAIL_BODY (Solo si sigue_incidencia: true)\nUsa exactamente estas plantillas segun el caso:\n\n- Si ayer estaba en TRANSITO (0900/1000) y hoy sigue igual (Regla 2):\n  \"Buenos dias. El envio [SEG] estuvo en transito el dia anterior y hoy aun no ha cambiado a reparto. Solicitamos que el envio salga a reparto al dia siguiente. Gracias.\"\n\n- Si ayer estaba en REPARTO (1200/1500) y hoy sigue igual (Regla 3):\n  \"Buenos dias. El envio [SEG] se encuentra en reparto desde ayer sin entregarse. Solicitamos que el pedido sea sacado nuevamente a reparto hoy mismo. Gracias.\"\n\n- Si es la PRIMERA INCIDENCIA (1600, 2300, etc) (Regla 4):\n  \"Buenos dias. El envio [SEG] presenta su primera incidencia. Solicitamos explicitamente un segundo intento de reparto para el siguiente dia habil. Gracias.\"\n\n### SALIDA JSON\n{\n  \"sigue_incidencia\": true,\n  \"estado_actual\": \"Descripcion del ultimo evento del historial\",\n  \"justification\": \"Razon detallada de por que sigue activa o se resolvió.\",\n  \"email_body\": \"Texto del correo segun las reglas de explicacion-workflow.txt si sigue activa, o vacio si se resolvió.\"\n}\n\n\n### REGLA ESPECIAL TRANSITO (SLA 24-48H)\nSi el paquete estaba ayer en incidencia por tránsito (0900/1000) y hoy sigue sin estar en reparto (no hay 1200 ni 1500), la incidencia SIGUE ACTIVA independientemente de que hoy haya nuevos eventos de gestión interna como el 71_INAT.\nEl SLA de tránsito se incumple si pasan más de 24h laborables desde el primer escaneo de tránsito (0900/1000) hasta la entrega o reparto.\n\n### EJEMPLOS DE SALIDA JSON (ESTO ES SOLO EL FORMATO, NO LOS COPIES TEXTUALMENTE)\n\nEJEMPLO 1: INCIDENCIA SIGUE ACTIVA\n{\n  \"sigue_incidencia\": true,\n  \"estado_actual\": \"1600 Reparto fallido\",\n  \"justification\": \"Ayer estaba en 1600. Hoy el ultimo evento sigue siendo 1600 Reparto fallido a las 14:15. Sigue activa porque no hay avance ni entrega.\"\n}\n\nEJEMPLO 2: INCIDENCIA RESUELTA\n{\n  \"sigue_incidencia\": false,\n  \"estado_actual\": \"1500 En reparto\",\n  \"justification\": \"Ayer estaba en 1600. Hoy el ultimo evento es 1500 En reparto a las 09:30. Resuelta porque se ha programado un nuevo intento hoy.\"\n}"
+              "content": "Eres un auditor logistico de CTT Express. Se te proporciona una incidencia registrada ayer y el historial actual del envio. Determina si la incidencia sigue activa o se ha resuelto. RESPONDE SOLO CON JSON PURO, SIN MARKDOWN.\n \n### FUENTE DE VERDAD (CRITICO)\nLee el historial cronologico de arriba a abajo. El ultimo evento es el estado actual.\nLas horas laborables ya vienen calculadas en el bloque \"HORAS PRECALCULADAS\". NO recalcules. USA esos valores directamente.\n \n### PASO 0 — ESTADOS TERMINALES (PRIORIDAD MAXIMA, EJECUTAR PRIMERO)\nAntes de cualquier otra evaluacion, comprueba si el ultimo evento del historial es un estado terminal.\nLos estados terminales son: 2500, 2300, 2310.\n \n- Ultimo evento es 2500 (Devolucion) → sigue_incidencia: false. El paquete esta en devolucion. FIN.\n- Ultimo evento es 2300 (Punto CTT / PUDO) → sigue_incidencia: true. Accion requerida: notificar punto recogida. FIN.\n- Ultimo evento es 2310 (Datos incorrectos) → sigue_incidencia: true. Accion requerida. FIN.\n \n### PASO 1 — RESOLUCION DE INCIDENCIA\nLa incidencia se considera RESUELTA si:\n- El envio ha sido entregado (codigo 2000 en historial).\n- Una incidencia de reparto fallido (1600/2400/2600/2700) fue seguida de un evento 1500 posterior.\n- El envio ya no presenta el codigo de incidencia original y hay avance claro.\n \nLa incidencia SIGUE ACTIVA si:\n- El ultimo evento sigue siendo un codigo de incidencia (1600, 1700, 1800, etc.).\n- No hay ningun 1500 posterior al ultimo 1600 en el historial.\n- El paquete sigue bloqueado en el mismo estado sin avance real.\n \n### PASO 2 — REGLA ESPECIAL TRANSITO (CRITICO)\nSi transit_hours > 24 y NO hay ningun evento 1200 o 1500 en el historial → sigue_incidencia: true.\nEl 71_INAT NO resuelve el transito. Es gestion interna. Ignorarlo para esta decision.\nSi transit_hours <= 24 y no hay incidencia activa → sigue_incidencia: false.\n \n### PASO 3 — UMBRALES DE TIEMPO\nUsar los valores precalculados directamente:\n- transit_hours > 24 sin 1200/1500 → sigue activa (transito estancado).\n- delivery_hours > 24 → sigue activa (reparto estancado).\n- stationary_hours > 24 → sigue activa (estacionado prolongado).\n- manifest_hours > 24 sin transito → sigue activa (grabado sin recoger).\nSi ninguno supera umbral y no hay incidencia activa → sigue_incidencia: false.\n \n### REGLA ANTI-ALUCINACION (CRITICO)\nNUNCA afirmes que existe un evento si su codigo no aparece textualmente en el historial.\nEl 71_INAT NO es una incidencia. No lo menciones como causa de incidencia.\nSi no hay 1600 en el historial, no puedes decir que hay reparto fallido.\n \n### PLANTILLAS EMAIL_BODY (Solo si sigue_incidencia: true)\n \n- Transito estancado (transit_hours > 24, sin 1200/1500):\n  \"Buenos dias. El envio [SEG] estuvo en transito el dia anterior y hoy aun no ha cambiado a reparto. Solicitamos que el envio salga a reparto al dia siguiente. Gracias.\"\n \n- Reparto estancado (delivery_hours > 24):\n  \"Buenos dias. El envio [SEG] se encuentra en reparto desde ayer sin entregarse. Solicitamos que el pedido sea sacado nuevamente a reparto hoy mismo. Gracias.\"\n \n- Reparto fallido activo (1600 sin 1500 posterior):\n  \"Buenos dias. El envio [SEG] presenta su primera incidencia. Solicitamos explicitamente un segundo intento de reparto para el siguiente dia habil. Gracias.\"\n \n- Punto CTT / PUDO (ultimo evento 2300):\n  \"Hola equipo de CTT, necesitamos la direccion detallada del punto de recogida para el siguiente envio: EXPEDICION: - [SEG]. Gracias de antemano.\"\n \n- Otros casos activos (0600, 2310, 1012, 1006, 1008):\n  Usar mensaje descriptivo pidiendo gestion urgente del envio [SEG].\n \n### COHERENCIA OBLIGATORIA\nSi sigue_incidencia: false → email_body debe ser \"\" (vacio).\nSi sigue_incidencia: true → email_body debe tener contenido con el numero de envio real.\nNunca contradigas la justificacion con la decision.\n \n### SALIDA JSON\n{\n  \"sigue_incidencia\": true | false,\n  \"estado_actual\": \"Descripcion del ultimo evento del historial\",\n  \"justification\": \"Razon detallada indicando que paso se aplico y por que.\",\n  \"email_body\": \"Texto del correo si sigue activa, o vacio si resuelta.\"\n}\n \n### EJEMPLOS DE SALIDA JSON\n \nEJEMPLO 1: DEVOLUCION — RESUELTA POR ESTADO TERMINAL\n{\n  \"sigue_incidencia\": false,\n  \"estado_actual\": \"2500 Devolucion\",\n  \"justification\": \"Paso 0: el ultimo evento es [2500] Devolucion. Estado terminal. El paquete ya no esta en incidencia de reparto, esta en proceso de devolucion. sigue_incidencia: false.\",\n  \"email_body\": \"\"\n}\n \nEJEMPLO 2: TRANSITO ESTANCADO CON HORAS PRECALCULADAS\n{\n  \"sigue_incidencia\": true,\n  \"estado_actual\": \"71_INAT Entrega dia siguiente\",\n  \"justification\": \"Paso 0: no es terminal. Paso 1: no hay 1200 ni 1500 en el historial. Paso 2: transit_hours = 26.4, supera 24h. El 71_INAT es gestion interna y no resuelve el transito. sigue_incidencia: true.\",\n  \"email_body\": \"Buenos dias. El envio 0002070002079700443991 estuvo en transito el dia anterior y hoy aun no ha cambiado a reparto. Solicitamos que el envio salga a reparto al dia siguiente. Gracias.\"\n}\n \nEJEMPLO 3: REPARTO FALLIDO RESUELTO\n{\n  \"sigue_incidencia\": false,\n  \"estado_actual\": \"1500 En reparto\",\n  \"justification\": \"Paso 0: no es terminal. Paso 1: habia un 1600 pero hay un 1500 posterior en el historial. Incidencia resuelta. sigue_incidencia: false.\",\n  \"email_body\": \"\"\n}\n \nEJEMPLO 4: REPARTO FALLIDO SIGUE ACTIVO\n{\n  \"sigue_incidencia\": true,\n  \"estado_actual\": \"1700 Envio estacionado\",\n  \"justification\": \"Paso 0: no es terminal. Paso 1: existe evento 1600 sin ningun 1500 posterior en el historial. Incidencia sigue activa. sigue_incidencia: true.\",\n  \"email_body\": \"Buenos dias. El envio 0080530080539701011625 presenta su primera incidencia. Solicitamos explicitamente un segundo intento de reparto para el siguiente dia habil. Gracias.\"\n}"
             }
           ]
         },
@@ -349,13 +348,13 @@
           "temperature": 0.1
         }
       },
-      "id": "25d195a5-bce1-4d05-858e-fb0b061661cb",
+      "id": "e80af4ec-e98d-4e55-baf4-f6cbfef5c3a2",
       "name": "IA Followup",
       "type": "@n8n/n8n-nodes-langchain.openAi",
       "typeVersion": 2.1,
       "position": [
-        -1024,
-        576
+        -5008,
+        960
       ],
       "credentials": {
         "openAiApi": {
@@ -368,13 +367,13 @@
       "parameters": {
         "jsCode": "const raw = $input.item.json;\nconst aiText = raw.output[0].content[0].text;\nconst aiData = JSON.parse(aiText.replace(/```json|```/g, '').trim());\n\nconst incidencia = $('Loop Followup').first().json;\n\nreturn {\n  shipping_code: incidencia['NUMERO DE ENVIO'],\n  numero_pedido: incidencia['NUMERO DE PEDIDO'],\n  tienda: incidencia['TIENDA'],\n  credencial: incidencia['CREDENCIAL'],\n  incidencia_registrada: incidencia['INCIDENCIA'],\n  sigue_incidencia: aiData.sigue_incidencia === true,\n  estado_actual: aiData.estado_actual || '',\n  justification: aiData.justification || '',\n  email_body: aiData.email_body || ''\n};"
       },
-      "id": "26604e16-1d28-4996-ada0-6709f891a07f",
+      "id": "5d6e81f7-a7c8-487f-a6ee-714ac74c1e9f",
       "name": "Code FW JS2",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -672,
-        576
+        -4656,
+        960
       ]
     },
     {
@@ -401,13 +400,13 @@
         },
         "options": {}
       },
-      "id": "0ac84a8e-f6e9-47eb-83c7-83bd1cb62ec0",
+      "id": "2e8164a2-0000-4934-b4ad-783f02dabf71",
       "name": "If Sigue Incidencia",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        -448,
-        576
+        -4432,
+        960
       ]
     },
     {
@@ -512,13 +511,13 @@
           "fallbackOutput": "extra"
         }
       },
-      "id": "aaf8deac-f6fd-4363-97e7-0e23628e7852",
+      "id": "4811a74d-3fe3-44dd-aea8-1e6f02144a56",
       "name": "Switch Tienda FW",
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.4,
       "position": [
-        -224,
-        336
+        -4208,
+        784
       ]
     },
     {
@@ -528,13 +527,13 @@
         "message": "={{ $json.email_body }}",
         "options": {}
       },
-      "id": "263f84c7-c83f-4f1b-ac9c-81791d7caf73",
+      "id": "40a67565-0ac0-4e8e-b7db-1b93e66dc040",
       "name": "FW Gmail H",
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
       "position": [
-        0,
-        0
+        -3984,
+        544
       ],
       "webhookId": "45217402-ac7a-4e20-af92-7d40e1ad1d87",
       "credentials": {
@@ -551,13 +550,13 @@
         "message": "={{ $json.email_body }}",
         "options": {}
       },
-      "id": "452197d6-3427-48dd-8ce6-5f4815fe7c44",
+      "id": "00d10186-6313-4f7a-b3ca-3b5a2b9ce3ab",
       "name": "FW Gmail M",
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
       "position": [
-        0,
-        192
+        -3984,
+        736
       ],
       "webhookId": "bf8672e7-5a5f-485e-bdf7-413976cccfc9",
       "credentials": {
@@ -574,13 +573,13 @@
         "message": "={{ $json.email_body }}",
         "options": {}
       },
-      "id": "f8ec47c5-76c0-49f6-a258-3b6949015c4f",
+      "id": "4bed3d94-c8b4-478e-a57c-c358eca1b58b",
       "name": "FW Gmail K",
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
       "position": [
-        0,
-        384
+        -3984,
+        928
       ],
       "webhookId": "d7f0234e-d878-43af-ab6f-e0f26618cc9b",
       "credentials": {
@@ -597,13 +596,13 @@
         "message": "={{ $json.email_body }}",
         "options": {}
       },
-      "id": "55ba5d15-c1aa-4e4b-b562-cfc49bc541d1",
+      "id": "ceb703bd-f19a-4f4e-9868-10798bcbe5ef",
       "name": "FW Gmail S",
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
       "position": [
-        0,
-        672
+        -3984,
+        1120
       ],
       "webhookId": "2384e059-84af-4d9e-9017-1b1e870accf6",
       "credentials": {
@@ -790,13 +789,13 @@
         },
         "options": {}
       },
-      "id": "a298ba9f-11e1-429f-a4a6-1d6aa7ba3dd9",
+      "id": "2662b507-0339-4e8c-8c86-69c893a5ef11",
       "name": "Update Sigue Incidencia",
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        224,
-        336
+        -3760,
+        832
       ],
       "credentials": {
         "googleSheetsOAuth2Api": {
@@ -982,14 +981,259 @@
         },
         "options": {}
       },
-      "id": "70eb4b7f-4c6f-4cdd-b7b7-7519fa5be3fe",
+      "id": "66249875-e88d-4371-b6bb-18146ca31ba8",
       "name": "Update Resuelta",
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        224,
-        1072
+        -4208,
+        1152
       ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "vUMIiZSNk60SoDGg",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "return [\n  { json: { client: 'HAMINOS', credencial: 'HAMINOS', centers: ['4863000001'], access_token: $('Token HAMINOS FW').first().json.access_token } },\n  { json: { client: 'MIESTERY', credencial: 'MIESTERY', centers: ['4768500003'], access_token: $('Token MIESTERY FW').first().json.access_token } },\n  { json: { client: 'KULTUDENDA', credencial: 'KULTUDENDA', centers: ['4541600001', '4541600002'], access_token: $('Token KULTUDENDA FW').first().json.access_token } },\n  { json: { client: 'SNAPPY', credencial: 'SNAPPY', centers: ['4735200001', '4735200002', '4735200003', '4735200004', '4735200005'], access_token: $('Token SNAPPY FW').first().json.access_token } }\n];"
+      },
+      "id": "a0000001-0000-4000-8000-000000000001",
+      "name": "Preparar Configs 0000",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [-6128, 1700]
+    },
+    {
+      "parameters": { "options": {} },
+      "id": "a0000001-0000-4000-8000-000000000002",
+      "name": "Loop Clientes 0000",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [-5904, 1700]
+    },
+    {
+      "parameters": {
+        "workflowId": "NtGW6lN2IMYIaKeYdTuot",
+        "options": {}
+      },
+      "id": "a0000001-0000-4000-8000-000000000003",
+      "name": "Call SubWf 0000",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [-5680, 1700]
+    },
+    {
+      "parameters": {
+        "jsCode": "const ayer = $now.minus({days: 1}).toFormat('yyyy-MM-dd');\nconst credencial = $('Loop Clientes 0000').item.json.credencial;\nconst client = $('Loop Clientes 0000').item.json.client;\n\nconst result = [];\nfor (const item of $input.all()) {\n  const code = String(item.json.shipping_status_code || '');\n  const rawDate = String(item.json.shipping_status_datetime || '');\n  let fecha = '';\n  if (rawDate) {\n    try {\n      const d = new Date(rawDate);\n      d.setHours(d.getHours() + 1);\n      fecha = d.toISOString().substring(0, 10);\n    } catch(e) {\n      fecha = rawDate.substring(0, 10);\n    }\n  }\n  if ((code === '0000' || code === '0030') && fecha === ayer) {\n    result.push({ json: { ...item.json, credencial, client, fecha_estado_local: fecha } });\n  }\n}\nreturn result;"
+      },
+      "id": "a0000001-0000-4000-8000-000000000004",
+      "name": "Filtrar 0000 Ayer",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [-5456, 1700]
+    },
+    {
+      "parameters": { "options": {} },
+      "id": "a0000001-0000-4000-8000-000000000005",
+      "name": "Loop Pedidos 0000",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [-5232, 1700]
+    },
+    {
+      "parameters": {
+        "jsCode": "const pedido = $input.item.json;\nconst shippingCode = pedido.shipping_code;\nconst numeroPedido = (pedido.client_references && pedido.client_references[0]) || '';\nconst centerCode = String(pedido.client_center_code || '');\nconst credencial = pedido.credencial;\n\nconst emailMap = {\n  'HAMINOS': 'incidenciashaminos@gmail.com',\n  'MIESTERY': 'incidenciasamzdiscounts01@gmail.com',\n  'KULTUDENDA': 'incidenciaskulturdenda@gmail.com',\n  'SNAPPY': 'incidenciassnappyblue@gmail.com'\n};\nconst destinatario = emailMap[credencial] || '';\n\nreturn [{\n  json: {\n    shipping_code: shippingCode,\n    numero_pedido: numeroPedido,\n    tienda: credencial,\n    centro: centerCode,\n    credencial,\n    fecha_estado: pedido.fecha_estado_local || '',\n    destinatario,\n    email_subject: `ALERTA INTERNA: Envio ${shippingCode} grabado sin recoger`,\n    email_body: `El envio ${shippingCode} figura como grabado o recogida sin programar desde ayer. Revisar con almacen.`\n  }\n}];"
+      },
+      "id": "a0000001-0000-4000-8000-000000000006",
+      "name": "Preparar Alerta 0000",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [-5008, 1700]
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": { "caseSensitive": true, "leftValue": "", "typeValidation": "strict", "version": 3 },
+                "conditions": [{ "leftValue": "={{ $json.credencial }}", "rightValue": "HAMINOS", "operator": { "type": "string", "operation": "equals" } }],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "HAMINOS"
+            },
+            {
+              "conditions": {
+                "options": { "caseSensitive": true, "leftValue": "", "typeValidation": "strict", "version": 3 },
+                "conditions": [{ "leftValue": "={{ $json.credencial }}", "rightValue": "MIESTERY", "operator": { "type": "string", "operation": "equals" } }],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "MIESTERY"
+            },
+            {
+              "conditions": {
+                "options": { "caseSensitive": true, "leftValue": "", "typeValidation": "strict", "version": 3 },
+                "conditions": [{ "leftValue": "={{ $json.credencial }}", "rightValue": "KULTUDENDA", "operator": { "type": "string", "operation": "equals" } }],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "KULTUDENDA"
+            },
+            {
+              "conditions": {
+                "options": { "caseSensitive": true, "leftValue": "", "typeValidation": "strict", "version": 3 },
+                "conditions": [{ "leftValue": "={{ $json.credencial }}", "rightValue": "SNAPPY", "operator": { "type": "string", "operation": "equals" } }],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "SNAPPY"
+            }
+          ]
+        },
+        "options": { "fallbackOutput": "extra" }
+      },
+      "id": "a0000001-0000-4000-8000-000000000007",
+      "name": "Switch Credencial 0000",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [-4784, 1700]
+    },
+    {
+      "parameters": {
+        "sendTo": "incidenciashaminos@gmail.com",
+        "subject": "={{ $json.email_subject }}",
+        "message": "={{ $json.email_body }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "id": "a0000001-0000-4000-8000-000000000008",
+      "name": "Gmail 0000 H",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [-4560, 1540],
+      "webhookId": "b1000001-0000-4000-8000-000000000001",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "xvnQhr5hfD4gc3Uk",
+          "name": "HAMINOS"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "incidenciasamzdiscounts01@gmail.com",
+        "subject": "={{ $json.email_subject }}",
+        "message": "={{ $json.email_body }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "id": "a0000001-0000-4000-8000-000000000009",
+      "name": "Gmail 0000 M",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [-4560, 1700],
+      "webhookId": "b1000001-0000-4000-8000-000000000002",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "QJJKjkTiSoxnKucv",
+          "name": "MIESTERY / SERVICE CORP WORLD"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "incidenciaskulturdenda@gmail.com",
+        "subject": "={{ $json.email_subject }}",
+        "message": "={{ $json.email_body }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "id": "a0000001-0000-4000-8000-000000000010",
+      "name": "Gmail 0000 K",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [-4560, 1860],
+      "webhookId": "b1000001-0000-4000-8000-000000000003",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "I8iOQCCkF5dchDft",
+          "name": "KULTURDENDA"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "incidenciassnappyblue@gmail.com",
+        "subject": "={{ $json.email_subject }}",
+        "message": "={{ $json.email_body }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "id": "a0000001-0000-4000-8000-000000000011",
+      "name": "Gmail 0000 S",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [-4560, 2020],
+      "webhookId": "b1000001-0000-4000-8000-000000000004",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "ATDngCzgo2CXlgvv",
+          "name": "SNAPPY"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1MzLQ4PuK5i4cYJhV2yrezJSoTwse7FsnpX2VcWl65yk",
+          "mode": "list",
+          "cachedResultName": "CTT Tracking Log"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 751381048,
+          "mode": "list",
+          "cachedResultName": "Test IA",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MzLQ4PuK5i4cYJhV2yrezJSoTwse7FsnpX2VcWl65yk/edit#gid=751381048"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "FECHA PROCESADO": "={{ $now.toFormat('dd-MM-yyyy HH:mm:ss') }}",
+            "NUMERO DE ENVIO": "={{ $('Preparar Alerta 0000').item.json.shipping_code }}",
+            "NUMERO DE PEDIDO": "={{ $('Preparar Alerta 0000').item.json.numero_pedido }}",
+            "TIENDA": "={{ $('Preparar Alerta 0000').item.json.tienda }}",
+            "CENTRO": "={{ $('Preparar Alerta 0000').item.json.centro }}",
+            "ESTADO": "0000",
+            "FECHA ESTADO": "={{ $('Preparar Alerta 0000').item.json.fecha_estado }}",
+            "H EN ESTADO": "0",
+            "EMAIL ENVIADO": "SI",
+            "TIPO EMAIL": "internal",
+            "RAZON": "Grabado sin recoger al dia siguiente",
+            "DESTINATARIO": "={{ $('Preparar Alerta 0000').item.json.destinatario }}",
+            "CREDENCIAL": "={{ $('Preparar Alerta 0000').item.json.credencial }}"
+          },
+          "matchingColumns": [],
+          "schema": []
+        },
+        "options": {}
+      },
+      "id": "a0000001-0000-4000-8000-000000000012",
+      "name": "Log Test IA 0000",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [-4336, 1700],
       "credentials": {
         "googleSheetsOAuth2Api": {
           "id": "vUMIiZSNk60SoDGg",
@@ -1034,48 +1278,10 @@
     },
     "Loop Followup": {
       "main": [
+        [],
         [
           {
             "node": "Obtener Historial FW",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Switch Credencial": {
-      "main": [
-        [
-          {
-            "node": "Token HAMINOS FW",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Token MIESTERY FW",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Token KULTUDENDA FW",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Token SNAPPY FW",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Wait FW",
             "type": "main",
             "index": 0
           }
@@ -1120,6 +1326,11 @@
         [
           {
             "node": "Leer Incidencias",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Preparar Configs 0000",
             "type": "main",
             "index": 0
           }
@@ -1293,11 +1504,161 @@
         ]
       ]
     },
-    "Wait FW": {
+    "Preparar Configs 0000": {
       "main": [
         [
           {
-            "node": "Loop Followup",
+            "node": "Loop Clientes 0000",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Clientes 0000": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Call SubWf 0000",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call SubWf 0000": {
+      "main": [
+        [
+          {
+            "node": "Filtrar 0000 Ayer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filtrar 0000 Ayer": {
+      "main": [
+        [
+          {
+            "node": "Loop Pedidos 0000",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Pedidos 0000": {
+      "main": [
+        [
+          {
+            "node": "Loop Clientes 0000",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Preparar Alerta 0000",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Preparar Alerta 0000": {
+      "main": [
+        [
+          {
+            "node": "Switch Credencial 0000",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch Credencial 0000": {
+      "main": [
+        [
+          {
+            "node": "Gmail 0000 H",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Gmail 0000 M",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Gmail 0000 K",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Gmail 0000 S",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail 0000 H": {
+      "main": [
+        [
+          {
+            "node": "Log Test IA 0000",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail 0000 M": {
+      "main": [
+        [
+          {
+            "node": "Log Test IA 0000",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail 0000 K": {
+      "main": [
+        [
+          {
+            "node": "Log Test IA 0000",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail 0000 S": {
+      "main": [
+        [
+          {
+            "node": "Log Test IA 0000",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Log Test IA 0000": {
+      "main": [
+        [
+          {
+            "node": "Loop Pedidos 0000",
             "type": "main",
             "index": 0
           }

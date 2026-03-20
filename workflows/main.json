@@ -2,113 +2,33 @@
   "nodes": [
     {
       "parameters": {
-        "method": "POST",
-        "url": "https://api.cttexpress.com/integrations/oauth2/token",
-        "sendBody": true,
-        "contentType": "form-urlencoded",
-        "bodyParameters": {
-          "parameters": [
+        "assignments": {
+          "assignments": [
             {
-              "name": "client_id",
-              "value": "3eg1spueen47l2jkcm0dt56olk"
+              "id": "uuid-HAMINOS",
+              "name": "centers",
+              "value": [
+                "4863000001"
+              ],
+              "type": "array"
             },
             {
-              "name": "client_secret",
-              "value": "dmnoi2am8sdndpc1p905c2s5van5p110fik945t5q6pd5fkledk"
-            },
-            {
-              "name": "grant_type",
-              "value": "client_credentials"
-            },
-            {
-              "name": "scope",
-              "value": "urn:com:ctt-express:integration-clients:scopes:common/ALL"
+              "id": "a2e679e1-5f83-43e0-8af0-22e2753e82bd",
+              "name": "access_token",
+              "value": "={{ $json.access_token }}",
+              "type": "string"
             }
           ]
         },
         "options": {}
       },
-      "id": "45975755-601a-458e-a1a8-39ddb6ff24ac",
-      "name": "1. Obtener Token SERVICE CORP WORLD1",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.1,
+      "id": "58d21272-0e67-48b9-92da-d21bc0d673b3",
+      "name": "Config HAMINOS Centers",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
       "position": [
-        -11648,
-        1888
-      ]
-    },
-    {
-      "parameters": {
-        "method": "POST",
-        "url": "https://api.cttexpress.com/integrations/oauth2/token",
-        "sendBody": true,
-        "contentType": "form-urlencoded",
-        "bodyParameters": {
-          "parameters": [
-            {
-              "name": "client_id",
-              "value": "76m6rjgitmn2rdnpvenkngtf2"
-            },
-            {
-              "name": "client_secret",
-              "value": "145nub573diu45cleh7h3at6gkb6f91shoh9lv38q1djoi245loj"
-            },
-            {
-              "name": "grant_type",
-              "value": "client_credentials"
-            },
-            {
-              "name": "scope",
-              "value": "urn:com:ctt-express:integration-clients:scopes:common/ALL"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "id": "5936e376-2e59-473c-865d-4d518941bbe6",
-      "name": "1. Obtener Token KULTUDENDA1",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.1,
-      "position": [
-        -11648,
-        2080
-      ]
-    },
-    {
-      "parameters": {
-        "method": "POST",
-        "url": "https://api.cttexpress.com/integrations/oauth2/token",
-        "sendBody": true,
-        "contentType": "form-urlencoded",
-        "bodyParameters": {
-          "parameters": [
-            {
-              "name": "client_id",
-              "value": "21fmaj0ohg018vodhuf7cgdbqn"
-            },
-            {
-              "name": "client_secret",
-              "value": "6vrimoi7bftui40e63o3i2jhd9lqc6bcfuag2af6n35oov38oa1"
-            },
-            {
-              "name": "grant_type",
-              "value": "client_credentials"
-            },
-            {
-              "name": "scope",
-              "value": "urn:com:ctt-express:integration-clients:scopes:common/ALL"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "id": "f4c10ebb-1407-4a01-a870-597b2e711a8b",
-      "name": "1. Obtener Token SNAPPY1",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.1,
-      "position": [
-        -11648,
-        2272
+        -11424,
+        1152
       ]
     },
     {
@@ -116,221 +36,158 @@
         "assignments": {
           "assignments": [
             {
-              "id": "be16fbad-33b2-4ccd-8d9c-629fb2acd44d",
-              "name": "daysRange",
-              "value": "30",
-              "type": "string"
+              "id": "uuid-SERVICECORPWORLD",
+              "name": "centers",
+              "value": [
+                "4768500003"
+              ],
+              "type": "array"
             },
             {
-              "id": "151a10f1-deb7-4f75-bad3-acaae563502e",
-              "name": "pageLimit",
-              "value": "20",
+              "id": "0e21b407-7a48-49f0-9ef6-2556a6664105",
+              "name": "access_token",
+              "value": "={{ $json.access_token }}",
               "type": "string"
             }
           ]
         },
         "options": {}
       },
+      "id": "b8e755c4-5917-440c-a7d8-c74226c98f77",
+      "name": "Config SERVICE CORP WORLD Centers",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -11872,
-        1984
-      ],
-      "id": "23f4ffc8-58ca-4bfa-b90e-620e5bb580ce",
-      "name": "Edit Fields"
-    },
-    {
-      "parameters": {
-        "method": "POST",
-        "url": "https://api.cttexpress.com/integrations/oauth2/token",
-        "sendBody": true,
-        "contentType": "form-urlencoded",
-        "bodyParameters": {
-          "parameters": [
-            {
-              "name": "client_id",
-              "value": "6lmgulg22aneeht6tj0oqgd5nt"
-            },
-            {
-              "name": "client_secret",
-              "value": "g84jnhse644ttjct97s1hkvth1ekbh8pupjpoue9ubmhmis77ll"
-            },
-            {
-              "name": "grant_type",
-              "value": "client_credentials"
-            },
-            {
-              "name": "scope",
-              "value": "urn:com:ctt-express:integration-clients:scopes:common/ALL"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "id": "cf01259d-4e7a-4df3-80d8-e0d79afca0fa",
-      "name": "1. Obtener Token HAMINOS1",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.1,
-      "position": [
-        -11648,
-        1696
+        -11424,
+        1344
       ]
     },
     {
       "parameters": {
-        "numberInputs": 4
-      },
-      "type": "n8n-nodes-base.merge",
-      "typeVersion": 3.2,
-      "position": [
-        -10976,
-        1856
-      ],
-      "id": "3afb4e80-9980-4efe-8f67-f53eaed4ee21",
-      "name": "Merge2"
-    },
-    {
-      "parameters": {
-        "rule": {
-          "interval": [
+        "assignments": {
+          "assignments": [
             {
-              "field": "cronExpression",
-              "expression": "0 17 * * 1-5"
+              "id": "uuid-KULTUDENDA",
+              "name": "centers",
+              "value": [
+                "4541600001",
+                "4541600002"
+              ],
+              "type": "array"
             },
             {
-              "field": "cronExpression",
-              "expression": "0 20 * * 1-5"
+              "id": "7ee132dd-b75f-4a2d-adb2-1704dbff8b85",
+              "name": "access_token",
+              "value": "={{ $json.access_token }}",
+              "type": "string"
             }
           ]
-        }
-      },
-      "type": "n8n-nodes-base.scheduleTrigger",
-      "typeVersion": 1.3,
-      "position": [
-        -12096,
-        1984
-      ],
-      "id": "d437911e-2400-4e7a-a7e5-6aaa6bde41b2",
-      "name": "Schedule Trigger"
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 3
-          },
-          "conditions": [
-            {
-              "id": "c29a7369-1524-4e44-9139-97f1d52f168c",
-              "leftValue": "={{ $json.shipping_status_code }}",
-              "rightValue": "2100",
-              "operator": {
-                "type": "string",
-                "operation": "notEquals"
-              }
-            },
-            {
-              "id": "9de119f0-ff38-45cf-af70-58876bc723b7",
-              "leftValue": "={{ $json.shipping_status_code }}",
-              "rightValue": "2310",
-              "operator": {
-                "type": "string",
-                "operation": "notEquals"
-              }
-            },
-            {
-              "id": "7960038a-a926-496e-ac96-2f6d89d956b9",
-              "leftValue": "={{ $json.shipping_status_code }}",
-              "rightValue": "3000",
-              "operator": {
-                "type": "string",
-                "operation": "notEquals"
-              }
-            }
-          ],
-          "combinator": "and"
         },
         "options": {}
       },
-      "id": "8807cbcf-207a-4589-9be0-5b9e28e2ebf9",
-      "name": "Filtrar_Estados_Activos_Optimizado",
-      "type": "n8n-nodes-base.filter",
-      "typeVersion": 2.3,
+      "id": "273c05ed-4c64-478c-a82b-c1c6ab3f4ba4",
+      "name": "Config KULTUDENDA Centers",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
       "position": [
-        -10752,
-        1888
+        -11424,
+        1536
       ]
     },
     {
       "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "uuid-SNAPPY",
+              "name": "centers",
+              "value": [
+                "4735200001",
+                "4735200002",
+                "4735200003",
+                "4735200004",
+                "4735200005"
+              ],
+              "type": "array"
+            },
+            {
+              "id": "df5a71da-5eb7-4553-b8c1-02b903390d9e",
+              "name": "access_token",
+              "value": "={{ $json.access_token }}",
+              "type": "string"
+            }
+          ]
+        },
         "options": {}
       },
-      "id": "c4ff86d6-7719-411d-9f8f-5b54f76f6be9",
-      "name": "Loop: Processar 1 a 2",
-      "type": "n8n-nodes-base.splitInBatches",
-      "typeVersion": 3,
+      "id": "058bce6a-89c5-4487-aded-ebb820a436dd",
+      "name": "Config SNAPPY Centers",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
       "position": [
-        -10528,
-        1888
+        -11424,
+        1728
       ]
     },
     {
       "parameters": {
-        "url": "=https://api.cttexpress.com/integrations-info/trf/item-history-api/history/{{ $json.shipping_code }}",
-        "sendQuery": true,
-        "queryParameters": {
-          "parameters": [
-            {
-              "name": "view",
-              "value": "APITRACK"
-            },
-            {
-              "name": "showItems",
-              "value": "false"
-            }
-          ]
-        },
-        "sendHeaders": true,
-        "headerParameters": {
-          "parameters": [
-            {
-              "name": "Authorization",
-              "value": "={{ 'Bearer ' + ($('Loop: Processar 1 a 2').item.json.client_code == '47352' ? $('1. Obtener Token SNAPPY1').first().json.access_token : $('Loop: Processar 1 a 2').item.json.client_code == '48630' ? $('1. Obtener Token HAMINOS1').first().json.access_token : $('Loop: Processar 1 a 2').item.json.client_code == '47685' ? $('1. Obtener Token SERVICE CORP WORLD1').first().json.access_token : $('1. Obtener Token KULTUDENDA1').first().json.access_token) }}"
-            }
-          ]
-        },
+        "workflowId": "NtGW6lN2IMYIaKeYdTuot",
         "options": {}
       },
-      "id": "1a10f180-fee5-4142-941a-317ab52db583",
-      "name": "Obtenir Historial Detallat1",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.1,
+      "id": "b6e552a0-8aaf-4e9f-9dcb-25cb168c54ee",
+      "name": "Call SubWf HAMINOS",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
       "position": [
-        -10304,
-        1816
-      ],
-      "retryOnFail": true,
-      "waitBetweenTries": 5000
+        -11200,
+        1152
+      ]
     },
     {
       "parameters": {
-        "jsCode": "try {\n  const item = $('Loop: Processar 1 a 2').first().json;\n  const history = $input.item.json;\n  let events = [];\n  if (history?.data?.shipping_history?.events) {\n    events = history.data.shipping_history.events;\n  } else if (Array.isArray(history)) {\n    const data = history[0];\n    if (data?.data?.shipping_history?.events) {\n      events = data.data.shipping_history.events;\n    }\n  }\n  const has1600 = events.some(e => e.code === '1600' || e.event_code === '1600');\n  let formattedHistory = 'Sin eventos disponibles';\n  if (events.length > 0) {\n    formattedHistory = events.map(e => {\n      let date = e.event_date || e.item_event_date || '';\n      if (date) {\n        try {\n          const d = new Date(date);\n          d.setHours(d.getHours() + 1);\n          date = d.toISOString().replace('T', ' ').substring(0, 16);\n        } catch(x) {}\n      }\n      const code = e.code || e.event_code || 'N/A';\n      const desc = e.description || e.event_description || '';\n      const detail = e.detail?.External_event_text || e.detail?.item_event_text || '';\n      return `${date} - [${code}] ${desc} (${detail})`;\n    }).join('\\n');\n  }\n  return {\n    json: {\n      ...item,\n      status_history: events,\n      formatted_history: formattedHistory,\n      history_has_1600: has1600,\n      total_events: events.length\n    }\n  };\n} catch (error) {\n  throw new Error(`[Code JS3] ${error.message}`);\n}"
+        "workflowId": "NtGW6lN2IMYIaKeYdTuot",
+        "options": {}
       },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
+      "id": "1fc5d889-a10a-40cd-a82e-ef862ca52f71",
+      "name": "Call SubWf SERVICE CORP WORLD",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
       "position": [
-        -10080,
-        1816
-      ],
-      "id": "afd20b53-6b75-41a3-b456-720b10817779",
-      "name": "Code in JavaScript3"
+        -11200,
+        1344
+      ]
     },
     {
       "parameters": {
+        "workflowId": "NtGW6lN2IMYIaKeYdTuot",
+        "options": {}
+      },
+      "id": "28ebcabf-3695-491e-8000-80483a99da32",
+      "name": "Call SubWf KULTUDENDA",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        -11200,
+        1536
+      ]
+    },
+    {
+      "parameters": {
+        "workflowId": "NtGW6lN2IMYIaKeYdTuot",
+        "options": {}
+      },
+      "id": "68d644d0-b0d9-4e30-86c7-eaf3ff54dc2b",
+      "name": "Call SubWf SNAPPY",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        -11200,
+        1728
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "append",
         "documentId": {
           "__rl": true,
           "value": "1MzLQ4PuK5i4cYJhV2yrezJSoTwse7FsnpX2VcWl65yk",
@@ -339,643 +196,172 @@
         },
         "sheetName": {
           "__rl": true,
-          "value": 1123525887,
+          "value": 751381048,
           "mode": "list",
-          "cachedResultName": "Incidencias",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MzLQ4PuK5i4cYJhV2yrezJSoTwse7FsnpX2VcWl65yk/edit#gid=1123525887"
+          "cachedResultName": "Test IA",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MzLQ4PuK5i4cYJhV2yrezJSoTwse7FsnpX2VcWl65yk/edit#gid=751381048"
         },
-        "filtersUI": {
-          "values": [
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "FECHA PROCESADO": "={{ $now.toFormat('dd-MM-yyyy HH:mm:ss') }}",
+            "NUMERO DE ENVIO": "={{ $('Preparar Contexto').item.json.shipping_code }}",
+            "NUMERO DE PEDIDO": "={{ $('Preparar Contexto').item.json.client_references[0] }}",
+            "TIENDA": "={{ $('Preparar Contexto').item.json.client_code === '48630' ? 'HAMINOS' : ($('Preparar Contexto').item.json.client_code === '47685' ? 'MIESTERY' : ($('Preparar Contexto').item.json.client_code === '45416' ? 'KULTUDENDA' : 'SNAPPY')) }}",
+            "CENTRO": "={{ $('Preparar Contexto').item.json.client_center_code }}",
+            "ESTADO": "={{ $('Code in JavaScript3').item.json.shipping_status_code }}",
+            "FECHA ESTADO": "={{ $('Code in JavaScript3').item.json.shipping_status_datetime }}",
+            "H EN ESTADO": "={{$('Code in JavaScript2').first().json.h_en_estado}}",
+            "EMAIL ENVIADO": "={{ $('Code in JavaScript2').first().json.should_notify }}\n",
+            "TIPO EMAIL": "={{ $('Code in JavaScript2').first().json.ai_incident_detected }}",
+            "RAZON": "={{ $('Code in JavaScript2').first().json.ai_justification }}",
+            "DESTINATARIO": "={{ $('Code in JavaScript2').first().json.email_to }}",
+            "CREDENCIAL": "={{ $('Preparar Contexto').item.json.client_code === '48630' ? 'HAMINOS' : ($('Preparar Contexto').item.json.client_code === '47685' ? 'MIESTERY' : ($('Preparar Contexto').item.json.client_code === '45416' ? 'KULTUDENDA' : 'SNAPPY')) }}"
+          },
+          "matchingColumns": [],
+          "schema": [
             {
-              "lookupColumn": "NUMERO DE ENVIO",
-              "lookupValue": "={{ $('Code in JavaScript3').item.json.shipping_code }}"
+              "id": "FECHA PROCESADO",
+              "displayName": "FECHA PROCESADO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "NUMERO DE ENVIO",
+              "displayName": "NUMERO DE ENVIO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "NUMERO DE PEDIDO",
+              "displayName": "NUMERO DE PEDIDO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "TIENDA",
+              "displayName": "TIENDA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "CENTRO",
+              "displayName": "CENTRO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "ESTADO",
+              "displayName": "ESTADO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "FECHA ESTADO",
+              "displayName": "FECHA ESTADO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "H EN ESTADO",
+              "displayName": "H EN ESTADO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "EMAIL ENVIADO",
+              "displayName": "EMAIL ENVIADO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "TIPO EMAIL",
+              "displayName": "TIPO EMAIL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "RAZON",
+              "displayName": "RAZON",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "DESTINATARIO",
+              "displayName": "DESTINATARIO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "CREDENCIAL",
+              "displayName": "CREDENCIAL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
             }
-          ]
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
         },
         "options": {}
       },
-      "id": "e0d6267c-4dcf-4c2b-b298-7c5c9fb3cbe3",
-      "name": "Buscar Avisos Previos",
+      "id": "81b4b3e7-4ec1-4e54-b3da-785031e61654",
+      "name": "Log Estados1",
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        -9856,
-        1816
+        -7488,
+        1360
       ],
-      "alwaysOutputData": true,
       "retryOnFail": true,
+      "maxRetries": 3,
+      "retryDelay": 5000,
+      "alwaysOutputData": true,
       "credentials": {
         "googleSheetsOAuth2Api": {
           "id": "vUMIiZSNk60SoDGg",
           "name": "Google Sheets account"
         }
-      }
-    },
-    {
-      "parameters": {
-        "jsCode": "const rows = $input.all();\nconst item = $('Code in JavaScript3').item.json;\nconst hoy = $now.toFormat('dd-MM-yyyy');\nconst ayer = $now.minus({days: 1}).toFormat('dd-MM-yyyy');\n\nconst filasValidas = rows.filter(r => r.json['NUMERO DE ENVIO']);\n\nconst filasHoy = filasValidas.filter(r => {\n  const fecha = (r.json['FECHA PROCESADO'] || '').substring(0, 10);\n  return fecha === hoy;\n});\n\nconst filasAyer = filasValidas.filter(r => {\n  const fecha = (r.json['FECHA PROCESADO'] || '').substring(0, 10);\n  return fecha === ayer;\n});\n\nconst is2500 = String(item.shipping_status_code || '') === '2500';\n\nconst skip = filasHoy.length > 0;\nconst forceInternal = !skip && (filasAyer.length > 0 || is2500);\nconst numeroAvisos = filasValidas.length + 1;\n\nreturn {\n  json: {\n    ...item,\n    skip,\n    force_internal: forceInternal,\n    is_2500: is2500,\n    numero_avisos: numeroAvisos\n  }\n};"
       },
-      "id": "2dbf7da3-04f2-4060-a674-6ea86bbd1296",
-      "name": "Preparar Contexto",
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        -9632,
-        1816
-      ]
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 3
-          },
-          "conditions": [
-            {
-              "id": "skip-check",
-              "leftValue": "={{ $json.skip }}",
-              "rightValue": true,
-              "operator": {
-                "type": "boolean",
-                "operation": "equals"
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
-      },
-      "id": "1942be12-ce2b-4d79-8e76-c2e3987b6f46",
-      "name": "If Duplicado Hoy",
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.3,
-      "position": [
-        -9408,
-        1816
-      ]
-    },
-    {
-      "parameters": {
-        "modelId": {
-          "__rl": true,
-          "value": "gpt-4o-mini",
-          "mode": "list",
-          "cachedResultName": "GPT-4O-MINI"
-        },
-        "responses": {
-          "values": [
-            {
-              "content": "=Historial Procesado:\n{{ $json.formatted_history }}\n\nNumero de Pedido: {{ $json.shipping_code }}\nHora actual: {{ $now.toFormat('yyyy-MM-dd HH:mm') }} ({{ ['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo'][$now.weekday - 1] }})"
-            },
-            {
-              "role": "system",
-              "content": "=Eres un auditor logistico de CTT Express. Analiza el historial y decide si notificar. RESPONDE SOLO CON JSON PURO, SIN MARKDOWN.\n\n### FUENTE DE VERDAD (CRITICO)\nDetermina el estado actual UNICAMENTE leyendo el historial cronologico de arriba a abajo.\nIgnora cualquier otro campo o dato externo que no sea el historial y la hora actual.\n\n### CALCULO DE HORAS LABORABLES (CRITICO)\nEl historial y la hora actual estan en hora Madrid.\nLos umbrales de 24h se refieren a HORAS LABORABLES (lunes a viernes).\nLos sabados y domingos NO cuentan como tiempo transcurrido.\n\nFormula OBLIGATORIA paso a paso:\n1. Identifica el evento relevante segun las reglas de abajo.\n2. Desde la fecha del evento hasta la hora actual, suma SOLO las horas de dias laborables (lunes a viernes).\n   - Cada dia laborable completo = 24h.\n   - Los sabados y domingos se saltan completamente: no suman nada.\n   - Ejemplo A: Viernes 15:00 → Lunes 15:00 = 24h laborables.\n   - Ejemplo B: Viernes 10:00 → Lunes 18:00 = 32h laborables.\n   - Ejemplo C: Miercoles 10:00 → Jueves 11:00 = 25h laborables.\n3. Ese resultado es horas_in_status.\n4. hours_in_status debe reflejar SIEMPRE las horas reales. Nunca escribas 0 si has calculado otra cifra.\n5. Compara horas_in_status con el umbral ANTES de decidir.\nNO estimes, calcula siempre.\n\n### CICLO DE REPARTO\nEl ciclo de reparto empieza en el primer 1200 o 1500 del ciclo actual.\nUsa la fecha del primer 1200 o 1500 del ciclo actual como punto de inicio.\nEjemplo: si hay 1200 a las 06:42 y luego 1500 a las 11:03, el ciclo empezo a las 06:42.\nCRITICO: Cada vez que aparece un 1000 despues de un 1200, el ciclo SE REINICIA COMPLETAMENTE.\nEl punto de inicio siempre es el ultimo 1200 que no haya sido seguido de otro 1000.\nEjemplo de reinicio: 1200 07:10 → 1000 08:11 (reset) → 1200 17:34 → 1000 18:33 (reset) → 1200 18:34 ← el ciclo empezo a las 18:34.\n\n### ALERTAS CON UMBRAL\nNotificar solo si supera las horas indicadas:\n- 0000 / 0030 → > 24h grabado (Alerta Interna)\n- 1200 / 1500 → > 24h en ciclo de reparto\n- 1700 / 1800 → > 24h estacionado\n\n### REGLA ESPECIAL TRANSITO (SLA 24-48H)\nEl tiempo en transito se mide DESDE el momento en que se documentó originalmente el tránsito, hasta que llega a reparto.\nReglas OBLIGATORIAS para transito:\n1. Buscar el primer evento `0900` o `1000` de todo el historial.\n2. Calcular las horas laborables transcurridas desde ESE primer evento hasta la hora actual.\n3. Ignorar todas las actualizaciones intermedias (como nuevos 1000, 71_INAT o cualquier otro evento que no sea salida a reparto).\n4. Si las horas laborables desde que empezó a estar en tránsito son mayores a 24 horas y todavía no hay un 1200 o 1500, notificar (should_notify: true).\n5. Esta regla tiene prioridad absoluta sobre \"mensajes de gestion interna\" como el 71_INAT.\n\n### ALERTAS SIN UMBRAL\nNotificar SIEMPRE si la incidencia esta ACTIVA:\n- 1600 → reparto fallido\n- 2300, 2400, 2600, 2700 → variantes de reparto fallido\n- 0600 → recogida fallida\n- 2310 / 2900 → datos incorrectos\n- 1012 → posible extravio\n- 1006 → danos en contenido\n- 1008 → posible robo\n\nEn detected_incident escribe siempre el nombre, no el codigo.\n\n### REGLA DE RESOLUCION DE INCIDENCIAS (CRITICO)\nUna incidencia 1600/2300/2400/2600/2700/0600 esta RESUELTA solamente si despues de ella aparece un 1500.\nSi despues aparece 1200, 1000 u otro codigo distinto de 1500, la incidencia SIGUE ACTIVA.\n\nCasos:\n- 1600 es el ultimo evento → should_notify: true SIEMPRE\n- 1600 → 1500 (ultimo) → resuelta → should_notify: false, evaluar 1500 con umbral\n- 1600 → 1200 (ultimo) → NO resuelta → should_notify: true\n- 1600 → 1000 (ultimo) → NO resuelta → should_notify: true\n- 0600 es el ultimo evento → should_notify: true SIEMPRE\n\n### NO NOTIFICAR si:\n- horas_in_status < 24 para 0000/0030/0900/1000/1200/1500/1700/1800\n- Incidencia 1600/variante seguida de 1500 → resuelta\n- Evento 71_INAT → ya gestionado. Si el ultimo evento es 71_INAT → should_notify: false, EXCEPTO si se incumple la REGLA ESPECIAL TRANSITO (en cuyo caso notifica por retraso en transito igualmente).\n- delivery_date informado → ya entregado\n- Ultimo evento no esta en lista de alertas\n\n### NOTA IMPORTANTE\nResponde siempre target_type: standard. El sistema lo sobreescribira si es necesario.\n\n### PLANTILLAS SEGUN WORKFLOW (usa el Numero de Pedido exacto del prompt como [SEG])\nemail_subject → SIEMPRE: \"Incidencia en el envio [SEG]\"\nemail_body → texto largo de la plantilla\n\nREGLAS DE PLANTILLA (SOLO PARA should_notify: true):\n- 0000/0030 (Día 1 - Alerta Interna):\n  email_subject: \"ALERTA INTERNA: Envio [SEG] grabado sin recoger\"\n  email_body: \"El envio [SEG] figura como grabado o recogida sin programar desde ayer. Revisar con almacen.\"\n  target_type: \"internal\"\n\n- 0900/1000 (Día 2 - Tránsito estancado):\n  email_body: \"Buenos dias. El envio [SEG] estuvo en transito el dia anterior y hoy aun no ha cambiado a reparto. Solicitamos que el envio salga a reparto al dia siguiente. Gracias.\"\n  target_type: \"standard\"\n\n- 1200/1500 (Día 3 - Reparto estancado):\n  email_body: \"Buenos dias. El envio [SEG] se encuentra en reparto desde ayer sin entregarse. Solicitamos que el pedido sea sacado nuevamente a reparto hoy mismo. Gracias.\"\n  target_type: \"standard\"\n\n- 1600/2300/2400/2600/2700 (Incidencia):\n  email_body: \"Buenos dias. El envio [SEG] presenta su primera incidencia. Solicitamos explicitamente un segundo intento de reparto para el siguiente dia habil. Gracias.\"\n  target_type: \"standard\"\n\n- Otros casos (0600, 2310, 2900, 1012, 1006, 1008): usar un mensaje descriptivo similar pidiendo gestion urgente.\n\n### COHERENCIA OBLIGATORIA\nSi should_notify es false → email_subject y email_body deben ser \"\" (vacios).\nSi escribes \"no supera\" o \"resuelta\" → should_notify: false.\nSi escribes \"supera\" o \"incidencia activa\" → should_notify: true.\nNunca contradigas la justificacion con la decision.\n\n### SALIDA JSON\nREGLAS (OBLIGATORIO):\n- Si no se supera el umbral y no hay alertas sin umbral activas, PON should_notify: false y DEJA LOS CAMPOS DE EMAIL VACIOS (\"\").\n- email_subject → SIEMPRE: \"Incidencia en el envio [SEG]\" con el numero real\n- email_body → texto largo de la plantilla con el numero real\n- NUNCA el body en el subject ni al reves\n- Si should_notify false → ambos campos \"\"\n\n### VERIFICACIÓN FINAL OBLIGATORIA (ejecutar SIEMPRE antes de responder)\nPaso 1: ¿El último evento es 1600/2300/2400/2600/2700/0600?\n  → SI y NO hay 1500 posterior → should_notify: true. IGNORA cualquier cálculo de horas.\n  → NO → continúa con el análisis normal de umbrales.\n\n\n### EJEMPLOS DE SALIDA JSON (ESTO ES SOLO EL FORMATO, NO LOS COPIES PARA OTRO ENVIO)\n\nEJEMPLO 1: INCIDENCIA ACTIVA (Notificar)\n{\n  \"analysis\": {\n    \"detected_incident\": \"Reparto fallido\",\n    \"hours_in_status\": 9,\n    \"is_first_incident\": true,\n    \"justification\": \"Ultimo evento: 1600 Reparto fallido a las 09:17 del martes. Ahora son las 18:36. Umbral: sin umbral. Incidencia activa -> se envia correo.\"\n  },\n  \"decision\": {\n    \"should_notify\": true,\n    \"target_type\": \"standard\",\n    \"email_subject\": \"Incidencia en el envio 0080530080539701011625\",\n    \"email_body\": \"Buenos dias. El envio 0080530080539701011625 presenta reparto fallido o incidencia. Por favor, programar un nuevo reparto para el siguiente dia habil. Gracias.\"\n  }\n}\n\nEJEMPLO 2: SIN INCIDENCIA O NO SUPERA UMBRAL (NO Notificar)\n{\n  \"analysis\": {\n    \"detected_incident\": \"Delegacion destino\",\n    \"hours_in_status\": 0,\n    \"is_first_incident\": false,\n    \"justification\": \"Ultimo evento: 1200 Delegacion destino a las 07:47 del lunes. Ahora son las 17:40. Han pasado 0 horas laborables. No se supera el umbral -> NO se envia correo.\"\n  },\n  \"decision\": {\n    \"should_notify\": false,\n    \"target_type\": \"standard\",\n    \"email_subject\": \"\",\n    \"email_body\": \"\"\n  }\n}"
-            }
-          ]
-        },
-        "builtInTools": {},
-        "options": {
-          "temperature": 0.1
-        }
-      },
-      "type": "@n8n/n8n-nodes-langchain.openAi",
-      "typeVersion": 2.1,
-      "position": [
-        -9184,
-        1744
-      ],
-      "id": "67a80c1c-60c6-4146-85c4-a126e180462e",
-      "name": "Message a model",
-      "credentials": {
-        "openAiApi": {
-          "id": "1MaHDKdD55sbyLF8",
-          "name": "haminos"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "jsCode": "const raw = $input.item.json;\nconst aiText = raw.output[0].content[0].text;\nconst aiData = JSON.parse(aiText.replace(/```json|```/g, '').trim());\n\nconst contexto = $('Preparar Contexto').item.json;\nconst forceInternal = contexto.force_internal === true;\nconst is2500 = contexto.is_2500 === true;\nconst numeroAvisos = contexto.numero_avisos || 1;\nconst clientCode = String(contexto.client_center_code || '');\n\nlet targetType = aiData.decision?.target_type || 'standard';\nif (forceInternal || is2500) targetType = 'internal';\n\nconst shouldNotify = aiData.decision?.should_notify === true;\n\nconst emailTo = targetType === 'internal'\n  ? 'alertas@sergi.com'\n  : (clientCode.match(/^454160000[1-2]$/) ? 'cca.z2@cttexpress.com' : 'cca.z3@cttexpress.com');\n\nreturn {\n  should_notify: shouldNotify,\n  target_type: targetType,\n  email_subject: shouldNotify ? (aiData.decision?.email_subject || '') : '',\n  email_body: shouldNotify ? (aiData.decision?.email_body || '') : '',\n  ai_incident_detected: aiData.analysis?.detected_incident || 'N/A',\n  ai_justification: aiData.analysis?.justification || 'Sin detalle',\n  h_en_estado: aiData.analysis?.hours_in_status || 0,\n  email_to: emailTo,\n  numero_avisos: numeroAvisos,\n  force_internal: forceInternal,\n  is_2500: is2500\n};"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        -8832,
-        1744
-      ],
-      "id": "561172dc-4f63-4520-a2b9-219ee5ad5c46",
-      "name": "Code in JavaScript2"
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 3
-          },
-          "conditions": [
-            {
-              "id": "3b3d3f7b-9600-41fd-91d6-2fb221274511",
-              "leftValue": "={{ $json.should_notify }}",
-              "rightValue": true,
-              "operator": {
-                "type": "boolean",
-                "operation": "equals"
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.3,
-      "position": [
-        -8608,
-        1744
-      ],
-      "id": "6c226b93-ed66-4cf6-ab43-86882268635e",
-      "name": "If1"
-    },
-    {
-      "parameters": {
-        "rules": {
-          "values": [
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 3
-                },
-                "conditions": [
-                  {
-                    "leftValue": "={{ $('Code in JavaScript2').item.json.target_type }}",
-                    "rightValue": "standard",
-                    "operator": {
-                      "type": "string",
-                      "operation": "equals"
-                    }
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "Standard"
-            },
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 3
-                },
-                "conditions": [
-                  {
-                    "leftValue": "={{ $('Code in JavaScript2').item.json.target_type }}",
-                    "rightValue": "internal",
-                    "operator": {
-                      "type": "string",
-                      "operation": "equals"
-                    }
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "Internal"
-            }
-          ]
-        },
-        "options": {
-          "fallbackOutput": "extra"
-        }
-      },
-      "id": "8f61eb2e-ea73-4d56-9392-241e004ed0e7",
-      "name": "Switch Target Type",
-      "type": "n8n-nodes-base.switch",
-      "typeVersion": 3.4,
-      "position": [
-        -8384,
-        1344
-      ]
-    },
-    {
-      "parameters": {
-        "rules": {
-          "values": [
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 3
-                },
-                "conditions": [
-                  {
-                    "leftValue": "={{ $('Preparar Contexto').item.json.client_code }}",
-                    "rightValue": "48630",
-                    "operator": {
-                      "type": "string",
-                      "operation": "equals"
-                    }
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "HAMINOS"
-            },
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 3
-                },
-                "conditions": [
-                  {
-                    "leftValue": "={{ $('Preparar Contexto').item.json.client_code }}",
-                    "rightValue": "47685",
-                    "operator": {
-                      "type": "string",
-                      "operation": "equals"
-                    }
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "SERVICE CORP"
-            },
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 3
-                },
-                "conditions": [
-                  {
-                    "leftValue": "={{ $('Preparar Contexto').item.json.client_code }}",
-                    "rightValue": "45416",
-                    "operator": {
-                      "type": "string",
-                      "operation": "equals"
-                    }
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "KULTUDENDA"
-            },
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 3
-                },
-                "conditions": [
-                  {
-                    "leftValue": "={{ $('Preparar Contexto').item.json.client_code }}",
-                    "rightValue": "47352",
-                    "operator": {
-                      "type": "string",
-                      "operation": "equals"
-                    }
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "SNAPPY"
-            }
-          ]
-        },
-        "options": {
-          "fallbackOutput": "extra"
-        }
-      },
-      "type": "n8n-nodes-base.switch",
-      "typeVersion": 3.4,
-      "position": [
-        -8160,
-        832
-      ],
-      "id": "9f453a4f-efaf-482a-a742-31a72bab4afb",
-      "name": "Switch3"
-    },
-    {
-      "parameters": {
-        "rules": {
-          "values": [
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 3
-                },
-                "conditions": [
-                  {
-                    "leftValue": "={{ $('Preparar Contexto').item.json.client_code }}",
-                    "rightValue": "48630",
-                    "operator": {
-                      "type": "string",
-                      "operation": "equals"
-                    },
-                    "id": "0ea6be7a-8f97-47c9-86db-8b5d7dc594dd"
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "HAMINOS"
-            },
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 3
-                },
-                "conditions": [
-                  {
-                    "leftValue": "={{ $('Preparar Contexto').item.json.client_code }}",
-                    "rightValue": "47685",
-                    "operator": {
-                      "type": "string",
-                      "operation": "equals"
-                    },
-                    "id": "7da82b48-f3eb-4463-ab88-5a73641c9905"
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "SERVICE CORP"
-            },
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 3
-                },
-                "conditions": [
-                  {
-                    "leftValue": "={{ $('Preparar Contexto').item.json.client_code }}",
-                    "rightValue": "45416",
-                    "operator": {
-                      "type": "string",
-                      "operation": "equals"
-                    },
-                    "id": "2d09f65e-6699-4e65-b7e9-4150ca055344"
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "KULTUDENDA"
-            },
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 3
-                },
-                "conditions": [
-                  {
-                    "leftValue": "={{ $('Preparar Contexto').item.json.client_code }}",
-                    "rightValue": "47352",
-                    "operator": {
-                      "type": "string",
-                      "operation": "equals"
-                    },
-                    "id": "17fd2f70-4cef-4da9-844b-5131c39d8f3e"
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "SNAPPY"
-            }
-          ]
-        },
-        "options": {
-          "fallbackOutput": "extra"
-        }
-      },
-      "type": "n8n-nodes-base.switch",
-      "typeVersion": 3.4,
-      "position": [
-        -8160,
-        1768
-      ],
-      "id": "7d04d535-f513-4483-988f-dab7f03ff4af",
-      "name": "Switch Client Internal"
-    },
-    {
-      "parameters": {
-        "resource": "draft",
-        "subject": "={{ $json.email_subject }}",
-        "message": "={{ $json.email_body }}\n\nSEG: {{ $('Preparar Contexto').item.json.shipping_code }}\nPED: {{ $('Preparar Contexto').item.json.client_references[0] }}",
-        "options": {}
-      },
-      "id": "eb69279d-b2e3-4e44-928d-24236c02f396",
-      "name": "Trans H",
-      "type": "n8n-nodes-base.gmail",
-      "typeVersion": 2.2,
-      "position": [
-        -7936,
-        544
-      ],
-      "webhookId": "687fe524-700d-4b68-9c6f-7ba0a82d4b98",
-      "credentials": {
-        "gmailOAuth2": {
-          "id": "xvnQhr5hfD4gc3Uk",
-          "name": "HAMINOS"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "resource": "draft",
-        "subject": "={{ $json.email_subject }}",
-        "message": "={{ $json.email_body }}\n\nSEG: {{ $('Preparar Contexto').item.json.shipping_code }}\nPED: {{ $('Preparar Contexto').item.json.client_references[0] }}",
-        "options": {}
-      },
-      "id": "c38093fc-d45c-47ae-85e2-2f9a8c10b222",
-      "name": "Trans M1",
-      "type": "n8n-nodes-base.gmail",
-      "typeVersion": 2.2,
-      "position": [
-        -7936,
-        736
-      ],
-      "webhookId": "d6262cda-5b4c-409d-ad13-2ff59066d7bb",
-      "credentials": {
-        "gmailOAuth2": {
-          "id": "QJJKjkTiSoxnKucv",
-          "name": "MIESTERY / SERVICE CORP WORLD"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "resource": "draft",
-        "subject": "={{ $json.email_subject }}",
-        "message": "={{ $json.email_body }}\n\nSEG: {{ $('Preparar Contexto').item.json.shipping_code }}\nPED: {{ $('Preparar Contexto').item.json.client_references[0] }}",
-        "options": {}
-      },
-      "id": "a798585c-497a-4a3d-a23c-1b488ac20f37",
-      "name": "Trans K1",
-      "type": "n8n-nodes-base.gmail",
-      "typeVersion": 2.2,
-      "position": [
-        -7936,
-        928
-      ],
-      "webhookId": "37bf9cb8-6c76-4e55-b952-99c33af2d342",
-      "credentials": {
-        "gmailOAuth2": {
-          "id": "I8iOQCCkF5dchDft",
-          "name": "KULTURDENDA"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "resource": "draft",
-        "subject": "={{ $json.email_subject }}",
-        "message": "={{ $json.email_body }}\n\nSEG: {{ $('Preparar Contexto').item.json.shipping_code }}\nPED: {{ $('Preparar Contexto').item.json.client_references[0] }}",
-        "options": {}
-      },
-      "id": "618f8c6f-6908-4671-bfc6-db48bad94b14",
-      "name": "Trans S1",
-      "type": "n8n-nodes-base.gmail",
-      "typeVersion": 2.2,
-      "position": [
-        -7936,
-        1120
-      ],
-      "webhookId": "e6fd21ee-c4ae-4ce2-a664-090d1fb5e50e",
-      "credentials": {
-        "gmailOAuth2": {
-          "id": "ATDngCzgo2CXlgvv",
-          "name": "SNAPPY"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "resource": "draft",
-        "subject": "=SEGUIMIENTO INTERNO: Incidencia - {{ $('Preparar Contexto').item.json.shipping_code }}",
-        "message": "={{ $json.email_body }}\n\n--- DETALLES INTERNOS ---\nJUSTIFICACION IA:\n{{ $json.ai_justification }}\n\nENVIO: {{ $('Preparar Contexto').item.json.shipping_code }}",
-        "options": {}
-      },
-      "id": "51236e8b-9b91-4c7f-b313-fb81bbe576ce",
-      "name": "Int H",
-      "type": "n8n-nodes-base.gmail",
-      "typeVersion": 2.2,
-      "position": [
-        -7936,
-        1600
-      ],
-      "webhookId": "3b9886c3-83ec-498a-ae32-8d01c94c75fb",
-      "credentials": {
-        "gmailOAuth2": {
-          "id": "xvnQhr5hfD4gc3Uk",
-          "name": "HAMINOS"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "resource": "draft",
-        "subject": "=SEGUIMIENTO INTERNO: Incidencia - {{ $('Preparar Contexto').item.json.shipping_code }}",
-        "message": "={{ $json.email_body }}\n\n--- DETALLES INTERNOS ---\nJUSTIFICACION IA:\n{{ $json.ai_justification }}\n\nENVIO: {{ $('Preparar Contexto').item.json.shipping_code }}",
-        "options": {}
-      },
-      "id": "79157d42-a414-4425-9f72-f64f8bf08ea6",
-      "name": "Int M",
-      "type": "n8n-nodes-base.gmail",
-      "typeVersion": 2.2,
-      "position": [
-        -7936,
-        1792
-      ],
-      "webhookId": "7ef7a9ae-6d77-45b4-8a59-3a858f6eb647",
-      "credentials": {
-        "gmailOAuth2": {
-          "id": "QJJKjkTiSoxnKucv",
-          "name": "MIESTERY / SERVICE CORP WORLD"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "resource": "draft",
-        "subject": "=SEGUIMIENTO INTERNO: Incidencia - {{ $('Preparar Contexto').item.json.shipping_code }}",
-        "message": "={{ $json.email_body }}\n\n--- DETALLES INTERNOS ---\nJUSTIFICACION IA:\n{{ $json.ai_justification }}\n\nENVIO: {{ $('Preparar Contexto').item.json.shipping_code }}",
-        "options": {}
-      },
-      "id": "d0257a76-b447-495d-acbb-326f5e8913f6",
-      "name": "Int K",
-      "type": "n8n-nodes-base.gmail",
-      "typeVersion": 2.2,
-      "position": [
-        -7936,
-        1984
-      ],
-      "webhookId": "55cc0f50-7042-44cb-85e3-4a5f07e0cf7d",
-      "credentials": {
-        "gmailOAuth2": {
-          "id": "I8iOQCCkF5dchDft",
-          "name": "KULTURDENDA"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "resource": "draft",
-        "subject": "=SEGUIMIENTO INTERNO: Incidencia - {{ $('Preparar Contexto').item.json.shipping_code }}",
-        "message": "={{ $json.email_body }}\n\n--- DETALLES INTERNOS ---\nJUSTIFICACION IA:\n{{ $json.ai_justification }}\n\nENVIO: {{ $('Preparar Contexto').item.json.shipping_code }}",
-        "options": {}
-      },
-      "id": "711d53c1-9fc2-4d70-a9ed-999c95c1dbd4",
-      "name": "Int S",
-      "type": "n8n-nodes-base.gmail",
-      "typeVersion": 2.2,
-      "position": [
-        -7936,
-        2176
-      ],
-      "webhookId": "b097a9b1-1604-4e87-a51d-c8312516ba13",
-      "credentials": {
-        "gmailOAuth2": {
-          "id": "ATDngCzgo2CXlgvv",
-          "name": "SNAPPY"
-        }
-      }
+      "onError": "continueRegularOutput"
     },
     {
       "parameters": {
@@ -1171,7 +557,7 @@
       "typeVersion": 4.7,
       "position": [
         -7712,
-        904
+        928
       ],
       "retryOnFail": true,
       "maxRetries": 3,
@@ -1185,7 +571,595 @@
     },
     {
       "parameters": {
-        "operation": "append",
+        "sendTo": "incidenciassnappyblue@gmail.com",
+        "subject": "=SEGUIMIENTO INTERNO: Incidencia - {{ $('Preparar Contexto').item.json.shipping_code }}",
+        "message": "={{ $json.email_body }}\n\n--- DETALLES INTERNOS ---\nJUSTIFICACION IA:\n{{ $json.ai_justification }}\n\nENVIO: {{ $('Preparar Contexto').item.json.shipping_code }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "id": "711d53c1-9fc2-4d70-a9ed-999c95c1dbd4",
+      "name": "Int S",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        -7936,
+        2176
+      ],
+      "webhookId": "b097a9b1-1604-4e87-a51d-c8312516ba13",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "ATDngCzgo2CXlgvv",
+          "name": "SNAPPY"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "incidenciaskulturdenda@gmail.com",
+        "subject": "=SEGUIMIENTO INTERNO: Incidencia - {{ $('Preparar Contexto').item.json.shipping_code }}",
+        "message": "={{ $json.email_body }}\n\n--- DETALLES INTERNOS ---\nJUSTIFICACION IA:\n{{ $json.ai_justification }}\n\nENVIO: {{ $('Preparar Contexto').item.json.shipping_code }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "id": "d0257a76-b447-495d-acbb-326f5e8913f6",
+      "name": "Int K",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        -7936,
+        1984
+      ],
+      "webhookId": "55cc0f50-7042-44cb-85e3-4a5f07e0cf7d",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "I8iOQCCkF5dchDft",
+          "name": "KULTURDENDA"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "incidenciasamzdiscounts01@gmail.com",
+        "subject": "=SEGUIMIENTO INTERNO: Incidencia - {{ $('Preparar Contexto').item.json.shipping_code }}",
+        "message": "={{ $json.email_body }}\n\n--- DETALLES INTERNOS ---\nJUSTIFICACION IA:\n{{ $json.ai_justification }}\n\nENVIO: {{ $('Preparar Contexto').item.json.shipping_code }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "id": "79157d42-a414-4425-9f72-f64f8bf08ea6",
+      "name": "Int M",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        -7936,
+        1792
+      ],
+      "webhookId": "7ef7a9ae-6d77-45b4-8a59-3a858f6eb647",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "QJJKjkTiSoxnKucv",
+          "name": "MIESTERY / SERVICE CORP WORLD"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "draft",
+        "subject": "={{ $json.email_subject }}",
+        "message": "={{ $json.email_body }}\n\nSEG: {{ $('Preparar Contexto').item.json.shipping_code }}\nPED: {{ $('Preparar Contexto').item.json.client_references[0] }}",
+        "options": {}
+      },
+      "id": "618f8c6f-6908-4671-bfc6-db48bad94b14",
+      "name": "Trans S1",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        -7936,
+        1120
+      ],
+      "webhookId": "e6fd21ee-c4ae-4ce2-a664-090d1fb5e50e",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "ATDngCzgo2CXlgvv",
+          "name": "SNAPPY"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "draft",
+        "subject": "={{ $json.email_subject }}",
+        "message": "={{ $json.email_body }}\n\nSEG: {{ $('Preparar Contexto').item.json.shipping_code }}\nPED: {{ $('Preparar Contexto').item.json.client_references[0] }}",
+        "options": {}
+      },
+      "id": "a798585c-497a-4a3d-a23c-1b488ac20f37",
+      "name": "Trans K1",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        -7936,
+        928
+      ],
+      "webhookId": "37bf9cb8-6c76-4e55-b952-99c33af2d342",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "I8iOQCCkF5dchDft",
+          "name": "KULTURDENDA"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "draft",
+        "subject": "={{ $json.email_subject }}",
+        "message": "={{ $json.email_body }}\n\nSEG: {{ $('Preparar Contexto').item.json.shipping_code }}\nPED: {{ $('Preparar Contexto').item.json.client_references[0] }}",
+        "options": {}
+      },
+      "id": "c38093fc-d45c-47ae-85e2-2f9a8c10b222",
+      "name": "Trans M1",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        -7936,
+        736
+      ],
+      "webhookId": "d6262cda-5b4c-409d-ad13-2ff59066d7bb",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "QJJKjkTiSoxnKucv",
+          "name": "MIESTERY / SERVICE CORP WORLD"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "draft",
+        "subject": "={{ $json.email_subject }}",
+        "message": "={{ $json.email_body }}\n\nSEG: {{ $('Preparar Contexto').item.json.shipping_code }}\nPED: {{ $('Preparar Contexto').item.json.client_references[0] }}",
+        "options": {}
+      },
+      "id": "eb69279d-b2e3-4e44-928d-24236c02f396",
+      "name": "Trans H",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        -7936,
+        544
+      ],
+      "webhookId": "687fe524-700d-4b68-9c6f-7ba0a82d4b98",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "xvnQhr5hfD4gc3Uk",
+          "name": "HAMINOS"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('Preparar Contexto').item.json.client_code }}",
+                    "rightValue": "48630",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "0ea6be7a-8f97-47c9-86db-8b5d7dc594dd"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "HAMINOS"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('Preparar Contexto').item.json.client_code }}",
+                    "rightValue": "47685",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "7da82b48-f3eb-4463-ab88-5a73641c9905"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "SERVICE CORP"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('Preparar Contexto').item.json.client_code }}",
+                    "rightValue": "45416",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "2d09f65e-6699-4e65-b7e9-4150ca055344"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "KULTUDENDA"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('Preparar Contexto').item.json.client_code }}",
+                    "rightValue": "47352",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "17fd2f70-4cef-4da9-844b-5131c39d8f3e"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "SNAPPY"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra"
+        }
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        -8160,
+        1776
+      ],
+      "id": "7d04d535-f513-4483-988f-dab7f03ff4af",
+      "name": "Switch Client Internal"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('Preparar Contexto').item.json.client_code }}",
+                    "rightValue": "48630",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "HAMINOS"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('Preparar Contexto').item.json.client_code }}",
+                    "rightValue": "47685",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "SERVICE CORP"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('Preparar Contexto').item.json.client_code }}",
+                    "rightValue": "45416",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "KULTUDENDA"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('Preparar Contexto').item.json.client_code }}",
+                    "rightValue": "47352",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "SNAPPY"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra"
+        }
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        -8160,
+        864
+      ],
+      "id": "9f453a4f-efaf-482a-a742-31a72bab4afb",
+      "name": "Switch3"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('Code in JavaScript2').item.json.target_type }}",
+                    "rightValue": "standard",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Standard"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('Code in JavaScript2').item.json.target_type }}",
+                    "rightValue": "internal",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Internal"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra"
+        }
+      },
+      "id": "8f61eb2e-ea73-4d56-9392-241e004ed0e7",
+      "name": "Switch Target Type",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        -8384,
+        1344
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "3b3d3f7b-9600-41fd-91d6-2fb221274511",
+              "leftValue": "={{ $json.should_notify }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -8608,
+        1744
+      ],
+      "id": "6c226b93-ed66-4cf6-ab43-86882268635e",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "jsCode": "const raw = $input.item.json;\nconst aiText = raw.output[0].content[0].text;\nconst aiData = JSON.parse(aiText.replace(/```json|```/g, '').trim());\n\nconst contexto = $('Preparar Contexto').item.json;\nconst forceInternal = contexto.force_internal === true;\nconst is2500 = contexto.is_2500 === true;\nconst numeroAvisos = contexto.numero_avisos || 1;\nconst clientCode = String(contexto.client_center_code || '');\n\nlet targetType = aiData.decision?.target_type || 'standard';\nif (forceInternal || is2500) targetType = 'internal';\n\nconst shouldNotify = aiData.decision?.should_notify === true;\n\nconst emailTo = targetType === 'internal'\n  ? 'alertas@sergi.com'\n  : (clientCode.match(/^454160000[1-2]$/) ? 'cca.z2@cttexpress.com' : 'cca.z3@cttexpress.com');\n\nreturn {\n  should_notify: shouldNotify,\n  target_type: targetType,\n  email_subject: shouldNotify ? (aiData.decision?.email_subject || '') : '',\n  email_body: shouldNotify ? (aiData.decision?.email_body || '') : '',\n  ai_incident_detected: aiData.analysis?.detected_incident || 'N/A',\n  ai_justification: aiData.analysis?.justification || 'Sin detalle',\n  h_en_estado: aiData.analysis?.hours_in_status || 0,\n  email_to: emailTo,\n  numero_avisos: numeroAvisos,\n  force_internal: forceInternal,\n  is_2500: is2500\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -8832,
+        1744
+      ],
+      "id": "561172dc-4f63-4520-a2b9-219ee5ad5c46",
+      "name": "Code in JavaScript2"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "responses": {
+          "values": [
+            {
+              "content": "=Historial Procesado:\n{{ $json.formatted_history }}\n \nNumero de Pedido: {{ $json.shipping_code }}\nHora actual: {{ $now.toFormat('yyyy-MM-dd HH:mm') }} ({{ ['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo'][$now.weekday - 1] }})\n \n--- HORAS PRECALCULADAS (USA ESTOS VALORES DIRECTAMENTE, NO RECALCULES) ---\nHoras en tránsito desde primer 0900/1000 (sin reparto posterior): {{ $json.transit_hours }}\nHoras en grabación desde primer 0000/0030 (sin tránsito posterior): {{ $json.manifest_hours }}\nHoras en ciclo de reparto actual desde primer 1200/1500: {{ $json.delivery_hours }}\nHoras estacionado desde último 1700/1800: {{ $json.stationary_hours }}"
+            },
+            {
+              "role": "system",
+              "content": "=Eres un auditor logistico de CTT Express. Analiza el historial y decide si notificar. RESPONDE SOLO CON JSON PURO, SIN MARKDOWN.\n \n### FUENTE DE VERDAD (CRITICO)\nDetermina el estado actual UNICAMENTE leyendo el historial cronologico de arriba a abajo.\nIgnora cualquier otro campo o dato externo que no sea el historial y los valores precalculados.\n \n### HORAS LABORABLES (CRITICO)\nLas horas ya vienen calculadas en el bloque \"HORAS PRECALCULADAS\" del prompt de usuario.\nUSA DIRECTAMENTE esos valores como horas_in_status para el estado correspondiente.\nNO recalcules. NO estimes. NO ignores estos valores.\nSi un valor es 0, tratalo como 0.\n \n### EQUIVALENCIA DE EVENTOS (CRITICO)\n0900 (En Transito) y 1000 (Delegacion de transito) son el MISMO estado de transito.\nEl reloj de transito empieza en el PRIMERO que aparezca en el historial.\n1200 (Delegacion destino) y 1500 (En reparto) son el MISMO estado de reparto.\nEl reloj de reparto empieza en el PRIMERO que aparezca en el historial.\nEjemplo: 1000 a las 12:00 + 0900 a las 13:00 → en transito desde las 12:00.\nEjemplo: 1200 a las 14:00 + 1500 a las 15:00 → en reparto desde las 14:00.\n \n### CICLO DE REPARTO\nEl ciclo de reparto empieza en el primer 1200 o 1500 del ciclo actual.\nCRITICO: Cada vez que aparece un 1000 despues de un 1200, el ciclo SE REINICIA COMPLETAMENTE.\nEl punto de inicio siempre es el ultimo 1200 que no haya sido seguido de otro 1000.\nEl valor delivery_hours ya refleja este calculo correctamente.\n \n### ESTADOS TERMINALES — PRIORIDAD MAXIMA (CRITICO — EJECUTAR PRIMERO)\nAntes de cualquier otra evaluacion, comprueba si el ultimo evento del historial es un estado terminal.\nLos estados terminales son: 2500, 2300, 2310.\nUn estado terminal CIERRA y SUPERA cualquier incidencia activa previa (1600, 2400, 2600, 2700, 0600, 1700, 1800, etc.).\nCuando el ultimo evento es un estado terminal, se aplica SIEMPRE su plantilla propia.\nNO se evaluan incidencias anteriores. NO se calculan horas. Se va directamente a la plantilla del estado terminal.\n \nCasos:\n- Ultimo evento es 2500 → Plantilla 2500. should_notify: true. target_type: \"internal\". FIN.\n- Ultimo evento es 2300 → Plantilla PUDO. should_notify: true. target_type: \"standard\". FIN.\n- Ultimo evento es 2310 → Plantilla 2310. should_notify: true. target_type: \"standard\". FIN.\n \n### ALERTAS CON UMBRAL\nNotificar solo si supera las horas indicadas (usa los valores precalculados):\n- 0000 / 0030 → manifest_hours > 24 (Alerta Interna)\n- 0900 / 1000 → transit_hours > 24\n- 1200 / 1500 → delivery_hours > 24\n- 1700 / 1800 → stationary_hours > 24\n \n### REGLA ESPECIAL TRANSITO (SLA 24-48H)\nSi transit_hours > 24 y no hay ningun evento 1200 o 1500 en el historial → notificar (should_notify: true).\nEsta regla tiene prioridad absoluta sobre mensajes de gestion interna como el 71_INAT.\n \n### ALERTAS SIN UMBRAL\nNotificar SIEMPRE si la incidencia esta ACTIVA:\n- 1600 → reparto fallido\n- 2400, 2600, 2700 → variantes de reparto fallido (nuevo reparto / reexpedicion)\n- 2300 → depositado en punto CTT (NO es reparto fallido — ver plantilla PUDO)\n- 0600 → recogida fallida\n- 2310 / 2900 → datos incorrectos\n- 1012 → posible extravio\n- 1006 → danos en contenido\n- 1008 → posible robo\n \nEn detected_incident escribe siempre el nombre, no el codigo.\n \n### PRIORIDAD ENTRE INCIDENCIAS GRAVES (1012 / 1006 / 1008)\nSi en el historial existe un evento 1012, 1006 o 1008, este tiene PRIORIDAD sobre cualquier 1600 activo previo.\nAplicar siempre la plantilla del evento mas grave, no la del reparto fallido.\nOrden de prioridad descendente: 1012 > 1008 > 1006 > 1600/2400/2600/2700.\n \n### REGLA DE RESOLUCION DE INCIDENCIAS (CRITICO)\nUna incidencia (1600/2400/2600/2700/0600) esta RESUELTA SOLAMENTE si DESPUES de ella en el historial aparece un evento 1500.\nSi en el historial hay un evento de incidencia y NO hay NINGUN 1500 posterior, la incidencia SIGUE ACTIVA,\nsin importar que otros eventos haya despues (ej. 1200, 1000, 71_INAT, 1700, 1800, 1900).\nEXCEPCION: si el ultimo evento es un estado terminal (2500/2300/2310), la incidencia se cierra igualmente.\n \nCasos:\n- Existe un 1600 y no hay un 1500 posterior y el ultimo evento NO es terminal → should_notify: true SIEMPRE.\n- Existe un 1600 seguido de un 1500 → resuelta → should_notify: false (se evalua delivery_hours).\n- Existe un 0600 y no hay recoleccion posterior y el ultimo evento NO es terminal → should_notify: true SIEMPRE.\n- Existe un 1600 y el ultimo evento es 2500/2300/2310 → cerrada por estado terminal → usar plantilla terminal.\n \n### REGLA ANTI-ALUCINACION (CRITICO)\nNUNCA afirmes que existe un evento si su codigo no aparece textualmente en el historial.\nSi en el historial ves 71_INAT pero NO hay ningun codigo de incidencia (1600/2300/2400/2600/2700/0600) → NO hay incidencia activa → should_notify: false.\nEl 71_INAT NO es una incidencia. Es una gestion interna de CTT. No lo confundas con un reparto fallido.\nEjemplo INCORRECTO: historial tiene [0900][1000][71_INAT] y la IA dice \"Existio un 1600\" → PROHIBIDO.\nEjemplo CORRECTO: si no hay 1600 en el historial, no puedes mencionar 1600 en la justificacion.\n \n### NO NOTIFICAR si:\n- Valor precalculado correspondiente < 24 para 0000/0030/0900/1000/1200/1500/1700/1800\n- Incidencia 1600/variante seguida de 1500 → resuelta\n- Evento 71_INAT como ultimo evento → should_notify: false,\n  EXCEPTO si incidencia activa sigue sin resolver (ver REGLA DE RESOLUCION)\n  o si transit_hours > 24 (ver REGLA ESPECIAL TRANSITO).\n- delivery_date informado → ya entregado\n- Ultimo evento no esta en lista de alertas\n \n### NOTA IMPORTANTE\nResponde siempre target_type: standard. El sistema lo sobreescribira si es necesario.\n \n### PLANTILLAS SEGUN WORKFLOW (usa el Numero de Pedido exacto del prompt como [SEG])\n \nREGLAS DE PLANTILLA (SOLO PARA should_notify: true):\n- 0000/0030 (Alerta Interna):\n  email_subject: \"ALERTA INTERNA: Envio [SEG] grabado sin recoger\"\n  email_body: \"El envio [SEG] figura como grabado o recogida sin programar desde ayer. Revisar con almacen.\"\n  target_type: \"internal\"\n \n- 0900/1000 (Transito estancado):\n  email_subject: \"Incidencia en el envio [SEG]\"\n  email_body: \"Buenos dias. El envio [SEG] estuvo en transito el dia anterior y hoy aun no ha cambiado a reparto. Solicitamos que el envio salga a reparto al dia siguiente. Gracias.\"\n  target_type: \"standard\"\n \n- 1200/1500 (Reparto estancado):\n  email_subject: \"Incidencia en el envio [SEG]\"\n  email_body: \"Buenos dias. El envio [SEG] se encuentra en reparto desde ayer sin entregarse. Solicitamos que el pedido sea sacado nuevamente a reparto hoy mismo. Gracias.\"\n  target_type: \"standard\"\n \n- 1600/2400/2600/2700 (Reparto fallido activo):\n  email_subject: \"Incidencia en el envio [SEG]\"\n  email_body: \"Buenos dias. El envio [SEG] presenta su primera incidencia. Solicitamos explicitamente un segundo intento de reparto para el siguiente dia habil. Gracias.\"\n  target_type: \"standard\"\n \n- 2300-PUDO / 2310 (Paquete en punto CTT):\n  email_subject: \"Envio en punto CTT: [SEG]\"\n  email_body: \"Hola equipo de CTT, necesitamos la direccion detallada del punto de recogida para el siguiente envio: EXPEDICION: - [SEG]. Gracias de antemano.\"\n  target_type: \"standard\"\n \n- 2500 (Devolucion en proceso):\n  email_subject: \"Devolucion en proceso: [SEG]\"\n  email_body: \"Estimados, el siguiente pedido ha entrado en proceso de devolucion. Iniciamos seguimiento manual. CODIGO: - [SEG]\"\n  target_type: \"internal\"\n \n- Otros casos (0600, 2900, 1012, 1006, 1008): usar un mensaje descriptivo similar pidiendo gestion urgente.\n \n### COHERENCIA OBLIGATORIA\nSi should_notify es false → email_subject y email_body deben ser \"\" (vacios).\nSi escribes \"no supera\" o \"resuelta\" → should_notify: false.\nSi escribes \"supera\" o \"incidencia activa\" → should_notify: true.\nNunca contradigas la justificacion con la decision.\n \n### SALIDA JSON\nREGLAS (OBLIGATORIO):\n- Si no se supera el umbral y no hay alertas sin umbral activas → should_notify: false, email_subject: \"\", email_body: \"\".\n- NUNCA el body en el subject ni al reves.\n- Si should_notify false → ambos campos \"\".\n \n### VERIFICACION FINAL OBLIGATORIA (ejecutar SIEMPRE en este orden exacto)\n \nPASO 0 — ESTADOS TERMINALES (PRIORIDAD MAXIMA):\n¿El ultimo evento del historial es 2500, 2300 o 2310?\n  → SI → Aplicar plantilla del estado terminal. should_notify: true. FIN.\n  → NO → Continuar con Paso 1.\n \nPASO 1 — INCIDENCIAS GRAVES (1012 / 1006 / 1008):\n¿Existe en el historial algun evento 1012, 1006 o 1008?\n  → SI → Aplicar plantilla del evento mas grave. should_notify: true. FIN.\n  → NO → Continuar con Paso 2.\n \nPASO 2 — INCIDENCIAS DE REPARTO / RECOGIDA ACTIVAS:\n¿Existe en el historial algun evento 1600, 2400, 2600, 2700 o 0600 que NO tenga un 1500 posterior?\n  NOTA CRITICA: El codigo 2300 NO se cuenta como reparto fallido en este paso.\n  → SI → La incidencia sigue activa. should_notify: true. FIN.\n  → NO → Continuar con Paso 3.\n \nPASO 3 — UMBRALES DE TIEMPO (usa los valores precalculados):\n- transit_hours > 24 y sin 1200/1500 en historial → should_notify: true (transito estancado).\n- manifest_hours > 24 y sin transito en historial → should_notify: true (alerta interna).\n- delivery_hours > 24 → should_notify: true (reparto estancado).\n- stationary_hours > 24 → should_notify: true (estacionado).\n- Si ninguno supera → should_notify: false.\n \n### EJEMPLOS DE SALIDA JSON\n \nEJEMPLO 1: ESTADO TERMINAL 2500\n{\n  \"analysis\": {\n    \"detected_incident\": \"Devolucion en proceso\",\n    \"hours_in_status\": 0,\n    \"is_first_incident\": false,\n    \"justification\": \"Paso 0: el ultimo evento es [2500] Devolucion. Estado terminal con prioridad maxima. Cierra cualquier incidencia previa. Se aplica plantilla 2500.\"\n  },\n  \"decision\": {\n    \"should_notify\": true,\n    \"target_type\": \"internal\",\n    \"email_subject\": \"Devolucion en proceso: 0080530080539701031342\",\n    \"email_body\": \"Estimados, el siguiente pedido ha entrado en proceso de devolucion. Iniciamos seguimiento manual. CODIGO: - 0080530080539701031342\"\n  }\n}\n \nEJEMPLO 2: TRANSITO ESTANCADO (con horas precalculadas)\n{\n  \"analysis\": {\n    \"detected_incident\": \"Transito estancado\",\n    \"hours_in_status\": 26.4,\n    \"is_first_incident\": false,\n    \"justification\": \"Paso 0: no es terminal. Paso 1: no hay incidencias graves. Paso 2: no hay incidencias activas. Paso 3: transit_hours = 26.4, supera umbral de 24h y no hay 1200/1500 en historial -> should_notify: true.\"\n  },\n  \"decision\": {\n    \"should_notify\": true,\n    \"target_type\": \"standard\",\n    \"email_subject\": \"Incidencia en el envio 0002070002079700443991\",\n    \"email_body\": \"Buenos dias. El envio 0002070002079700443991 estuvo en transito el dia anterior y hoy aun no ha cambiado a reparto. Solicitamos que el envio salga a reparto al dia siguiente. Gracias.\"\n  }\n}\n \nEJEMPLO 3: SIN INCIDENCIA\n{\n  \"analysis\": {\n    \"detected_incident\": \"Delegacion destino\",\n    \"hours_in_status\": 0,\n    \"is_first_incident\": false,\n    \"justification\": \"Paso 0: no es terminal. Paso 1: no hay incidencias graves. Paso 2: no hay incidencias activas. Paso 3: delivery_hours = 0, no supera umbral -> should_notify: false.\"\n  },\n  \"decision\": {\n    \"should_notify\": false,\n    \"target_type\": \"standard\",\n    \"email_subject\": \"\",\n    \"email_body\": \"\"\n  }\n}"
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {
+          "temperature": 0.1
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2.1,
+      "position": [
+        -9184,
+        1744
+      ],
+      "id": "67a80c1c-60c6-4146-85c4-a126e180462e",
+      "name": "Message a model",
+      "credentials": {
+        "openAiApi": {
+          "id": "1MaHDKdD55sbyLF8",
+          "name": "haminos"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "skip-check",
+              "leftValue": "={{ $json.skip }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "1942be12-ce2b-4d79-8e76-c2e3987b6f46",
+      "name": "If Duplicado Hoy",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -9408,
+        1360
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const rows = $input.all();\nconst item = $('Code in JavaScript3').item.json;\nconst hoy = $now.toFormat('dd-MM-yyyy');\nconst ayer = $now.minus({days: 1}).toFormat('dd-MM-yyyy');\n\nconst filasValidas = rows.filter(r => r.json['NUMERO DE ENVIO']);\n\nconst filasHoy = filasValidas.filter(r => {\n  const fecha = (r.json['FECHA PROCESADO'] || '').substring(0, 10);\n  return fecha === hoy;\n});\n\nconst filasAyer = filasValidas.filter(r => {\n  const fecha = (r.json['FECHA PROCESADO'] || '').substring(0, 10);\n  return fecha === ayer;\n});\n\nconst is2500 = String(item.shipping_status_code || '') === '2500';\n\nconst skip = filasHoy.length > 0;\nconst forceInternal = !skip && (filasAyer.length > 0 || is2500);\nconst numeroAvisos = filasValidas.length + 1;\n\nreturn {\n  json: {\n    ...item,\n    skip,\n    force_internal: forceInternal,\n    is_2500: is2500,\n    numero_avisos: numeroAvisos\n  }\n};"
+      },
+      "id": "2dbf7da3-04f2-4060-a674-6ea86bbd1296",
+      "name": "Preparar Contexto",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -9632,
+        1360
+      ]
+    },
+    {
+      "parameters": {
         "documentId": {
           "__rl": true,
           "value": "1MzLQ4PuK5i4cYJhV2yrezJSoTwse7FsnpX2VcWl65yk",
@@ -1194,227 +1168,225 @@
         },
         "sheetName": {
           "__rl": true,
-          "value": 751381048,
+          "value": 1123525887,
           "mode": "list",
-          "cachedResultName": "Test IA",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MzLQ4PuK5i4cYJhV2yrezJSoTwse7FsnpX2VcWl65yk/edit#gid=751381048"
+          "cachedResultName": "Incidencias",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MzLQ4PuK5i4cYJhV2yrezJSoTwse7FsnpX2VcWl65yk/edit#gid=1123525887"
         },
-        "columns": {
-          "mappingMode": "defineBelow",
-          "value": {
-            "FECHA PROCESADO": "={{ $now.toFormat('dd-MM-yyyy HH:mm:ss') }}",
-            "NUMERO DE ENVIO": "={{ $('Preparar Contexto').item.json.shipping_code }}",
-            "NUMERO DE PEDIDO": "={{ $('Preparar Contexto').item.json.client_references[0] }}",
-            "TIENDA": "={{ $('Preparar Contexto').item.json.client_code === '48630' ? 'HAMINOS' : ($('Preparar Contexto').item.json.client_code === '47685' ? 'MIESTERY' : ($('Preparar Contexto').item.json.client_code === '45416' ? 'KULTUDENDA' : 'SNAPPY')) }}",
-            "CENTRO": "={{ $('Preparar Contexto').item.json.client_center_code }}",
-            "ESTADO": "={{ $('Code in JavaScript3').item.json.shipping_status_code }}",
-            "FECHA ESTADO": "={{ $('Code in JavaScript3').item.json.shipping_status_datetime }}",
-            "H EN ESTADO": "={{$('Code in JavaScript2').first().json.h_en_estado}}",
-            "EMAIL ENVIADO": "={{ $('Code in JavaScript2').first().json.should_notify }}\n",
-            "TIPO EMAIL": "={{ $('Code in JavaScript2').first().json.ai_incident_detected }}",
-            "RAZON": "={{ $('Code in JavaScript2').first().json.ai_justification }}",
-            "DESTINATARIO": "={{ $('Code in JavaScript2').first().json.email_to }}",
-            "CREDENCIAL": "={{ $('Preparar Contexto').item.json.client_code === '48630' ? 'HAMINOS' : ($('Preparar Contexto').item.json.client_code === '47685' ? 'MIESTERY' : ($('Preparar Contexto').item.json.client_code === '45416' ? 'KULTUDENDA' : 'SNAPPY')) }}"
-          },
-          "matchingColumns": [],
-          "schema": [
+        "filtersUI": {
+          "values": [
             {
-              "id": "FECHA PROCESADO",
-              "displayName": "FECHA PROCESADO",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "NUMERO DE ENVIO",
-              "displayName": "NUMERO DE ENVIO",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "NUMERO DE PEDIDO",
-              "displayName": "NUMERO DE PEDIDO",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "TIENDA",
-              "displayName": "TIENDA",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "CENTRO",
-              "displayName": "CENTRO",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "ESTADO",
-              "displayName": "ESTADO",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "FECHA ESTADO",
-              "displayName": "FECHA ESTADO",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "H EN ESTADO",
-              "displayName": "H EN ESTADO",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "EMAIL ENVIADO",
-              "displayName": "EMAIL ENVIADO",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "TIPO EMAIL",
-              "displayName": "TIPO EMAIL",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "RAZON",
-              "displayName": "RAZON",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "DESTINATARIO",
-              "displayName": "DESTINATARIO",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "CREDENCIAL",
-              "displayName": "CREDENCIAL",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
+              "lookupColumn": "NUMERO DE ENVIO",
+              "lookupValue": "={{ $('Code in JavaScript3').item.json.shipping_code }}"
             }
-          ],
-          "attemptToConvertTypes": false,
-          "convertFieldsToString": false
+          ]
         },
         "options": {}
       },
-      "id": "81b4b3e7-4ec1-4e54-b3da-785031e61654",
-      "name": "Log Estados1",
+      "id": "e0d6267c-4dcf-4c2b-b298-7c5c9fb3cbe3",
+      "name": "Buscar Avisos Previos",
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        -7488,
-        1480
+        -9856,
+        1360
       ],
-      "retryOnFail": true,
-      "maxRetries": 3,
-      "retryDelay": 5000,
       "alwaysOutputData": true,
+      "retryOnFail": true,
       "credentials": {
         "googleSheetsOAuth2Api": {
           "id": "vUMIiZSNk60SoDGg",
           "name": "Google Sheets account"
         }
-      },
-      "onError": "continueRegularOutput"
+      }
     },
     {
       "parameters": {
-        "workflowId": "NtGW6lN2IMYIaKeYdTuot",
+        "jsCode": "try {\n  const item = $('Loop: Processar 1 a 2').first().json;\n  const history = $input.item.json;\n  let events = [];\n\n  if (history?.data?.shipping_history?.events) {\n    events = history.data.shipping_history.events;\n  } else if (Array.isArray(history)) {\n    const data = history[0];\n    if (data?.data?.shipping_history?.events) {\n      events = data.data.shipping_history.events;\n    }\n  }\n\n  const has1600 = events.some(e => e.code === '1600' || e.event_code === '1600');\n\n  // ─── PARSEO Y FORMATO DEL HISTORIAL ─────────────────────────────────────────\n  let parsedEvents = []; // { date: Date, code: string }\n  let formattedHistory = 'Sin eventos disponibles';\n\n  if (events.length > 0) {\n    formattedHistory = events.map(e => {\n      let date = e.event_date || e.item_event_date || '';\n      let parsedDate = null;\n\n      if (date) {\n        try {\n          const d = new Date(date);\n          d.setHours(d.getHours() + 1); // UTC+1 Madrid\n          parsedDate = d;\n          date = d.toISOString().replace('T', ' ').substring(0, 16);\n        } catch (x) {}\n      }\n\n      const code = e.code || e.event_code || 'N/A';\n      const desc = e.description || e.event_description || '';\n      const detail = e.detail?.External_event_text || e.detail?.item_event_text || '';\n\n      if (parsedDate) {\n        parsedEvents.push({ date: parsedDate, code });\n      }\n\n      return `${date} - [${code}] ${desc} (${detail})`;\n    }).join('\\n');\n  }\n\n  // ─── CÁLCULO DE HORAS LABORABLES ────────────────────────────────────────────\n  // Lunes=1 ... Viernes=5, Sábado=6, Domingo=0\n  function businessHours(startDate, endDate) {\n    if (!startDate || !endDate || endDate <= startDate) return 0;\n    let hours = 0;\n    let cur = new Date(startDate.getTime());\n\n    while (cur < endDate) {\n      const dow = cur.getDay(); // 0=Dom, 6=Sab\n      if (dow !== 0 && dow !== 6) {\n        const y = cur.getFullYear(), m = cur.getMonth(), d = cur.getDate();\n        const nextMidnight = new Date(y, m, d + 1);\n        const seg = endDate < nextMidnight ? endDate : nextMidnight;\n        hours += (seg - cur) / 3600000;\n      }\n      const y = cur.getFullYear(), m = cur.getMonth(), d = cur.getDate();\n      cur = new Date(y, m, d + 1);\n    }\n\n    return parseFloat(hours.toFixed(1));\n  }\n\n  const now = new Date();\n\n  const TRANSIT    = ['0900', '1000'];\n  const DELIVERY   = ['1200', '1500'];\n  const STATIONARY = ['1700', '1800'];\n  const MANIFEST   = ['0000', '0030'];\n\n  // TRÁNSITO: desde el primer 0900/1000, solo si no hay 1200/1500 posterior\n  const firstTransit = parsedEvents.find(e => TRANSIT.includes(e.code));\n  let transitHours = 0;\n  if (firstTransit) {\n    const hasDeliveryAfter = parsedEvents.some(\n      e => DELIVERY.includes(e.code) && e.date > firstTransit.date\n    );\n    if (!hasDeliveryAfter) {\n      transitHours = businessHours(firstTransit.date, now);\n    }\n  }\n\n  // MANIFESTADO: desde primer 0000/0030, solo si aún no hay tránsito ni reparto\n  const firstManifest = parsedEvents.find(e => MANIFEST.includes(e.code));\n  let manifestHours = 0;\n  if (firstManifest && !firstTransit) {\n    manifestHours = businessHours(firstManifest.date, now);\n  }\n\n  // CICLO REPARTO: reset en cada 1000 después de 1200/1500\n  // Regla: el ciclo empieza en el primer 1200/1500 del ciclo actual\n  // Cada 1000 posterior a un 1200/1500 reinicia el ciclo\n  let deliveryCycleStart = null;\n  let inDelivery = false;\n  for (const event of parsedEvents) {\n    if (DELIVERY.includes(event.code)) {\n      if (!inDelivery) {\n        deliveryCycleStart = event.date;\n        inDelivery = true;\n      }\n    } else if (event.code === '1000' && inDelivery) {\n      deliveryCycleStart = null;\n      inDelivery = false;\n    }\n  }\n  let deliveryHours = 0;\n  if (deliveryCycleStart) {\n    deliveryHours = businessHours(deliveryCycleStart, now);\n  }\n\n  // ESTACIONADO: desde el último 1700/1800\n  const lastStationary = [...parsedEvents].reverse().find(e => STATIONARY.includes(e.code));\n  let stationaryHours = 0;\n  if (lastStationary) {\n    stationaryHours = businessHours(lastStationary.date, now);\n  }\n\n  // ─── OUTPUT ─────────────────────────────────────────────────────────────────\n  return {\n    json: {\n      ...item,\n      status_history: events,\n      formatted_history: formattedHistory,\n      history_has_1600: has1600,\n      total_events: events.length,\n      // Horas precalculadas para la IA\n      transit_hours:    transitHours,\n      manifest_hours:   manifestHours,\n      delivery_hours:   deliveryHours,\n      stationary_hours: stationaryHours\n    }\n  };\n\n} catch (error) {\n  throw new Error(`[Code JS3] ${error.message}`);\n}"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -10080,
+        1360
+      ],
+      "id": "afd20b53-6b75-41a3-b456-720b10817779",
+      "name": "Code in JavaScript3"
+    },
+    {
+      "parameters": {
+        "url": "=https://api.cttexpress.com/integrations-info/trf/item-history-api/history/{{ $json.shipping_code }}",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "view",
+              "value": "APITRACK"
+            },
+            {
+              "name": "showItems",
+              "value": "false"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "={{ 'Bearer ' + ($('Loop: Processar 1 a 2').item.json.client_code == '47352' ? $('1. Obtener Token SNAPPY1').first().json.access_token : $('Loop: Processar 1 a 2').item.json.client_code == '48630' ? $('1. Obtener Token HAMINOS1').first().json.access_token : $('Loop: Processar 1 a 2').item.json.client_code == '47685' ? $('1. Obtener Token SERVICE CORP WORLD1').first().json.access_token : $('1. Obtener Token KULTUDENDA1').first().json.access_token) }}"
+            }
+          ]
+        },
         "options": {}
       },
-      "id": "68d644d0-b0d9-4e30-86c7-eaf3ff54dc2b",
-      "name": "Call SubWf SNAPPY",
-      "type": "n8n-nodes-base.executeWorkflow",
-      "typeVersion": 1,
+      "id": "1a10f180-fee5-4142-941a-317ab52db583",
+      "name": "Obtenir Historial Detallat1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
       "position": [
-        -11200,
-        2272
+        -10304,
+        1360
+      ],
+      "retryOnFail": true,
+      "waitBetweenTries": 5000
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "c4ff86d6-7719-411d-9f8f-5b54f76f6be9",
+      "name": "Loop: Processar 1 a 2",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -10528,
+        1440
       ]
     },
     {
       "parameters": {
-        "workflowId": "NtGW6lN2IMYIaKeYdTuot",
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "c29a7369-1524-4e44-9139-97f1d52f168c",
+              "leftValue": "={{ $json.shipping_status_code }}",
+              "rightValue": "2100",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
+            },
+            {
+              "id": "9de119f0-ff38-45cf-af70-58876bc723b7",
+              "leftValue": "={{ $json.shipping_status_code }}",
+              "rightValue": "2310",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
+            },
+            {
+              "id": "7960038a-a926-496e-ac96-2f6d89d956b9",
+              "leftValue": "={{ $json.shipping_status_code }}",
+              "rightValue": "3000",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
         "options": {}
       },
-      "id": "28ebcabf-3695-491e-8000-80483a99da32",
-      "name": "Call SubWf KULTUDENDA",
-      "type": "n8n-nodes-base.executeWorkflow",
-      "typeVersion": 1,
+      "id": "8807cbcf-207a-4589-9be0-5b9e28e2ebf9",
+      "name": "Filtrar_Estados_Activos_Optimizado",
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.3,
       "position": [
-        -11200,
-        2080
+        -10752,
+        1440
       ]
     },
     {
       "parameters": {
-        "workflowId": "NtGW6lN2IMYIaKeYdTuot",
-        "options": {}
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 17 * * 1-5"
+            },
+            {
+              "field": "cronExpression",
+              "expression": "0 20 * * 1-5"
+            }
+          ]
+        }
       },
-      "id": "1fc5d889-a10a-40cd-a82e-ef862ca52f71",
-      "name": "Call SubWf SERVICE CORP WORLD",
-      "type": "n8n-nodes-base.executeWorkflow",
-      "typeVersion": 1,
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
       "position": [
-        -11200,
-        1888
-      ]
+        -12096,
+        1440
+      ],
+      "id": "d437911e-2400-4e7a-a7e5-6aaa6bde41b2",
+      "name": "Schedule Trigger"
     },
     {
       "parameters": {
-        "workflowId": "NtGW6lN2IMYIaKeYdTuot",
+        "numberInputs": 4
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -10976,
+        1408
+      ],
+      "id": "3afb4e80-9980-4efe-8f67-f53eaed4ee21",
+      "name": "Merge2"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.cttexpress.com/integrations/oauth2/token",
+        "sendBody": true,
+        "contentType": "form-urlencoded",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "client_id",
+              "value": "6lmgulg22aneeht6tj0oqgd5nt"
+            },
+            {
+              "name": "client_secret",
+              "value": "g84jnhse644ttjct97s1hkvth1ekbh8pupjpoue9ubmhmis77ll"
+            },
+            {
+              "name": "grant_type",
+              "value": "client_credentials"
+            },
+            {
+              "name": "scope",
+              "value": "urn:com:ctt-express:integration-clients:scopes:common/ALL"
+            }
+          ]
+        },
         "options": {}
       },
-      "id": "b6e552a0-8aaf-4e9f-9dcb-25cb168c54ee",
-      "name": "Call SubWf HAMINOS",
-      "type": "n8n-nodes-base.executeWorkflow",
-      "typeVersion": 1,
+      "id": "cf01259d-4e7a-4df3-80d8-e0d79afca0fa",
+      "name": "1. Obtener Token HAMINOS1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
       "position": [
-        -11200,
-        1696
+        -11648,
+        1152
       ]
     },
     {
@@ -1422,225 +1394,257 @@
         "assignments": {
           "assignments": [
             {
-              "id": "uuid-SNAPPY",
-              "name": "centers",
-              "value": [
-                "4735200001",
-                "4735200002",
-                "4735200003",
-                "4735200004",
-                "4735200005"
-              ],
-              "type": "array"
+              "id": "be16fbad-33b2-4ccd-8d9c-629fb2acd44d",
+              "name": "daysRange",
+              "value": "30",
+              "type": "string"
             },
             {
-              "id": "df5a71da-5eb7-4553-b8c1-02b903390d9e",
-              "name": "access_token",
-              "value": "={{ $json.access_token }}",
+              "id": "151a10f1-deb7-4f75-bad3-acaae563502e",
+              "name": "pageLimit",
+              "value": "20",
               "type": "string"
             }
           ]
         },
         "options": {}
       },
-      "id": "058bce6a-89c5-4487-aded-ebb820a436dd",
-      "name": "Config SNAPPY Centers",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -11424,
-        2272
+        -11872,
+        1440
+      ],
+      "id": "23f4ffc8-58ca-4bfa-b90e-620e5bb580ce",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.cttexpress.com/integrations/oauth2/token",
+        "sendBody": true,
+        "contentType": "form-urlencoded",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "client_id",
+              "value": "21fmaj0ohg018vodhuf7cgdbqn"
+            },
+            {
+              "name": "client_secret",
+              "value": "6vrimoi7bftui40e63o3i2jhd9lqc6bcfuag2af6n35oov38oa1"
+            },
+            {
+              "name": "grant_type",
+              "value": "client_credentials"
+            },
+            {
+              "name": "scope",
+              "value": "urn:com:ctt-express:integration-clients:scopes:common/ALL"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "f4c10ebb-1407-4a01-a870-597b2e711a8b",
+      "name": "1. Obtener Token SNAPPY1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        -11648,
+        1728
       ]
     },
     {
       "parameters": {
-        "assignments": {
-          "assignments": [
+        "method": "POST",
+        "url": "https://api.cttexpress.com/integrations/oauth2/token",
+        "sendBody": true,
+        "contentType": "form-urlencoded",
+        "bodyParameters": {
+          "parameters": [
             {
-              "id": "uuid-KULTUDENDA",
-              "name": "centers",
-              "value": [
-                "4541600001",
-                "4541600002"
-              ],
-              "type": "array"
+              "name": "client_id",
+              "value": "76m6rjgitmn2rdnpvenkngtf2"
             },
             {
-              "id": "7ee132dd-b75f-4a2d-adb2-1704dbff8b85",
-              "name": "access_token",
-              "value": "={{ $json.access_token }}",
-              "type": "string"
+              "name": "client_secret",
+              "value": "145nub573diu45cleh7h3at6gkb6f91shoh9lv38q1djoi245loj"
+            },
+            {
+              "name": "grant_type",
+              "value": "client_credentials"
+            },
+            {
+              "name": "scope",
+              "value": "urn:com:ctt-express:integration-clients:scopes:common/ALL"
             }
           ]
         },
         "options": {}
       },
-      "id": "273c05ed-4c64-478c-a82b-c1c6ab3f4ba4",
-      "name": "Config KULTUDENDA Centers",
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
+      "id": "5936e376-2e59-473c-865d-4d518941bbe6",
+      "name": "1. Obtener Token KULTUDENDA1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
       "position": [
-        -11424,
-        2080
+        -11648,
+        1536
       ]
     },
     {
       "parameters": {
-        "assignments": {
-          "assignments": [
+        "method": "POST",
+        "url": "https://api.cttexpress.com/integrations/oauth2/token",
+        "sendBody": true,
+        "contentType": "form-urlencoded",
+        "bodyParameters": {
+          "parameters": [
             {
-              "id": "uuid-SERVICECORPWORLD",
-              "name": "centers",
-              "value": [
-                "4768500003"
-              ],
-              "type": "array"
+              "name": "client_id",
+              "value": "3eg1spueen47l2jkcm0dt56olk"
             },
             {
-              "id": "0e21b407-7a48-49f0-9ef6-2556a6664105",
-              "name": "access_token",
-              "value": "={{ $json.access_token }}",
-              "type": "string"
+              "name": "client_secret",
+              "value": "dmnoi2am8sdndpc1p905c2s5van5p110fik945t5q6pd5fkledk"
+            },
+            {
+              "name": "grant_type",
+              "value": "client_credentials"
+            },
+            {
+              "name": "scope",
+              "value": "urn:com:ctt-express:integration-clients:scopes:common/ALL"
             }
           ]
         },
         "options": {}
       },
-      "id": "b8e755c4-5917-440c-a7d8-c74226c98f77",
-      "name": "Config SERVICE CORP WORLD Centers",
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
+      "id": "45975755-601a-458e-a1a8-39ddb6ff24ac",
+      "name": "1. Obtener Token SERVICE CORP WORLD1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
       "position": [
-        -11424,
-        1888
+        -11648,
+        1344
       ]
     },
     {
       "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "uuid-HAMINOS",
-              "name": "centers",
-              "value": [
-                "4863000001"
-              ],
-              "type": "array"
-            },
-            {
-              "id": "a2e679e1-5f83-43e0-8af0-22e2753e82bd",
-              "name": "access_token",
-              "value": "={{ $json.access_token }}",
-              "type": "string"
-            }
-          ]
-        },
-        "options": {}
+        "sendTo": "incidenciashaminos@gmail.com",
+        "subject": "=SEGUIMIENTO INTERNO: Incidencia - {{ $('Preparar Contexto').item.json.shipping_code }}",
+        "message": "={{ $json.email_body }}\n\n--- DETALLES INTERNOS ---\nJUSTIFICACION IA:\n{{ $json.ai_justification }}\n\nENVIO: {{ $('Preparar Contexto').item.json.shipping_code }}",
+        "options": {
+          "appendAttribution": false
+        }
       },
-      "id": "58d21272-0e67-48b9-92da-d21bc0d673b3",
-      "name": "Config HAMINOS Centers",
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
+      "id": "51236e8b-9b91-4c7f-b313-fb81bbe576ce",
+      "name": "Int H",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
       "position": [
-        -11424,
-        1696
-      ]
+        -7936,
+        1600
+      ],
+      "webhookId": "3b9886c3-83ec-498a-ae32-8d01c94c75fb",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "xvnQhr5hfD4gc3Uk",
+          "name": "HAMINOS"
+        }
+      }
     }
   ],
   "connections": {
-    "1. Obtener Token SERVICE CORP WORLD1": {
+    "Config HAMINOS Centers": {
       "main": [
         [
           {
-            "node": "Config SERVICE CORP WORLD Centers",
+            "node": "Call SubWf HAMINOS",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "1. Obtener Token KULTUDENDA1": {
+    "Config SERVICE CORP WORLD Centers": {
       "main": [
         [
           {
-            "node": "Config KULTUDENDA Centers",
+            "node": "Call SubWf SERVICE CORP WORLD",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "1. Obtener Token SNAPPY1": {
+    "Config KULTUDENDA Centers": {
       "main": [
         [
           {
-            "node": "Config SNAPPY Centers",
+            "node": "Call SubWf KULTUDENDA",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Edit Fields": {
+    "Config SNAPPY Centers": {
       "main": [
         [
           {
-            "node": "1. Obtener Token KULTUDENDA1",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "1. Obtener Token SERVICE CORP WORLD1",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "1. Obtener Token SNAPPY1",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "1. Obtener Token HAMINOS1",
+            "node": "Call SubWf SNAPPY",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "1. Obtener Token HAMINOS1": {
+    "Call SubWf HAMINOS": {
       "main": [
         [
           {
-            "node": "Config HAMINOS Centers",
+            "node": "Merge2",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Merge2": {
+    "Call SubWf SERVICE CORP WORLD": {
       "main": [
         [
           {
-            "node": "Filtrar_Estados_Activos_Optimizado",
+            "node": "Merge2",
             "type": "main",
-            "index": 0
+            "index": 1
           }
         ]
       ]
     },
-    "Schedule Trigger": {
+    "Call SubWf KULTUDENDA": {
       "main": [
         [
           {
-            "node": "Edit Fields",
+            "node": "Merge2",
             "type": "main",
-            "index": 0
+            "index": 2
           }
         ]
       ]
     },
-    "Filtrar_Estados_Activos_Optimizado": {
+    "Call SubWf SNAPPY": {
+      "main": [
+        [
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 3
+          }
+        ]
+      ]
+    },
+    "Log Estados1": {
       "main": [
         [
           {
@@ -1651,63 +1655,7 @@
         ]
       ]
     },
-    "Loop: Processar 1 a 2": {
-      "main": [
-        [],
-        [
-          {
-            "node": "Obtenir Historial Detallat1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Obtenir Historial Detallat1": {
-      "main": [
-        [
-          {
-            "node": "Code in JavaScript3",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Code in JavaScript3": {
-      "main": [
-        [
-          {
-            "node": "Buscar Avisos Previos",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Buscar Avisos Previos": {
-      "main": [
-        [
-          {
-            "node": "Preparar Contexto",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Preparar Contexto": {
-      "main": [
-        [
-          {
-            "node": "If Duplicado Hoy",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "If Duplicado Hoy": {
+    "Registrar Incidencia1": {
       "main": [
         [
           {
@@ -1715,68 +1663,112 @@
             "type": "main",
             "index": 0
           }
+        ]
+      ]
+    },
+    "Int S": {
+      "main": [
+        [
+          {
+            "node": "Registrar Incidencia1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Int K": {
+      "main": [
+        [
+          {
+            "node": "Registrar Incidencia1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Int M": {
+      "main": [
+        [
+          {
+            "node": "Registrar Incidencia1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Trans S1": {
+      "main": [
+        [
+          {
+            "node": "Registrar Incidencia1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Trans K1": {
+      "main": [
+        [
+          {
+            "node": "Registrar Incidencia1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Trans M1": {
+      "main": [
+        [
+          {
+            "node": "Registrar Incidencia1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Trans H": {
+      "main": [
+        [
+          {
+            "node": "Registrar Incidencia1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch Client Internal": {
+      "main": [
+        [
+          {
+            "node": "Int H",
+            "type": "main",
+            "index": 0
+          }
         ],
         [
           {
-            "node": "Message a model",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Message a model": {
-      "main": [
-        [
-          {
-            "node": "Code in JavaScript2",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Code in JavaScript2": {
-      "main": [
-        [
-          {
-            "node": "If1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "If1": {
-      "main": [
-        [
-          {
-            "node": "Switch Target Type",
+            "node": "Int M",
             "type": "main",
             "index": 0
           }
         ],
         [
           {
-            "node": "Log Estados1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Switch Target Type": {
-      "main": [
-        [
-          {
-            "node": "Switch3",
+            "node": "Int K",
             "type": "main",
             "index": 0
           }
         ],
         [
           {
-            "node": "Switch Client Internal",
+            "node": "Int S",
             "type": "main",
             "index": 0
           }
@@ -1829,32 +1821,18 @@
         ]
       ]
     },
-    "Switch Client Internal": {
+    "Switch Target Type": {
       "main": [
         [
           {
-            "node": "Int H",
+            "node": "Switch3",
             "type": "main",
             "index": 0
           }
         ],
         [
           {
-            "node": "Int M",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Int K",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Int S",
+            "node": "Switch Client Internal",
             "type": "main",
             "index": 0
           }
@@ -1868,44 +1846,217 @@
         ]
       ]
     },
-    "Trans H": {
+    "If1": {
       "main": [
         [
           {
-            "node": "Registrar Incidencia1",
+            "node": "Switch Target Type",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Log Estados1",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Trans M1": {
+    "Code in JavaScript2": {
       "main": [
         [
           {
-            "node": "Registrar Incidencia1",
+            "node": "If1",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Trans K1": {
+    "Message a model": {
       "main": [
         [
           {
-            "node": "Registrar Incidencia1",
+            "node": "Code in JavaScript2",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Trans S1": {
+    "If Duplicado Hoy": {
       "main": [
         [
           {
-            "node": "Registrar Incidencia1",
+            "node": "Log Estados1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Preparar Contexto": {
+      "main": [
+        [
+          {
+            "node": "If Duplicado Hoy",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Buscar Avisos Previos": {
+      "main": [
+        [
+          {
+            "node": "Preparar Contexto",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript3": {
+      "main": [
+        [
+          {
+            "node": "Buscar Avisos Previos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Obtenir Historial Detallat1": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop: Processar 1 a 2": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Obtenir Historial Detallat1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filtrar_Estados_Activos_Optimizado": {
+      "main": [
+        [
+          {
+            "node": "Loop: Processar 1 a 2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge2": {
+      "main": [
+        [
+          {
+            "node": "Filtrar_Estados_Activos_Optimizado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "1. Obtener Token HAMINOS1": {
+      "main": [
+        [
+          {
+            "node": "Config HAMINOS Centers",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "1. Obtener Token HAMINOS1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "1. Obtener Token SNAPPY1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "1. Obtener Token KULTUDENDA1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "1. Obtener Token SERVICE CORP WORLD1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "1. Obtener Token SNAPPY1": {
+      "main": [
+        [
+          {
+            "node": "Config SNAPPY Centers",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "1. Obtener Token KULTUDENDA1": {
+      "main": [
+        [
+          {
+            "node": "Config KULTUDENDA Centers",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "1. Obtener Token SERVICE CORP WORLD1": {
+      "main": [
+        [
+          {
+            "node": "Config SERVICE CORP WORLD Centers",
             "type": "main",
             "index": 0
           }
@@ -1922,168 +2073,9 @@
           }
         ]
       ]
-    },
-    "Int M": {
-      "main": [
-        [
-          {
-            "node": "Registrar Incidencia1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Int K": {
-      "main": [
-        [
-          {
-            "node": "Registrar Incidencia1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Int S": {
-      "main": [
-        [
-          {
-            "node": "Registrar Incidencia1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Registrar Incidencia1": {
-      "main": [
-        [
-          {
-            "node": "Log Estados1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Log Estados1": {
-      "main": [
-        [
-          {
-            "node": "Loop: Processar 1 a 2",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Call SubWf SNAPPY": {
-      "main": [
-        [
-          {
-            "node": "Merge2",
-            "type": "main",
-            "index": 3
-          }
-        ]
-      ]
-    },
-    "Call SubWf KULTUDENDA": {
-      "main": [
-        [
-          {
-            "node": "Merge2",
-            "type": "main",
-            "index": 2
-          }
-        ]
-      ]
-    },
-    "Call SubWf SERVICE CORP WORLD": {
-      "main": [
-        [
-          {
-            "node": "Merge2",
-            "type": "main",
-            "index": 1
-          }
-        ]
-      ]
-    },
-    "Call SubWf HAMINOS": {
-      "main": [
-        [
-          {
-            "node": "Merge2",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Config SNAPPY Centers": {
-      "main": [
-        [
-          {
-            "node": "Call SubWf SNAPPY",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Config KULTUDENDA Centers": {
-      "main": [
-        [
-          {
-            "node": "Call SubWf KULTUDENDA",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Config SERVICE CORP WORLD Centers": {
-      "main": [
-        [
-          {
-            "node": "Call SubWf SERVICE CORP WORLD",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Config HAMINOS Centers": {
-      "main": [
-        [
-          {
-            "node": "Call SubWf HAMINOS",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
     }
   },
-  "pinData": {
-    "Schedule Trigger": [
-      {
-        "timestamp": "2026-03-04T20:00:00.041+01:00",
-        "Readable date": "March 4th 2026, 8:00:00 pm",
-        "Readable time": "8:00:00 pm",
-        "Day of week": "Wednesday",
-        "Year": "2026",
-        "Month": "March",
-        "Day of month": "04",
-        "Hour": "20",
-        "Minute": "00",
-        "Second": "00",
-        "Timezone": "Europe/Madrid (UTC+01:00)"
-      }
-    ]
-  },
+  "pinData": {},
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "1c2aee663286167ca5973273ceb0c60aa2fcbae95195db0810f62f8c4797daff"
