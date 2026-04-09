@@ -1,8 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { collection, getDocs, orderBy, query, limit } from "firebase/firestore";
 import { db } from "@/lib/firebase";
+import { useAuth } from "@/lib/auth-context";
 import { Ejecucion, Incidencia, Historial } from "@/lib/types";
 import { StatsCards } from "@/components/StatsCards";
 import { EjecucionesTable } from "@/components/EjecucionesTable";
@@ -12,6 +14,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 export default function Dashboard() {
+  const { state, logout } = useAuth();
+  const router = useRouter();
   const [ejecuciones, setEjecuciones] = useState<Ejecucion[]>([]);
   const [incidencias, setIncidencias] = useState<Incidencia[]>([]);
   const [historial, setHistorial] = useState<Historial[]>([]);
@@ -20,6 +24,13 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (state.status === "unauthenticated" || state.status === "unauthorized") {
+      router.replace("/login");
+    }
+  }, [state, router]);
+
+  useEffect(() => {
+    if (state.status !== "authenticated") return;
     async function load() {
       setLoading(true);
       try {
@@ -37,10 +48,17 @@ export default function Dashboard() {
       setLoading(false);
     }
     load();
-  }, []);
+  }, [state]);
+
+  if (state.status === "loading" || state.status !== "authenticated") {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-sm text-muted-foreground">Cargando...</p>
+      </div>
+    );
+  }
 
   const tiendas = ["TODAS", ...Array.from(new Set(ejecuciones.map((e) => e.tienda)))];
-
   const termino = busqueda.trim().toLowerCase();
 
   function coincideBusqueda(envio: string, pedido: string) {
@@ -85,6 +103,12 @@ export default function Dashboard() {
               ))}
             </SelectContent>
           </Select>
+          <button
+            onClick={logout}
+            className="h-9 px-3 rounded-md border text-sm hover:bg-muted transition-colors"
+          >
+            Cerrar sesión
+          </button>
         </div>
       </div>
 
