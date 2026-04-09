@@ -1,0 +1,8 @@
+# Dashboard - Next.js
+dashboard/node_modules/
+dashboard/.next/
+dashboard/out/
+dashboard/.env.local
+dashboard/.env*.local
+dashboard/next-env.d.ts
+dashboard/*.tsbuildinfo
