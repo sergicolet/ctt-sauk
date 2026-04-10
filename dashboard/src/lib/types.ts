@@ -18,6 +18,8 @@ export interface Ejecucion {
   manifest_hours: number;
   forzado_interno: boolean;
   dano: boolean;
+  historial_formateado?: string;
+  stationary_hours?: number;
 }
 
 export interface Incidencia {
@@ -40,6 +42,8 @@ export interface Incidencia {
   manifest_hours: number;
   forzado_interno: boolean;
   dano: boolean;
+  historial_formateado?: string;
+  stationary_hours?: number;
 }
 
 export interface Historial {

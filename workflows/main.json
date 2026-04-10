@@ -22,13 +22,13 @@
         },
         "options": {}
       },
-      "id": "58d21272-0e67-48b9-92da-d21bc0d673b3",
+      "id": "954ed19b-f608-4222-8c69-aa9ef4d4a9ea",
       "name": "Config HAMINOS Centers",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -11424,
-        1152
+        -38896,
+        13440
       ]
     },
     {
@@ -53,13 +53,13 @@
         },
         "options": {}
       },
-      "id": "b8e755c4-5917-440c-a7d8-c74226c98f77",
+      "id": "7b04a534-d284-40de-8e7f-a3910bf1dba3",
       "name": "Config SERVICE CORP WORLD Centers",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -11424,
-        1344
+        -38896,
+        13632
       ]
     },
     {
@@ -85,13 +85,13 @@
         },
         "options": {}
       },
-      "id": "273c05ed-4c64-478c-a82b-c1c6ab3f4ba4",
+      "id": "689a087e-fb25-457e-8fb8-40639c243dd3",
       "name": "Config KULTUDENDA Centers",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -11424,
-        1536
+        -38896,
+        13824
       ]
     },
     {
@@ -120,13 +120,13 @@
         },
         "options": {}
       },
-      "id": "058bce6a-89c5-4487-aded-ebb820a436dd",
+      "id": "0db31880-c293-4db5-b49e-78724dfc8c26",
       "name": "Config SNAPPY Centers",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -11424,
-        1728
+        -38896,
+        14016
       ]
     },
     {
@@ -134,13 +134,13 @@
         "workflowId": "NtGW6lN2IMYIaKeYdTuot",
         "options": {}
       },
-      "id": "b6e552a0-8aaf-4e9f-9dcb-25cb168c54ee",
+      "id": "633e4466-762e-4ab2-a6d4-ea8efcc8cfc2",
       "name": "Call SubWf HAMINOS",
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1,
       "position": [
-        -11200,
-        1152
+        -38672,
+        13440
       ]
     },
     {
@@ -148,13 +148,13 @@
         "workflowId": "NtGW6lN2IMYIaKeYdTuot",
         "options": {}
       },
-      "id": "1fc5d889-a10a-40cd-a82e-ef862ca52f71",
+      "id": "af13d968-2c99-4937-aae0-3f322c38e60e",
       "name": "Call SubWf SERVICE CORP WORLD",
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1,
       "position": [
-        -11200,
-        1344
+        -38672,
+        13632
       ]
     },
     {
@@ -162,13 +162,13 @@
         "workflowId": "NtGW6lN2IMYIaKeYdTuot",
         "options": {}
       },
-      "id": "28ebcabf-3695-491e-8000-80483a99da32",
+      "id": "28d2eb2c-4a4b-4341-ba16-1379532dc40c",
       "name": "Call SubWf KULTUDENDA",
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1,
       "position": [
-        -11200,
-        1536
+        -38672,
+        13824
       ]
     },
     {
@@ -176,119 +176,334 @@
         "workflowId": "NtGW6lN2IMYIaKeYdTuot",
         "options": {}
       },
-      "id": "68d644d0-b0d9-4e30-86c7-eaf3ff54dc2b",
+      "id": "8798fae9-6d31-44c9-ab73-070b0fc95f5a",
       "name": "Call SubWf SNAPPY",
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1,
       "position": [
-        -11200,
-        1728
+        -38672,
+        14016
       ]
     },
     {
       "parameters": {
         "assignments": {
           "assignments": [
-            { "id": "log-1", "name": "_docid", "value": "={{ $now.toMillis() + '_' + $('Preparar Contexto').item.json.shipping_code }}", "type": "string" },
-            { "id": "log-2", "name": "fecha_procesado", "value": "={{ $now.toFormat('dd-MM-yyyy HH:mm:ss') }}", "type": "string" },
-            { "id": "log-3", "name": "numero_envio", "value": "={{ $('Preparar Contexto').item.json.shipping_code }}", "type": "string" },
-            { "id": "log-4", "name": "numero_pedido", "value": "={{ $('Preparar Contexto').item.json.client_references[0] }}", "type": "string" },
-            { "id": "log-5", "name": "tienda", "value": "={{ $('Preparar Contexto').item.json.client_code === '48630' ? 'HAMINOS' : ($('Preparar Contexto').item.json.client_code === '47685' ? 'MIESTERY' : ($('Preparar Contexto').item.json.client_code === '45416' ? 'KULTUDENDA' : 'SNAPPY')) }}", "type": "string" },
-            { "id": "log-6", "name": "centro", "value": "={{ $('Preparar Contexto').item.json.client_center_code }}", "type": "string" },
-            { "id": "log-7", "name": "estado", "value": "={{ $('Code in JavaScript3').item.json.shipping_status_code }}", "type": "string" },
-            { "id": "log-8", "name": "fecha_estado", "value": "={{ $('Code in JavaScript3').item.json.shipping_status_datetime }}", "type": "string" },
-            { "id": "log-9", "name": "h_en_estado", "value": "={{ $('Code in JavaScript2').first().json.h_en_estado }}", "type": "number" },
-            { "id": "log-10", "name": "email_enviado", "value": "={{ $('Code in JavaScript2').first().json.should_notify }}", "type": "boolean" },
-            { "id": "log-11", "name": "tipo_email", "value": "={{ $('Code in JavaScript2').first().json.ai_incident_detected }}", "type": "string" },
-            { "id": "log-12", "name": "razon", "value": "={{ $('Code in JavaScript2').first().json.ai_justification }}", "type": "string" },
-            { "id": "log-13", "name": "destinatario", "value": "={{ $('Code in JavaScript2').first().json.email_to }}", "type": "string" },
-            { "id": "log-14", "name": "credencial", "value": "={{ $('Preparar Contexto').item.json.client_code === '48630' ? 'HAMINOS' : ($('Preparar Contexto').item.json.client_code === '47685' ? 'MIESTERY' : ($('Preparar Contexto').item.json.client_code === '45416' ? 'KULTUDENDA' : 'SNAPPY')) }}", "type": "string" },
-            { "id": "log-15", "name": "transit_hours", "value": "={{ $('Code in JavaScript3').item.json.transit_hours }}", "type": "number" },
-            { "id": "log-16", "name": "delivery_hours", "value": "={{ $('Code in JavaScript3').item.json.delivery_hours }}", "type": "number" },
-            { "id": "log-17", "name": "manifest_hours", "value": "={{ $('Code in JavaScript3').item.json.manifest_hours }}", "type": "number" },
-            { "id": "log-18", "name": "forzado_interno", "value": "={{ $('Code in JavaScript2').first().json.force_internal }}", "type": "boolean" },
-            { "id": "log-19", "name": "dano", "value": "={{ $('Code in JavaScript3').item.json.has_damage }}", "type": "boolean" }
+            {
+              "id": "log-1",
+              "name": "_docid",
+              "value": "={{ $now.toMillis() + '_' + $('Preparar Contexto Avisos').item.json.shipping_code }}",
+              "type": "string"
+            },
+            {
+              "id": "log-2",
+              "name": "fecha_procesado",
+              "value": "={{ $now.toFormat('dd-MM-yyyy HH:mm:ss') }}",
+              "type": "string"
+            },
+            {
+              "id": "log-3",
+              "name": "numero_envio",
+              "value": "={{ $('Preparar Contexto Avisos').item.json.shipping_code.toJsonString() }}",
+              "type": "string"
+            },
+            {
+              "id": "log-4",
+              "name": "numero_pedido",
+              "value": "={{ $('Preparar Contexto Avisos').item.json.client_references[0] }}",
+              "type": "string"
+            },
+            {
+              "id": "log-5",
+              "name": "tienda",
+              "value": "={{ $('Preparar Contexto Avisos').item.json.client_code === '48630' ? 'HAMINOS' : ($('Preparar Contexto Avisos').item.json.client_code === '47685' ? 'MIESTERY' : ($('Preparar Contexto Avisos').item.json.client_code === '45416' ? 'KULTUDENDA' : 'SNAPPY')) }}",
+              "type": "string"
+            },
+            {
+              "id": "log-6",
+              "name": "centro",
+              "value": "={{ $('Preparar Contexto Avisos').item.json.client_center_code }}",
+              "type": "string"
+            },
+            {
+              "id": "log-7",
+              "name": "estado",
+              "value": "={{ $('Calcular Estados y Horas').item.json.shipping_status_code }}",
+              "type": "string"
+            },
+            {
+              "id": "log-8",
+              "name": "fecha_estado",
+              "value": "={{ $('Calcular Estados y Horas').item.json.shipping_status_datetime }}",
+              "type": "string"
+            },
+            {
+              "id": "log-9",
+              "name": "h_en_estado",
+              "value": "={{ $('Procesar Respuesta IA').first().json.h_en_estado.toString()}}",
+              "type": "number"
+            },
+            {
+              "id": "log-10",
+              "name": "email_enviado",
+              "value": "={{ $('Procesar Respuesta IA').first().json.should_notify }}",
+              "type": "boolean"
+            },
+            {
+              "id": "log-11",
+              "name": "tipo_email",
+              "value": "={{ $('Procesar Respuesta IA').first().json.ai_incident_detected }}",
+              "type": "string"
+            },
+            {
+              "id": "log-12",
+              "name": "razon",
+              "value": "={{ $('Procesar Respuesta IA').first().json.ai_justification }}",
+              "type": "string"
+            },
+            {
+              "id": "log-13",
+              "name": "destinatario",
+              "value": "={{ $('Procesar Respuesta IA').first().json.email_to }}",
+              "type": "string"
+            },
+            {
+              "id": "log-14",
+              "name": "credencial",
+              "value": "={{ $('Preparar Contexto Avisos').item.json.client_code === '48630' ? 'HAMINOS' : ($('Preparar Contexto Avisos').item.json.client_code === '47685' ? 'MIESTERY' : ($('Preparar Contexto Avisos').item.json.client_code === '45416' ? 'KULTUDENDA' : 'SNAPPY')) }}",
+              "type": "string"
+            },
+            {
+              "id": "log-15",
+              "name": "transit_hours",
+              "value": "={{ $('Calcular Estados y Horas').item.json.transit_hours.toString()}}",
+              "type": "number"
+            },
+            {
+              "id": "log-16",
+              "name": "delivery_hours",
+              "value": "={{ $('Calcular Estados y Horas').item.json.delivery_hours.toString()}}",
+              "type": "number"
+            },
+            {
+              "id": "log-17",
+              "name": "manifest_hours",
+              "value": "={{ $('Calcular Estados y Horas').item.json.manifest_hours.toString()}}",
+              "type": "number"
+            },
+            {
+              "id": "log-18",
+              "name": "forzado_interno",
+              "value": "={{ $('Procesar Respuesta IA').first().json.force_internal }}",
+              "type": "boolean"
+            },
+            {
+              "id": "log-19",
+              "name": "dano",
+              "value": "={{ $('Calcular Estados y Horas').item.json.has_damage }}",
+              "type": "boolean"
+            },
+            {
+              "id": "log-20",
+              "name": "historial_formateado",
+              "value": "={{ $('Calcular Estados y Horas').item.json.formatted_history }}",
+              "type": "string"
+            }
           ]
         },
-        "options": { "ignoreConversionErrors": true }
+        "options": {
+          "ignoreConversionErrors": true
+        }
       },
-      "id": "81b4b3e7-4ec1-4e54-b3da-785031e61654",
-      "name": "Log Estados1",
+      "id": "1d5e0181-9119-4570-a0b2-e45e9684a697",
+      "name": "Preparar Log Firebase",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
-      "position": [-7488, 1360],
+      "position": [
+        -34736,
+        13536
+      ],
       "alwaysOutputData": true,
       "onError": "continueRegularOutput"
     },
     {
       "parameters": {
-        "operation": "create",
+        "operation": "upsert",
         "projectId": "ctt-dashboard",
         "collection": "ejecuciones",
-        "documentId": "_docid",
-        "columns": "fecha_procesado,numero_envio,numero_pedido,tienda,centro,estado,fecha_estado,h_en_estado,email_enviado,tipo_email,razon,destinatario,credencial,transit_hours,delivery_hours,manifest_hours,forzado_interno,dano"
+        "updateKey": "_docid",
+        "columns": "fecha_procesado,numero_envio,numero_pedido,tienda,centro,estado,fecha_estado,h_en_estado,email_enviado,tipo_email,razon,destinatario,credencial,transit_hours,delivery_hours,manifest_hours,forzado_interno,dano,historial_formateado"
       },
-      "id": "firebase-ejecucion-0001",
+      "id": "9ea3406c-8db7-4033-967d-b105c729092d",
       "name": "Firebase Log Ejecucion",
       "type": "n8n-nodes-base.googleFirebaseCloudFirestore",
       "typeVersion": 1.1,
-      "position": [-7264, 1360],
+      "position": [
+        -34512,
+        14064
+      ],
       "alwaysOutputData": true,
-      "onError": "continueRegularOutput",
       "credentials": {
         "googleFirebaseCloudFirestoreOAuth2Api": {
           "id": "EXM0epVP1YsMfolr",
           "name": "haminos"
         }
-      }
+      },
+      "onError": "continueRegularOutput"
     },
     {
       "parameters": {
         "assignments": {
           "assignments": [
-            { "id": "inc-1", "name": "_docid", "value": "={{ $('Code in JavaScript3').item.json.shipping_code }}", "type": "string" },
-            { "id": "inc-2", "name": "fecha_procesado", "value": "={{ $now.toFormat('dd-MM-yyyy HH:mm:ss') }}", "type": "string" },
-            { "id": "inc-3", "name": "numero_envio", "value": "={{ $('Code in JavaScript3').item.json.shipping_code }}", "type": "string" },
-            { "id": "inc-4", "name": "numero_pedido", "value": "={{ $('Code in JavaScript3').item.json.client_references[0] }}", "type": "string" },
-            { "id": "inc-5", "name": "tienda", "value": "={{ $('Preparar Contexto').item.json.client_code === '48630' ? 'HAMINOS' : ($('Preparar Contexto').item.json.client_code === '47685' ? 'MIESTERY' : ($('Preparar Contexto').item.json.client_code === '45416' ? 'KULTUDENDA' : 'SNAPPY')) }}", "type": "string" },
-            { "id": "inc-6", "name": "centro", "value": "={{ $('Code in JavaScript3').item.json.client_center_code }}", "type": "string" },
-            { "id": "inc-7", "name": "incidencia", "value": "={{ $('Code in JavaScript2').item.json.ai_incident_detected }}", "type": "string" },
-            { "id": "inc-8", "name": "fecha_incidencia", "value": "={{ $('Code in JavaScript3').item.json.shipping_status_datetime }}", "type": "string" },
-            { "id": "inc-9", "name": "h_en_incidencia", "value": "={{ $('Code in JavaScript2').item.json.h_en_estado }}", "type": "number" },
-            { "id": "inc-10", "name": "tipo_email", "value": "={{ $('Code in JavaScript2').item.json.target_type }}", "type": "string" },
-            { "id": "inc-11", "name": "razon", "value": "={{ $('Code in JavaScript2').item.json.ai_justification }}", "type": "string" },
-            { "id": "inc-12", "name": "destinatario", "value": "={{ $('Code in JavaScript2').item.json.email_to }}", "type": "string" },
-            { "id": "inc-13", "name": "credencial", "value": "={{ $('Preparar Contexto').item.json.client_code === '48630' ? 'HAMINOS' : ($('Preparar Contexto').item.json.client_code === '47685' ? 'MIESTERY' : ($('Preparar Contexto').item.json.client_code === '45416' ? 'KULTUDENDA' : 'SNAPPY')) }}", "type": "string" },
-            { "id": "inc-14", "name": "numero_avisos", "value": "={{ $('Code in JavaScript2').item.json.numero_avisos }}", "type": "number" },
-            { "id": "inc-15", "name": "transit_hours", "value": "={{ $('Code in JavaScript3').item.json.transit_hours }}", "type": "number" },
-            { "id": "inc-16", "name": "delivery_hours", "value": "={{ $('Code in JavaScript3').item.json.delivery_hours }}", "type": "number" },
-            { "id": "inc-17", "name": "manifest_hours", "value": "={{ $('Code in JavaScript3').item.json.manifest_hours }}", "type": "number" },
-            { "id": "inc-18", "name": "forzado_interno", "value": "={{ $('Code in JavaScript2').item.json.force_internal }}", "type": "boolean" },
-            { "id": "inc-19", "name": "dano", "value": "={{ $('Code in JavaScript3').item.json.has_damage }}", "type": "boolean" }
+            {
+              "id": "inc-1",
+              "name": "_docid",
+              "value": "={{ $('Calcular Estados y Horas').item.json.shipping_code }}",
+              "type": "string"
+            },
+            {
+              "id": "inc-2",
+              "name": "fecha_procesado",
+              "value": "={{ $now.toFormat('dd-MM-yyyy HH:mm:ss') }}",
+              "type": "string"
+            },
+            {
+              "id": "inc-3",
+              "name": "numero_envio",
+              "value": "={{$('Calcular Estados y Horas').item.json.shipping_code.toJsonString() }}",
+              "type": "string"
+            },
+            {
+              "id": "inc-4",
+              "name": "numero_pedido",
+              "value": "={{$('Calcular Estados y Horas').item.json.client_references[0] }}",
+              "type": "string"
+            },
+            {
+              "id": "inc-5",
+              "name": "tienda",
+              "value": "={{ $('Preparar Contexto Avisos').item.json.client_code === '48630' ? 'HAMINOS' : ($('Preparar Contexto Avisos').item.json.client_code === '47685' ? 'MIESTERY' : ($('Preparar Contexto Avisos').item.json.client_code === '45416' ? 'KULTUDENDA' : 'SNAPPY')) }}",
+              "type": "string"
+            },
+            {
+              "id": "inc-6",
+              "name": "centro",
+              "value": "={{ $('Calcular Estados y Horas').item.json.client_center_code }}",
+              "type": "string"
+            },
+            {
+              "id": "inc-7",
+              "name": "incidencia",
+              "value": "={{ $('Procesar Respuesta IA').item.json.ai_incident_detected }}",
+              "type": "string"
+            },
+            {
+              "id": "inc-8",
+              "name": "fecha_incidencia",
+              "value": "={{ $('Calcular Estados y Horas').item.json.shipping_status_datetime }}",
+              "type": "string"
+            },
+            {
+              "id": "inc-9",
+              "name": "h_en_incidencia",
+              "value": "={{ $('Procesar Respuesta IA').item.json.h_en_estado.toString()}}",
+              "type": "number"
+            },
+            {
+              "id": "inc-10",
+              "name": "tipo_email",
+              "value": "={{ $('Procesar Respuesta IA').item.json.target_type }}",
+              "type": "string"
+            },
+            {
+              "id": "inc-11",
+              "name": "razon",
+              "value": "={{ $('Procesar Respuesta IA').item.json.ai_justification }}",
+              "type": "string"
+            },
+            {
+              "id": "inc-12",
+              "name": "destinatario",
+              "value": "={{ $('Procesar Respuesta IA').item.json.email_to }}",
+              "type": "string"
+            },
+            {
+              "id": "inc-13",
+              "name": "credencial",
+              "value": "={{ $('Preparar Contexto Avisos').item.json.client_code === '48630' ? 'HAMINOS' : ($('Preparar Contexto Avisos').item.json.client_code === '47685' ? 'MIESTERY' : ($('Preparar Contexto Avisos').item.json.client_code === '45416' ? 'KULTUDENDA' : 'SNAPPY')) }}",
+              "type": "string"
+            },
+            {
+              "id": "inc-14",
+              "name": "numero_avisos",
+              "value": "={{ $('Procesar Respuesta IA').item.json.numero_avisos.toString()}}",
+              "type": "number"
+            },
+            {
+              "id": "inc-15",
+              "name": "transit_hours",
+              "value": "={{ $('Calcular Estados y Horas').item.json.transit_hours.toString()}}",
+              "type": "number"
+            },
+            {
+              "id": "inc-16",
+              "name": "delivery_hours",
+              "value": "={{ $('Calcular Estados y Horas').item.json.delivery_hours.toString()}}",
+              "type": "number"
+            },
+            {
+              "id": "inc-17",
+              "name": "manifest_hours",
+              "value": "={{ $('Calcular Estados y Horas').item.json.manifest_hours.toString()}}",
+              "type": "number"
+            },
+            {
+              "id": "inc-18",
+              "name": "forzado_interno",
+              "value": "={{ $('Procesar Respuesta IA').item.json.force_internal }}",
+              "type": "boolean"
+            },
+            {
+              "id": "inc-19",
+              "name": "dano",
+              "value": "={{ $('Calcular Estados y Horas').item.json.has_damage }}",
+              "type": "boolean"
+            },
+            {
+              "id": "inc-20",
+              "name": "historial_formateado",
+              "value": "={{ $('Calcular Estados y Horas').item.json.formatted_history }}",
+              "type": "string"
+            }
           ]
         },
         "options": {}
       },
-      "id": "7262453c-b61b-4c13-8dd9-0c73825db809",
+      "id": "7dabae2b-5dd2-415a-920d-538fd8b7a52c",
       "name": "Registrar Incidencia1",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
-      "position": [-7712, 928]
+      "position": [
+        -35184,
+        11992
+      ]
     },
     {
       "parameters": {
         "operation": "upsert",
         "projectId": "ctt-dashboard",
         "collection": "incidencias",
-        "documentId": "_docid",
-        "updateKey": "numero_envio",
-        "columns": "fecha_procesado,numero_envio,numero_pedido,tienda,centro,incidencia,fecha_incidencia,h_en_incidencia,tipo_email,razon,destinatario,credencial,numero_avisos,transit_hours,delivery_hours,manifest_hours,forzado_interno,dano"
+        "updateKey": "_docid",
+        "columns": "fecha_procesado,numero_envio,numero_pedido,tienda,centro,incidencia,fecha_incidencia,h_en_incidencia,tipo_email,razon,destinatario,credencial,numero_avisos,transit_hours,delivery_hours,manifest_hours,forzado_interno,dano,historial_formateado"
       },
-      "id": "firebase-incidencia-0001",
+      "id": "e1443eff-4dc1-425a-98a0-f0ba6a4318e0",
       "name": "Firebase Incidencia",
       "type": "n8n-nodes-base.googleFirebaseCloudFirestore",
       "typeVersion": 1.1,
-      "position": [-7488, 928],
+      "position": [
+        -34960,
+        11992
+      ],
       "credentials": {
         "googleFirebaseCloudFirestoreOAuth2Api": {
           "id": "EXM0epVP1YsMfolr",
@@ -299,19 +514,19 @@
     {
       "parameters": {
         "sendTo": "incidenciassnappyblue@gmail.com",
-        "subject": "=SEGUIMIENTO INTERNO: Incidencia - {{ $('Preparar Contexto').item.json.shipping_code }}",
-        "message": "={{ $json.email_body }}\n\n--- DETALLES INTERNOS ---\nJUSTIFICACION IA:\n{{ $json.ai_justification }}\n\nENVIO: {{ $('Preparar Contexto').item.json.shipping_code }}",
+        "subject": "=SEGUIMIENTO INTERNO: Incidencia - {{ $('Preparar Contexto Avisos').item.json.shipping_code }}",
+        "message": "={{ $json.email_body }}\n\n--- DETALLES INTERNOS ---\nJUSTIFICACION IA:\n{{ $json.ai_justification }}\n\nENVIO: {{ $('Preparar Contexto Avisos').item.json.shipping_code }}",
         "options": {
           "appendAttribution": false
         }
       },
-      "id": "711d53c1-9fc2-4d70-a9ed-999c95c1dbd4",
+      "id": "139a3da6-51dc-4edf-b72f-17daaab273fd",
       "name": "Int S",
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
       "position": [
-        -7936,
-        2176
+        -35408,
+        13056
       ],
       "webhookId": "b097a9b1-1604-4e87-a51d-c8312516ba13",
       "credentials": {
@@ -324,19 +539,19 @@
     {
       "parameters": {
         "sendTo": "incidenciaskulturdenda@gmail.com",
-        "subject": "=SEGUIMIENTO INTERNO: Incidencia - {{ $('Preparar Contexto').item.json.shipping_code }}",
-        "message": "={{ $json.email_body }}\n\n--- DETALLES INTERNOS ---\nJUSTIFICACION IA:\n{{ $json.ai_justification }}\n\nENVIO: {{ $('Preparar Contexto').item.json.shipping_code }}",
+        "subject": "=SEGUIMIENTO INTERNO: Incidencia - {{ $('Preparar Contexto Avisos').item.json.shipping_code }}",
+        "message": "={{ $json.email_body }}\n\n--- DETALLES INTERNOS ---\nJUSTIFICACION IA:\n{{ $json.ai_justification }}\n\nENVIO: {{ $('Preparar Contexto Avisos').item.json.shipping_code }}",
         "options": {
           "appendAttribution": false
         }
       },
-      "id": "d0257a76-b447-495d-acbb-326f5e8913f6",
+      "id": "ee20987b-bea8-4aaf-830c-d92cc9a75fb7",
       "name": "Int K",
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
       "position": [
-        -7936,
-        1984
+        -35408,
+        12864
       ],
       "webhookId": "55cc0f50-7042-44cb-85e3-4a5f07e0cf7d",
       "credentials": {
@@ -349,19 +564,19 @@
     {
       "parameters": {
         "sendTo": "incidenciasamzdiscounts01@gmail.com",
-        "subject": "=SEGUIMIENTO INTERNO: Incidencia - {{ $('Preparar Contexto').item.json.shipping_code }}",
-        "message": "={{ $json.email_body }}\n\n--- DETALLES INTERNOS ---\nJUSTIFICACION IA:\n{{ $json.ai_justification }}\n\nENVIO: {{ $('Preparar Contexto').item.json.shipping_code }}",
+        "subject": "=SEGUIMIENTO INTERNO: Incidencia - {{ $('Preparar Contexto Avisos').item.json.shipping_code }}",
+        "message": "={{ $json.email_body }}\n\n--- DETALLES INTERNOS ---\nJUSTIFICACION IA:\n{{ $json.ai_justification }}\n\nENVIO: {{ $('Preparar Contexto Avisos').item.json.shipping_code }}",
         "options": {
           "appendAttribution": false
         }
       },
-      "id": "79157d42-a414-4425-9f72-f64f8bf08ea6",
+      "id": "4a704608-8eb8-4369-ac20-da52e5958012",
       "name": "Int M",
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
       "position": [
-        -7936,
-        1792
+        -35408,
+        12672
       ],
       "webhookId": "7ef7a9ae-6d77-45b4-8a59-3a858f6eb647",
       "credentials": {
@@ -375,16 +590,16 @@
       "parameters": {
         "resource": "draft",
         "subject": "={{ $json.email_subject }}",
-        "message": "={{ $json.email_body }}\n\nSEG: {{ $('Preparar Contexto').item.json.shipping_code }}\nPED: {{ $('Preparar Contexto').item.json.client_references[0] }}",
+        "message": "={{ $json.email_body }}\n\nSEG: {{ $('Preparar Contexto Avisos').item.json.shipping_code }}\nPED: {{ $('Preparar Contexto Avisos').item.json.client_references[0] }}",
         "options": {}
       },
-      "id": "618f8c6f-6908-4671-bfc6-db48bad94b14",
+      "id": "9136dd0f-8e30-44d6-8361-19477354756a",
       "name": "Trans S1",
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
       "position": [
-        -7936,
-        1120
+        -35408,
+        12192
       ],
       "webhookId": "e6fd21ee-c4ae-4ce2-a664-090d1fb5e50e",
       "credentials": {
@@ -398,16 +613,16 @@
       "parameters": {
         "resource": "draft",
         "subject": "={{ $json.email_subject }}",
-        "message": "={{ $json.email_body }}\n\nSEG: {{ $('Preparar Contexto').item.json.shipping_code }}\nPED: {{ $('Preparar Contexto').item.json.client_references[0] }}",
+        "message": "={{ $json.email_body }}\n\nSEG: {{ $('Preparar Contexto Avisos').item.json.shipping_code }}\nPED: {{ $('Preparar Contexto Avisos').item.json.client_references[0] }}",
         "options": {}
       },
-      "id": "a798585c-497a-4a3d-a23c-1b488ac20f37",
+      "id": "f938b4d1-f261-45ae-91ec-32c4e2a05c3f",
       "name": "Trans K1",
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
       "position": [
-        -7936,
-        928
+        -35408,
+        12000
       ],
       "webhookId": "37bf9cb8-6c76-4e55-b952-99c33af2d342",
       "credentials": {
@@ -421,16 +636,16 @@
       "parameters": {
         "resource": "draft",
         "subject": "={{ $json.email_subject }}",
-        "message": "={{ $json.email_body }}\n\nSEG: {{ $('Preparar Contexto').item.json.shipping_code }}\nPED: {{ $('Preparar Contexto').item.json.client_references[0] }}",
+        "message": "={{ $json.email_body }}\n\nSEG: {{ $('Preparar Contexto Avisos').item.json.shipping_code }}\nPED: {{ $('Preparar Contexto Avisos').item.json.client_references[0] }}",
         "options": {}
       },
-      "id": "c38093fc-d45c-47ae-85e2-2f9a8c10b222",
+      "id": "67c9f5eb-6ea0-468a-94a0-dd85f3843869",
       "name": "Trans M1",
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
       "position": [
-        -7936,
-        736
+        -35408,
+        11808
       ],
       "webhookId": "d6262cda-5b4c-409d-ad13-2ff59066d7bb",
       "credentials": {
@@ -444,16 +659,16 @@
       "parameters": {
         "resource": "draft",
         "subject": "={{ $json.email_subject }}",
-        "message": "={{ $json.email_body }}\n\nSEG: {{ $('Preparar Contexto').item.json.shipping_code }}\nPED: {{ $('Preparar Contexto').item.json.client_references[0] }}",
+        "message": "={{ $json.email_body }}\n\nSEG: {{ $('Preparar Contexto Avisos').item.json.shipping_code }}\nPED: {{ $('Preparar Contexto Avisos').item.json.client_references[0] }}",
         "options": {}
       },
-      "id": "eb69279d-b2e3-4e44-928d-24236c02f396",
+      "id": "02cce4da-c532-44f3-a2ef-402db3b3a92e",
       "name": "Trans H",
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
       "position": [
-        -7936,
-        544
+        -35408,
+        11616
       ],
       "webhookId": "687fe524-700d-4b68-9c6f-7ba0a82d4b98",
       "credentials": {
@@ -477,7 +692,7 @@
                 },
                 "conditions": [
                   {
-                    "leftValue": "={{ $('Preparar Contexto').item.json.client_code }}",
+                    "leftValue": "={{ $('Preparar Contexto Avisos').item.json.client_code }}",
                     "rightValue": "48630",
                     "operator": {
                       "type": "string",
@@ -501,7 +716,7 @@
                 },
                 "conditions": [
                   {
-                    "leftValue": "={{ $('Preparar Contexto').item.json.client_code }}",
+                    "leftValue": "={{ $('Preparar Contexto Avisos').item.json.client_code }}",
                     "rightValue": "47685",
                     "operator": {
                       "type": "string",
@@ -525,7 +740,7 @@
                 },
                 "conditions": [
                   {
-                    "leftValue": "={{ $('Preparar Contexto').item.json.client_code }}",
+                    "leftValue": "={{ $('Preparar Contexto Avisos').item.json.client_code }}",
                     "rightValue": "45416",
                     "operator": {
                       "type": "string",
@@ -549,7 +764,7 @@
                 },
                 "conditions": [
                   {
-                    "leftValue": "={{ $('Preparar Contexto').item.json.client_code }}",
+                    "leftValue": "={{ $('Preparar Contexto Avisos').item.json.client_code }}",
                     "rightValue": "47352",
                     "operator": {
                       "type": "string",
@@ -572,10 +787,10 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.4,
       "position": [
-        -8160,
-        1776
+        -35632,
+        12784
       ],
-      "id": "7d04d535-f513-4483-988f-dab7f03ff4af",
+      "id": "c7d564c4-8322-4141-9cc1-367f38428337",
       "name": "Switch Client Internal"
     },
     {
@@ -592,7 +807,7 @@
                 },
                 "conditions": [
                   {
-                    "leftValue": "={{ $('Preparar Contexto').item.json.client_code }}",
+                    "leftValue": "={{ $('Preparar Contexto Avisos').item.json.client_code }}",
                     "rightValue": "48630",
                     "operator": {
                       "type": "string",
@@ -615,7 +830,7 @@
                 },
                 "conditions": [
                   {
-                    "leftValue": "={{ $('Preparar Contexto').item.json.client_code }}",
+                    "leftValue": "={{ $('Preparar Contexto Avisos').item.json.client_code }}",
                     "rightValue": "47685",
                     "operator": {
                       "type": "string",
@@ -638,7 +853,7 @@
                 },
                 "conditions": [
                   {
-                    "leftValue": "={{ $('Preparar Contexto').item.json.client_code }}",
+                    "leftValue": "={{ $('Preparar Contexto Avisos').item.json.client_code }}",
                     "rightValue": "45416",
                     "operator": {
                       "type": "string",
@@ -661,7 +876,7 @@
                 },
                 "conditions": [
                   {
-                    "leftValue": "={{ $('Preparar Contexto').item.json.client_code }}",
+                    "leftValue": "={{ $('Preparar Contexto Avisos').item.json.client_code }}",
                     "rightValue": "47352",
                     "operator": {
                       "type": "string",
@@ -683,10 +898,10 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.4,
       "position": [
-        -8160,
-        864
+        -35632,
+        11920
       ],
-      "id": "9f453a4f-efaf-482a-a742-31a72bab4afb",
+      "id": "6a0ab49b-87c2-473f-a61f-2560cd94cf73",
       "name": "Switch3"
     },
     {
@@ -703,7 +918,7 @@
                 },
                 "conditions": [
                   {
-                    "leftValue": "={{ $('Code in JavaScript2').item.json.target_type }}",
+                    "leftValue": "={{ $('Procesar Respuesta IA').item.json.target_type }}",
                     "rightValue": "standard",
                     "operator": {
                       "type": "string",
@@ -726,7 +941,7 @@
                 },
                 "conditions": [
                   {
-                    "leftValue": "={{ $('Code in JavaScript2').item.json.target_type }}",
+                    "leftValue": "={{ $('Procesar Respuesta IA').item.json.target_type }}",
                     "rightValue": "internal",
                     "operator": {
                       "type": "string",
@@ -745,13 +960,13 @@
           "fallbackOutput": "extra"
         }
       },
-      "id": "8f61eb2e-ea73-4d56-9392-241e004ed0e7",
-      "name": "Switch Target Type",
+      "id": "33c888ef-adca-433c-807f-e8cbf8bb0e62",
+      "name": "Ruta Alerta (Internal/Standard)",
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.4,
       "position": [
-        -8384,
-        1344
+        -35856,
+        12848
       ]
     },
     {
@@ -781,24 +996,24 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        -8608,
-        1744
+        -36080,
+        13008
       ],
-      "id": "6c226b93-ed66-4cf6-ab43-86882268635e",
-      "name": "If1"
+      "id": "897e72de-0d92-497b-af51-5fba8a7ccaf1",
+      "name": "¿Debe Notificar? (IA)"
     },
     {
       "parameters": {
-        "jsCode": "const raw = $input.item.json;\nconst aiText = raw.output[0].content[0].text;\nconst aiData = JSON.parse(aiText.replace(/```json|```/g, '').trim());\n\nconst contexto = $('Preparar Contexto').item.json;\nconst forceInternal = contexto.force_internal === true;\nconst is2500 = contexto.is_2500 === true;\nconst hasDamage = contexto.has_damage === true;\nconst numeroAvisos = contexto.numero_avisos || 1;\nconst clientCode = String(contexto.client_center_code || '');\n\nlet targetType = aiData.decision?.target_type || 'standard';\nif (forceInternal || is2500) targetType = 'internal';\n\nconst shouldNotify = aiData.decision?.should_notify === true;\n\nconst emailTo = targetType === 'internal'\n  ? 'alertas@sergi.com'\n  : (clientCode.match(/^454160000[1-2]$/) ? 'cca.z2@cttexpress.com' : 'cca.z3@cttexpress.com');\n\nreturn {\n  should_notify: shouldNotify,\n  target_type: targetType,\n  email_subject: shouldNotify ? (aiData.decision?.email_subject || '') : '',\n  email_body: shouldNotify ? (aiData.decision?.email_body || '') : '',\n  ai_incident_detected: aiData.analysis?.detected_incident || 'N/A',\n  ai_justification: aiData.analysis?.justification || 'Sin detalle',\n  h_en_estado: aiData.analysis?.hours_in_status || 0,\n  email_to: emailTo,\n  numero_avisos: numeroAvisos,\n  force_internal: forceInternal,\n  is_2500: is2500,\n  has_damage: hasDamage,\n  notify_damage: hasDamage && String(contexto.shipping_status_code || '') !== '2000'\n};"
+        "jsCode": "const raw = $input.item.json;\nconst aiText = raw.output[0].content[0].text;\nconst aiData = JSON.parse(aiText.replace(/```json|```/g, '').trim());\n\nconst contexto = $('Preparar Contexto Avisos').item.json;\nconst forceInternal = contexto.force_internal === true;\nconst is2500 = contexto.is_2500 === true;\nconst hasDamage = contexto.has_damage === true;\nconst numeroAvisos = contexto.numero_avisos || 1;\nconst clientCode = String(contexto.client_center_code || '');\n\n// Decision values with fallbacks for flat JSON structures\nlet targetType = aiData.decision?.target_type || aiData.target_type || 'standard';\nif (forceInternal || is2500) targetType = 'internal';\n\n// CRITICO: si es forceInternal, siempre debe ser shouldNotify true\nconst shouldNotify = aiData.decision?.should_notify === true || aiData.should_notify === true || forceInternal;\n\nconst subject = aiData.decision?.email_subject || aiData.email_subject || (is2500 ? `Devolucion en proceso: ${contexto.shipping_code}` : '');\nconst body = aiData.decision?.email_body || aiData.email_body || aiData.message || (is2500 ? 'Estimados, el siguiente pedido ha entrado en proceso de devolucion. Iniciamos seguimiento manual.' : '');\n\nconst emailTo = targetType === 'internal'\n  ? 'alertas@sergi.com'\n  : (clientCode.match(/^454160000[1-2]$/) ? 'cca.z2@cttexpress.com' : 'cca.z3@cttexpress.com');\n\nreturn {\n  should_notify: shouldNotify,\n  target_type: targetType,\n  email_subject: shouldNotify ? subject : '',\n  email_body: shouldNotify ? body : '',\n  ai_incident_detected: aiData.analysis?.detected_incident || aiData.detected_incident || (is2500 ? 'Devolucion' : 'N/A'),\n  ai_justification: aiData.analysis?.justification || aiData.justification || (is2500 ? 'Paso 0: Estado terminal 2500 Detectado.' : 'Sin detalle'),\n  h_en_estado: aiData.analysis?.hours_in_status || aiData.hours_in_status || 0,\n  email_to: emailTo,\n  numero_avisos: numeroAvisos,\n  force_internal: forceInternal,\n  is_2500: is2500,\n  has_damage: hasDamage,\n  notify_damage: hasDamage && String(contexto.shipping_status_code || '') !== '2000'\n};"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -8832,
-        1744
+        -36304,
+        13392
       ],
-      "id": "561172dc-4f63-4520-a2b9-219ee5ad5c46",
-      "name": "Code in JavaScript2"
+      "id": "0e98e58a-964d-4905-bf25-7cc65fbca681",
+      "name": "Procesar Respuesta IA"
     },
     {
       "parameters": {
@@ -815,7 +1030,7 @@
             },
             {
               "role": "system",
-              "content": "=Eres un auditor logistico de CTT Express. Analiza el historial y decide si notificar. RESPONDE SOLO CON JSON PURO, SIN MARKDOWN.\n \n### FUENTE DE VERDAD (CRITICO)\nDetermina el estado actual UNICAMENTE leyendo el historial cronologico de arriba a abajo.\nIgnora cualquier otro campo o dato externo que no sea el historial y los valores precalculados.\n \n### VALORES PRECALCULADOS (CRITICO)\nLas horas y el estado de incidencia activa ya vienen calculados en el bloque \"VALORES PRECALCULADOS\" del prompt de usuario.\nUSA DIRECTAMENTE esos valores. NO recalcules. NO estimes. NO ignores estos valores.\nSi un valor es 0 o false, tratalo como 0 o false.\nEl campo \"Incidencia activa\" ya determina si existe un 1600/2400/2600/2700/0600 sin 1500 posterior. NO reevalues esto leyendo el historial.\n \n### EQUIVALENCIA DE EVENTOS (CRITICO)\n0900 (En Transito) y 1000 (Delegacion de transito) son el MISMO estado de transito.\nEl reloj de transito empieza en el PRIMERO que aparezca en el historial.\n1200 (Delegacion destino) y 1500 (En reparto) son el MISMO estado de reparto.\nEl reloj de reparto empieza en el PRIMERO que aparezca en el historial.\nEjemplo: 1000 a las 12:00 + 0900 a las 13:00 → en transito desde las 12:00.\nEjemplo: 1200 a las 14:00 + 1500 a las 15:00 → en reparto desde las 14:00.\n \n### CICLO DE REPARTO\nEl ciclo de reparto empieza en el primer 1200 o 1500 del ciclo actual.\nCRITICO: Cada vez que aparece un 1000 despues de un 1200, el ciclo SE REINICIA COMPLETAMENTE.\nEl punto de inicio siempre es el ultimo 1200 que no haya sido seguido de otro 1000.\nEl valor delivery_hours ya refleja este calculo correctamente.\n \n### ESTADOS TERMINALES — PRIORIDAD MAXIMA (CRITICO — EJECUTAR PRIMERO)\nAntes de cualquier otra evaluacion, comprueba si el ultimo evento del historial es un estado terminal.\nLos estados terminales son: 2500, 2300, 2310.\nUn estado terminal CIERRA y SUPERA cualquier incidencia activa previa (1600, 2400, 2600, 2700, 0600, 1700, 1800, etc.).\nCuando el ultimo evento es un estado terminal, se aplica SIEMPRE su plantilla propia.\nNO se evaluan incidencias anteriores. NO se calculan horas. Se va directamente a la plantilla del estado terminal.\n \nCasos:\n- Ultimo evento es 2500 → Plantilla 2500. should_notify: true. target_type: \"internal\". FIN.\n- Ultimo evento es 2300 → Plantilla PUDO. should_notify: true. target_type: \"standard\". FIN.\n- Ultimo evento es 2310 → Plantilla 2310. should_notify: true. target_type: \"standard\". FIN.\n \n### ALERTAS CON UMBRAL\nNotificar solo si supera las horas indicadas (usa los valores precalculados):\n- 0000 / 0030 → manifest_hours > 24 (Alerta Interna)\n- 0900 / 1000 → transit_hours > 24\n- 1200 / 1500 → delivery_hours > 24\n- 1700 / 1800 → stationary_hours > 24\n \n### REGLA ESPECIAL TRANSITO (SLA 24-48H)\nSi transit_hours > 24 y no hay ningun evento 1200 o 1500 en el historial → notificar (should_notify: true).\nEsta regla tiene prioridad absoluta sobre mensajes de gestion interna como el 71_INAT.\n \n### ALERTAS SIN UMBRAL\nNotificar SIEMPRE si la incidencia esta ACTIVA:\n- 1600 → reparto fallido\n- 2400, 2600, 2700 → variantes de reparto fallido (nuevo reparto / reexpedicion)\n- 2300 → depositado en punto CTT (NO es reparto fallido — ver plantilla PUDO)\n- 0600 → recogida fallida\n- 2310 / 2900 → datos incorrectos\n- 1012 → posible extravio\n- 1006 → danos en contenido\n- 1008 → posible robo\n \nEn detected_incident escribe siempre el nombre, no el codigo.\n \n### PRIORIDAD ENTRE INCIDENCIAS GRAVES (1012 / 1006 / 1008)\nSi en el historial existe un evento 1012, 1006 o 1008, este tiene PRIORIDAD sobre cualquier 1600 activo previo.\nAplicar siempre la plantilla del evento mas grave, no la del reparto fallido.\nOrden de prioridad descendente: 1012 > 1008 > 1006 > 1600/2400/2600/2700.\n \n### REGLA DE RESOLUCION DE INCIDENCIAS (CRITICO)\nEl campo precalculado \"Incidencia activa\" ya determina si la incidencia esta resuelta o no. USA ESE VALOR.\nNO intentes deducir esto leyendo el historial: el codigo JS ya lo ha calculado correctamente.\nSolo debes usar el historial para identificar el tipo de incidencia (codigo) y elegir la plantilla correcta.\n \n### REGLA ANTI-ALUCINACION (CRITICO)\nNUNCA afirmes que existe un evento si su codigo no aparece textualmente en el historial.\nSi en el historial ves 71_INAT pero NO hay ningun codigo de incidencia (1600/2300/2400/2600/2700/0600) → NO hay incidencia activa → should_notify: false.\nEl 71_INAT NO es una incidencia. Es una gestion interna de CTT. No lo confundas con un reparto fallido.\nEjemplo INCORRECTO: historial tiene [0900][1000][71_INAT] y la IA dice \"Existio un 1600\" → PROHIBIDO.\nEjemplo CORRECTO: si no hay 1600 en el historial, no puedes mencionar 1600 en la justificacion.\n \n### NO NOTIFICAR si:\n- Valor precalculado correspondiente < 24 para 0000/0030/0900/1000/1200/1500/1700/1800\n- Incidencia 1600/variante seguida de 1500 → resuelta\n- Evento 71_INAT como ultimo evento → should_notify: false,\n  EXCEPTO si incidencia activa sigue sin resolver (ver REGLA DE RESOLUCION)\n  o si transit_hours > 24 (ver REGLA ESPECIAL TRANSITO).\n- delivery_date informado → ya entregado\n- Ultimo evento no esta en lista de alertas\n \n### NOTA IMPORTANTE\nResponde siempre target_type: standard. El sistema lo sobreescribira si es necesario.\n \n### PLANTILLAS SEGUN WORKFLOW (usa el Numero de Pedido exacto del prompt como [SEG])\n \nREGLAS DE PLANTILLA (SOLO PARA should_notify: true):\n- 0000/0030 (Alerta Interna):\n  email_subject: \"ALERTA INTERNA: Envio [SEG] grabado sin recoger\"\n  email_body: \"El envio [SEG] figura como grabado o recogida sin programar desde ayer. Revisar con almacen.\"\n  target_type: \"internal\"\n \n- 0900/1000 (Transito estancado):\n  email_subject: \"Incidencia en el envio [SEG]\"\n  email_body: \"Buenos dias. El envio [SEG] estuvo en transito el dia anterior y hoy aun no ha cambiado a reparto. Solicitamos que el envio salga a reparto al dia siguiente. Gracias.\"\n  target_type: \"standard\"\n \n- 1200/1500 (Reparto estancado):\n  email_subject: \"Incidencia en el envio [SEG]\"\n  email_body: \"Buenos dias. El envio [SEG] se encuentra en reparto desde ayer sin entregarse. Solicitamos que el pedido sea sacado nuevamente a reparto hoy mismo. Gracias.\"\n  target_type: \"standard\"\n \n- 1600/2400/2600/2700 (Reparto fallido activo):\n  email_subject: \"Incidencia en el envio [SEG]\"\n  email_body: \"Buenos dias. El envio [SEG] presenta su primera incidencia. Solicitamos explicitamente un segundo intento de reparto para el siguiente dia habil. Gracias.\"\n  target_type: \"standard\"\n \n- 2300-PUDO / 2310 (Paquete en punto CTT):\n  email_subject: \"Envio en punto CTT: [SEG]\"\n  email_body: \"Hola equipo de CTT, necesitamos la direccion detallada del punto de recogida para el siguiente envio: EXPEDICION: - [SEG]. Gracias de antemano.\"\n  target_type: \"standard\"\n \n- 2500 (Devolucion en proceso):\n  email_subject: \"Devolucion en proceso: [SEG]\"\n  email_body: \"Estimados, el siguiente pedido ha entrado en proceso de devolucion. Iniciamos seguimiento manual. CODIGO: - [SEG]\"\n  target_type: \"internal\"\n \n- Otros casos (0600, 2900, 1012, 1006, 1008): usar un mensaje descriptivo similar pidiendo gestion urgente.\n \n### COHERENCIA OBLIGATORIA\nSi should_notify es false → email_subject y email_body deben ser \"\" (vacios).\nSi escribes \"no supera\" o \"resuelta\" → should_notify: false.\nSi escribes \"supera\" o \"incidencia activa\" → should_notify: true.\nNunca contradigas la justificacion con la decision.\n \n### SALIDA JSON\nREGLAS (OBLIGATORIO):\n- Si no se supera el umbral y no hay alertas sin umbral activas → should_notify: false, email_subject: \"\", email_body: \"\".\n- NUNCA el body en el subject ni al reves.\n- Si should_notify false → ambos campos \"\".\n \n### VERIFICACION FINAL OBLIGATORIA (ejecutar SIEMPRE en este orden exacto)\n \nPASO 0 — ESTADOS TERMINALES (PRIORIDAD MAXIMA):\n¿El ultimo evento del historial es 2500, 2300 o 2310?\n  → SI → Aplicar plantilla del estado terminal. should_notify: true. FIN.\n  → NO → Continuar con Paso 1.\n \nPASO 1 — INCIDENCIAS GRAVES (1012 / 1006 / 1008):\n¿Existe en el historial algun evento 1012, 1006 o 1008?\n  → SI → Aplicar plantilla del evento mas grave. should_notify: true. FIN.\n  → NO → Continuar con Paso 2.\n \nPASO 2 — INCIDENCIAS DE REPARTO / RECOGIDA ACTIVAS:\nUSA DIRECTAMENTE el campo precalculado \"Incidencia activa\" del prompt de usuario. NO analices el historial para esto.\n  → \"Incidencia activa\" es true → should_notify: true. El codigo activo esta en \"Codigo de incidencia activa\". FIN.\n  → \"Incidencia activa\" es false → Continuar con Paso 3.\n \nPASO 3 — UMBRALES DE TIEMPO (usa los valores precalculados):\n- transit_hours > 24 y sin 1200/1500 en historial → should_notify: true (transito estancado).\n- manifest_hours > 24 y sin transito en historial → should_notify: true (alerta interna).\n- delivery_hours > 24 → should_notify: true (reparto estancado).\n- stationary_hours > 24 → should_notify: true (estacionado).\n- Si ninguno supera → should_notify: false.\n \n### EJEMPLOS DE SALIDA JSON\n \nEJEMPLO 1: ESTADO TERMINAL 2500\n{\n  \"analysis\": {\n    \"detected_incident\": \"Devolucion en proceso\",\n    \"hours_in_status\": 0,\n    \"is_first_incident\": false,\n    \"justification\": \"Paso 0: el ultimo evento es [2500] Devolucion. Estado terminal con prioridad maxima. Cierra cualquier incidencia previa. Se aplica plantilla 2500.\"\n  },\n  \"decision\": {\n    \"should_notify\": true,\n    \"target_type\": \"internal\",\n    \"email_subject\": \"Devolucion en proceso: 0080530080539701031342\",\n    \"email_body\": \"Estimados, el siguiente pedido ha entrado en proceso de devolucion. Iniciamos seguimiento manual. CODIGO: - 0080530080539701031342\"\n  }\n}\n \nEJEMPLO 2: TRANSITO ESTANCADO (con horas precalculadas)\n{\n  \"analysis\": {\n    \"detected_incident\": \"Transito estancado\",\n    \"hours_in_status\": 26.4,\n    \"is_first_incident\": false,\n    \"justification\": \"Paso 0: no es terminal. Paso 1: no hay incidencias graves. Paso 2: no hay incidencias activas. Paso 3: transit_hours = 26.4, supera umbral de 24h y no hay 1200/1500 en historial -> should_notify: true.\"\n  },\n  \"decision\": {\n    \"should_notify\": true,\n    \"target_type\": \"standard\",\n    \"email_subject\": \"Incidencia en el envio 0002070002079700443991\",\n    \"email_body\": \"Buenos dias. El envio 0002070002079700443991 estuvo en transito el dia anterior y hoy aun no ha cambiado a reparto. Solicitamos que el envio salga a reparto al dia siguiente. Gracias.\"\n  }\n}\n \nEJEMPLO 3: SIN INCIDENCIA\n{\n  \"analysis\": {\n    \"detected_incident\": \"Delegacion destino\",\n    \"hours_in_status\": 0,\n    \"is_first_incident\": false,\n    \"justification\": \"Paso 0: no es terminal. Paso 1: no hay incidencias graves. Paso 2: no hay incidencias activas. Paso 3: delivery_hours = 0, no supera umbral -> should_notify: false.\"\n  },\n  \"decision\": {\n    \"should_notify\": false,\n    \"target_type\": \"standard\",\n    \"email_subject\": \"\",\n    \"email_body\": \"\"\n  }\n}\n \nEJEMPLO 4: REPARTO FALLIDO ACTIVO (1600 / 2600 sin 1500 posterior)\n{\n  \"analysis\": {\n    \"detected_incident\": \"Reparto fallido activo\",\n    \"hours_in_status\": 2.3,\n    \"is_first_incident\": true,\n    \"justification\": \"Paso 0: no es terminal. Paso 1: no hay incidencias graves. Paso 2: existe [1600] sin 1500 posterior y [2600] como ultimo evento sin 1500 posterior -> incidencia activa -> should_notify: true.\"\n  },\n  \"decision\": {\n    \"should_notify\": true,\n    \"target_type\": \"standard\",\n    \"email_subject\": \"Incidencia en el envio 0080530080539701104227\",\n    \"email_body\": \"Buenos dias. El envio 0080530080539701104227 presenta su primera incidencia. Solicitamos explicitamente un segundo intento de reparto para el siguiente dia habil. Gracias.\"\n  }\n}"
+              "content": "=Eres un auditor logistico de CTT Express. Analiza el historial y decide si notificar. RESPONDE SOLO CON JSON PURO, SIN MARKDOWN.\n \n\n\n### FORMATO DE SALIDA (ESTRICTO - OBLIGATORIO)\nDebes responder SIEMPRE con este esquema JSON:\n{\n  \"analysis\": {\n    \"detected_incident\": \"Nombre de la incidencia\",\n    \"justification\": \"Explicacion detallada de por que se toma la decision siguiendo los PASOS.\",\n    \"hours_in_status\": 0.0\n  },\n  \"decision\": {\n    \"should_notify\": true/false,\n    \"target_type\": \"standard\"/\"internal\",\n    \"email_subject\": \"Asunto del email\",\n    \"email_body\": \"Cuerpo del email\"\n  }\n}\n\n### FUENTE DE VERDAD (CRITICO)\nDetermina el estado actual UNICAMENTE leyendo el historial cronologico de arriba a abajo.\nIgnora cualquier otro campo o dato externo que no sea el historial y los valores precalculados.\n \n### VALORES PRECALCULADOS (CRITICO)\nLas horas y el estado de incidencia activa ya vienen calculados en el bloque \"VALORES PRECALCULADOS\" del prompt de usuario.\nUSA DIRECTAMENTE esos valores. NO recalcules. NO estimes. NO ignores estos valores.\nSi un valor es 0 o false, tratalo como 0 o false.\nEl campo \"Incidencia activa\" ya determina si existe un 1600/2400/2600/2700/0600 sin 1500 posterior. NO reevalues esto leyendo el historial.\n \n### EQUIVALENCIA DE EVENTOS (CRITICO)\n0900 (En Transito) y 1000 (Delegacion de transito) son el MISMO estado de transito.\nEl reloj de transito empieza en el PRIMERO que aparezca en el historial.\n1200 (Delegacion destino) y 1500 (En reparto) son el MISMO estado de reparto.\nEl reloj de reparto empieza en el PRIMERO que aparezca en el historial.\n \n### CICLO DE REPARTO\nEl ciclo de reparto empieza en el primer 1200 o 1500 del ciclo actual.\nCRITICO: Cada vez que aparece un 1000 despues de un 1200, el ciclo SE REINICIA COMPLETAMENTE.\nEl punto de inicio siempre es el ultimo 1200 que no haya sido seguido de otro 1000.\nEl valor delivery_hours ya refleja este calculo correctamente.\n \n### ESTADOS TERMINALES — PRIORIDAD ABSOLUTA (CRITICO — EJECUTAR PRIMERO)\nAntes de cualquier otra evaluacion, comprueba si el ultimo evento del historial es un estado terminal.\nLos estados terminales son: 2500, 2300, 2310.\nIMPORTANTE: Un estado terminal CIERRA y ANULA cualquier incidencia activa previa (1600, 2400, etc.).\nSi el ultimo evento es terminal, se ignora TODO lo anterior y se aplica su plantilla.\n \nCasos:\n- Ultimo evento es 2500 → Plantilla 2500. should_notify: true. target_type: \"internal\". FIN.\n- Ultimo evento es 2300 → Plantilla PUDO. should_notify: true. target_type: \"standard\". FIN.\n- Ultimo evento es 2310 → Plantilla 2310. should_notify: true. target_type: \"standard\". FIN.\n \n### ALERTAS CON UMBRAL\nNotificar solo si supera las horas indicadas (usa los valores precalculados):\n- 0000 / 0030 → manifest_hours > 24 (Alerta Interna)\n- 0900 / 1000 → transit_hours > 24\n- 1200 / 1500 → delivery_hours > 24\n- 1700 / 1800 → stationary_hours > 24\n \n### REGLA ESPECIAL TRANSITO (SLA 24-48H)\nSi transit_hours > 24 y no hay ningun evento 1200 o 1500 en el historial → notificar (should_notify: true).\n \n### ALERTAS SIN UMBRAL\nNotificar SIEMPRE si la incidencia esta ACTIVA (y no es terminal):\n- 1600 → reparto fallido\n- 2400, 2600, 2700 → variantes de reparto fallido\n- 0600 → recogida fallida\n- 2310 / 2900 → datos incorrectos\n- 1012, 1006, 1008 → incidencias graves\n \n### REGLA DE RESOLUCION (CRITICO)\nConfia SIEMPRE en el valor precalculado \"Incidencia activa\".\nSi \"Incidencia activa\" es false, significa que el estado terminal (2500) o un evento de solucion (1500) ya resolvio el problema.\n \n### REGLA ANTI-COPIA (CRITICO)\nLOS VALORES DE LOS EJEMPLOS SON SOLO PARA ILUSTRAR EL FORMATO.\nNUNCA uses \"2.3\", \"26.4\" o los IDs de envio de los ejemplos si no aparecen en los datos reales.\n \n### PLANTILLAS (USA [SEG] para el shipping_code)\n \n- 2500 (Devolucion): \"Estimados, el siguiente pedido ha entrado en proceso de devolucion. Iniciamos seguimiento manual.\"\n- 1600/2400/2600/2700 (Reparto fallido): \"Buenos dias. El envio [SEG] presenta su primera incidencia. Solicitamos un segundo intento de reparto.\"\n \n### VERIFICACION FINAL OBLIGATORIA\n \nPASO 0 — TERMINAL: ¿Ultimo evento es 2500, 2300 o 2310? SI → Plantilla terminal. FIN.\nPASO 1 — GRAVES: ¿Existe 1012, 1006 o 1008? SI → Plantilla grave. FIN.\nPASO 2 — ACTIVAS: ¿\"Incidencia activa\" es true? SI → Plantilla incidente. FIN.\nPASO 3 — TIEMPOS: ¿Alguna hora supera 24h? SI → Plantilla estancado. FIN.\n \n### SALIDA JSON (SOLO JSON)"
             }
           ]
         },
@@ -827,10 +1042,10 @@
       "type": "@n8n/n8n-nodes-langchain.openAi",
       "typeVersion": 2.1,
       "position": [
-        -9184,
-        1744
+        -36656,
+        13392
       ],
-      "id": "67a80c1c-60c6-4146-85c4-a126e180462e",
+      "id": "a469c336-078e-49d2-8bf2-1ee8ec3ea912",
       "name": "Message a model",
       "credentials": {
         "openAiApi": {
@@ -863,42 +1078,41 @@
         },
         "options": {}
       },
-      "id": "1942be12-ce2b-4d79-8e76-c2e3987b6f46",
-      "name": "If Duplicado Hoy",
+      "id": "a4a739d4-9e93-4c4a-9b5f-537bc75b1826",
+      "name": "¿Ya Procesado Hoy?",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        -9408,
-        1360
+        -36880,
+        13560
       ]
     },
     {
       "parameters": {
-        "jsCode": "const rows = $input.all();\nconst item = $('Code in JavaScript3').item.json;\nconst hoy = $now.toFormat('dd-MM-yyyy');\nconst ayer = $now.minus({days: 1}).toFormat('dd-MM-yyyy');\n\n// Firestore get returns single doc (or empty if not found)\nconst doc = rows.length > 0 && rows[0].json.numero_envio ? rows[0].json : null;\n\nconst is2500 = String(item.shipping_status_code || '') === '2500';\n\nlet skip = false;\nlet forceInternal = false;\nlet numeroAvisos = 1;\n\nif (doc) {\n  const fecha = (doc.fecha_procesado || '').substring(0, 10);\n  skip = !is2500 && fecha === hoy;\n  forceInternal = !skip && (fecha === ayer || is2500);\n  numeroAvisos = (doc.numero_avisos || 0) + 1;\n} else {\n  forceInternal = is2500;\n}\n\nreturn {\n  json: {\n    ...item,\n    skip,\n    force_internal: forceInternal,\n    is_2500: is2500,\n    numero_avisos: numeroAvisos\n  }\n};"
+        "jsCode": "const rows = $input.all();\nconst item = $('Calcular Estados y Horas').item.json;\nconst hoy = $now.toFormat('dd-MM-yyyy');\nconst ayer = $now.minus({days: 1}).toFormat('dd-MM-yyyy');\n\n// Firestore get returns single doc (or empty if not found)\nconst doc = rows.length > 0 && rows[0].json.numero_envio ? rows[0].json : null;\n\nconst is2500 = String(item.shipping_status_code || '') === '2500';\n\nlet skip = false;\nlet forceInternal = false;\nlet numeroAvisos = 1;\n\nif (doc) {\n  const fecha = (doc.fecha_procesado || '').substring(0, 10);\n  skip = !is2500 && fecha === hoy;\n  forceInternal = !skip && (fecha === ayer || is2500);\n  numeroAvisos = (doc.numero_avisos || 0) + 1;\n} else {\n  forceInternal = is2500;\n}\n\nreturn {\n  json: {\n    ...item,\n    skip,\n    force_internal: forceInternal,\n    is_2500: is2500,\n    numero_avisos: numeroAvisos\n  }\n};"
       },
-      "id": "2dbf7da3-04f2-4060-a674-6ea86bbd1296",
-      "name": "Preparar Contexto",
+      "id": "ab0794d5-7670-40a1-8e76-c1f112856b41",
+      "name": "Preparar Contexto Avisos",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -9632,
-        1360
+        -37104,
+        13560
       ]
     },
     {
       "parameters": {
-        "operation": "get",
         "projectId": "ctt-dashboard",
         "collection": "incidencias",
-        "documentId": "={{ $('Code in JavaScript3').item.json.shipping_code }}"
+        "documentId": "={{ $('Calcular Estados y Horas').item.json.shipping_code }}"
       },
-      "id": "e0d6267c-4dcf-4c2b-b298-7c5c9fb3cbe3",
+      "id": "11cd1ef7-d002-4c54-aa58-f96714ecb43a",
       "name": "Buscar Avisos Previos",
       "type": "n8n-nodes-base.googleFirebaseCloudFirestore",
       "typeVersion": 1.1,
       "position": [
-        -9856,
-        1360
+        -37328,
+        13560
       ],
       "alwaysOutputData": true,
       "retryOnFail": true,
@@ -911,16 +1125,16 @@
     },
     {
       "parameters": {
-        "jsCode": "try {\n  const item = $('Loop: Processar 1 a 2').first().json;\n  const history = $input.item.json;\n  let events = [];\n\n  if (history?.data?.shipping_history?.events) {\n    events = history.data.shipping_history.events;\n  } else if (Array.isArray(history)) {\n    const data = history[0];\n    if (data?.data?.shipping_history?.events) {\n      events = data.data.shipping_history.events;\n    }\n  }\n\n  const has1600 = events.some(e => e.code === '1600' || e.event_code === '1600');\n  const hasDamage = events.some(e => {\n    const code = e.code || e.event_code || '';\n    const incidentCode = e.detail?.incident_type_code || '';\n    return code.includes('6_INCT') || incidentCode.includes('6_INCT');\n  });\n\n  // ─── PARSEO Y FORMATO DEL HISTORIAL ─────────────────────────────────────────\n  let parsedEvents = []; // { date: Date, code: string }\n  let formattedHistory = 'Sin eventos disponibles';\n\n  if (events.length > 0) {\n    formattedHistory = events.map(e => {\n      let date = e.event_date || e.item_event_date || '';\n      let parsedDate = null;\n\n      if (date) {\n        try {\n          const d = new Date(date);\n          d.setHours(d.getHours() + 1); // UTC+1 Madrid\n          parsedDate = d;\n          date = d.toISOString().replace('T', ' ').substring(0, 16);\n        } catch (x) {}\n      }\n\n      const code = e.code || e.event_code || 'N/A';\n      const desc = e.description || e.event_description || '';\n      const detailText = e.detail?.External_event_text || e.detail?.item_event_text || '';\n      const incidentName = e.detail?.incident_type_name || '';\n      const incidentCode = e.detail?.incident_type_code || '';\n      const detail = incidentName ? `${detailText} [INCIDENCIA: ${incidentName} (${incidentCode})]`.trim() : detailText;\n\n      if (parsedDate) {\n        parsedEvents.push({ date: parsedDate, code, incidentCode });\n      }\n\n      return `${date} - [${code}] ${desc} (${detail})`;\n    }).join('\\n');\n  }\n\n  // ─── CÁLCULO DE HORAS LABORABLES ────────────────────────────────────────────\n  // Lunes=1 ... Viernes=5, Sábado=6, Domingo=0\n  function businessHours(startDate, endDate) {\n    if (!startDate || !endDate || endDate <= startDate) return 0;\n    let hours = 0;\n    let cur = new Date(startDate.getTime());\n\n    while (cur < endDate) {\n      const dow = cur.getDay(); // 0=Dom, 6=Sab\n      if (dow !== 0 && dow !== 6) {\n        const y = cur.getFullYear(), m = cur.getMonth(), d = cur.getDate();\n        const nextMidnight = new Date(y, m, d + 1);\n        const seg = endDate < nextMidnight ? endDate : nextMidnight;\n        hours += (seg - cur) / 3600000;\n      }\n      const y = cur.getFullYear(), m = cur.getMonth(), d = cur.getDate();\n      cur = new Date(y, m, d + 1);\n    }\n\n    return parseFloat(hours.toFixed(1));\n  }\n\n  const now = new Date();\n\n  const TRANSIT    = ['0900', '1000'];\n  const DELIVERY   = ['1200', '1500'];\n  const STATIONARY = ['1700', '1800'];\n  const MANIFEST   = ['0000', '0030'];\n\n  // TRÁNSITO: desde el primer 0900/1000, solo si no hay 1200/1500 posterior\n  const firstTransit = parsedEvents.find(e => TRANSIT.includes(e.code));\n  let transitHours = 0;\n  if (firstTransit) {\n    const hasDeliveryAfter = parsedEvents.some(\n      e => e.code === '1500' && e.date > firstTransit.date\n    );\n    if (!hasDeliveryAfter) {\n      transitHours = businessHours(firstTransit.date, now);\n    }\n  }\n\n  // MANIFESTADO: desde primer 0000/0030, solo si aún no hay tránsito ni reparto\n  const firstManifest = parsedEvents.find(e => MANIFEST.includes(e.code));\n  let manifestHours = 0;\n  if (firstManifest && !firstTransit) {\n    manifestHours = businessHours(firstManifest.date, now);\n  }\n\n  // CICLO REPARTO: reset en cada 1000 después de 1200/1500\n  // Regla: el ciclo empieza en el primer 1200/1500 del ciclo actual\n  // Cada 1000 posterior a un 1200/1500 reinicia el ciclo\n  let deliveryCycleStart = null;\n  let inDelivery = false;\n  for (const event of parsedEvents) {\n    if (event.code === '1500') {\n      deliveryCycleStart = event.date;\n      inDelivery = true;\n    } else if (event.code === '1200' && !inDelivery) {\n      deliveryCycleStart = event.date;\n      inDelivery = true;\n    } else if (event.code === '1000' && inDelivery) {\n      deliveryCycleStart = null;\n      inDelivery = false;\n    }\n  }\n  let deliveryHours = 0;\n  if (deliveryCycleStart) {\n    deliveryHours = businessHours(deliveryCycleStart, now);\n  }\n\n  // ESTACIONADO: desde el último 1700/1800\n  const lastStationary = [...parsedEvents].reverse().find(e => STATIONARY.includes(e.code));\n  let stationaryHours = 0;\n  if (lastStationary) {\n    stationaryHours = businessHours(lastStationary.date, now);\n  }\n\n  // ─── INCIDENCIAS ACTIVAS PRECALCULADAS ──────────────────────────────────────\n  const INCIDENT_CODES = ['1600', '2400', '2600', '2700', '0600'];\n  const TERMINAL_CODES = ['2500', '2300', '2310'];\n\n  const lastEvent = parsedEvents[parsedEvents.length - 1];\n  const isTerminal = lastEvent && TERMINAL_CODES.includes(lastEvent.code);\n\n  // Una incidencia está activa si existe en el historial y NO hay 1500 después de ella\n  let activeIncidentCode = null;\n  for (const ev of parsedEvents) {\n    if (INCIDENT_CODES.includes(ev.code)) {\n      const has1500After = parsedEvents.some(e => e.code === '1500' && e.date > ev.date);\n      if (!has1500After && !isTerminal) {\n        activeIncidentCode = ev.code;\n      } else if (has1500After) {\n        activeIncidentCode = null; // resuelta por 1500 posterior\n      }\n    }\n  }\n  const hasActiveIncident = activeIncidentCode !== null;\n\n  // ─── OUTPUT ─────────────────────────────────────────────────────────────────\n  return {\n    json: {\n      ...item,\n      status_history: events,\n      formatted_history: formattedHistory,\n      history_has_1600: has1600,\n      has_damage: hasDamage,\n      total_events: events.length,\n      // Horas precalculadas para la IA\n      transit_hours:    transitHours,\n      manifest_hours:   manifestHours,\n      delivery_hours:   deliveryHours,\n      stationary_hours: stationaryHours,\n      // Incidencia activa precalculada (NO recalcular en la IA)\n      has_active_incident: hasActiveIncident,\n      active_incident_code: activeIncidentCode || ''\n    }\n  };\n\n} catch (error) {\n  throw new Error(`[Code JS3] ${error.message}`);\n}"
+        "jsCode": "try {\n  const item = $('Loop: Processar 1 a 2').first().json;\n  const history = $input.item.json;\n  let events = [];\n\n  if (history?.data?.shipping_history?.events) {\n    events = history.data.shipping_history.events;\n  } else if (Array.isArray(history)) {\n    const data = history[0];\n    if (data?.data?.shipping_history?.events) {\n      events = data.data.shipping_history.events;\n    }\n  }\n\n  const has1600 = events.some(e => e.code === '1600' || e.event_code === '1600');\n  const hasDamage = events.some(e => {\n    const code = e.code || e.event_code || '';\n    const incidentCode = e.detail?.incident_type_code || '';\n    return code.includes('6_INCT') || incidentCode.includes('6_INCT');\n  });\n\n  // ─── PARSEO Y FORMATO DEL HISTORIAL ─────────────────────────────────────────\n  let parsedEvents = []; // { date: Date, code: string }\n  let formattedHistory = 'Sin eventos disponibles';\n\n  if (events.length > 0) {\n    formattedHistory = events.map(e => {\n      let date = e.event_date || e.item_event_date || '';\n      let parsedDate = null;\n\n      if (date) {\n        try {\n          const d = new Date(date);\n          d.setHours(d.getHours() + 1); // UTC+1 Madrid\n          parsedDate = d;\n          date = d.toISOString().replace('T', ' ').substring(0, 16);\n        } catch (x) {}\n      }\n\n      const code = e.code || e.event_code || 'N/A';\n      const desc = e.description || e.event_description || '';\n      const detailText = e.detail?.External_event_text || e.detail?.item_event_text || '';\n      const incidentName = e.detail?.incident_type_name || '';\n      const incidentCode = e.detail?.incident_type_code || '';\n      const detail = incidentName ? `${detailText} [INCIDENCIA: ${incidentName} (${incidentCode})]`.trim() : detailText;\n\n      if (parsedDate) {\n        parsedEvents.push({ date: parsedDate, code, incidentCode });\n      }\n\n      return `${date} - [${code}] ${desc} (${detail})`;\n    }).join('\\n');\n  }\n\n  // ─── CÁLCULO DE HORAS LABORABLES ────────────────────────────────────────────\n  // Lunes=1 ... Viernes=5, Sábado=6, Domingo=0\n  function businessHours(startDate, endDate) {\n    if (!startDate || !endDate || endDate <= startDate) return 0;\n    let hours = 0;\n    let cur = new Date(startDate.getTime());\n\n    while (cur < endDate) {\n      const dow = cur.getDay(); // 0=Dom, 6=Sab\n      if (dow !== 0 && dow !== 6) {\n        const y = cur.getFullYear(), m = cur.getMonth(), d = cur.getDate();\n        const nextMidnight = new Date(y, m, d + 1);\n        const seg = endDate < nextMidnight ? endDate : nextMidnight;\n        hours += (seg - cur) / 3600000;\n      }\n      const y = cur.getFullYear(), m = cur.getMonth(), d = cur.getDate();\n      cur = new Date(y, m, d + 1);\n    }\n\n    return parseFloat(hours.toFixed(1));\n  }\n\n  const now = new Date();\n\n  const TRANSIT    = ['0900', '1000'];\n  const DELIVERY   = ['1200', '1500'];\n  const STATIONARY = ['1700', '1800'];\n  const MANIFEST   = ['0000', '0030'];\n\n  // TRÁNSITO: desde el primer 0900/1000, solo si no hay 1200/1500 posterior\n  const firstTransit = parsedEvents.find(e => TRANSIT.includes(e.code));\n  let transitHours = 0;\n  if (firstTransit) {\n    const hasDeliveryAfter = parsedEvents.some(\n      e => e.code === '1500' && e.date > firstTransit.date\n    );\n    if (!hasDeliveryAfter) {\n      transitHours = businessHours(firstTransit.date, now);\n    }\n  }\n\n  // MANIFESTADO: desde primer 0000/0030, solo si aún no hay tránsito ni reparto\n  const firstManifest = parsedEvents.find(e => MANIFEST.includes(e.code));\n  let manifestHours = 0;\n  if (firstManifest && !firstTransit) {\n    manifestHours = businessHours(firstManifest.date, now);\n  }\n\n  // CICLO REPARTO: reset en cada 1000 después de 1200/1500\n  // Regla: el ciclo empieza en el primer 1200/1500 del ciclo actual\n  // Cada 1000 posterior a un 1200/1500 reinicia el ciclo\n  let deliveryCycleStart = null;\n  let inDelivery = false;\n  for (const event of parsedEvents) {\n    if (event.code === '1500') {\n      deliveryCycleStart = event.date;\n      inDelivery = true;\n    } else if (event.code === '1200' && !inDelivery) {\n      deliveryCycleStart = event.date;\n      inDelivery = true;\n    } else if (event.code === '1000' && inDelivery) {\n      deliveryCycleStart = null;\n      inDelivery = false;\n    }\n  }\n  let deliveryHours = 0;\n  if (deliveryCycleStart) {\n    deliveryHours = businessHours(deliveryCycleStart, now);\n  }\n\n  // ESTACIONADO: desde el último 1700/1800\n  const lastStationary = [...parsedEvents].reverse().find(e => STATIONARY.includes(e.code));\n  let stationaryHours = 0;\n  if (lastStationary) {\n    stationaryHours = businessHours(lastStationary.date, now);\n  }\n\n  // ─── INCIDENCIAS ACTIVAS PRECALCULADAS ──────────────────────────────────────\n  const INCIDENT_CODES = ['1600', '2400', '2600', '2700', '0600'];\n  const TERMINAL_CODES = ['2500', '2300', '2310'];\n\n  const lastEvent = parsedEvents[parsedEvents.length - 1];\n  const isTerminal = lastEvent && TERMINAL_CODES.includes(lastEvent.code);\n\n  // Una incidencia está activa si existe en el historial y NO hay 1500 ni Terminal después de ella\n  let activeIncidentCode = null;\n  for (const ev of parsedEvents) {\n    if (INCIDENT_CODES.includes(ev.code)) {\n      const has1500After = parsedEvents.some(e => e.code === '1500' && e.date > ev.date);\n      // Regla CORE: si ya es terminal, no hay incidencia activa posible (resuelta por devolución/entrega/error)\n      if (isTerminal) {\n        activeIncidentCode = null;\n      } else if (!has1500After) {\n        // Solo es activa si no hay 1500 posterior Y no es terminal\n        activeIncidentCode = ev.code;\n      } else {\n        // Si hay un 1500 posterior, se considera resuelta por el nuevo intento\n        activeIncidentCode = null;\n      }\n    }\n  }\n  const hasActiveIncident = activeIncidentCode !== null;\n\n  // ─── OUTPUT ─────────────────────────────────────────────────────────────────\n  return {\n    json: {\n      ...item,\n      status_history: events,\n      formatted_history: formattedHistory,\n      history_has_1600: has1600,\n      has_damage: hasDamage,\n      total_events: events.length,\n      // Horas precalculadas para la IA\n      transit_hours:    transitHours,\n      manifest_hours:   manifestHours,\n      delivery_hours:   deliveryHours,\n      stationary_hours: stationaryHours,\n      // Incidencia activa precalculada (NO recalcular en la IA)\n      has_active_incident: hasActiveIncident,\n      active_incident_code: activeIncidentCode || ''\n    }\n  };\n\n} catch (error) {\n  throw new Error(`[Code JS3] ${error.message}`);\n}"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -10080,
-        1360
+        -37552,
+        13560
       ],
-      "id": "afd20b53-6b75-41a3-b456-720b10817779",
-      "name": "Code in JavaScript3"
+      "id": "586c3c8f-c2c5-4712-96d7-986fdc9db523",
+      "name": "Calcular Estados y Horas"
     },
     {
       "parameters": {
@@ -943,19 +1157,19 @@
           "parameters": [
             {
               "name": "Authorization",
-              "value": "={{ 'Bearer ' + ($('Loop: Processar 1 a 2').item.json.client_code == '47352' ? $('1. Obtener Token SNAPPY1').first().json.access_token : $('Loop: Processar 1 a 2').item.json.client_code == '48630' ? $('1. Obtener Token HAMINOS1').first().json.access_token : $('Loop: Processar 1 a 2').item.json.client_code == '47685' ? $('1. Obtener Token SERVICE CORP WORLD1').first().json.access_token : $('1. Obtener Token KULTUDENDA1').first().json.access_token) }}"
+              "value": "={{ 'Bearer ' + ($('Loop: Processar 1 a 2').item.json.client_code == '47352' ? $('Token CTT SNAPPY').first().json.access_token : $('Loop: Processar 1 a 2').item.json.client_code == '48630' ? $('Token CTT HAMINOS').first().json.access_token : $('Loop: Processar 1 a 2').item.json.client_code == '47685' ? $('Token CTT MIESTERY').first().json.access_token : $('Token CTT KULTUDENDA').first().json.access_token) }}"
             }
           ]
         },
         "options": {}
       },
-      "id": "1a10f180-fee5-4142-941a-317ab52db583",
+      "id": "00bda2e2-7c73-4112-a29d-6997f1652ef4",
       "name": "Obtenir Historial Detallat1",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        -10304,
-        1360
+        -37776,
+        13560
       ],
       "retryOnFail": true,
       "maxRetries": 3,
@@ -965,13 +1179,13 @@
       "parameters": {
         "options": {}
       },
-      "id": "c4ff86d6-7719-411d-9f8f-5b54f76f6be9",
+      "id": "6d5939b9-1e4a-41fb-8863-343873c13c03",
       "name": "Loop: Processar 1 a 2",
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
       "position": [
-        -10528,
-        1440
+        -38000,
+        13632
       ]
     },
     {
@@ -1016,13 +1230,13 @@
         },
         "options": {}
       },
-      "id": "8807cbcf-207a-4589-9be0-5b9e28e2ebf9",
+      "id": "47ea43c5-4419-4abd-96f5-11480f43e6f1",
       "name": "Filtrar_Estados_Activos_Optimizado",
       "type": "n8n-nodes-base.filter",
       "typeVersion": 2.3,
       "position": [
-        -10752,
-        1440
+        -38224,
+        13632
       ]
     },
     {
@@ -1043,10 +1257,10 @@
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.3,
       "position": [
-        -12096,
-        1440
+        -39568,
+        13728
       ],
-      "id": "d437911e-2400-4e7a-a7e5-6aaa6bde41b2",
+      "id": "07fcd04a-abb9-4929-9bd7-c86699301147",
       "name": "Schedule Trigger"
     },
     {
@@ -1056,10 +1270,10 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
       "position": [
-        -10976,
-        1408
+        -38448,
+        13600
       ],
-      "id": "3afb4e80-9980-4efe-8f67-f53eaed4ee21",
+      "id": "0bbc17a2-2c4b-447a-b80b-e06bd1a2c179",
       "name": "Merge2"
     },
     {
@@ -1090,13 +1304,13 @@
         },
         "options": {}
       },
-      "id": "cf01259d-4e7a-4df3-80d8-e0d79afca0fa",
-      "name": "1. Obtener Token HAMINOS1",
+      "id": "c37008b0-38fb-4e0b-b099-5984cad032d9",
+      "name": "Token CTT HAMINOS",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        -11648,
-        1152
+        -39120,
+        13440
       ]
     },
     {
@@ -1122,10 +1336,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -11872,
-        1440
+        -39344,
+        13728
       ],
-      "id": "23f4ffc8-58ca-4bfa-b90e-620e5bb580ce",
+      "id": "3a616191-3ece-48ed-8b91-66560f803bb0",
       "name": "Edit Fields"
     },
     {
@@ -1156,13 +1370,13 @@
         },
         "options": {}
       },
-      "id": "f4c10ebb-1407-4a01-a870-597b2e711a8b",
-      "name": "1. Obtener Token SNAPPY1",
+      "id": "80bbbed5-f8ed-4542-9a5d-52275eaf33eb",
+      "name": "Token CTT SNAPPY",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        -11648,
-        1728
+        -39120,
+        14016
       ]
     },
     {
@@ -1193,13 +1407,13 @@
         },
         "options": {}
       },
-      "id": "5936e376-2e59-473c-865d-4d518941bbe6",
-      "name": "1. Obtener Token KULTUDENDA1",
+      "id": "b548d438-8adb-498b-a38a-7218eefeefeb",
+      "name": "Token CTT KULTUDENDA",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        -11648,
-        1536
+        -39120,
+        13824
       ]
     },
     {
@@ -1230,31 +1444,31 @@
         },
         "options": {}
       },
-      "id": "45975755-601a-458e-a1a8-39ddb6ff24ac",
-      "name": "1. Obtener Token SERVICE CORP WORLD1",
+      "id": "9c2e724b-8f22-4fe4-9b55-c9448c6a6542",
+      "name": "Token CTT MIESTERY",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        -11648,
-        1344
+        -39120,
+        13632
       ]
     },
     {
       "parameters": {
         "sendTo": "incidenciashaminos@gmail.com",
-        "subject": "=SEGUIMIENTO INTERNO: Incidencia - {{ $('Preparar Contexto').item.json.shipping_code }}",
-        "message": "={{ $json.email_body }}\n\n--- DETALLES INTERNOS ---\nJUSTIFICACION IA:\n{{ $json.ai_justification }}\n\nENVIO: {{ $('Preparar Contexto').item.json.shipping_code }}",
+        "subject": "=SEGUIMIENTO INTERNO: Incidencia - {{ $('Preparar Contexto Avisos').item.json.shipping_code }}",
+        "message": "={{ $json.email_body }}\n\n--- DETALLES INTERNOS ---\nJUSTIFICACION IA:\n{{ $json.ai_justification }}\n\nENVIO: {{ $('Preparar Contexto Avisos').item.json.shipping_code }}",
         "options": {
           "appendAttribution": false
         }
       },
-      "id": "51236e8b-9b91-4c7f-b313-fb81bbe576ce",
+      "id": "3a2d3f9e-640c-45bc-b153-8418416be11b",
       "name": "Int H",
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
       "position": [
-        -7936,
-        1600
+        -35408,
+        12480
       ],
       "webhookId": "3b9886c3-83ec-498a-ae32-8d01c94c75fb",
       "credentials": {
@@ -1267,24 +1481,35 @@
     {
       "parameters": {
         "conditions": {
-          "options": { "caseSensitive": true, "leftValue": "", "typeValidation": "strict", "version": 3 },
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
           "conditions": [
             {
               "id": "if-damage",
               "leftValue": "={{ $json.notify_damage }}",
               "rightValue": true,
-              "operator": { "type": "boolean", "operation": "equals" }
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
             }
           ],
           "combinator": "and"
         },
         "options": {}
       },
-      "id": "d9000001-0000-4000-8000-000000000001",
+      "id": "cfbc0c52-4f98-4e85-8de8-45c235045189",
       "name": "If Daño",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
-      "position": [-8608, 2100]
+      "position": [
+        -35408,
+        13824
+      ]
     },
     {
       "parameters": {
@@ -1292,8 +1517,22 @@
           "values": [
             {
               "conditions": {
-                "options": { "caseSensitive": true, "leftValue": "", "typeValidation": "strict", "version": 3 },
-                "conditions": [{ "leftValue": "={{ $('Preparar Contexto').item.json.client_code }}", "rightValue": "48630", "operator": { "type": "string", "operation": "equals" } }],
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('Preparar Contexto Avisos').item.json.client_code }}",
+                    "rightValue": "48630",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
                 "combinator": "and"
               },
               "renameOutput": true,
@@ -1301,8 +1540,22 @@
             },
             {
               "conditions": {
-                "options": { "caseSensitive": true, "leftValue": "", "typeValidation": "strict", "version": 3 },
-                "conditions": [{ "leftValue": "={{ $('Preparar Contexto').item.json.client_code }}", "rightValue": "47685", "operator": { "type": "string", "operation": "equals" } }],
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('Preparar Contexto Avisos').item.json.client_code }}",
+                    "rightValue": "47685",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
                 "combinator": "and"
               },
               "renameOutput": true,
@@ -1310,8 +1563,22 @@
             },
             {
               "conditions": {
-                "options": { "caseSensitive": true, "leftValue": "", "typeValidation": "strict", "version": 3 },
-                "conditions": [{ "leftValue": "={{ $('Preparar Contexto').item.json.client_code }}", "rightValue": "45416", "operator": { "type": "string", "operation": "equals" } }],
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('Preparar Contexto Avisos').item.json.client_code }}",
+                    "rightValue": "45416",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
                 "combinator": "and"
               },
               "renameOutput": true,
@@ -1319,8 +1586,22 @@
             },
             {
               "conditions": {
-                "options": { "caseSensitive": true, "leftValue": "", "typeValidation": "strict", "version": 3 },
-                "conditions": [{ "leftValue": "={{ $('Preparar Contexto').item.json.client_code }}", "rightValue": "47352", "operator": { "type": "string", "operation": "equals" } }],
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('Preparar Contexto Avisos').item.json.client_code }}",
+                    "rightValue": "47352",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
                 "combinator": "and"
               },
               "renameOutput": true,
@@ -1328,73 +1609,151 @@
             }
           ]
         },
-        "options": { "fallbackOutput": "extra" }
+        "options": {
+          "fallbackOutput": "extra"
+        }
       },
-      "id": "d9000001-0000-4000-8000-000000000002",
+      "id": "4cf22aef-2a77-406d-aec0-365c68785c76",
       "name": "Switch Daño Cliente",
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.4,
-      "position": [-8384, 2100]
+      "position": [
+        -35184,
+        13896
+      ]
     },
     {
       "parameters": {
         "sendTo": "incidenciashaminos@gmail.com",
-        "subject": "=DAÑO DETECTADO: Envio {{ $('Preparar Contexto').item.json.shipping_code }}",
-        "message": "=ALERTA: El envio {{ $('Preparar Contexto').item.json.shipping_code }} tiene una incidencia de daño (6_INCT) registrada.\n\nPedido: {{ $('Preparar Contexto').item.json.client_references[0] }}\nJustificacion IA: {{ $json.ai_justification }}",
-        "options": { "appendAttribution": false }
+        "subject": "=DAÑO DETECTADO: Envio {{ $('Preparar Contexto Avisos').item.json.shipping_code }}",
+        "message": "=ALERTA: El envio {{ $('Preparar Contexto Avisos').item.json.shipping_code }} tiene una incidencia de daño (6_INCT) registrada.\n\nPedido: {{ $('Preparar Contexto Avisos').item.json.client_references[0] }}\nJustificacion IA: {{ $json.ai_justification }}",
+        "options": {
+          "appendAttribution": false
+        }
       },
-      "id": "d9000001-0000-4000-8000-000000000003",
+      "id": "9ec91fdd-9da9-4bb4-ab26-734b7490d0ce",
       "name": "Gmail Daño H",
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
-      "position": [-8160, 1900],
+      "position": [
+        -34960,
+        13752
+      ],
       "webhookId": "d9000001-0000-4000-8000-000000000003",
-      "credentials": { "gmailOAuth2": { "id": "xvnQhr5hfD4gc3Uk", "name": "HAMINOS" } }
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "xvnQhr5hfD4gc3Uk",
+          "name": "HAMINOS"
+        }
+      }
     },
     {
       "parameters": {
         "sendTo": "incidenciasamzdiscounts01@gmail.com",
-        "subject": "=DAÑO DETECTADO: Envio {{ $('Preparar Contexto').item.json.shipping_code }}",
-        "message": "=ALERTA: El envio {{ $('Preparar Contexto').item.json.shipping_code }} tiene una incidencia de daño (6_INCT) registrada.\n\nPedido: {{ $('Preparar Contexto').item.json.client_references[0] }}\nJustificacion IA: {{ $json.ai_justification }}",
-        "options": { "appendAttribution": false }
+        "subject": "=DAÑO DETECTADO: Envio {{ $('Preparar Contexto Avisos').item.json.shipping_code }}",
+        "message": "=ALERTA: El envio {{ $('Preparar Contexto Avisos').item.json.shipping_code }} tiene una incidencia de daño (6_INCT) registrada.\n\nPedido: {{ $('Preparar Contexto Avisos').item.json.client_references[0] }}\nJustificacion IA: {{ $json.ai_justification }}",
+        "options": {
+          "appendAttribution": false
+        }
       },
-      "id": "d9000001-0000-4000-8000-000000000004",
+      "id": "1b1a25b3-a2e5-4ae0-aa77-99c4d2b139fc",
       "name": "Gmail Daño M",
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
-      "position": [-8160, 2060],
+      "position": [
+        -34960,
+        13944
+      ],
       "webhookId": "d9000001-0000-4000-8000-000000000004",
-      "credentials": { "gmailOAuth2": { "id": "QJJKjkTiSoxnKucv", "name": "MIESTERY / SERVICE CORP WORLD" } }
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "QJJKjkTiSoxnKucv",
+          "name": "MIESTERY / SERVICE CORP WORLD"
+        }
+      }
     },
     {
       "parameters": {
         "sendTo": "incidenciaskulturdenda@gmail.com",
-        "subject": "=DAÑO DETECTADO: Envio {{ $('Preparar Contexto').item.json.shipping_code }}",
-        "message": "=ALERTA: El envio {{ $('Preparar Contexto').item.json.shipping_code }} tiene una incidencia de daño (6_INCT) registrada.\n\nPedido: {{ $('Preparar Contexto').item.json.client_references[0] }}\nJustificacion IA: {{ $json.ai_justification }}",
-        "options": { "appendAttribution": false }
+        "subject": "=DAÑO DETECTADO: Envio {{ $('Preparar Contexto Avisos').item.json.shipping_code }}",
+        "message": "=ALERTA: El envio {{ $('Preparar Contexto Avisos').item.json.shipping_code }} tiene una incidencia de daño (6_INCT) registrada.\n\nPedido: {{ $('Preparar Contexto Avisos').item.json.client_references[0] }}\nJustificacion IA: {{ $json.ai_justification }}",
+        "options": {
+          "appendAttribution": false
+        }
       },
-      "id": "d9000001-0000-4000-8000-000000000005",
+      "id": "eb5280f4-62bd-4f65-8508-6202372682bb",
       "name": "Gmail Daño K",
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
-      "position": [-8160, 2220],
+      "position": [
+        -34960,
+        14136
+      ],
       "webhookId": "d9000001-0000-4000-8000-000000000005",
-      "credentials": { "gmailOAuth2": { "id": "I8iOQCCkF5dchDft", "name": "KULTURDENDA" } }
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "I8iOQCCkF5dchDft",
+          "name": "KULTURDENDA"
+        }
+      }
     },
     {
       "parameters": {
         "sendTo": "incidenciassnappyblue@gmail.com",
-        "subject": "=DAÑO DETECTADO: Envio {{ $('Preparar Contexto').item.json.shipping_code }}",
-        "message": "=ALERTA: El envio {{ $('Preparar Contexto').item.json.shipping_code }} tiene una incidencia de daño (6_INCT) registrada.\n\nPedido: {{ $('Preparar Contexto').item.json.client_references[0] }}\nJustificacion IA: {{ $json.ai_justification }}",
-        "options": { "appendAttribution": false }
+        "subject": "=DAÑO DETECTADO: Envio {{ $('Preparar Contexto Avisos').item.json.shipping_code }}",
+        "message": "=ALERTA: El envio {{ $('Preparar Contexto Avisos').item.json.shipping_code }} tiene una incidencia de daño (6_INCT) registrada.\n\nPedido: {{ $('Preparar Contexto Avisos').item.json.client_references[0] }}\nJustificacion IA: {{ $json.ai_justification }}",
+        "options": {
+          "appendAttribution": false
+        }
       },
-      "id": "d9000001-0000-4000-8000-000000000006",
+      "id": "86721197-d7be-43b5-b7ad-dd39dda88b72",
       "name": "Gmail Daño S",
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
-      "position": [-8160, 2380],
+      "position": [
+        -34960,
+        14328
+      ],
       "webhookId": "d9000001-0000-4000-8000-000000000006",
-      "credentials": { "gmailOAuth2": { "id": "ATDngCzgo2CXlgvv", "name": "SNAPPY" } }
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "ATDngCzgo2CXlgvv",
+          "name": "SNAPPY"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "force-check",
+              "leftValue": "={{ $json.force_internal }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -36192,
+        13200
+      ],
+      "id": "force-internal-check-node",
+      "name": "¿Es Alerta Forzada? (Terminal)"
     }
   ],
   "connections": {
@@ -1486,7 +1845,7 @@
         ]
       ]
     },
-    "Log Estados1": {
+    "Preparar Log Firebase": {
       "main": [
         [
           {
@@ -1523,7 +1882,7 @@
       "main": [
         [
           {
-            "node": "Log Estados1",
+            "node": "Preparar Log Firebase",
             "type": "main",
             "index": 0
           }
@@ -1639,7 +1998,7 @@
         ],
         [
           {
-            "node": "Log Estados1",
+            "node": "Preparar Log Firebase",
             "type": "main",
             "index": 0
           }
@@ -1678,14 +2037,14 @@
         ],
         [
           {
-            "node": "Log Estados1",
+            "node": "Preparar Log Firebase",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Switch Target Type": {
+    "Ruta Alerta (Internal/Standard)": {
       "main": [
         [
           {
@@ -1703,36 +2062,36 @@
         ],
         [
           {
-            "node": "Log Estados1",
+            "node": "Preparar Log Firebase",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "If1": {
+    "¿Debe Notificar? (IA)": {
       "main": [
         [
           {
-            "node": "Switch Target Type",
+            "node": "Ruta Alerta (Internal/Standard)",
             "type": "main",
             "index": 0
           }
         ],
         [
           {
-            "node": "Log Estados1",
+            "node": "Preparar Log Firebase",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Code in JavaScript2": {
+    "Procesar Respuesta IA": {
       "main": [
         [
           {
-            "node": "If1",
+            "node": "¿Es Alerta Forzada? (Terminal)",
             "type": "main",
             "index": 0
           },
@@ -1744,61 +2103,22 @@
         ]
       ]
     },
-    "If Daño": {
-      "main": [
-        [
-          {
-            "node": "Switch Daño Cliente",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Log Estados1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Switch Daño Cliente": {
-      "main": [
-        [{ "node": "Gmail Daño H", "type": "main", "index": 0 }],
-        [{ "node": "Gmail Daño M", "type": "main", "index": 0 }],
-        [{ "node": "Gmail Daño K", "type": "main", "index": 0 }],
-        [{ "node": "Gmail Daño S", "type": "main", "index": 0 }],
-        [{ "node": "Log Estados1", "type": "main", "index": 0 }]
-      ]
-    },
-    "Gmail Daño H": {
-      "main": [[{ "node": "Log Estados1", "type": "main", "index": 0 }]]
-    },
-    "Gmail Daño M": {
-      "main": [[{ "node": "Log Estados1", "type": "main", "index": 0 }]]
-    },
-    "Gmail Daño K": {
-      "main": [[{ "node": "Log Estados1", "type": "main", "index": 0 }]]
-    },
-    "Gmail Daño S": {
-      "main": [[{ "node": "Log Estados1", "type": "main", "index": 0 }]]
-    },
     "Message a model": {
       "main": [
         [
           {
-            "node": "Code in JavaScript2",
+            "node": "Procesar Respuesta IA",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "If Duplicado Hoy": {
+    "¿Ya Procesado Hoy?": {
       "main": [
         [
           {
-            "node": "Log Estados1",
+            "node": "Preparar Log Firebase",
             "type": "main",
             "index": 0
           }
@@ -1812,11 +2132,11 @@
         ]
       ]
     },
-    "Preparar Contexto": {
+    "Preparar Contexto Avisos": {
       "main": [
         [
           {
-            "node": "If Duplicado Hoy",
+            "node": "¿Ya Procesado Hoy?",
             "type": "main",
             "index": 0
           }
@@ -1827,14 +2147,14 @@
       "main": [
         [
           {
-            "node": "Preparar Contexto",
+            "node": "Preparar Contexto Avisos",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Code in JavaScript3": {
+    "Calcular Estados y Horas": {
       "main": [
         [
           {
@@ -1849,7 +2169,7 @@
       "main": [
         [
           {
-            "node": "Code in JavaScript3",
+            "node": "Calcular Estados y Horas",
             "type": "main",
             "index": 0
           }
@@ -1901,7 +2221,7 @@
         ]
       ]
     },
-    "1. Obtener Token HAMINOS1": {
+    "Token CTT HAMINOS": {
       "main": [
         [
           {
@@ -1916,29 +2236,29 @@
       "main": [
         [
           {
-            "node": "1. Obtener Token HAMINOS1",
+            "node": "Token CTT HAMINOS",
             "type": "main",
             "index": 0
           },
           {
-            "node": "1. Obtener Token SNAPPY1",
+            "node": "Token CTT SNAPPY",
             "type": "main",
             "index": 0
           },
           {
-            "node": "1. Obtener Token KULTUDENDA1",
+            "node": "Token CTT KULTUDENDA",
             "type": "main",
             "index": 0
           },
           {
-            "node": "1. Obtener Token SERVICE CORP WORLD1",
+            "node": "Token CTT MIESTERY",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "1. Obtener Token SNAPPY1": {
+    "Token CTT SNAPPY": {
       "main": [
         [
           {
@@ -1949,7 +2269,7 @@
         ]
       ]
     },
-    "1. Obtener Token KULTUDENDA1": {
+    "Token CTT KULTUDENDA": {
       "main": [
         [
           {
@@ -1960,7 +2280,7 @@
         ]
       ]
     },
-    "1. Obtener Token SERVICE CORP WORLD1": {
+    "Token CTT MIESTERY": {
       "main": [
         [
           {
@@ -1976,6 +2296,125 @@
         [
           {
             "node": "Registrar Incidencia1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If Daño": {
+      "main": [
+        [
+          {
+            "node": "Switch Daño Cliente",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Preparar Log Firebase",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch Daño Cliente": {
+      "main": [
+        [
+          {
+            "node": "Gmail Daño H",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Gmail Daño M",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Gmail Daño K",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Gmail Daño S",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Preparar Log Firebase",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail Daño H": {
+      "main": [
+        [
+          {
+            "node": "Preparar Log Firebase",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail Daño M": {
+      "main": [
+        [
+          {
+            "node": "Preparar Log Firebase",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail Daño K": {
+      "main": [
+        [
+          {
+            "node": "Preparar Log Firebase",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail Daño S": {
+      "main": [
+        [
+          {
+            "node": "Preparar Log Firebase",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "¿Es Alerta Forzada? (Terminal)": {
+      "main": [
+        [
+          {
+            "node": "Switch Client Internal",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "¿Debe Notificar? (IA)",
             "type": "main",
             "index": 0
           }

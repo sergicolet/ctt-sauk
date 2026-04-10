@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import {
   Table,
@@ -10,91 +10,149 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetDescription,
+} from "@/components/ui/sheet";
 import { Historial } from "@/lib/types";
+import { 
+  History, 
+  Cpu, 
+  FileText, 
+  Mail, 
+  ExternalLink,
+  AlertCircle
+} from "lucide-react";
+import { cleanTracking } from "@/lib/status-map";
 
 interface Props {
   historial: Historial[];
 }
 
 export function HistorialTable({ historial }: Props) {
-  const [expandido, setExpandido] = useState<string | null>(null);
+  const [selectedHist, setSelectedHist] = useState<Historial | null>(null);
 
   return (
-    <div className="rounded-md border">
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Fecha</TableHead>
-            <TableHead>Envío</TableHead>
-            <TableHead>Pedido</TableHead>
-            <TableHead>Tienda</TableHead>
-            <TableHead>Tipo email</TableHead>
-            <TableHead>Destinatario</TableHead>
-            <TableHead>Detalle</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {historial.length === 0 && (
-            <TableRow>
-              <TableCell colSpan={7} className="text-center text-muted-foreground py-8">
-                Sin historial
-              </TableCell>
-            </TableRow>
-          )}
-          {historial.map((h) => (
-            <React.Fragment key={h.id}>
-              <TableRow
-                className="cursor-pointer hover:bg-muted/50"
-                onClick={() => setExpandido(expandido === h.id ? null : h.id)}
-              >
-                <TableCell className="text-xs text-muted-foreground">{h.fecha}</TableCell>
-                <TableCell className="font-mono text-xs">{h.numero_envio}</TableCell>
-                <TableCell className="text-xs">{h.numero_pedido}</TableCell>
-                <TableCell>
-                  <Badge variant="outline">{h.tienda}</Badge>
-                </TableCell>
-                <TableCell className="text-xs">{h.tipo_email ?? "—"}</TableCell>
-                <TableCell className="text-xs">{h.email_destinatario ?? "—"}</TableCell>
-                <TableCell className="text-xs text-blue-600">
-                  {expandido === h.id ? "▲ cerrar" : "▼ ver"}
-                </TableCell>
+    <>
+      <div className="rounded-2xl border bg-white shadow-sm overflow-x-auto custom-scrollbar">
+        <div className="min-w-[1000px] w-full">
+          <Table>
+            <TableHeader className="bg-slate-50 border-b">
+              <TableRow className="hover:bg-transparent">
+                <TableHead className="py-5 px-6 font-semibold text-slate-400 uppercase tracking-wider text-[11px]">Fecha / Hora</TableHead>
+                <TableHead className="py-5 font-semibold text-slate-400 uppercase tracking-wider text-[11px]">Envío</TableHead>
+                <TableHead className="py-5 font-semibold text-slate-400 uppercase tracking-wider text-[11px]">Pedido</TableHead>
+                <TableHead className="py-5 font-semibold text-slate-400 uppercase tracking-wider text-[11px]">Tienda</TableHead>
+                <TableHead className="py-5 font-semibold text-slate-400 uppercase tracking-wider text-[11px]">Tipo Notif.</TableHead>
+                <TableHead className="py-5 font-semibold text-slate-400 uppercase tracking-wider text-[11px]">Destinatario</TableHead>
               </TableRow>
-              {expandido === h.id && (
-                <TableRow key={`${h.id}-detalle`}>
-                  <TableCell colSpan={7} className="bg-muted/30 p-4 space-y-4">
-                    {h.contexto && (
-                      <div>
-                        <p className="text-xs font-semibold text-muted-foreground mb-1">CONTEXTO PREPARADO</p>
-                        <pre className="text-xs whitespace-pre-wrap bg-background border rounded p-3 max-h-48 overflow-auto">
-                          {h.contexto}
-                        </pre>
-                      </div>
-                    )}
-                    {h.ia_output && (
-                      <div>
-                        <p className="text-xs font-semibold text-muted-foreground mb-1">OUTPUT IA</p>
-                        <pre className="text-xs whitespace-pre-wrap bg-background border rounded p-3 max-h-48 overflow-auto">
-                          {h.ia_output}
-                        </pre>
-                      </div>
-                    )}
-                    {h.email_cuerpo && (
-                      <div>
-                        <p className="text-xs font-semibold text-muted-foreground mb-1">
-                          EMAIL ENVIADO — {h.email_asunto}
-                        </p>
-                        <pre className="text-xs whitespace-pre-wrap bg-background border rounded p-3 max-h-48 overflow-auto">
-                          {h.email_cuerpo}
-                        </pre>
-                      </div>
-                    )}
+            </TableHeader>
+            <TableBody>
+              {historial.length === 0 && (
+                <TableRow>
+                  <TableCell colSpan={6} className="text-center text-slate-400 py-24">
+                    <div className="flex flex-col items-center gap-2">
+                      <History className="h-10 w-10 opacity-20" />
+                      <p className="text-lg font-medium">El Log de Auditoría IA está vacío</p>
+                    </div>
                   </TableCell>
                 </TableRow>
               )}
-            </React.Fragment>
-          ))}
-        </TableBody>
-      </Table>
-    </div>
+              {historial.map((h) => {
+                const cleanedCode = cleanTracking(h.numero_envio);
+                return (
+                  <TableRow 
+                    key={h.id} 
+                    className="group cursor-pointer hover:bg-slate-50 transition-colors border-b last:border-0"
+                    onClick={() => setSelectedHist(h)}
+                  >
+                    <TableCell className="py-5 px-6">
+                      <span className="text-xs font-semibold text-slate-400">{h.fecha}</span>
+                    </TableCell>
+                    <TableCell className="py-5">
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm font-semibold text-slate-700">{cleanedCode}</span>
+                        <a 
+                          href={`https://www.cttexpress.com/localizador-de-envios/?sc=${cleanedCode}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-blue-500 hover:text-blue-700 transition-colors"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          <ExternalLink className="h-3.5 w-3.5" />
+                        </a>
+                      </div>
+                    </TableCell>
+                    <TableCell className="py-5">
+                      <span className="text-sm font-medium text-slate-500">{h.numero_pedido}</span>
+                    </TableCell>
+                    <TableCell className="py-5">
+                      <Badge variant="outline" className="font-semibold border-slate-200">{h.tienda}</Badge>
+                    </TableCell>
+                    <TableCell className="py-5">
+                      <span className="text-xs font-bold uppercase text-slate-400">{h.tipo_email || "—"}</span>
+                    </TableCell>
+                    <TableCell className="py-5">
+                      <span className="text-sm font-medium text-slate-600 truncate max-w-[150px] inline-block" title={h.email_destinatario}>
+                        {h.email_destinatario || "—"}
+                      </span>
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
+            </TableBody>
+          </Table>
+        </div>
+      </div>
+
+      <Sheet open={!!selectedHist} onOpenChange={(open) => !open && setSelectedHist(null)}>
+        <SheetContent className="sm:max-w-[800px] overflow-y-auto p-0 border-l shadow-2xl">
+          {selectedHist && (
+            <div className="flex flex-col h-full bg-white">
+              <SheetHeader className="p-8 bg-slate-900 text-white">
+                <div className="flex items-center gap-3 mb-2">
+                  <Cpu className="h-6 w-6 text-primary" />
+                  <SheetTitle className="text-2xl font-bold tracking-tight text-white uppercase italic">Traza Bruta IA</SheetTitle>
+                </div>
+                <SheetDescription className="text-slate-400 font-medium text-base">
+                  Auditoría completa para envío #{cleanTracking(selectedHist.numero_envio)}
+                </SheetDescription>
+              </SheetHeader>
+              
+              <div className="p-8 space-y-10">
+                {/* Context Section */}
+                <div className="space-y-4">
+                  <div className="flex items-center gap-2 text-primary">
+                    <FileText className="h-5 w-5" />
+                    <h3 className="text-sm font-bold uppercase tracking-widest">Contexto Enviado</h3>
+                  </div>
+                  <div className="bg-slate-50 border rounded-2xl shadow-sm overflow-hidden p-6">
+                    <pre className="text-sm text-slate-700 leading-relaxed whitespace-pre-wrap">
+                      {selectedHist.contexto}
+                    </pre>
+                  </div>
+                </div>
+
+                {/* AI Output Section */}
+                <div className="space-y-4">
+                  <div className="flex items-center gap-2 text-primary">
+                    <Cpu className="h-5 w-5" />
+                    <h3 className="text-sm font-bold uppercase tracking-widest">Respuesta en Bruto</h3>
+                  </div>
+                  <div className="bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl p-6 overflow-hidden">
+                    <pre className="text-sm text-emerald-400 leading-relaxed whitespace-pre-wrap">
+                      {selectedHist.ia_output}
+                    </pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+        </SheetContent>
+      </Sheet>
+    </>
   );
 }
