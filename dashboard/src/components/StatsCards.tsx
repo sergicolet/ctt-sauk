@@ -11,7 +11,9 @@ interface Props {
 export function StatsCards({ ejecuciones, incidencias }: Props) {
   const allItems = [...ejecuciones, ...incidencias];
   const totalEjecuciones = ejecuciones.length;
-  const emailsEnviados = allItems.filter((e) => e.email_enviado).length;
+  const emailsEnviados = 
+    ejecuciones.filter((e) => e.email_enviado).length + 
+    incidencias.filter((i) => i.numero_avisos > 0).length;
   const incidenciasActivas = incidencias.length;
 
   // Split between Draft CTT and Internal
