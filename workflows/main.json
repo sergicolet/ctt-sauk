@@ -281,6 +281,7 @@
         "projectId": "ctt-dashboard",
         "collection": "incidencias",
         "documentId": "_docid",
+        "updateKey": "numero_envio",
         "columns": "fecha_procesado,numero_envio,numero_pedido,tienda,centro,incidencia,fecha_incidencia,h_en_incidencia,tipo_email,razon,destinatario,credencial,numero_avisos,transit_hours,delivery_hours,manifest_hours,forzado_interno,dano"
       },
       "id": "firebase-incidencia-0001",
