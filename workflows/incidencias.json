@@ -609,16 +609,18 @@
         "projectId": "ctt-dashboard",
         "collection": "incidencias",
         "documentId": "={{ $('Code FW JS2').item.json.shipping_code }}",
-        "columns": {
-          "mappingMode": "defineBelow",
-          "value": {
-            "seguimiento": "={{ $('Code FW JS2').item.json.estado_actual }}",
-            "resultado_followup": "=Aviso interno enviado {{ $now.toFormat('dd-MM-yyyy HH:mm') }}"
-          },
-          "matchingColumns": [],
-          "schema": []
-        },
-        "options": {}
+        "updateFields": {
+          "values": [
+            {
+              "key": "seguimiento",
+              "value": "={{ $('Code FW JS2').item.json.estado_actual }}"
+            },
+            {
+              "key": "resultado_followup",
+              "value": "=Aviso interno enviado {{ $now.toFormat('dd-MM-yyyy HH:mm') }}"
+            }
+          ]
+        }
       },
       "id": "7c3130d9-946c-44fa-a971-c77481a2da76",
       "name": "Update Sigue Incidencia",
@@ -641,16 +643,18 @@
         "projectId": "ctt-dashboard",
         "collection": "incidencias",
         "documentId": "={{ $json.shipping_code }}",
-        "columns": {
-          "mappingMode": "defineBelow",
-          "value": {
-            "seguimiento": "={{ $json.estado_actual }}",
-            "resultado_followup": "=Resuelta {{ $now.toFormat('dd-MM-yyyy HH:mm') }}"
-          },
-          "matchingColumns": [],
-          "schema": []
-        },
-        "options": {}
+        "updateFields": {
+          "values": [
+            {
+              "key": "seguimiento",
+              "value": "={{ $json.estado_actual }}"
+            },
+            {
+              "key": "resultado_followup",
+              "value": "=Resuelta {{ $now.toFormat('dd-MM-yyyy HH:mm') }}"
+            }
+          ]
+        }
       },
       "id": "77b8ac9d-545c-4b22-9a10-676695313e97",
       "name": "Update Resuelta",
