@@ -187,385 +187,111 @@
     },
     {
       "parameters": {
-        "operation": "append",
-        "documentId": {
-          "__rl": true,
-          "value": "1MzLQ4PuK5i4cYJhV2yrezJSoTwse7FsnpX2VcWl65yk",
-          "mode": "list",
-          "cachedResultName": "CTT Tracking Log"
+        "assignments": {
+          "assignments": [
+            { "id": "log-1", "name": "_docid", "value": "={{ $now.toMillis() + '_' + $('Preparar Contexto').item.json.shipping_code }}", "type": "string" },
+            { "id": "log-2", "name": "fecha_procesado", "value": "={{ $now.toFormat('dd-MM-yyyy HH:mm:ss') }}", "type": "string" },
+            { "id": "log-3", "name": "numero_envio", "value": "={{ $('Preparar Contexto').item.json.shipping_code }}", "type": "string" },
+            { "id": "log-4", "name": "numero_pedido", "value": "={{ $('Preparar Contexto').item.json.client_references[0] }}", "type": "string" },
+            { "id": "log-5", "name": "tienda", "value": "={{ $('Preparar Contexto').item.json.client_code === '48630' ? 'HAMINOS' : ($('Preparar Contexto').item.json.client_code === '47685' ? 'MIESTERY' : ($('Preparar Contexto').item.json.client_code === '45416' ? 'KULTUDENDA' : 'SNAPPY')) }}", "type": "string" },
+            { "id": "log-6", "name": "centro", "value": "={{ $('Preparar Contexto').item.json.client_center_code }}", "type": "string" },
+            { "id": "log-7", "name": "estado", "value": "={{ $('Code in JavaScript3').item.json.shipping_status_code }}", "type": "string" },
+            { "id": "log-8", "name": "fecha_estado", "value": "={{ $('Code in JavaScript3').item.json.shipping_status_datetime }}", "type": "string" },
+            { "id": "log-9", "name": "h_en_estado", "value": "={{ $('Code in JavaScript2').first().json.h_en_estado }}", "type": "number" },
+            { "id": "log-10", "name": "email_enviado", "value": "={{ $('Code in JavaScript2').first().json.should_notify }}", "type": "boolean" },
+            { "id": "log-11", "name": "tipo_email", "value": "={{ $('Code in JavaScript2').first().json.ai_incident_detected }}", "type": "string" },
+            { "id": "log-12", "name": "razon", "value": "={{ $('Code in JavaScript2').first().json.ai_justification }}", "type": "string" },
+            { "id": "log-13", "name": "destinatario", "value": "={{ $('Code in JavaScript2').first().json.email_to }}", "type": "string" },
+            { "id": "log-14", "name": "credencial", "value": "={{ $('Preparar Contexto').item.json.client_code === '48630' ? 'HAMINOS' : ($('Preparar Contexto').item.json.client_code === '47685' ? 'MIESTERY' : ($('Preparar Contexto').item.json.client_code === '45416' ? 'KULTUDENDA' : 'SNAPPY')) }}", "type": "string" },
+            { "id": "log-15", "name": "transit_hours", "value": "={{ $('Code in JavaScript3').item.json.transit_hours }}", "type": "number" },
+            { "id": "log-16", "name": "delivery_hours", "value": "={{ $('Code in JavaScript3').item.json.delivery_hours }}", "type": "number" },
+            { "id": "log-17", "name": "manifest_hours", "value": "={{ $('Code in JavaScript3').item.json.manifest_hours }}", "type": "number" },
+            { "id": "log-18", "name": "forzado_interno", "value": "={{ $('Code in JavaScript2').first().json.force_internal }}", "type": "boolean" },
+            { "id": "log-19", "name": "dano", "value": "={{ $('Code in JavaScript3').item.json.has_damage }}", "type": "boolean" }
+          ]
         },
-        "sheetName": {
-          "__rl": true,
-          "value": 751381048,
-          "mode": "list",
-          "cachedResultName": "Test IA",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MzLQ4PuK5i4cYJhV2yrezJSoTwse7FsnpX2VcWl65yk/edit#gid=751381048"
-        },
-        "columns": {
-          "mappingMode": "defineBelow",
-          "value": {
-            "FECHA PROCESADO": "={{ $now.toFormat('dd-MM-yyyy HH:mm:ss') }}",
-            "NUMERO DE ENVIO": "={{ $('Preparar Contexto').item.json.shipping_code }}",
-            "NUMERO DE PEDIDO": "={{ $('Preparar Contexto').item.json.client_references[0] }}",
-            "TIENDA": "={{ $('Preparar Contexto').item.json.client_code === '48630' ? 'HAMINOS' : ($('Preparar Contexto').item.json.client_code === '47685' ? 'MIESTERY' : ($('Preparar Contexto').item.json.client_code === '45416' ? 'KULTUDENDA' : 'SNAPPY')) }}",
-            "CENTRO": "={{ $('Preparar Contexto').item.json.client_center_code }}",
-            "ESTADO": "={{ $('Code in JavaScript3').item.json.shipping_status_code }}",
-            "FECHA ESTADO": "={{ $('Code in JavaScript3').item.json.shipping_status_datetime }}",
-            "H EN ESTADO": "={{$('Code in JavaScript2').first().json.h_en_estado}}",
-            "EMAIL ENVIADO": "={{ $('Code in JavaScript2').first().json.should_notify }}\n",
-            "TIPO EMAIL": "={{ $('Code in JavaScript2').first().json.ai_incident_detected }}",
-            "RAZON": "={{ $('Code in JavaScript2').first().json.ai_justification }}",
-            "DESTINATARIO": "={{ $('Code in JavaScript2').first().json.email_to }}",
-            "CREDENCIAL": "={{ $('Preparar Contexto').item.json.client_code === '48630' ? 'HAMINOS' : ($('Preparar Contexto').item.json.client_code === '47685' ? 'MIESTERY' : ($('Preparar Contexto').item.json.client_code === '45416' ? 'KULTUDENDA' : 'SNAPPY')) }}"
-          },
-          "matchingColumns": [],
-          "schema": [
-            {
-              "id": "FECHA PROCESADO",
-              "displayName": "FECHA PROCESADO",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "NUMERO DE ENVIO",
-              "displayName": "NUMERO DE ENVIO",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "NUMERO DE PEDIDO",
-              "displayName": "NUMERO DE PEDIDO",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "TIENDA",
-              "displayName": "TIENDA",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "CENTRO",
-              "displayName": "CENTRO",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "ESTADO",
-              "displayName": "ESTADO",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "FECHA ESTADO",
-              "displayName": "FECHA ESTADO",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "H EN ESTADO",
-              "displayName": "H EN ESTADO",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "EMAIL ENVIADO",
-              "displayName": "EMAIL ENVIADO",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "TIPO EMAIL",
-              "displayName": "TIPO EMAIL",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "RAZON",
-              "displayName": "RAZON",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "DESTINATARIO",
-              "displayName": "DESTINATARIO",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "CREDENCIAL",
-              "displayName": "CREDENCIAL",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            }
-          ],
-          "attemptToConvertTypes": false,
-          "convertFieldsToString": false
-        },
-        "options": {}
+        "options": { "ignoreConversionErrors": true }
       },
       "id": "81b4b3e7-4ec1-4e54-b3da-785031e61654",
       "name": "Log Estados1",
-      "type": "n8n-nodes-base.googleSheets",
-      "typeVersion": 4.7,
-      "position": [
-        -7488,
-        1360
-      ],
-      "retryOnFail": true,
-      "maxRetries": 3,
-      "retryDelay": 5000,
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [-7488, 1360],
       "alwaysOutputData": true,
-      "credentials": {
-        "googleSheetsOAuth2Api": {
-          "id": "vUMIiZSNk60SoDGg",
-          "name": "Google Sheets account"
-        }
-      },
       "onError": "continueRegularOutput"
     },
     {
       "parameters": {
-        "operation": "appendOrUpdate",
-        "documentId": {
-          "__rl": true,
-          "value": "1MzLQ4PuK5i4cYJhV2yrezJSoTwse7FsnpX2VcWl65yk",
-          "mode": "list",
-          "cachedResultName": "CTT Tracking Log"
-        },
-        "sheetName": {
-          "__rl": true,
-          "value": 1123525887,
-          "mode": "list",
-          "cachedResultName": "Incidencias",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MzLQ4PuK5i4cYJhV2yrezJSoTwse7FsnpX2VcWl65yk/edit#gid=1123525887"
-        },
-        "columns": {
-          "mappingMode": "defineBelow",
-          "value": {
-            "FECHA PROCESADO": "={{ $now.toFormat('dd-MM-yyyy HH:mm:ss') }}",
-            "NUMERO DE ENVIO": "={{ $('Code in JavaScript3').item.json.shipping_code }}",
-            "NUMERO DE PEDIDO": "={{ $('Code in JavaScript3').item.json.client_references[0] }}",
-            "TIENDA": "={{ $('Preparar Contexto').item.json.client_code === '48630' ? 'HAMINOS' : ($('Preparar Contexto').item.json.client_code === '47685' ? 'MIESTERY' : ($('Preparar Contexto').item.json.client_code === '45416' ? 'KULTUDENDA' : 'SNAPPY')) }}",
-            "CENTRO": "={{ $('Code in JavaScript3').item.json.client_center_code }}",
-            "INCIDENCIA": "={{ $('Code in JavaScript2').item.json.ai_incident_detected }}",
-            "FECHA INCIDENCIA": "={{ $('Code in JavaScript3').item.json.shipping_status_datetime }}",
-            "H EN INCIDENCIA": "={{ $('Code in JavaScript2').item.json.h_en_estado }}",
-            "EMAIL ENVIADO": "SI",
-            "TIPO EMAIL": "={{ $('Code in JavaScript2').item.json.target_type }}",
-            "RAZON": "={{ $('Code in JavaScript2').item.json.ai_justification }}",
-            "DESTINATARIO": "={{ $('Code in JavaScript2').item.json.email_to }}",
-            "CREDENCIAL": "={{ $('Preparar Contexto').item.json.client_code === '48630' ? 'HAMINOS' : ($('Preparar Contexto').item.json.client_code === '47685' ? 'MIESTERY' : ($('Preparar Contexto').item.json.client_code === '45416' ? 'KULTUDENDA' : 'SNAPPY')) }}",
-            "NUMERO AVISOS": "={{ $('Code in JavaScript2').item.json.numero_avisos }}"
-          },
-          "matchingColumns": [
-            "NUMERO DE ENVIO"
-          ],
-          "schema": [
-            {
-              "id": "FECHA PROCESADO",
-              "displayName": "FECHA PROCESADO",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "NUMERO DE ENVIO",
-              "displayName": "NUMERO DE ENVIO",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "NUMERO DE PEDIDO",
-              "displayName": "NUMERO DE PEDIDO",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "TIENDA",
-              "displayName": "TIENDA",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "CENTRO",
-              "displayName": "CENTRO",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "INCIDENCIA",
-              "displayName": "INCIDENCIA",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "FECHA INCIDENCIA",
-              "displayName": "FECHA INCIDENCIA",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "H EN INCIDENCIA",
-              "displayName": "H EN INCIDENCIA",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "EMAIL ENVIADO",
-              "displayName": "EMAIL ENVIADO",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "TIPO EMAIL",
-              "displayName": "TIPO EMAIL",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "RAZON",
-              "displayName": "RAZON",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "DESTINATARIO",
-              "displayName": "DESTINATARIO",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "CREDENCIAL",
-              "displayName": "CREDENCIAL",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "NUMERO AVISOS",
-              "displayName": "NUMERO AVISOS",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "SEGUIMIENTO",
-              "displayName": "SEGUIMIENTO",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "RESULTADO FOLLOWUP",
-              "displayName": "RESULTADO FOLLOWUP",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            }
-          ],
-          "attemptToConvertTypes": false,
-          "convertFieldsToString": false
+        "operation": "create",
+        "projectId": "ctt-dashboard",
+        "collection": "ejecuciones",
+        "documentId": "_docid",
+        "columns": "fecha_procesado,numero_envio,numero_pedido,tienda,centro,estado,fecha_estado,h_en_estado,email_enviado,tipo_email,razon,destinatario,credencial,transit_hours,delivery_hours,manifest_hours,forzado_interno,dano"
+      },
+      "id": "firebase-ejecucion-0001",
+      "name": "Firebase Log Ejecucion",
+      "type": "n8n-nodes-base.googleFirebaseCloudFirestore",
+      "typeVersion": 1.1,
+      "position": [-7264, 1360],
+      "alwaysOutputData": true,
+      "onError": "continueRegularOutput",
+      "credentials": {
+        "googleFirebaseCloudFirestoreOAuth2Api": {
+          "id": "EXM0epVP1YsMfolr",
+          "name": "haminos"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            { "id": "inc-1", "name": "_docid", "value": "={{ $('Code in JavaScript3').item.json.shipping_code }}", "type": "string" },
+            { "id": "inc-2", "name": "fecha_procesado", "value": "={{ $now.toFormat('dd-MM-yyyy HH:mm:ss') }}", "type": "string" },
+            { "id": "inc-3", "name": "numero_envio", "value": "={{ $('Code in JavaScript3').item.json.shipping_code }}", "type": "string" },
+            { "id": "inc-4", "name": "numero_pedido", "value": "={{ $('Code in JavaScript3').item.json.client_references[0] }}", "type": "string" },
+            { "id": "inc-5", "name": "tienda", "value": "={{ $('Preparar Contexto').item.json.client_code === '48630' ? 'HAMINOS' : ($('Preparar Contexto').item.json.client_code === '47685' ? 'MIESTERY' : ($('Preparar Contexto').item.json.client_code === '45416' ? 'KULTUDENDA' : 'SNAPPY')) }}", "type": "string" },
+            { "id": "inc-6", "name": "centro", "value": "={{ $('Code in JavaScript3').item.json.client_center_code }}", "type": "string" },
+            { "id": "inc-7", "name": "incidencia", "value": "={{ $('Code in JavaScript2').item.json.ai_incident_detected }}", "type": "string" },
+            { "id": "inc-8", "name": "fecha_incidencia", "value": "={{ $('Code in JavaScript3').item.json.shipping_status_datetime }}", "type": "string" },
+            { "id": "inc-9", "name": "h_en_incidencia", "value": "={{ $('Code in JavaScript2').item.json.h_en_estado }}", "type": "number" },
+            { "id": "inc-10", "name": "tipo_email", "value": "={{ $('Code in JavaScript2').item.json.target_type }}", "type": "string" },
+            { "id": "inc-11", "name": "razon", "value": "={{ $('Code in JavaScript2').item.json.ai_justification }}", "type": "string" },
+            { "id": "inc-12", "name": "destinatario", "value": "={{ $('Code in JavaScript2').item.json.email_to }}", "type": "string" },
+            { "id": "inc-13", "name": "credencial", "value": "={{ $('Preparar Contexto').item.json.client_code === '48630' ? 'HAMINOS' : ($('Preparar Contexto').item.json.client_code === '47685' ? 'MIESTERY' : ($('Preparar Contexto').item.json.client_code === '45416' ? 'KULTUDENDA' : 'SNAPPY')) }}", "type": "string" },
+            { "id": "inc-14", "name": "numero_avisos", "value": "={{ $('Code in JavaScript2').item.json.numero_avisos }}", "type": "number" },
+            { "id": "inc-15", "name": "transit_hours", "value": "={{ $('Code in JavaScript3').item.json.transit_hours }}", "type": "number" },
+            { "id": "inc-16", "name": "delivery_hours", "value": "={{ $('Code in JavaScript3').item.json.delivery_hours }}", "type": "number" },
+            { "id": "inc-17", "name": "manifest_hours", "value": "={{ $('Code in JavaScript3').item.json.manifest_hours }}", "type": "number" },
+            { "id": "inc-18", "name": "forzado_interno", "value": "={{ $('Code in JavaScript2').item.json.force_internal }}", "type": "boolean" },
+            { "id": "inc-19", "name": "dano", "value": "={{ $('Code in JavaScript3').item.json.has_damage }}", "type": "boolean" }
+          ]
         },
         "options": {}
       },
       "id": "7262453c-b61b-4c13-8dd9-0c73825db809",
       "name": "Registrar Incidencia1",
-      "type": "n8n-nodes-base.googleSheets",
-      "typeVersion": 4.7,
-      "position": [
-        -7712,
-        928
-      ],
-      "retryOnFail": true,
-      "maxRetries": 3,
-      "retryDelay": 3000,
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [-7712, 928]
+    },
+    {
+      "parameters": {
+        "operation": "upsert",
+        "projectId": "ctt-dashboard",
+        "collection": "incidencias",
+        "documentId": "_docid",
+        "columns": "fecha_procesado,numero_envio,numero_pedido,tienda,centro,incidencia,fecha_incidencia,h_en_incidencia,tipo_email,razon,destinatario,credencial,numero_avisos,transit_hours,delivery_hours,manifest_hours,forzado_interno,dano"
+      },
+      "id": "firebase-incidencia-0001",
+      "name": "Firebase Incidencia",
+      "type": "n8n-nodes-base.googleFirebaseCloudFirestore",
+      "typeVersion": 1.1,
+      "position": [-7488, 928],
       "credentials": {
-        "googleSheetsOAuth2Api": {
-          "id": "vUMIiZSNk60SoDGg",
-          "name": "Google Sheets account"
+        "googleFirebaseCloudFirestoreOAuth2Api": {
+          "id": "EXM0epVP1YsMfolr",
+          "name": "haminos"
         }
       }
     },
@@ -1062,7 +788,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const raw = $input.item.json;\nconst aiText = raw.output[0].content[0].text;\nconst aiData = JSON.parse(aiText.replace(/```json|```/g, '').trim());\n\nconst contexto = $('Preparar Contexto').item.json;\nconst forceInternal = contexto.force_internal === true;\nconst is2500 = contexto.is_2500 === true;\nconst numeroAvisos = contexto.numero_avisos || 1;\nconst clientCode = String(contexto.client_center_code || '');\n\nlet targetType = aiData.decision?.target_type || 'standard';\nif (forceInternal || is2500) targetType = 'internal';\n\nconst shouldNotify = aiData.decision?.should_notify === true;\n\nconst emailTo = targetType === 'internal'\n  ? 'alertas@sergi.com'\n  : (clientCode.match(/^454160000[1-2]$/) ? 'cca.z2@cttexpress.com' : 'cca.z3@cttexpress.com');\n\nreturn {\n  should_notify: shouldNotify,\n  target_type: targetType,\n  email_subject: shouldNotify ? (aiData.decision?.email_subject || '') : '',\n  email_body: shouldNotify ? (aiData.decision?.email_body || '') : '',\n  ai_incident_detected: aiData.analysis?.detected_incident || 'N/A',\n  ai_justification: aiData.analysis?.justification || 'Sin detalle',\n  h_en_estado: aiData.analysis?.hours_in_status || 0,\n  email_to: emailTo,\n  numero_avisos: numeroAvisos,\n  force_internal: forceInternal,\n  is_2500: is2500\n};"
+        "jsCode": "const raw = $input.item.json;\nconst aiText = raw.output[0].content[0].text;\nconst aiData = JSON.parse(aiText.replace(/```json|```/g, '').trim());\n\nconst contexto = $('Preparar Contexto').item.json;\nconst forceInternal = contexto.force_internal === true;\nconst is2500 = contexto.is_2500 === true;\nconst hasDamage = contexto.has_damage === true;\nconst numeroAvisos = contexto.numero_avisos || 1;\nconst clientCode = String(contexto.client_center_code || '');\n\nlet targetType = aiData.decision?.target_type || 'standard';\nif (forceInternal || is2500) targetType = 'internal';\n\nconst shouldNotify = aiData.decision?.should_notify === true;\n\nconst emailTo = targetType === 'internal'\n  ? 'alertas@sergi.com'\n  : (clientCode.match(/^454160000[1-2]$/) ? 'cca.z2@cttexpress.com' : 'cca.z3@cttexpress.com');\n\nreturn {\n  should_notify: shouldNotify,\n  target_type: targetType,\n  email_subject: shouldNotify ? (aiData.decision?.email_subject || '') : '',\n  email_body: shouldNotify ? (aiData.decision?.email_body || '') : '',\n  ai_incident_detected: aiData.analysis?.detected_incident || 'N/A',\n  ai_justification: aiData.analysis?.justification || 'Sin detalle',\n  h_en_estado: aiData.analysis?.hours_in_status || 0,\n  email_to: emailTo,\n  numero_avisos: numeroAvisos,\n  force_internal: forceInternal,\n  is_2500: is2500,\n  has_damage: hasDamage,\n  notify_damage: hasDamage && String(contexto.shipping_status_code || '') !== '2000'\n};"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -1084,11 +810,11 @@
         "responses": {
           "values": [
             {
-              "content": "=Historial Procesado:\n{{ $json.formatted_history }}\n \nNumero de Pedido: {{ $json.shipping_code }}\nHora actual: {{ $now.toFormat('yyyy-MM-dd HH:mm') }} ({{ ['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo'][$now.weekday - 1] }})\n \n--- HORAS PRECALCULADAS (USA ESTOS VALORES DIRECTAMENTE, NO RECALCULES) ---\nHoras en tránsito desde primer 0900/1000 (sin reparto posterior): {{ $json.transit_hours }}\nHoras en grabación desde primer 0000/0030 (sin tránsito posterior): {{ $json.manifest_hours }}\nHoras en ciclo de reparto actual desde primer 1200/1500: {{ $json.delivery_hours }}\nHoras estacionado desde último 1700/1800: {{ $json.stationary_hours }}"
+              "content": "=Historial Procesado:\n{{ $json.formatted_history }}\n \nNumero de Pedido: {{ $json.shipping_code }}\nHora actual: {{ $now.toFormat('yyyy-MM-dd HH:mm') }} ({{ ['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo'][$now.weekday - 1] }})\n \n--- VALORES PRECALCULADOS (USA ESTOS VALORES DIRECTAMENTE, NO RECALCULES) ---\nHoras en tránsito desde primer 0900/1000 (sin reparto posterior): {{ $json.transit_hours }}\nHoras en grabación desde primer 0000/0030 (sin tránsito posterior): {{ $json.manifest_hours }}\nHoras en ciclo de reparto actual desde primer 1200/1500: {{ $json.delivery_hours }}\nHoras estacionado desde último 1700/1800: {{ $json.stationary_hours }}\nIncidencia activa (1600/2400/2600/2700/0600 sin 1500 posterior, ya calculado): {{ $json.has_active_incident }}\nCodigo de incidencia activa: {{ $json.active_incident_code || 'ninguna' }}"
             },
             {
               "role": "system",
-              "content": "=Eres un auditor logistico de CTT Express. Analiza el historial y decide si notificar. RESPONDE SOLO CON JSON PURO, SIN MARKDOWN.\n \n### FUENTE DE VERDAD (CRITICO)\nDetermina el estado actual UNICAMENTE leyendo el historial cronologico de arriba a abajo.\nIgnora cualquier otro campo o dato externo que no sea el historial y los valores precalculados.\n \n### HORAS LABORABLES (CRITICO)\nLas horas ya vienen calculadas en el bloque \"HORAS PRECALCULADAS\" del prompt de usuario.\nUSA DIRECTAMENTE esos valores como horas_in_status para el estado correspondiente.\nNO recalcules. NO estimes. NO ignores estos valores.\nSi un valor es 0, tratalo como 0.\n \n### EQUIVALENCIA DE EVENTOS (CRITICO)\n0900 (En Transito) y 1000 (Delegacion de transito) son el MISMO estado de transito.\nEl reloj de transito empieza en el PRIMERO que aparezca en el historial.\n1200 (Delegacion destino) y 1500 (En reparto) son el MISMO estado de reparto.\nEl reloj de reparto empieza en el PRIMERO que aparezca en el historial.\nEjemplo: 1000 a las 12:00 + 0900 a las 13:00 → en transito desde las 12:00.\nEjemplo: 1200 a las 14:00 + 1500 a las 15:00 → en reparto desde las 14:00.\n \n### CICLO DE REPARTO\nEl ciclo de reparto empieza en el primer 1200 o 1500 del ciclo actual.\nCRITICO: Cada vez que aparece un 1000 despues de un 1200, el ciclo SE REINICIA COMPLETAMENTE.\nEl punto de inicio siempre es el ultimo 1200 que no haya sido seguido de otro 1000.\nEl valor delivery_hours ya refleja este calculo correctamente.\n \n### ESTADOS TERMINALES — PRIORIDAD MAXIMA (CRITICO — EJECUTAR PRIMERO)\nAntes de cualquier otra evaluacion, comprueba si el ultimo evento del historial es un estado terminal.\nLos estados terminales son: 2500, 2300, 2310.\nUn estado terminal CIERRA y SUPERA cualquier incidencia activa previa (1600, 2400, 2600, 2700, 0600, 1700, 1800, etc.).\nCuando el ultimo evento es un estado terminal, se aplica SIEMPRE su plantilla propia.\nNO se evaluan incidencias anteriores. NO se calculan horas. Se va directamente a la plantilla del estado terminal.\n \nCasos:\n- Ultimo evento es 2500 → Plantilla 2500. should_notify: true. target_type: \"internal\". FIN.\n- Ultimo evento es 2300 → Plantilla PUDO. should_notify: true. target_type: \"standard\". FIN.\n- Ultimo evento es 2310 → Plantilla 2310. should_notify: true. target_type: \"standard\". FIN.\n \n### ALERTAS CON UMBRAL\nNotificar solo si supera las horas indicadas (usa los valores precalculados):\n- 0000 / 0030 → manifest_hours > 24 (Alerta Interna)\n- 0900 / 1000 → transit_hours > 24\n- 1200 / 1500 → delivery_hours > 24\n- 1700 / 1800 → stationary_hours > 24\n \n### REGLA ESPECIAL TRANSITO (SLA 24-48H)\nSi transit_hours > 24 y no hay ningun evento 1200 o 1500 en el historial → notificar (should_notify: true).\nEsta regla tiene prioridad absoluta sobre mensajes de gestion interna como el 71_INAT.\n \n### ALERTAS SIN UMBRAL\nNotificar SIEMPRE si la incidencia esta ACTIVA:\n- 1600 → reparto fallido\n- 2400, 2600, 2700 → variantes de reparto fallido (nuevo reparto / reexpedicion)\n- 2300 → depositado en punto CTT (NO es reparto fallido — ver plantilla PUDO)\n- 0600 → recogida fallida\n- 2310 / 2900 → datos incorrectos\n- 1012 → posible extravio\n- 1006 → danos en contenido\n- 1008 → posible robo\n \nEn detected_incident escribe siempre el nombre, no el codigo.\n \n### PRIORIDAD ENTRE INCIDENCIAS GRAVES (1012 / 1006 / 1008)\nSi en el historial existe un evento 1012, 1006 o 1008, este tiene PRIORIDAD sobre cualquier 1600 activo previo.\nAplicar siempre la plantilla del evento mas grave, no la del reparto fallido.\nOrden de prioridad descendente: 1012 > 1008 > 1006 > 1600/2400/2600/2700.\n \n### REGLA DE RESOLUCION DE INCIDENCIAS (CRITICO)\nUna incidencia (1600/2400/2600/2700/0600) esta RESUELTA SOLAMENTE si DESPUES de ella en el historial aparece un evento 1500.\nSi en el historial hay un evento de incidencia y NO hay NINGUN 1500 posterior, la incidencia SIGUE ACTIVA,\nsin importar que otros eventos haya despues (ej. 1200, 1000, 71_INAT, 1700, 1800, 1900).\nEXCEPCION: si el ultimo evento es un estado terminal (2500/2300/2310), la incidencia se cierra igualmente.\n \nCasos:\n- Existe un 1600 y no hay un 1500 posterior y el ultimo evento NO es terminal → should_notify: true SIEMPRE.\n- Existe un 1600 seguido de un 1500 → resuelta → should_notify: false (se evalua delivery_hours).\n- Existe un 0600 y no hay recoleccion posterior y el ultimo evento NO es terminal → should_notify: true SIEMPRE.\n- Existe un 1600 y el ultimo evento es 2500/2300/2310 → cerrada por estado terminal → usar plantilla terminal.\n \n### REGLA ANTI-ALUCINACION (CRITICO)\nNUNCA afirmes que existe un evento si su codigo no aparece textualmente en el historial.\nSi en el historial ves 71_INAT pero NO hay ningun codigo de incidencia (1600/2300/2400/2600/2700/0600) → NO hay incidencia activa → should_notify: false.\nEl 71_INAT NO es una incidencia. Es una gestion interna de CTT. No lo confundas con un reparto fallido.\nEjemplo INCORRECTO: historial tiene [0900][1000][71_INAT] y la IA dice \"Existio un 1600\" → PROHIBIDO.\nEjemplo CORRECTO: si no hay 1600 en el historial, no puedes mencionar 1600 en la justificacion.\n \n### NO NOTIFICAR si:\n- Valor precalculado correspondiente < 24 para 0000/0030/0900/1000/1200/1500/1700/1800\n- Incidencia 1600/variante seguida de 1500 → resuelta\n- Evento 71_INAT como ultimo evento → should_notify: false,\n  EXCEPTO si incidencia activa sigue sin resolver (ver REGLA DE RESOLUCION)\n  o si transit_hours > 24 (ver REGLA ESPECIAL TRANSITO).\n- delivery_date informado → ya entregado\n- Ultimo evento no esta en lista de alertas\n \n### NOTA IMPORTANTE\nResponde siempre target_type: standard. El sistema lo sobreescribira si es necesario.\n \n### PLANTILLAS SEGUN WORKFLOW (usa el Numero de Pedido exacto del prompt como [SEG])\n \nREGLAS DE PLANTILLA (SOLO PARA should_notify: true):\n- 0000/0030 (Alerta Interna):\n  email_subject: \"ALERTA INTERNA: Envio [SEG] grabado sin recoger\"\n  email_body: \"El envio [SEG] figura como grabado o recogida sin programar desde ayer. Revisar con almacen.\"\n  target_type: \"internal\"\n \n- 0900/1000 (Transito estancado):\n  email_subject: \"Incidencia en el envio [SEG]\"\n  email_body: \"Buenos dias. El envio [SEG] estuvo en transito el dia anterior y hoy aun no ha cambiado a reparto. Solicitamos que el envio salga a reparto al dia siguiente. Gracias.\"\n  target_type: \"standard\"\n \n- 1200/1500 (Reparto estancado):\n  email_subject: \"Incidencia en el envio [SEG]\"\n  email_body: \"Buenos dias. El envio [SEG] se encuentra en reparto desde ayer sin entregarse. Solicitamos que el pedido sea sacado nuevamente a reparto hoy mismo. Gracias.\"\n  target_type: \"standard\"\n \n- 1600/2400/2600/2700 (Reparto fallido activo):\n  email_subject: \"Incidencia en el envio [SEG]\"\n  email_body: \"Buenos dias. El envio [SEG] presenta su primera incidencia. Solicitamos explicitamente un segundo intento de reparto para el siguiente dia habil. Gracias.\"\n  target_type: \"standard\"\n \n- 2300-PUDO / 2310 (Paquete en punto CTT):\n  email_subject: \"Envio en punto CTT: [SEG]\"\n  email_body: \"Hola equipo de CTT, necesitamos la direccion detallada del punto de recogida para el siguiente envio: EXPEDICION: - [SEG]. Gracias de antemano.\"\n  target_type: \"standard\"\n \n- 2500 (Devolucion en proceso):\n  email_subject: \"Devolucion en proceso: [SEG]\"\n  email_body: \"Estimados, el siguiente pedido ha entrado en proceso de devolucion. Iniciamos seguimiento manual. CODIGO: - [SEG]\"\n  target_type: \"internal\"\n \n- Otros casos (0600, 2900, 1012, 1006, 1008): usar un mensaje descriptivo similar pidiendo gestion urgente.\n \n### COHERENCIA OBLIGATORIA\nSi should_notify es false → email_subject y email_body deben ser \"\" (vacios).\nSi escribes \"no supera\" o \"resuelta\" → should_notify: false.\nSi escribes \"supera\" o \"incidencia activa\" → should_notify: true.\nNunca contradigas la justificacion con la decision.\n \n### SALIDA JSON\nREGLAS (OBLIGATORIO):\n- Si no se supera el umbral y no hay alertas sin umbral activas → should_notify: false, email_subject: \"\", email_body: \"\".\n- NUNCA el body en el subject ni al reves.\n- Si should_notify false → ambos campos \"\".\n \n### VERIFICACION FINAL OBLIGATORIA (ejecutar SIEMPRE en este orden exacto)\n \nPASO 0 — ESTADOS TERMINALES (PRIORIDAD MAXIMA):\n¿El ultimo evento del historial es 2500, 2300 o 2310?\n  → SI → Aplicar plantilla del estado terminal. should_notify: true. FIN.\n  → NO → Continuar con Paso 1.\n \nPASO 1 — INCIDENCIAS GRAVES (1012 / 1006 / 1008):\n¿Existe en el historial algun evento 1012, 1006 o 1008?\n  → SI → Aplicar plantilla del evento mas grave. should_notify: true. FIN.\n  → NO → Continuar con Paso 2.\n \nPASO 2 — INCIDENCIAS DE REPARTO / RECOGIDA ACTIVAS:\n¿Existe en el historial algun evento 1600, 2400, 2600, 2700 o 0600 que NO tenga un 1500 posterior?\n  NOTA CRITICA: El codigo 2300 NO se cuenta como reparto fallido en este paso.\n  → SI → La incidencia sigue activa. should_notify: true. FIN.\n  → NO → Continuar con Paso 3.\n \nPASO 3 — UMBRALES DE TIEMPO (usa los valores precalculados):\n- transit_hours > 24 y sin 1200/1500 en historial → should_notify: true (transito estancado).\n- manifest_hours > 24 y sin transito en historial → should_notify: true (alerta interna).\n- delivery_hours > 24 → should_notify: true (reparto estancado).\n- stationary_hours > 24 → should_notify: true (estacionado).\n- Si ninguno supera → should_notify: false.\n \n### EJEMPLOS DE SALIDA JSON\n \nEJEMPLO 1: ESTADO TERMINAL 2500\n{\n  \"analysis\": {\n    \"detected_incident\": \"Devolucion en proceso\",\n    \"hours_in_status\": 0,\n    \"is_first_incident\": false,\n    \"justification\": \"Paso 0: el ultimo evento es [2500] Devolucion. Estado terminal con prioridad maxima. Cierra cualquier incidencia previa. Se aplica plantilla 2500.\"\n  },\n  \"decision\": {\n    \"should_notify\": true,\n    \"target_type\": \"internal\",\n    \"email_subject\": \"Devolucion en proceso: 0080530080539701031342\",\n    \"email_body\": \"Estimados, el siguiente pedido ha entrado en proceso de devolucion. Iniciamos seguimiento manual. CODIGO: - 0080530080539701031342\"\n  }\n}\n \nEJEMPLO 2: TRANSITO ESTANCADO (con horas precalculadas)\n{\n  \"analysis\": {\n    \"detected_incident\": \"Transito estancado\",\n    \"hours_in_status\": 26.4,\n    \"is_first_incident\": false,\n    \"justification\": \"Paso 0: no es terminal. Paso 1: no hay incidencias graves. Paso 2: no hay incidencias activas. Paso 3: transit_hours = 26.4, supera umbral de 24h y no hay 1200/1500 en historial -> should_notify: true.\"\n  },\n  \"decision\": {\n    \"should_notify\": true,\n    \"target_type\": \"standard\",\n    \"email_subject\": \"Incidencia en el envio 0002070002079700443991\",\n    \"email_body\": \"Buenos dias. El envio 0002070002079700443991 estuvo en transito el dia anterior y hoy aun no ha cambiado a reparto. Solicitamos que el envio salga a reparto al dia siguiente. Gracias.\"\n  }\n}\n \nEJEMPLO 3: SIN INCIDENCIA\n{\n  \"analysis\": {\n    \"detected_incident\": \"Delegacion destino\",\n    \"hours_in_status\": 0,\n    \"is_first_incident\": false,\n    \"justification\": \"Paso 0: no es terminal. Paso 1: no hay incidencias graves. Paso 2: no hay incidencias activas. Paso 3: delivery_hours = 0, no supera umbral -> should_notify: false.\"\n  },\n  \"decision\": {\n    \"should_notify\": false,\n    \"target_type\": \"standard\",\n    \"email_subject\": \"\",\n    \"email_body\": \"\"\n  }\n}"
+              "content": "=Eres un auditor logistico de CTT Express. Analiza el historial y decide si notificar. RESPONDE SOLO CON JSON PURO, SIN MARKDOWN.\n \n### FUENTE DE VERDAD (CRITICO)\nDetermina el estado actual UNICAMENTE leyendo el historial cronologico de arriba a abajo.\nIgnora cualquier otro campo o dato externo que no sea el historial y los valores precalculados.\n \n### VALORES PRECALCULADOS (CRITICO)\nLas horas y el estado de incidencia activa ya vienen calculados en el bloque \"VALORES PRECALCULADOS\" del prompt de usuario.\nUSA DIRECTAMENTE esos valores. NO recalcules. NO estimes. NO ignores estos valores.\nSi un valor es 0 o false, tratalo como 0 o false.\nEl campo \"Incidencia activa\" ya determina si existe un 1600/2400/2600/2700/0600 sin 1500 posterior. NO reevalues esto leyendo el historial.\n \n### EQUIVALENCIA DE EVENTOS (CRITICO)\n0900 (En Transito) y 1000 (Delegacion de transito) son el MISMO estado de transito.\nEl reloj de transito empieza en el PRIMERO que aparezca en el historial.\n1200 (Delegacion destino) y 1500 (En reparto) son el MISMO estado de reparto.\nEl reloj de reparto empieza en el PRIMERO que aparezca en el historial.\nEjemplo: 1000 a las 12:00 + 0900 a las 13:00 → en transito desde las 12:00.\nEjemplo: 1200 a las 14:00 + 1500 a las 15:00 → en reparto desde las 14:00.\n \n### CICLO DE REPARTO\nEl ciclo de reparto empieza en el primer 1200 o 1500 del ciclo actual.\nCRITICO: Cada vez que aparece un 1000 despues de un 1200, el ciclo SE REINICIA COMPLETAMENTE.\nEl punto de inicio siempre es el ultimo 1200 que no haya sido seguido de otro 1000.\nEl valor delivery_hours ya refleja este calculo correctamente.\n \n### ESTADOS TERMINALES — PRIORIDAD MAXIMA (CRITICO — EJECUTAR PRIMERO)\nAntes de cualquier otra evaluacion, comprueba si el ultimo evento del historial es un estado terminal.\nLos estados terminales son: 2500, 2300, 2310.\nUn estado terminal CIERRA y SUPERA cualquier incidencia activa previa (1600, 2400, 2600, 2700, 0600, 1700, 1800, etc.).\nCuando el ultimo evento es un estado terminal, se aplica SIEMPRE su plantilla propia.\nNO se evaluan incidencias anteriores. NO se calculan horas. Se va directamente a la plantilla del estado terminal.\n \nCasos:\n- Ultimo evento es 2500 → Plantilla 2500. should_notify: true. target_type: \"internal\". FIN.\n- Ultimo evento es 2300 → Plantilla PUDO. should_notify: true. target_type: \"standard\". FIN.\n- Ultimo evento es 2310 → Plantilla 2310. should_notify: true. target_type: \"standard\". FIN.\n \n### ALERTAS CON UMBRAL\nNotificar solo si supera las horas indicadas (usa los valores precalculados):\n- 0000 / 0030 → manifest_hours > 24 (Alerta Interna)\n- 0900 / 1000 → transit_hours > 24\n- 1200 / 1500 → delivery_hours > 24\n- 1700 / 1800 → stationary_hours > 24\n \n### REGLA ESPECIAL TRANSITO (SLA 24-48H)\nSi transit_hours > 24 y no hay ningun evento 1200 o 1500 en el historial → notificar (should_notify: true).\nEsta regla tiene prioridad absoluta sobre mensajes de gestion interna como el 71_INAT.\n \n### ALERTAS SIN UMBRAL\nNotificar SIEMPRE si la incidencia esta ACTIVA:\n- 1600 → reparto fallido\n- 2400, 2600, 2700 → variantes de reparto fallido (nuevo reparto / reexpedicion)\n- 2300 → depositado en punto CTT (NO es reparto fallido — ver plantilla PUDO)\n- 0600 → recogida fallida\n- 2310 / 2900 → datos incorrectos\n- 1012 → posible extravio\n- 1006 → danos en contenido\n- 1008 → posible robo\n \nEn detected_incident escribe siempre el nombre, no el codigo.\n \n### PRIORIDAD ENTRE INCIDENCIAS GRAVES (1012 / 1006 / 1008)\nSi en el historial existe un evento 1012, 1006 o 1008, este tiene PRIORIDAD sobre cualquier 1600 activo previo.\nAplicar siempre la plantilla del evento mas grave, no la del reparto fallido.\nOrden de prioridad descendente: 1012 > 1008 > 1006 > 1600/2400/2600/2700.\n \n### REGLA DE RESOLUCION DE INCIDENCIAS (CRITICO)\nEl campo precalculado \"Incidencia activa\" ya determina si la incidencia esta resuelta o no. USA ESE VALOR.\nNO intentes deducir esto leyendo el historial: el codigo JS ya lo ha calculado correctamente.\nSolo debes usar el historial para identificar el tipo de incidencia (codigo) y elegir la plantilla correcta.\n \n### REGLA ANTI-ALUCINACION (CRITICO)\nNUNCA afirmes que existe un evento si su codigo no aparece textualmente en el historial.\nSi en el historial ves 71_INAT pero NO hay ningun codigo de incidencia (1600/2300/2400/2600/2700/0600) → NO hay incidencia activa → should_notify: false.\nEl 71_INAT NO es una incidencia. Es una gestion interna de CTT. No lo confundas con un reparto fallido.\nEjemplo INCORRECTO: historial tiene [0900][1000][71_INAT] y la IA dice \"Existio un 1600\" → PROHIBIDO.\nEjemplo CORRECTO: si no hay 1600 en el historial, no puedes mencionar 1600 en la justificacion.\n \n### NO NOTIFICAR si:\n- Valor precalculado correspondiente < 24 para 0000/0030/0900/1000/1200/1500/1700/1800\n- Incidencia 1600/variante seguida de 1500 → resuelta\n- Evento 71_INAT como ultimo evento → should_notify: false,\n  EXCEPTO si incidencia activa sigue sin resolver (ver REGLA DE RESOLUCION)\n  o si transit_hours > 24 (ver REGLA ESPECIAL TRANSITO).\n- delivery_date informado → ya entregado\n- Ultimo evento no esta en lista de alertas\n \n### NOTA IMPORTANTE\nResponde siempre target_type: standard. El sistema lo sobreescribira si es necesario.\n \n### PLANTILLAS SEGUN WORKFLOW (usa el Numero de Pedido exacto del prompt como [SEG])\n \nREGLAS DE PLANTILLA (SOLO PARA should_notify: true):\n- 0000/0030 (Alerta Interna):\n  email_subject: \"ALERTA INTERNA: Envio [SEG] grabado sin recoger\"\n  email_body: \"El envio [SEG] figura como grabado o recogida sin programar desde ayer. Revisar con almacen.\"\n  target_type: \"internal\"\n \n- 0900/1000 (Transito estancado):\n  email_subject: \"Incidencia en el envio [SEG]\"\n  email_body: \"Buenos dias. El envio [SEG] estuvo en transito el dia anterior y hoy aun no ha cambiado a reparto. Solicitamos que el envio salga a reparto al dia siguiente. Gracias.\"\n  target_type: \"standard\"\n \n- 1200/1500 (Reparto estancado):\n  email_subject: \"Incidencia en el envio [SEG]\"\n  email_body: \"Buenos dias. El envio [SEG] se encuentra en reparto desde ayer sin entregarse. Solicitamos que el pedido sea sacado nuevamente a reparto hoy mismo. Gracias.\"\n  target_type: \"standard\"\n \n- 1600/2400/2600/2700 (Reparto fallido activo):\n  email_subject: \"Incidencia en el envio [SEG]\"\n  email_body: \"Buenos dias. El envio [SEG] presenta su primera incidencia. Solicitamos explicitamente un segundo intento de reparto para el siguiente dia habil. Gracias.\"\n  target_type: \"standard\"\n \n- 2300-PUDO / 2310 (Paquete en punto CTT):\n  email_subject: \"Envio en punto CTT: [SEG]\"\n  email_body: \"Hola equipo de CTT, necesitamos la direccion detallada del punto de recogida para el siguiente envio: EXPEDICION: - [SEG]. Gracias de antemano.\"\n  target_type: \"standard\"\n \n- 2500 (Devolucion en proceso):\n  email_subject: \"Devolucion en proceso: [SEG]\"\n  email_body: \"Estimados, el siguiente pedido ha entrado en proceso de devolucion. Iniciamos seguimiento manual. CODIGO: - [SEG]\"\n  target_type: \"internal\"\n \n- Otros casos (0600, 2900, 1012, 1006, 1008): usar un mensaje descriptivo similar pidiendo gestion urgente.\n \n### COHERENCIA OBLIGATORIA\nSi should_notify es false → email_subject y email_body deben ser \"\" (vacios).\nSi escribes \"no supera\" o \"resuelta\" → should_notify: false.\nSi escribes \"supera\" o \"incidencia activa\" → should_notify: true.\nNunca contradigas la justificacion con la decision.\n \n### SALIDA JSON\nREGLAS (OBLIGATORIO):\n- Si no se supera el umbral y no hay alertas sin umbral activas → should_notify: false, email_subject: \"\", email_body: \"\".\n- NUNCA el body en el subject ni al reves.\n- Si should_notify false → ambos campos \"\".\n \n### VERIFICACION FINAL OBLIGATORIA (ejecutar SIEMPRE en este orden exacto)\n \nPASO 0 — ESTADOS TERMINALES (PRIORIDAD MAXIMA):\n¿El ultimo evento del historial es 2500, 2300 o 2310?\n  → SI → Aplicar plantilla del estado terminal. should_notify: true. FIN.\n  → NO → Continuar con Paso 1.\n \nPASO 1 — INCIDENCIAS GRAVES (1012 / 1006 / 1008):\n¿Existe en el historial algun evento 1012, 1006 o 1008?\n  → SI → Aplicar plantilla del evento mas grave. should_notify: true. FIN.\n  → NO → Continuar con Paso 2.\n \nPASO 2 — INCIDENCIAS DE REPARTO / RECOGIDA ACTIVAS:\nUSA DIRECTAMENTE el campo precalculado \"Incidencia activa\" del prompt de usuario. NO analices el historial para esto.\n  → \"Incidencia activa\" es true → should_notify: true. El codigo activo esta en \"Codigo de incidencia activa\". FIN.\n  → \"Incidencia activa\" es false → Continuar con Paso 3.\n \nPASO 3 — UMBRALES DE TIEMPO (usa los valores precalculados):\n- transit_hours > 24 y sin 1200/1500 en historial → should_notify: true (transito estancado).\n- manifest_hours > 24 y sin transito en historial → should_notify: true (alerta interna).\n- delivery_hours > 24 → should_notify: true (reparto estancado).\n- stationary_hours > 24 → should_notify: true (estacionado).\n- Si ninguno supera → should_notify: false.\n \n### EJEMPLOS DE SALIDA JSON\n \nEJEMPLO 1: ESTADO TERMINAL 2500\n{\n  \"analysis\": {\n    \"detected_incident\": \"Devolucion en proceso\",\n    \"hours_in_status\": 0,\n    \"is_first_incident\": false,\n    \"justification\": \"Paso 0: el ultimo evento es [2500] Devolucion. Estado terminal con prioridad maxima. Cierra cualquier incidencia previa. Se aplica plantilla 2500.\"\n  },\n  \"decision\": {\n    \"should_notify\": true,\n    \"target_type\": \"internal\",\n    \"email_subject\": \"Devolucion en proceso: 0080530080539701031342\",\n    \"email_body\": \"Estimados, el siguiente pedido ha entrado en proceso de devolucion. Iniciamos seguimiento manual. CODIGO: - 0080530080539701031342\"\n  }\n}\n \nEJEMPLO 2: TRANSITO ESTANCADO (con horas precalculadas)\n{\n  \"analysis\": {\n    \"detected_incident\": \"Transito estancado\",\n    \"hours_in_status\": 26.4,\n    \"is_first_incident\": false,\n    \"justification\": \"Paso 0: no es terminal. Paso 1: no hay incidencias graves. Paso 2: no hay incidencias activas. Paso 3: transit_hours = 26.4, supera umbral de 24h y no hay 1200/1500 en historial -> should_notify: true.\"\n  },\n  \"decision\": {\n    \"should_notify\": true,\n    \"target_type\": \"standard\",\n    \"email_subject\": \"Incidencia en el envio 0002070002079700443991\",\n    \"email_body\": \"Buenos dias. El envio 0002070002079700443991 estuvo en transito el dia anterior y hoy aun no ha cambiado a reparto. Solicitamos que el envio salga a reparto al dia siguiente. Gracias.\"\n  }\n}\n \nEJEMPLO 3: SIN INCIDENCIA\n{\n  \"analysis\": {\n    \"detected_incident\": \"Delegacion destino\",\n    \"hours_in_status\": 0,\n    \"is_first_incident\": false,\n    \"justification\": \"Paso 0: no es terminal. Paso 1: no hay incidencias graves. Paso 2: no hay incidencias activas. Paso 3: delivery_hours = 0, no supera umbral -> should_notify: false.\"\n  },\n  \"decision\": {\n    \"should_notify\": false,\n    \"target_type\": \"standard\",\n    \"email_subject\": \"\",\n    \"email_body\": \"\"\n  }\n}\n \nEJEMPLO 4: REPARTO FALLIDO ACTIVO (1600 / 2600 sin 1500 posterior)\n{\n  \"analysis\": {\n    \"detected_incident\": \"Reparto fallido activo\",\n    \"hours_in_status\": 2.3,\n    \"is_first_incident\": true,\n    \"justification\": \"Paso 0: no es terminal. Paso 1: no hay incidencias graves. Paso 2: existe [1600] sin 1500 posterior y [2600] como ultimo evento sin 1500 posterior -> incidencia activa -> should_notify: true.\"\n  },\n  \"decision\": {\n    \"should_notify\": true,\n    \"target_type\": \"standard\",\n    \"email_subject\": \"Incidencia en el envio 0080530080539701104227\",\n    \"email_body\": \"Buenos dias. El envio 0080530080539701104227 presenta su primera incidencia. Solicitamos explicitamente un segundo intento de reparto para el siguiente dia habil. Gracias.\"\n  }\n}"
             }
           ]
         },
@@ -1147,7 +873,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const rows = $input.all();\nconst item = $('Code in JavaScript3').item.json;\nconst hoy = $now.toFormat('dd-MM-yyyy');\nconst ayer = $now.minus({days: 1}).toFormat('dd-MM-yyyy');\n\nconst filasValidas = rows.filter(r => r.json['NUMERO DE ENVIO']);\n\nconst filasHoy = filasValidas.filter(r => {\n  const fecha = (r.json['FECHA PROCESADO'] || '').substring(0, 10);\n  return fecha === hoy;\n});\n\nconst filasAyer = filasValidas.filter(r => {\n  const fecha = (r.json['FECHA PROCESADO'] || '').substring(0, 10);\n  return fecha === ayer;\n});\n\nconst is2500 = String(item.shipping_status_code || '') === '2500';\n\nconst skip = filasHoy.length > 0;\nconst forceInternal = !skip && (filasAyer.length > 0 || is2500);\nconst numeroAvisos = filasValidas.length + 1;\n\nreturn {\n  json: {\n    ...item,\n    skip,\n    force_internal: forceInternal,\n    is_2500: is2500,\n    numero_avisos: numeroAvisos\n  }\n};"
+        "jsCode": "const rows = $input.all();\nconst item = $('Code in JavaScript3').item.json;\nconst hoy = $now.toFormat('dd-MM-yyyy');\nconst ayer = $now.minus({days: 1}).toFormat('dd-MM-yyyy');\n\n// Firestore get returns single doc (or empty if not found)\nconst doc = rows.length > 0 && rows[0].json.numero_envio ? rows[0].json : null;\n\nconst is2500 = String(item.shipping_status_code || '') === '2500';\n\nlet skip = false;\nlet forceInternal = false;\nlet numeroAvisos = 1;\n\nif (doc) {\n  const fecha = (doc.fecha_procesado || '').substring(0, 10);\n  skip = !is2500 && fecha === hoy;\n  forceInternal = !skip && (fecha === ayer || is2500);\n  numeroAvisos = (doc.numero_avisos || 0) + 1;\n} else {\n  forceInternal = is2500;\n}\n\nreturn {\n  json: {\n    ...item,\n    skip,\n    force_internal: forceInternal,\n    is_2500: is2500,\n    numero_avisos: numeroAvisos\n  }\n};"
       },
       "id": "2dbf7da3-04f2-4060-a674-6ea86bbd1296",
       "name": "Preparar Contexto",
@@ -1160,33 +886,15 @@
     },
     {
       "parameters": {
-        "documentId": {
-          "__rl": true,
-          "value": "1MzLQ4PuK5i4cYJhV2yrezJSoTwse7FsnpX2VcWl65yk",
-          "mode": "list",
-          "cachedResultName": "CTT Tracking Log"
-        },
-        "sheetName": {
-          "__rl": true,
-          "value": 1123525887,
-          "mode": "list",
-          "cachedResultName": "Incidencias",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MzLQ4PuK5i4cYJhV2yrezJSoTwse7FsnpX2VcWl65yk/edit#gid=1123525887"
-        },
-        "filtersUI": {
-          "values": [
-            {
-              "lookupColumn": "NUMERO DE ENVIO",
-              "lookupValue": "={{ $('Code in JavaScript3').item.json.shipping_code }}"
-            }
-          ]
-        },
-        "options": {}
+        "operation": "get",
+        "projectId": "ctt-dashboard",
+        "collection": "incidencias",
+        "documentId": "={{ $('Code in JavaScript3').item.json.shipping_code }}"
       },
       "id": "e0d6267c-4dcf-4c2b-b298-7c5c9fb3cbe3",
       "name": "Buscar Avisos Previos",
-      "type": "n8n-nodes-base.googleSheets",
-      "typeVersion": 4.7,
+      "type": "n8n-nodes-base.googleFirebaseCloudFirestore",
+      "typeVersion": 1.1,
       "position": [
         -9856,
         1360
@@ -1194,15 +902,15 @@
       "alwaysOutputData": true,
       "retryOnFail": true,
       "credentials": {
-        "googleSheetsOAuth2Api": {
-          "id": "vUMIiZSNk60SoDGg",
-          "name": "Google Sheets account"
+        "googleFirebaseCloudFirestoreOAuth2Api": {
+          "id": "EXM0epVP1YsMfolr",
+          "name": "haminos"
         }
       }
     },
     {
       "parameters": {
-        "jsCode": "try {\n  const item = $('Loop: Processar 1 a 2').first().json;\n  const history = $input.item.json;\n  let events = [];\n\n  if (history?.data?.shipping_history?.events) {\n    events = history.data.shipping_history.events;\n  } else if (Array.isArray(history)) {\n    const data = history[0];\n    if (data?.data?.shipping_history?.events) {\n      events = data.data.shipping_history.events;\n    }\n  }\n\n  const has1600 = events.some(e => e.code === '1600' || e.event_code === '1600');\n\n  // ─── PARSEO Y FORMATO DEL HISTORIAL ─────────────────────────────────────────\n  let parsedEvents = []; // { date: Date, code: string }\n  let formattedHistory = 'Sin eventos disponibles';\n\n  if (events.length > 0) {\n    formattedHistory = events.map(e => {\n      let date = e.event_date || e.item_event_date || '';\n      let parsedDate = null;\n\n      if (date) {\n        try {\n          const d = new Date(date);\n          d.setHours(d.getHours() + 1); // UTC+1 Madrid\n          parsedDate = d;\n          date = d.toISOString().replace('T', ' ').substring(0, 16);\n        } catch (x) {}\n      }\n\n      const code = e.code || e.event_code || 'N/A';\n      const desc = e.description || e.event_description || '';\n      const detail = e.detail?.External_event_text || e.detail?.item_event_text || '';\n\n      if (parsedDate) {\n        parsedEvents.push({ date: parsedDate, code });\n      }\n\n      return `${date} - [${code}] ${desc} (${detail})`;\n    }).join('\\n');\n  }\n\n  // ─── CÁLCULO DE HORAS LABORABLES ────────────────────────────────────────────\n  // Lunes=1 ... Viernes=5, Sábado=6, Domingo=0\n  function businessHours(startDate, endDate) {\n    if (!startDate || !endDate || endDate <= startDate) return 0;\n    let hours = 0;\n    let cur = new Date(startDate.getTime());\n\n    while (cur < endDate) {\n      const dow = cur.getDay(); // 0=Dom, 6=Sab\n      if (dow !== 0 && dow !== 6) {\n        const y = cur.getFullYear(), m = cur.getMonth(), d = cur.getDate();\n        const nextMidnight = new Date(y, m, d + 1);\n        const seg = endDate < nextMidnight ? endDate : nextMidnight;\n        hours += (seg - cur) / 3600000;\n      }\n      const y = cur.getFullYear(), m = cur.getMonth(), d = cur.getDate();\n      cur = new Date(y, m, d + 1);\n    }\n\n    return parseFloat(hours.toFixed(1));\n  }\n\n  const now = new Date();\n\n  const TRANSIT    = ['0900', '1000'];\n  const DELIVERY   = ['1200', '1500'];\n  const STATIONARY = ['1700', '1800'];\n  const MANIFEST   = ['0000', '0030'];\n\n  // TRÁNSITO: desde el primer 0900/1000, solo si no hay 1200/1500 posterior\n  const firstTransit = parsedEvents.find(e => TRANSIT.includes(e.code));\n  let transitHours = 0;\n  if (firstTransit) {\n    const hasDeliveryAfter = parsedEvents.some(\n      e => DELIVERY.includes(e.code) && e.date > firstTransit.date\n    );\n    if (!hasDeliveryAfter) {\n      transitHours = businessHours(firstTransit.date, now);\n    }\n  }\n\n  // MANIFESTADO: desde primer 0000/0030, solo si aún no hay tránsito ni reparto\n  const firstManifest = parsedEvents.find(e => MANIFEST.includes(e.code));\n  let manifestHours = 0;\n  if (firstManifest && !firstTransit) {\n    manifestHours = businessHours(firstManifest.date, now);\n  }\n\n  // CICLO REPARTO: reset en cada 1000 después de 1200/1500\n  // Regla: el ciclo empieza en el primer 1200/1500 del ciclo actual\n  // Cada 1000 posterior a un 1200/1500 reinicia el ciclo\n  let deliveryCycleStart = null;\n  let inDelivery = false;\n  for (const event of parsedEvents) {\n    if (DELIVERY.includes(event.code)) {\n      if (!inDelivery) {\n        deliveryCycleStart = event.date;\n        inDelivery = true;\n      }\n    } else if (event.code === '1000' && inDelivery) {\n      deliveryCycleStart = null;\n      inDelivery = false;\n    }\n  }\n  let deliveryHours = 0;\n  if (deliveryCycleStart) {\n    deliveryHours = businessHours(deliveryCycleStart, now);\n  }\n\n  // ESTACIONADO: desde el último 1700/1800\n  const lastStationary = [...parsedEvents].reverse().find(e => STATIONARY.includes(e.code));\n  let stationaryHours = 0;\n  if (lastStationary) {\n    stationaryHours = businessHours(lastStationary.date, now);\n  }\n\n  // ─── OUTPUT ─────────────────────────────────────────────────────────────────\n  return {\n    json: {\n      ...item,\n      status_history: events,\n      formatted_history: formattedHistory,\n      history_has_1600: has1600,\n      total_events: events.length,\n      // Horas precalculadas para la IA\n      transit_hours:    transitHours,\n      manifest_hours:   manifestHours,\n      delivery_hours:   deliveryHours,\n      stationary_hours: stationaryHours\n    }\n  };\n\n} catch (error) {\n  throw new Error(`[Code JS3] ${error.message}`);\n}"
+        "jsCode": "try {\n  const item = $('Loop: Processar 1 a 2').first().json;\n  const history = $input.item.json;\n  let events = [];\n\n  if (history?.data?.shipping_history?.events) {\n    events = history.data.shipping_history.events;\n  } else if (Array.isArray(history)) {\n    const data = history[0];\n    if (data?.data?.shipping_history?.events) {\n      events = data.data.shipping_history.events;\n    }\n  }\n\n  const has1600 = events.some(e => e.code === '1600' || e.event_code === '1600');\n  const hasDamage = events.some(e => {\n    const code = e.code || e.event_code || '';\n    const incidentCode = e.detail?.incident_type_code || '';\n    return code.includes('6_INCT') || incidentCode.includes('6_INCT');\n  });\n\n  // ─── PARSEO Y FORMATO DEL HISTORIAL ─────────────────────────────────────────\n  let parsedEvents = []; // { date: Date, code: string }\n  let formattedHistory = 'Sin eventos disponibles';\n\n  if (events.length > 0) {\n    formattedHistory = events.map(e => {\n      let date = e.event_date || e.item_event_date || '';\n      let parsedDate = null;\n\n      if (date) {\n        try {\n          const d = new Date(date);\n          d.setHours(d.getHours() + 1); // UTC+1 Madrid\n          parsedDate = d;\n          date = d.toISOString().replace('T', ' ').substring(0, 16);\n        } catch (x) {}\n      }\n\n      const code = e.code || e.event_code || 'N/A';\n      const desc = e.description || e.event_description || '';\n      const detailText = e.detail?.External_event_text || e.detail?.item_event_text || '';\n      const incidentName = e.detail?.incident_type_name || '';\n      const incidentCode = e.detail?.incident_type_code || '';\n      const detail = incidentName ? `${detailText} [INCIDENCIA: ${incidentName} (${incidentCode})]`.trim() : detailText;\n\n      if (parsedDate) {\n        parsedEvents.push({ date: parsedDate, code, incidentCode });\n      }\n\n      return `${date} - [${code}] ${desc} (${detail})`;\n    }).join('\\n');\n  }\n\n  // ─── CÁLCULO DE HORAS LABORABLES ────────────────────────────────────────────\n  // Lunes=1 ... Viernes=5, Sábado=6, Domingo=0\n  function businessHours(startDate, endDate) {\n    if (!startDate || !endDate || endDate <= startDate) return 0;\n    let hours = 0;\n    let cur = new Date(startDate.getTime());\n\n    while (cur < endDate) {\n      const dow = cur.getDay(); // 0=Dom, 6=Sab\n      if (dow !== 0 && dow !== 6) {\n        const y = cur.getFullYear(), m = cur.getMonth(), d = cur.getDate();\n        const nextMidnight = new Date(y, m, d + 1);\n        const seg = endDate < nextMidnight ? endDate : nextMidnight;\n        hours += (seg - cur) / 3600000;\n      }\n      const y = cur.getFullYear(), m = cur.getMonth(), d = cur.getDate();\n      cur = new Date(y, m, d + 1);\n    }\n\n    return parseFloat(hours.toFixed(1));\n  }\n\n  const now = new Date();\n\n  const TRANSIT    = ['0900', '1000'];\n  const DELIVERY   = ['1200', '1500'];\n  const STATIONARY = ['1700', '1800'];\n  const MANIFEST   = ['0000', '0030'];\n\n  // TRÁNSITO: desde el primer 0900/1000, solo si no hay 1200/1500 posterior\n  const firstTransit = parsedEvents.find(e => TRANSIT.includes(e.code));\n  let transitHours = 0;\n  if (firstTransit) {\n    const hasDeliveryAfter = parsedEvents.some(\n      e => e.code === '1500' && e.date > firstTransit.date\n    );\n    if (!hasDeliveryAfter) {\n      transitHours = businessHours(firstTransit.date, now);\n    }\n  }\n\n  // MANIFESTADO: desde primer 0000/0030, solo si aún no hay tránsito ni reparto\n  const firstManifest = parsedEvents.find(e => MANIFEST.includes(e.code));\n  let manifestHours = 0;\n  if (firstManifest && !firstTransit) {\n    manifestHours = businessHours(firstManifest.date, now);\n  }\n\n  // CICLO REPARTO: reset en cada 1000 después de 1200/1500\n  // Regla: el ciclo empieza en el primer 1200/1500 del ciclo actual\n  // Cada 1000 posterior a un 1200/1500 reinicia el ciclo\n  let deliveryCycleStart = null;\n  let inDelivery = false;\n  for (const event of parsedEvents) {\n    if (event.code === '1500') {\n      deliveryCycleStart = event.date;\n      inDelivery = true;\n    } else if (event.code === '1200' && !inDelivery) {\n      deliveryCycleStart = event.date;\n      inDelivery = true;\n    } else if (event.code === '1000' && inDelivery) {\n      deliveryCycleStart = null;\n      inDelivery = false;\n    }\n  }\n  let deliveryHours = 0;\n  if (deliveryCycleStart) {\n    deliveryHours = businessHours(deliveryCycleStart, now);\n  }\n\n  // ESTACIONADO: desde el último 1700/1800\n  const lastStationary = [...parsedEvents].reverse().find(e => STATIONARY.includes(e.code));\n  let stationaryHours = 0;\n  if (lastStationary) {\n    stationaryHours = businessHours(lastStationary.date, now);\n  }\n\n  // ─── INCIDENCIAS ACTIVAS PRECALCULADAS ──────────────────────────────────────\n  const INCIDENT_CODES = ['1600', '2400', '2600', '2700', '0600'];\n  const TERMINAL_CODES = ['2500', '2300', '2310'];\n\n  const lastEvent = parsedEvents[parsedEvents.length - 1];\n  const isTerminal = lastEvent && TERMINAL_CODES.includes(lastEvent.code);\n\n  // Una incidencia está activa si existe en el historial y NO hay 1500 después de ella\n  let activeIncidentCode = null;\n  for (const ev of parsedEvents) {\n    if (INCIDENT_CODES.includes(ev.code)) {\n      const has1500After = parsedEvents.some(e => e.code === '1500' && e.date > ev.date);\n      if (!has1500After && !isTerminal) {\n        activeIncidentCode = ev.code;\n      } else if (has1500After) {\n        activeIncidentCode = null; // resuelta por 1500 posterior\n      }\n    }\n  }\n  const hasActiveIncident = activeIncidentCode !== null;\n\n  // ─── OUTPUT ─────────────────────────────────────────────────────────────────\n  return {\n    json: {\n      ...item,\n      status_history: events,\n      formatted_history: formattedHistory,\n      history_has_1600: has1600,\n      has_damage: hasDamage,\n      total_events: events.length,\n      // Horas precalculadas para la IA\n      transit_hours:    transitHours,\n      manifest_hours:   manifestHours,\n      delivery_hours:   deliveryHours,\n      stationary_hours: stationaryHours,\n      // Incidencia activa precalculada (NO recalcular en la IA)\n      has_active_incident: hasActiveIncident,\n      active_incident_code: activeIncidentCode || ''\n    }\n  };\n\n} catch (error) {\n  throw new Error(`[Code JS3] ${error.message}`);\n}"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -1249,7 +957,8 @@
         1360
       ],
       "retryOnFail": true,
-      "waitBetweenTries": 5000
+      "maxRetries": 3,
+      "retryDelay": 5000
     },
     {
       "parameters": {
@@ -1553,6 +1262,138 @@
           "name": "HAMINOS"
         }
       }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": true, "leftValue": "", "typeValidation": "strict", "version": 3 },
+          "conditions": [
+            {
+              "id": "if-damage",
+              "leftValue": "={{ $json.notify_damage }}",
+              "rightValue": true,
+              "operator": { "type": "boolean", "operation": "equals" }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "d9000001-0000-4000-8000-000000000001",
+      "name": "If Daño",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [-8608, 2100]
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": { "caseSensitive": true, "leftValue": "", "typeValidation": "strict", "version": 3 },
+                "conditions": [{ "leftValue": "={{ $('Preparar Contexto').item.json.client_code }}", "rightValue": "48630", "operator": { "type": "string", "operation": "equals" } }],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "HAMINOS"
+            },
+            {
+              "conditions": {
+                "options": { "caseSensitive": true, "leftValue": "", "typeValidation": "strict", "version": 3 },
+                "conditions": [{ "leftValue": "={{ $('Preparar Contexto').item.json.client_code }}", "rightValue": "47685", "operator": { "type": "string", "operation": "equals" } }],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "MIESTERY"
+            },
+            {
+              "conditions": {
+                "options": { "caseSensitive": true, "leftValue": "", "typeValidation": "strict", "version": 3 },
+                "conditions": [{ "leftValue": "={{ $('Preparar Contexto').item.json.client_code }}", "rightValue": "45416", "operator": { "type": "string", "operation": "equals" } }],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "KULTUDENDA"
+            },
+            {
+              "conditions": {
+                "options": { "caseSensitive": true, "leftValue": "", "typeValidation": "strict", "version": 3 },
+                "conditions": [{ "leftValue": "={{ $('Preparar Contexto').item.json.client_code }}", "rightValue": "47352", "operator": { "type": "string", "operation": "equals" } }],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "SNAPPY"
+            }
+          ]
+        },
+        "options": { "fallbackOutput": "extra" }
+      },
+      "id": "d9000001-0000-4000-8000-000000000002",
+      "name": "Switch Daño Cliente",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [-8384, 2100]
+    },
+    {
+      "parameters": {
+        "sendTo": "incidenciashaminos@gmail.com",
+        "subject": "=DAÑO DETECTADO: Envio {{ $('Preparar Contexto').item.json.shipping_code }}",
+        "message": "=ALERTA: El envio {{ $('Preparar Contexto').item.json.shipping_code }} tiene una incidencia de daño (6_INCT) registrada.\n\nPedido: {{ $('Preparar Contexto').item.json.client_references[0] }}\nJustificacion IA: {{ $json.ai_justification }}",
+        "options": { "appendAttribution": false }
+      },
+      "id": "d9000001-0000-4000-8000-000000000003",
+      "name": "Gmail Daño H",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [-8160, 1900],
+      "webhookId": "d9000001-0000-4000-8000-000000000003",
+      "credentials": { "gmailOAuth2": { "id": "xvnQhr5hfD4gc3Uk", "name": "HAMINOS" } }
+    },
+    {
+      "parameters": {
+        "sendTo": "incidenciasamzdiscounts01@gmail.com",
+        "subject": "=DAÑO DETECTADO: Envio {{ $('Preparar Contexto').item.json.shipping_code }}",
+        "message": "=ALERTA: El envio {{ $('Preparar Contexto').item.json.shipping_code }} tiene una incidencia de daño (6_INCT) registrada.\n\nPedido: {{ $('Preparar Contexto').item.json.client_references[0] }}\nJustificacion IA: {{ $json.ai_justification }}",
+        "options": { "appendAttribution": false }
+      },
+      "id": "d9000001-0000-4000-8000-000000000004",
+      "name": "Gmail Daño M",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [-8160, 2060],
+      "webhookId": "d9000001-0000-4000-8000-000000000004",
+      "credentials": { "gmailOAuth2": { "id": "QJJKjkTiSoxnKucv", "name": "MIESTERY / SERVICE CORP WORLD" } }
+    },
+    {
+      "parameters": {
+        "sendTo": "incidenciaskulturdenda@gmail.com",
+        "subject": "=DAÑO DETECTADO: Envio {{ $('Preparar Contexto').item.json.shipping_code }}",
+        "message": "=ALERTA: El envio {{ $('Preparar Contexto').item.json.shipping_code }} tiene una incidencia de daño (6_INCT) registrada.\n\nPedido: {{ $('Preparar Contexto').item.json.client_references[0] }}\nJustificacion IA: {{ $json.ai_justification }}",
+        "options": { "appendAttribution": false }
+      },
+      "id": "d9000001-0000-4000-8000-000000000005",
+      "name": "Gmail Daño K",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [-8160, 2220],
+      "webhookId": "d9000001-0000-4000-8000-000000000005",
+      "credentials": { "gmailOAuth2": { "id": "I8iOQCCkF5dchDft", "name": "KULTURDENDA" } }
+    },
+    {
+      "parameters": {
+        "sendTo": "incidenciassnappyblue@gmail.com",
+        "subject": "=DAÑO DETECTADO: Envio {{ $('Preparar Contexto').item.json.shipping_code }}",
+        "message": "=ALERTA: El envio {{ $('Preparar Contexto').item.json.shipping_code }} tiene una incidencia de daño (6_INCT) registrada.\n\nPedido: {{ $('Preparar Contexto').item.json.client_references[0] }}\nJustificacion IA: {{ $json.ai_justification }}",
+        "options": { "appendAttribution": false }
+      },
+      "id": "d9000001-0000-4000-8000-000000000006",
+      "name": "Gmail Daño S",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [-8160, 2380],
+      "webhookId": "d9000001-0000-4000-8000-000000000006",
+      "credentials": { "gmailOAuth2": { "id": "ATDngCzgo2CXlgvv", "name": "SNAPPY" } }
     }
   ],
   "connections": {
@@ -1648,6 +1489,17 @@
       "main": [
         [
           {
+            "node": "Firebase Log Ejecucion",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Firebase Log Ejecucion": {
+      "main": [
+        [
+          {
             "node": "Loop: Processar 1 a 2",
             "type": "main",
             "index": 0
@@ -1656,6 +1508,17 @@
       ]
     },
     "Registrar Incidencia1": {
+      "main": [
+        [
+          {
+            "node": "Firebase Incidencia",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Firebase Incidencia": {
       "main": [
         [
           {
@@ -1871,9 +1734,53 @@
             "node": "If1",
             "type": "main",
             "index": 0
+          },
+          {
+            "node": "If Daño",
+            "type": "main",
+            "index": 0
           }
         ]
       ]
+    },
+    "If Daño": {
+      "main": [
+        [
+          {
+            "node": "Switch Daño Cliente",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Log Estados1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch Daño Cliente": {
+      "main": [
+        [{ "node": "Gmail Daño H", "type": "main", "index": 0 }],
+        [{ "node": "Gmail Daño M", "type": "main", "index": 0 }],
+        [{ "node": "Gmail Daño K", "type": "main", "index": 0 }],
+        [{ "node": "Gmail Daño S", "type": "main", "index": 0 }],
+        [{ "node": "Log Estados1", "type": "main", "index": 0 }]
+      ]
+    },
+    "Gmail Daño H": {
+      "main": [[{ "node": "Log Estados1", "type": "main", "index": 0 }]]
+    },
+    "Gmail Daño M": {
+      "main": [[{ "node": "Log Estados1", "type": "main", "index": 0 }]]
+    },
+    "Gmail Daño K": {
+      "main": [[{ "node": "Log Estados1", "type": "main", "index": 0 }]]
+    },
+    "Gmail Daño S": {
+      "main": [[{ "node": "Log Estados1", "type": "main", "index": 0 }]]
     },
     "Message a model": {
       "main": [

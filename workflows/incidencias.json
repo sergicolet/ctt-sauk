@@ -11,44 +11,35 @@
           ]
         }
       },
-      "id": "ddf16a08-ed34-4694-9e07-0b20eea5e5db",
+      "id": "8fe0a4c6-2429-4205-9f44-6eee0cc1a1b5",
       "name": "Trigger 12h",
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.2,
       "position": [
-        -7248,
-        1344
+        -9584,
+        2256
       ]
     },
     {
       "parameters": {
-        "documentId": {
-          "__rl": true,
-          "value": "1MzLQ4PuK5i4cYJhV2yrezJSoTwse7FsnpX2VcWl65yk",
-          "mode": "list",
-          "cachedResultName": "CTT Tracking Log"
-        },
-        "sheetName": {
-          "__rl": true,
-          "value": 1123525887,
-          "mode": "list",
-          "cachedResultName": "Incidencias",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MzLQ4PuK5i4cYJhV2yrezJSoTwse7FsnpX2VcWl65yk/edit#gid=1123525887"
-        },
+        "operation": "getAll",
+        "projectId": "ctt-dashboard",
+        "collection": "incidencias",
+        "returnAll": true,
         "options": {}
       },
-      "id": "110286c0-ec86-4cd4-825a-4a78b647dfcd",
+      "id": "c7629462-a070-4cdb-ac2f-ea26d34b3a64",
       "name": "Leer Incidencias",
-      "type": "n8n-nodes-base.googleSheets",
-      "typeVersion": 4.7,
+      "type": "n8n-nodes-base.googleFirebaseCloudFirestore",
+      "typeVersion": 1.1,
       "position": [
-        -6128,
-        1344
+        -8464,
+        1776
       ],
       "credentials": {
-        "googleSheetsOAuth2Api": {
-          "id": "vUMIiZSNk60SoDGg",
-          "name": "Google Sheets account"
+        "googleFirebaseCloudFirestoreOAuth2Api": {
+          "id": "EXM0epVP1YsMfolr",
+          "name": "haminos"
         }
       }
     },
@@ -64,16 +55,16 @@
           "conditions": [
             {
               "id": "f1",
-              "leftValue": "={{ $json['EMAIL ENVIADO'].toString() }}",
-              "rightValue": "SI",
+              "leftValue": "={{ $json.email_enviado }}",
+              "rightValue": true,
               "operator": {
-                "type": "string",
+                "type": "boolean",
                 "operation": "equals"
               }
             },
             {
               "id": "f2",
-              "leftValue": "={{ $json['TIPO EMAIL'] }}",
+              "leftValue": "={{ $json.tipo_email }}",
               "rightValue": "standard",
               "operator": {
                 "type": "string",
@@ -82,7 +73,7 @@
             },
             {
               "id": "f3",
-              "leftValue": "={{ $json['RESULTADO FOLLOWUP'] }}",
+              "leftValue": "={{ $json.resultado_followup ?? '' }}",
               "rightValue": "",
               "operator": {
                 "type": "string",
@@ -91,7 +82,7 @@
             },
             {
               "id": "f4",
-              "leftValue": "={{ $json['FECHA PROCESADO'].substring(0, 10) }}",
+              "leftValue": "={{ $json.fecha_procesado.substring(0, 10) }}",
               "rightValue": "={{ $now.weekday === 1 ? $now.minus({days: 3}).toFormat('dd-MM-yyyy') : $now.minus({days: 1}).toFormat('dd-MM-yyyy') }}",
               "operator": {
                 "type": "string",
@@ -103,26 +94,26 @@
         },
         "options": {}
       },
-      "id": "756ed08c-448c-4a60-8955-27bacb146466",
+      "id": "677d72fc-e85d-4c56-8e97-bf5ac0b34ff5",
       "name": "Filtrar Incidencias Ayer",
       "type": "n8n-nodes-base.filter",
       "typeVersion": 2,
       "position": [
-        -5904,
-        1344
+        -8240,
+        1776
       ]
     },
     {
       "parameters": {
         "options": {}
       },
-      "id": "3ebbb091-5a19-40e5-8752-e30007a54d96",
+      "id": "37897abc-6507-4c47-9c80-7baaf341cbe2",
       "name": "Loop Followup",
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
       "position": [
-        -5680,
-        1344
+        -8016,
+        1776
       ]
     },
     {
@@ -153,13 +144,13 @@
         },
         "options": {}
       },
-      "id": "eff4fc45-1be0-47e5-a494-426c6e6e68d9",
+      "id": "044cf95e-7da7-462a-aa0e-77208fa4a885",
       "name": "Token HAMINOS FW",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        -7024,
-        1344
+        -9360,
+        2256
       ]
     },
     {
@@ -190,13 +181,13 @@
         },
         "options": {}
       },
-      "id": "e92718ae-c547-4533-9cec-1f3647bd986a",
+      "id": "e7fb326c-30de-4455-86d5-c0c265f76769",
       "name": "Token MIESTERY FW",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        -6800,
-        1344
+        -9136,
+        2256
       ]
     },
     {
@@ -227,13 +218,13 @@
         },
         "options": {}
       },
-      "id": "47a02d81-29e3-4966-a671-0af2770b08eb",
+      "id": "5c283a20-a9df-44ca-830e-ec99c6c386f3",
       "name": "Token KULTUDENDA FW",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        -6576,
-        1344
+        -8912,
+        2256
       ]
     },
     {
@@ -264,13 +255,13 @@
         },
         "options": {}
       },
-      "id": "b25064b3-c0d6-4db1-9e15-ae01b5f3fb5e",
+      "id": "a5e5d56a-a890-47a6-a056-a5afbeb0900e",
       "name": "Token SNAPPY FW",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        -6352,
-        1344
+        -8688,
+        2256
       ]
     },
     {
@@ -300,28 +291,28 @@
         },
         "options": {}
       },
-      "id": "e95e655b-7e82-45a3-82bc-0f83fc1f1a2c",
+      "id": "62c9fd23-a4ea-44e8-adb5-50a6a9f17475",
       "name": "Obtener Historial FW",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        -5456,
-        960
+        -7792,
+        1360
       ],
       "retryOnFail": true,
       "waitBetweenTries": 5000
     },
     {
       "parameters": {
-        "jsCode": "try {\n  const incidencia = $('Loop Followup').first().json;\n  const history = $input.item.json;\n  let events = [];\n\n  if (history?.data?.shipping_history?.events) {\n    events = history.data.shipping_history.events;\n  }\n\n  // ─── PARSEO Y FORMATO DEL HISTORIAL ────────────────────────────────────────\n  let parsedEvents = []; // { date: Date, code: string }\n  let formattedHistory = 'Sin eventos disponibles';\n\n  if (events.length > 0) {\n    formattedHistory = events.map(e => {\n      let date = e.event_date || e.item_event_date || '';\n      let parsedDate = null;\n\n      if (date) {\n        try {\n          const d = new Date(date);\n          d.setHours(d.getHours() + 1); // UTC+1 Madrid\n          parsedDate = d;\n          date = d.toISOString().replace('T', ' ').substring(0, 16);\n        } catch (x) {}\n      }\n\n      const code = e.code || e.event_code || 'N/A';\n      const desc = e.description || e.event_description || '';\n      const detail = e.detail?.External_event_text || e.detail?.item_event_text || '';\n\n      if (parsedDate) {\n        parsedEvents.push({ date: parsedDate, code });\n      }\n\n      return `${date} - [${code}] ${desc} (${detail})`;\n    }).join('\\n');\n  }\n\n  // ─── CÁLCULO DE HORAS LABORABLES ───────────────────────────────────────────\n  function businessHours(startDate, endDate) {\n    if (!startDate || !endDate || endDate <= startDate) return 0;\n    let hours = 0;\n    let cur = new Date(startDate.getTime());\n\n    while (cur < endDate) {\n      const dow = cur.getDay(); // 0=Dom, 6=Sab\n      if (dow !== 0 && dow !== 6) {\n        const y = cur.getFullYear(), m = cur.getMonth(), d = cur.getDate();\n        const nextMidnight = new Date(y, m, d + 1);\n        const seg = endDate < nextMidnight ? endDate : nextMidnight;\n        hours += (seg - cur) / 3600000;\n      }\n      const y = cur.getFullYear(), m = cur.getMonth(), d = cur.getDate();\n      cur = new Date(y, m, d + 1);\n    }\n\n    return parseFloat(hours.toFixed(1));\n  }\n\n  const now = new Date();\n\n  const TRANSIT    = ['0900', '1000'];\n  const DELIVERY   = ['1200', '1500'];\n  const STATIONARY = ['1700', '1800'];\n  const MANIFEST   = ['0000', '0030'];\n\n  // TRÁNSITO: desde el primer 0900/1000, solo si no hay 1200/1500 posterior\n  const firstTransit = parsedEvents.find(e => TRANSIT.includes(e.code));\n  let transitHours = 0;\n  if (firstTransit) {\n    const hasDeliveryAfter = parsedEvents.some(\n      e => DELIVERY.includes(e.code) && e.date > firstTransit.date\n    );\n    if (!hasDeliveryAfter) {\n      transitHours = businessHours(firstTransit.date, now);\n    }\n  }\n\n  // MANIFESTADO: desde primer 0000/0030, solo si no hay tránsito\n  const firstManifest = parsedEvents.find(e => MANIFEST.includes(e.code));\n  let manifestHours = 0;\n  if (firstManifest && !firstTransit) {\n    manifestHours = businessHours(firstManifest.date, now);\n  }\n\n  // CICLO REPARTO: reset en cada 1000 después de 1200/1500\n  let deliveryCycleStart = null;\n  let inDelivery = false;\n  for (const event of parsedEvents) {\n    if (DELIVERY.includes(event.code)) {\n      if (!inDelivery) {\n        deliveryCycleStart = event.date;\n        inDelivery = true;\n      }\n    } else if (event.code === '1000' && inDelivery) {\n      deliveryCycleStart = null;\n      inDelivery = false;\n    }\n  }\n  let deliveryHours = 0;\n  if (deliveryCycleStart) {\n    deliveryHours = businessHours(deliveryCycleStart, now);\n  }\n\n  // ESTACIONADO: desde el último 1700/1800\n  const lastStationary = [...parsedEvents].reverse().find(e => STATIONARY.includes(e.code));\n  let stationaryHours = 0;\n  if (lastStationary) {\n    stationaryHours = businessHours(lastStationary.date, now);\n  }\n\n  // ─── OUTPUT ────────────────────────────────────────────────────────────────\n  return {\n    json: {\n      shipping_code:              incidencia['NUMERO DE ENVIO'],\n      numero_pedido:              incidencia['NUMERO DE PEDIDO'],\n      tienda:                     incidencia['TIENDA'],\n      credencial:                 incidencia['CREDENCIAL'],\n      incidencia_registrada:      incidencia['INCIDENCIA'],\n      fecha_incidencia_original:  incidencia['FECHA PROCESADO'],\n      formatted_history:          formattedHistory,\n      // Horas precalculadas para la IA\n      transit_hours:              transitHours,\n      manifest_hours:             manifestHours,\n      delivery_hours:             deliveryHours,\n      stationary_hours:           stationaryHours\n    }\n  };\n\n} catch (error) {\n  throw new Error(`[Code FW JS3] ${error.message}`);\n}"
+        "jsCode": "try {\n  const incidencia = $('Loop Followup').first().json;\n  const history = $input.item.json;\n  let events = [];\n\n  if (history?.data?.shipping_history?.events) {\n    events = history.data.shipping_history.events;\n  }\n\n  const hasDamage = events.some(e => (e.code || e.event_code || '').includes('6_INCT'));\n\n  // ─── PARSEO Y FORMATO DEL HISTORIAL ────────────────────────────────────────\n  let parsedEvents = []; // { date: Date, code: string }\n  let formattedHistory = 'Sin eventos disponibles';\n\n  if (events.length > 0) {\n    formattedHistory = events.map(e => {\n      let date = e.event_date || e.item_event_date || '';\n      let parsedDate = null;\n\n      if (date) {\n        try {\n          const d = new Date(date);\n          d.setHours(d.getHours() + 1); // UTC+1 Madrid\n          parsedDate = d;\n          date = d.toISOString().replace('T', ' ').substring(0, 16);\n        } catch (x) {}\n      }\n\n      const code = e.code || e.event_code || 'N/A';\n      const desc = e.description || e.event_description || '';\n      const detail = e.detail?.External_event_text || e.detail?.item_event_text || '';\n\n      if (parsedDate) {\n        parsedEvents.push({ date: parsedDate, code });\n      }\n\n      return `${date} - [${code}] ${desc} (${detail})`;\n    }).join('\\n');\n  }\n\n  // ─── CÁLCULO DE HORAS LABORABLES ───────────────────────────────────────────\n  function businessHours(startDate, endDate) {\n    if (!startDate || !endDate || endDate <= startDate) return 0;\n    let hours = 0;\n    let cur = new Date(startDate.getTime());\n\n    while (cur < endDate) {\n      const dow = cur.getDay(); // 0=Dom, 6=Sab\n      if (dow !== 0 && dow !== 6) {\n        const y = cur.getFullYear(), m = cur.getMonth(), d = cur.getDate();\n        const nextMidnight = new Date(y, m, d + 1);\n        const seg = endDate < nextMidnight ? endDate : nextMidnight;\n        hours += (seg - cur) / 3600000;\n      }\n      const y = cur.getFullYear(), m = cur.getMonth(), d = cur.getDate();\n      cur = new Date(y, m, d + 1);\n    }\n\n    return parseFloat(hours.toFixed(1));\n  }\n\n  const now = new Date();\n\n  const TRANSIT    = ['0900', '1000'];\n  const DELIVERY   = ['1200', '1500'];\n  const STATIONARY = ['1700', '1800'];\n  const MANIFEST   = ['0000', '0030'];\n\n  // TRÁNSITO: desde el primer 0900/1000, solo si no hay 1200/1500 posterior\n  const firstTransit = parsedEvents.find(e => TRANSIT.includes(e.code));\n  let transitHours = 0;\n  if (firstTransit) {\n    const hasDeliveryAfter = parsedEvents.some(\n      e => e.code === '1500' && e.date > firstTransit.date\n    );\n    if (!hasDeliveryAfter) {\n      transitHours = businessHours(firstTransit.date, now);\n    }\n  }\n\n  // MANIFESTADO: desde primer 0000/0030, solo si no hay tránsito\n  const firstManifest = parsedEvents.find(e => MANIFEST.includes(e.code));\n  let manifestHours = 0;\n  if (firstManifest && !firstTransit) {\n    manifestHours = businessHours(firstManifest.date, now);\n  }\n\n  // CICLO REPARTO: reset en cada 1000 después de 1200/1500\n  let deliveryCycleStart = null;\n  let inDelivery = false;\n  for (const event of parsedEvents) {\n    if (event.code === '1500') {\n      deliveryCycleStart = event.date;\n      inDelivery = true;\n    } else if (event.code === '1200' && !inDelivery) {\n      deliveryCycleStart = event.date;\n      inDelivery = true;\n    } else if (event.code === '1000' && inDelivery) {\n      deliveryCycleStart = null;\n      inDelivery = false;\n    }\n  }\n  let deliveryHours = 0;\n  if (deliveryCycleStart) {\n    deliveryHours = businessHours(deliveryCycleStart, now);\n  }\n\n  // ESTACIONADO: desde el último 1700/1800\n  const lastStationary = [...parsedEvents].reverse().find(e => STATIONARY.includes(e.code));\n  let stationaryHours = 0;\n  if (lastStationary) {\n    stationaryHours = businessHours(lastStationary.date, now);\n  }\n\n  // ─── OUTPUT ────────────────────────────────────────────────────────────────\n  return {\n    json: {\n      shipping_code:              incidencia.numero_envio,\n      numero_pedido:              incidencia.numero_pedido,\n      tienda:                     incidencia.tienda,\n      credencial:                 incidencia.credencial,\n      incidencia_registrada:      incidencia.incidencia,\n      fecha_incidencia_original:  incidencia.fecha_procesado,\n      formatted_history:          formattedHistory,\n      has_damage:                 hasDamage,\n      // Horas precalculadas para la IA\n      transit_hours:              transitHours,\n      manifest_hours:             manifestHours,\n      delivery_hours:             deliveryHours,\n      stationary_hours:           stationaryHours\n    }\n  };\n\n} catch (error) {\n  throw new Error(`[Code FW JS3] ${error.message}`);\n}"
       },
-      "id": "e5b711be-1109-4bca-b604-f950ff1abb6f",
+      "id": "ce8d34e2-f606-4b61-bdeb-90e339feee18",
       "name": "Code FW JS3",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -5232,
-        960
+        -7568,
+        1360
       ]
     },
     {
@@ -348,13 +339,13 @@
           "temperature": 0.1
         }
       },
-      "id": "e80af4ec-e98d-4e55-baf4-f6cbfef5c3a2",
+      "id": "71f06013-463c-4a5d-90f1-18fa8dbd1f12",
       "name": "IA Followup",
       "type": "@n8n/n8n-nodes-langchain.openAi",
       "typeVersion": 2.1,
       "position": [
-        -5008,
-        960
+        -7344,
+        1360
       ],
       "credentials": {
         "openAiApi": {
@@ -365,15 +356,15 @@
     },
     {
       "parameters": {
-        "jsCode": "const raw = $input.item.json;\nconst aiText = raw.output[0].content[0].text;\nconst aiData = JSON.parse(aiText.replace(/```json|```/g, '').trim());\n\nconst incidencia = $('Loop Followup').first().json;\n\nreturn {\n  shipping_code: incidencia['NUMERO DE ENVIO'],\n  numero_pedido: incidencia['NUMERO DE PEDIDO'],\n  tienda: incidencia['TIENDA'],\n  credencial: incidencia['CREDENCIAL'],\n  incidencia_registrada: incidencia['INCIDENCIA'],\n  sigue_incidencia: aiData.sigue_incidencia === true,\n  estado_actual: aiData.estado_actual || '',\n  justification: aiData.justification || '',\n  email_body: aiData.email_body || ''\n};"
+        "jsCode": "const raw = $input.item.json;\nconst aiText = raw.output[0].content[0].text;\nconst aiData = JSON.parse(aiText.replace(/```json|```/g, '').trim());\n\nconst incidencia = $('Loop Followup').first().json;\nconst hasDamage = $('Code FW JS3').item.json.has_damage === true;\n\nreturn {\n  shipping_code: incidencia.numero_envio,\n  numero_pedido: incidencia.numero_pedido,\n  tienda: incidencia.tienda,\n  credencial: incidencia.credencial,\n  incidencia_registrada: incidencia.incidencia,\n  sigue_incidencia: aiData.sigue_incidencia === true,\n  estado_actual: aiData.estado_actual || '',\n  justification: aiData.justification || '',\n  email_body: aiData.email_body || '',\n  has_damage: hasDamage\n};"
       },
-      "id": "5d6e81f7-a7c8-487f-a6ee-714ac74c1e9f",
+      "id": "ddc84277-2f19-4f55-94e9-a44b527dd191",
       "name": "Code FW JS2",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -4656,
-        960
+        -6992,
+        1360
       ]
     },
     {
@@ -400,13 +391,13 @@
         },
         "options": {}
       },
-      "id": "2e8164a2-0000-4934-b4ad-783f02dabf71",
+      "id": "226a2809-3093-4e38-8c4b-13cc9b68079f",
       "name": "If Sigue Incidencia",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        -4432,
-        960
+        -6768,
+        1360
       ]
     },
     {
@@ -511,13 +502,13 @@
           "fallbackOutput": "extra"
         }
       },
-      "id": "4811a74d-3fe3-44dd-aea8-1e6f02144a56",
+      "id": "c002053d-8375-423f-864e-e9bbd650491d",
       "name": "Switch Tienda FW",
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.4,
       "position": [
-        -4208,
-        784
+        -6544,
+        1200
       ]
     },
     {
@@ -527,13 +518,13 @@
         "message": "={{ $json.email_body }}",
         "options": {}
       },
-      "id": "40a67565-0ac0-4e8e-b7db-1b93e66dc040",
+      "id": "5698d8a6-58b8-453d-a47f-93a018b7dd74",
       "name": "FW Gmail H",
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
       "position": [
-        -3984,
-        544
+        -6320,
+        976
       ],
       "webhookId": "45217402-ac7a-4e20-af92-7d40e1ad1d87",
       "credentials": {
@@ -550,13 +541,13 @@
         "message": "={{ $json.email_body }}",
         "options": {}
       },
-      "id": "00d10186-6313-4f7a-b3ca-3b5a2b9ce3ab",
+      "id": "e2cd0b2b-2921-44f7-9bc8-67da838886e6",
       "name": "FW Gmail M",
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
       "position": [
-        -3984,
-        736
+        -6320,
+        1168
       ],
       "webhookId": "bf8672e7-5a5f-485e-bdf7-413976cccfc9",
       "credentials": {
@@ -573,13 +564,13 @@
         "message": "={{ $json.email_body }}",
         "options": {}
       },
-      "id": "4bed3d94-c8b4-478e-a57c-c358eca1b58b",
+      "id": "0590cb8e-00d6-40a2-a235-5901f05bad88",
       "name": "FW Gmail K",
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
       "position": [
-        -3984,
-        928
+        -6320,
+        1360
       ],
       "webhookId": "d7f0234e-d878-43af-ab6f-e0f26618cc9b",
       "credentials": {
@@ -596,13 +587,13 @@
         "message": "={{ $json.email_body }}",
         "options": {}
       },
-      "id": "ceb703bd-f19a-4f4e-9868-10798bcbe5ef",
+      "id": "483f1ef1-0eb0-4cc9-af4c-230cff05522a",
       "name": "FW Gmail S",
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
       "position": [
-        -3984,
-        1120
+        -6320,
+        1552
       ],
       "webhookId": "2384e059-84af-4d9e-9017-1b1e870accf6",
       "credentials": {
@@ -614,385 +605,65 @@
     },
     {
       "parameters": {
-        "operation": "appendOrUpdate",
-        "documentId": {
-          "__rl": true,
-          "value": "1MzLQ4PuK5i4cYJhV2yrezJSoTwse7FsnpX2VcWl65yk",
-          "mode": "list",
-          "cachedResultName": "CTT Tracking Log"
-        },
-        "sheetName": {
-          "__rl": true,
-          "value": 1123525887,
-          "mode": "list",
-          "cachedResultName": "Incidencias",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MzLQ4PuK5i4cYJhV2yrezJSoTwse7FsnpX2VcWl65yk/edit#gid=1123525887"
-        },
+        "operation": "update",
+        "projectId": "ctt-dashboard",
+        "collection": "incidencias",
+        "documentId": "={{ $('Code FW JS2').item.json.shipping_code }}",
         "columns": {
           "mappingMode": "defineBelow",
           "value": {
-            "NUMERO DE ENVIO": "={{ $('Code FW JS2').item.json.shipping_code }}",
-            "SEGUIMIENTO": "={{ $('Code FW JS2').item.json.estado_actual }}",
-            "RESULTADO FOLLOWUP": "=Aviso interno enviado {{ $now.toFormat('dd-MM-yyyy HH:mm') }}"
+            "seguimiento": "={{ $('Code FW JS2').item.json.estado_actual }}",
+            "resultado_followup": "=Aviso interno enviado {{ $now.toFormat('dd-MM-yyyy HH:mm') }}"
           },
-          "matchingColumns": [
-            "NUMERO DE ENVIO"
-          ],
-          "schema": [
-            {
-              "id": "FECHA PROCESADO",
-              "displayName": "FECHA PROCESADO",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "NUMERO DE ENVIO",
-              "displayName": "NUMERO DE ENVIO",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "NUMERO DE PEDIDO",
-              "displayName": "NUMERO DE PEDIDO",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "TIENDA",
-              "displayName": "TIENDA",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "CENTRO",
-              "displayName": "CENTRO",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "INCIDENCIA",
-              "displayName": "INCIDENCIA",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "FECHA INCIDENCIA",
-              "displayName": "FECHA INCIDENCIA",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "H EN INCIDENCIA",
-              "displayName": "H EN INCIDENCIA",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "EMAIL ENVIADO",
-              "displayName": "EMAIL ENVIADO",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "TIPO EMAIL",
-              "displayName": "TIPO EMAIL",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "RAZON",
-              "displayName": "RAZON",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "DESTINATARIO",
-              "displayName": "DESTINATARIO",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "CREDENCIAL",
-              "displayName": "CREDENCIAL",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "NUMERO AVISOS",
-              "displayName": "NUMERO AVISOS",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "SEGUIMIENTO",
-              "displayName": "SEGUIMIENTO",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "RESULTADO FOLLOWUP",
-              "displayName": "RESULTADO FOLLOWUP",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            }
-          ],
-          "attemptToConvertTypes": false,
-          "convertFieldsToString": false
+          "matchingColumns": [],
+          "schema": []
         },
         "options": {}
       },
-      "id": "2662b507-0339-4e8c-8c86-69c893a5ef11",
+      "id": "7c3130d9-946c-44fa-a971-c77481a2da76",
       "name": "Update Sigue Incidencia",
-      "type": "n8n-nodes-base.googleSheets",
-      "typeVersion": 4.7,
+      "type": "n8n-nodes-base.googleFirebaseCloudFirestore",
+      "typeVersion": 1.1,
       "position": [
-        -3760,
-        832
+        -6096,
+        1248
       ],
       "credentials": {
-        "googleSheetsOAuth2Api": {
-          "id": "vUMIiZSNk60SoDGg",
-          "name": "Google Sheets account"
+        "googleFirebaseCloudFirestoreOAuth2Api": {
+          "id": "EXM0epVP1YsMfolr",
+          "name": "haminos"
         }
       }
     },
     {
       "parameters": {
-        "operation": "appendOrUpdate",
-        "documentId": {
-          "__rl": true,
-          "value": "1MzLQ4PuK5i4cYJhV2yrezJSoTwse7FsnpX2VcWl65yk",
-          "mode": "list",
-          "cachedResultName": "CTT Tracking Log"
-        },
-        "sheetName": {
-          "__rl": true,
-          "value": 1123525887,
-          "mode": "list",
-          "cachedResultName": "Incidencias",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MzLQ4PuK5i4cYJhV2yrezJSoTwse7FsnpX2VcWl65yk/edit#gid=1123525887"
-        },
+        "operation": "update",
+        "projectId": "ctt-dashboard",
+        "collection": "incidencias",
+        "documentId": "={{ $json.shipping_code }}",
         "columns": {
           "mappingMode": "defineBelow",
           "value": {
-            "NUMERO DE ENVIO": "={{ $json.shipping_code }}",
-            "SEGUIMIENTO": "={{ $json.estado_actual }}",
-            "RESULTADO FOLLOWUP": "=Resuelta {{ $now.toFormat('dd-MM-yyyy HH:mm') }}"
+            "seguimiento": "={{ $json.estado_actual }}",
+            "resultado_followup": "=Resuelta {{ $now.toFormat('dd-MM-yyyy HH:mm') }}"
           },
-          "matchingColumns": [
-            "NUMERO DE ENVIO"
-          ],
-          "schema": [
-            {
-              "id": "FECHA PROCESADO",
-              "displayName": "FECHA PROCESADO",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "NUMERO DE ENVIO",
-              "displayName": "NUMERO DE ENVIO",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "NUMERO DE PEDIDO",
-              "displayName": "NUMERO DE PEDIDO",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "TIENDA",
-              "displayName": "TIENDA",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "CENTRO",
-              "displayName": "CENTRO",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "INCIDENCIA",
-              "displayName": "INCIDENCIA",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "FECHA INCIDENCIA",
-              "displayName": "FECHA INCIDENCIA",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "H EN INCIDENCIA",
-              "displayName": "H EN INCIDENCIA",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "EMAIL ENVIADO",
-              "displayName": "EMAIL ENVIADO",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "TIPO EMAIL",
-              "displayName": "TIPO EMAIL",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "RAZON",
-              "displayName": "RAZON",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "DESTINATARIO",
-              "displayName": "DESTINATARIO",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "CREDENCIAL",
-              "displayName": "CREDENCIAL",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "NUMERO AVISOS",
-              "displayName": "NUMERO AVISOS",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "SEGUIMIENTO",
-              "displayName": "SEGUIMIENTO",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "RESULTADO FOLLOWUP",
-              "displayName": "RESULTADO FOLLOWUP",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            }
-          ],
-          "attemptToConvertTypes": false,
-          "convertFieldsToString": false
+          "matchingColumns": [],
+          "schema": []
         },
         "options": {}
       },
-      "id": "66249875-e88d-4371-b6bb-18146ca31ba8",
+      "id": "77b8ac9d-545c-4b22-9a10-676695313e97",
       "name": "Update Resuelta",
-      "type": "n8n-nodes-base.googleSheets",
-      "typeVersion": 4.7,
+      "type": "n8n-nodes-base.googleFirebaseCloudFirestore",
+      "typeVersion": 1.1,
       "position": [
-        -4208,
-        1152
+        -6544,
+        1584
       ],
       "credentials": {
-        "googleSheetsOAuth2Api": {
-          "id": "vUMIiZSNk60SoDGg",
-          "name": "Google Sheets account"
+        "googleFirebaseCloudFirestoreOAuth2Api": {
+          "id": "EXM0epVP1YsMfolr",
+          "name": "haminos"
         }
       }
     },
@@ -1000,58 +671,357 @@
       "parameters": {
         "jsCode": "return [\n  { json: { client: 'HAMINOS', credencial: 'HAMINOS', centers: ['4863000001'], access_token: $('Token HAMINOS FW').first().json.access_token } },\n  { json: { client: 'MIESTERY', credencial: 'MIESTERY', centers: ['4768500003'], access_token: $('Token MIESTERY FW').first().json.access_token } },\n  { json: { client: 'KULTUDENDA', credencial: 'KULTUDENDA', centers: ['4541600001', '4541600002'], access_token: $('Token KULTUDENDA FW').first().json.access_token } },\n  { json: { client: 'SNAPPY', credencial: 'SNAPPY', centers: ['4735200001', '4735200002', '4735200003', '4735200004', '4735200005'], access_token: $('Token SNAPPY FW').first().json.access_token } }\n];"
       },
-      "id": "a0000001-0000-4000-8000-000000000001",
+      "id": "34c2d4b9-88b6-4495-8267-9adf546e8cdf",
       "name": "Preparar Configs 0000",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [-6128, 1700]
+      "position": [
+        -8464,
+        2512
+      ]
     },
     {
-      "parameters": { "options": {} },
-      "id": "a0000001-0000-4000-8000-000000000002",
+      "parameters": {
+        "options": {}
+      },
+      "id": "10c664de-72a4-45e8-a9b3-432589c258aa",
       "name": "Loop Clientes 0000",
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
-      "position": [-5904, 1700]
+      "position": [
+        -8240,
+        2512
+      ]
     },
     {
       "parameters": {
         "workflowId": "NtGW6lN2IMYIaKeYdTuot",
         "options": {}
       },
-      "id": "a0000001-0000-4000-8000-000000000003",
+      "id": "7fb9e0c3-29ea-4ddf-af8e-f3030b161973",
       "name": "Call SubWf 0000",
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1,
-      "position": [-5680, 1700]
+      "position": [
+        -8016,
+        2080
+      ]
     },
     {
       "parameters": {
         "jsCode": "const ayer = $now.minus({days: 1}).toFormat('yyyy-MM-dd');\nconst credencial = $('Loop Clientes 0000').item.json.credencial;\nconst client = $('Loop Clientes 0000').item.json.client;\n\nconst result = [];\nfor (const item of $input.all()) {\n  const code = String(item.json.shipping_status_code || '');\n  const rawDate = String(item.json.shipping_status_datetime || '');\n  let fecha = '';\n  if (rawDate) {\n    try {\n      const d = new Date(rawDate);\n      d.setHours(d.getHours() + 1);\n      fecha = d.toISOString().substring(0, 10);\n    } catch(e) {\n      fecha = rawDate.substring(0, 10);\n    }\n  }\n  if ((code === '0000' || code === '0030') && fecha === ayer) {\n    result.push({ json: { ...item.json, credencial, client, fecha_estado_local: fecha } });\n  }\n}\nreturn result;"
       },
-      "id": "a0000001-0000-4000-8000-000000000004",
+      "id": "01446102-b2b9-4852-8f2a-29a4bfea600a",
       "name": "Filtrar 0000 Ayer",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [-5456, 1700]
+      "position": [
+        -7792,
+        2080
+      ]
     },
     {
-      "parameters": { "options": {} },
-      "id": "a0000001-0000-4000-8000-000000000005",
+      "parameters": {
+        "options": {}
+      },
+      "id": "c171c07b-bdc1-4e0c-b96e-34bdbee7f309",
       "name": "Loop Pedidos 0000",
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
-      "position": [-5232, 1700]
+      "position": [
+        -7568,
+        2512
+      ]
     },
     {
       "parameters": {
         "jsCode": "const pedido = $input.item.json;\nconst shippingCode = pedido.shipping_code;\nconst numeroPedido = (pedido.client_references && pedido.client_references[0]) || '';\nconst centerCode = String(pedido.client_center_code || '');\nconst credencial = pedido.credencial;\n\nconst emailMap = {\n  'HAMINOS': 'incidenciashaminos@gmail.com',\n  'MIESTERY': 'incidenciasamzdiscounts01@gmail.com',\n  'KULTUDENDA': 'incidenciaskulturdenda@gmail.com',\n  'SNAPPY': 'incidenciassnappyblue@gmail.com'\n};\nconst destinatario = emailMap[credencial] || '';\n\nreturn [{\n  json: {\n    shipping_code: shippingCode,\n    numero_pedido: numeroPedido,\n    tienda: credencial,\n    centro: centerCode,\n    credencial,\n    fecha_estado: pedido.fecha_estado_local || '',\n    destinatario,\n    email_subject: `ALERTA INTERNA: Envio ${shippingCode} grabado sin recoger`,\n    email_body: `El envio ${shippingCode} figura como grabado o recogida sin programar desde ayer. Revisar con almacen.`\n  }\n}];"
       },
-      "id": "a0000001-0000-4000-8000-000000000006",
+      "id": "046d6989-cdee-480f-bf70-3dcb7dad2c27",
       "name": "Preparar Alerta 0000",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [-5008, 1700]
+      "position": [
+        -7280,
+        2352
+      ]
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.credencial }}",
+                    "rightValue": "HAMINOS",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "HAMINOS"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.credencial }}",
+                    "rightValue": "MIESTERY",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "MIESTERY"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.credencial }}",
+                    "rightValue": "KULTUDENDA",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "KULTUDENDA"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.credencial }}",
+                    "rightValue": "SNAPPY",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "SNAPPY"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra"
+        }
+      },
+      "id": "fbd27748-362c-44eb-b1c1-ed6947774018",
+      "name": "Switch Credencial 0000",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        -6992,
+        2304
+      ]
+    },
+    {
+      "parameters": {
+        "sendTo": "incidenciashaminos@gmail.com",
+        "subject": "={{ $json.email_subject }}",
+        "message": "={{ $json.email_body }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "id": "84009cbf-6dd9-4387-9365-85fcd15c9909",
+      "name": "Gmail 0000 H",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        -6768,
+        2064
+      ],
+      "webhookId": "b1000001-0000-4000-8000-000000000001",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "xvnQhr5hfD4gc3Uk",
+          "name": "HAMINOS"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "incidenciasamzdiscounts01@gmail.com",
+        "subject": "={{ $json.email_subject }}",
+        "message": "={{ $json.email_body }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "id": "4febfe78-15b0-4fc7-b43b-7b57ebb064fb",
+      "name": "Gmail 0000 M",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        -6768,
+        2256
+      ],
+      "webhookId": "b1000001-0000-4000-8000-000000000002",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "QJJKjkTiSoxnKucv",
+          "name": "MIESTERY / SERVICE CORP WORLD"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "incidenciaskulturdenda@gmail.com",
+        "subject": "={{ $json.email_subject }}",
+        "message": "={{ $json.email_body }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "id": "c185396d-0269-400e-90fd-617f49f978fc",
+      "name": "Gmail 0000 K",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        -6768,
+        2448
+      ],
+      "webhookId": "b1000001-0000-4000-8000-000000000003",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "I8iOQCCkF5dchDft",
+          "name": "KULTURDENDA"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "incidenciassnappyblue@gmail.com",
+        "subject": "={{ $json.email_subject }}",
+        "message": "={{ $json.email_body }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "id": "03433664-9841-43d9-8a55-4b7ac3b3a486",
+      "name": "Gmail 0000 S",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        -6768,
+        2640
+      ],
+      "webhookId": "b1000001-0000-4000-8000-000000000004",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "ATDngCzgo2CXlgvv",
+          "name": "SNAPPY"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "projectId": "ctt-dashboard",
+        "collection": "ejecuciones",
+        "documentId": "={{ $now.toMillis() + '_' + $('Preparar Alerta 0000').item.json.shipping_code }}",
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "fecha_procesado": "={{ $now.toFormat('dd-MM-yyyy HH:mm:ss') }}",
+            "numero_envio": "={{ $('Preparar Alerta 0000').item.json.shipping_code }}",
+            "numero_pedido": "={{ $('Preparar Alerta 0000').item.json.numero_pedido }}",
+            "tienda": "={{ $('Preparar Alerta 0000').item.json.tienda }}",
+            "centro": "={{ $('Preparar Alerta 0000').item.json.centro }}",
+            "estado": "0000",
+            "fecha_estado": "={{ $('Preparar Alerta 0000').item.json.fecha_estado }}",
+            "h_en_estado": 0,
+            "email_enviado": true,
+            "tipo_email": "internal",
+            "razon": "Grabado sin recoger al dia siguiente",
+            "destinatario": "={{ $('Preparar Alerta 0000').item.json.destinatario }}",
+            "credencial": "={{ $('Preparar Alerta 0000').item.json.credencial }}",
+            "dano": false
+          },
+          "matchingColumns": [],
+          "schema": []
+        },
+        "options": {}
+      },
+      "id": "b5536ecd-5dc1-4ee7-800e-f3393a3dfe81",
+      "name": "Log Test IA 0000",
+      "type": "n8n-nodes-base.googleFirebaseCloudFirestore",
+      "typeVersion": 1.1,
+      "position": [
+        -6544,
+        2448
+      ],
+      "credentials": {
+        "googleFirebaseCloudFirestoreOAuth2Api": {
+          "id": "EXM0epVP1YsMfolr",
+          "name": "haminos"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": true, "leftValue": "", "typeValidation": "strict", "version": 3 },
+          "conditions": [
+            {
+              "id": "if-damage-fw",
+              "leftValue": "={{ $json.has_damage }}",
+              "rightValue": true,
+              "operator": { "type": "boolean", "operation": "equals" }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "fw-damage-0001-0000-4000-8000-000000000001",
+      "name": "If Daño FW",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [-6768, 800]
     },
     {
       "parameters": {
@@ -1097,149 +1067,71 @@
         },
         "options": { "fallbackOutput": "extra" }
       },
-      "id": "a0000001-0000-4000-8000-000000000007",
-      "name": "Switch Credencial 0000",
+      "id": "fw-damage-0001-0000-4000-8000-000000000002",
+      "name": "Switch Daño FW",
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.4,
-      "position": [-4784, 1700]
+      "position": [-6544, 800]
     },
     {
       "parameters": {
         "sendTo": "incidenciashaminos@gmail.com",
-        "subject": "={{ $json.email_subject }}",
-        "message": "={{ $json.email_body }}",
-        "options": {
-          "appendAttribution": false
-        }
+        "subject": "=DAÑO DETECTADO (followup): Envio {{ $json.shipping_code }}",
+        "message": "=ALERTA: El envio {{ $json.shipping_code }} tiene una incidencia de daño (6_INCT) registrada.\n\nPedido: {{ $json.numero_pedido }}\nJustificacion IA: {{ $json.justification }}",
+        "options": { "appendAttribution": false }
       },
-      "id": "a0000001-0000-4000-8000-000000000008",
-      "name": "Gmail 0000 H",
+      "id": "fw-damage-0001-0000-4000-8000-000000000003",
+      "name": "Gmail Daño FW H",
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
-      "position": [-4560, 1540],
-      "webhookId": "b1000001-0000-4000-8000-000000000001",
-      "credentials": {
-        "gmailOAuth2": {
-          "id": "xvnQhr5hfD4gc3Uk",
-          "name": "HAMINOS"
-        }
-      }
+      "position": [-6320, 608],
+      "webhookId": "fw-damage-0001-0000-4000-8000-000000000003",
+      "credentials": { "gmailOAuth2": { "id": "xvnQhr5hfD4gc3Uk", "name": "HAMINOS" } }
     },
     {
       "parameters": {
         "sendTo": "incidenciasamzdiscounts01@gmail.com",
-        "subject": "={{ $json.email_subject }}",
-        "message": "={{ $json.email_body }}",
-        "options": {
-          "appendAttribution": false
-        }
+        "subject": "=DAÑO DETECTADO (followup): Envio {{ $json.shipping_code }}",
+        "message": "=ALERTA: El envio {{ $json.shipping_code }} tiene una incidencia de daño (6_INCT) registrada.\n\nPedido: {{ $json.numero_pedido }}\nJustificacion IA: {{ $json.justification }}",
+        "options": { "appendAttribution": false }
       },
-      "id": "a0000001-0000-4000-8000-000000000009",
-      "name": "Gmail 0000 M",
+      "id": "fw-damage-0001-0000-4000-8000-000000000004",
+      "name": "Gmail Daño FW M",
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
-      "position": [-4560, 1700],
-      "webhookId": "b1000001-0000-4000-8000-000000000002",
-      "credentials": {
-        "gmailOAuth2": {
-          "id": "QJJKjkTiSoxnKucv",
-          "name": "MIESTERY / SERVICE CORP WORLD"
-        }
-      }
+      "position": [-6320, 800],
+      "webhookId": "fw-damage-0001-0000-4000-8000-000000000004",
+      "credentials": { "gmailOAuth2": { "id": "QJJKjkTiSoxnKucv", "name": "MIESTERY / SERVICE CORP WORLD" } }
     },
     {
       "parameters": {
         "sendTo": "incidenciaskulturdenda@gmail.com",
-        "subject": "={{ $json.email_subject }}",
-        "message": "={{ $json.email_body }}",
-        "options": {
-          "appendAttribution": false
-        }
+        "subject": "=DAÑO DETECTADO (followup): Envio {{ $json.shipping_code }}",
+        "message": "=ALERTA: El envio {{ $json.shipping_code }} tiene una incidencia de daño (6_INCT) registrada.\n\nPedido: {{ $json.numero_pedido }}\nJustificacion IA: {{ $json.justification }}",
+        "options": { "appendAttribution": false }
       },
-      "id": "a0000001-0000-4000-8000-000000000010",
-      "name": "Gmail 0000 K",
+      "id": "fw-damage-0001-0000-4000-8000-000000000005",
+      "name": "Gmail Daño FW K",
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
-      "position": [-4560, 1860],
-      "webhookId": "b1000001-0000-4000-8000-000000000003",
-      "credentials": {
-        "gmailOAuth2": {
-          "id": "I8iOQCCkF5dchDft",
-          "name": "KULTURDENDA"
-        }
-      }
+      "position": [-6320, 992],
+      "webhookId": "fw-damage-0001-0000-4000-8000-000000000005",
+      "credentials": { "gmailOAuth2": { "id": "I8iOQCCkF5dchDft", "name": "KULTURDENDA" } }
     },
     {
       "parameters": {
         "sendTo": "incidenciassnappyblue@gmail.com",
-        "subject": "={{ $json.email_subject }}",
-        "message": "={{ $json.email_body }}",
-        "options": {
-          "appendAttribution": false
-        }
+        "subject": "=DAÑO DETECTADO (followup): Envio {{ $json.shipping_code }}",
+        "message": "=ALERTA: El envio {{ $json.shipping_code }} tiene una incidencia de daño (6_INCT) registrada.\n\nPedido: {{ $json.numero_pedido }}\nJustificacion IA: {{ $json.justification }}",
+        "options": { "appendAttribution": false }
       },
-      "id": "a0000001-0000-4000-8000-000000000011",
-      "name": "Gmail 0000 S",
+      "id": "fw-damage-0001-0000-4000-8000-000000000006",
+      "name": "Gmail Daño FW S",
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
-      "position": [-4560, 2020],
-      "webhookId": "b1000001-0000-4000-8000-000000000004",
-      "credentials": {
-        "gmailOAuth2": {
-          "id": "ATDngCzgo2CXlgvv",
-          "name": "SNAPPY"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "operation": "append",
-        "documentId": {
-          "__rl": true,
-          "value": "1MzLQ4PuK5i4cYJhV2yrezJSoTwse7FsnpX2VcWl65yk",
-          "mode": "list",
-          "cachedResultName": "CTT Tracking Log"
-        },
-        "sheetName": {
-          "__rl": true,
-          "value": 751381048,
-          "mode": "list",
-          "cachedResultName": "Test IA",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MzLQ4PuK5i4cYJhV2yrezJSoTwse7FsnpX2VcWl65yk/edit#gid=751381048"
-        },
-        "columns": {
-          "mappingMode": "defineBelow",
-          "value": {
-            "FECHA PROCESADO": "={{ $now.toFormat('dd-MM-yyyy HH:mm:ss') }}",
-            "NUMERO DE ENVIO": "={{ $('Preparar Alerta 0000').item.json.shipping_code }}",
-            "NUMERO DE PEDIDO": "={{ $('Preparar Alerta 0000').item.json.numero_pedido }}",
-            "TIENDA": "={{ $('Preparar Alerta 0000').item.json.tienda }}",
-            "CENTRO": "={{ $('Preparar Alerta 0000').item.json.centro }}",
-            "ESTADO": "0000",
-            "FECHA ESTADO": "={{ $('Preparar Alerta 0000').item.json.fecha_estado }}",
-            "H EN ESTADO": "0",
-            "EMAIL ENVIADO": "SI",
-            "TIPO EMAIL": "internal",
-            "RAZON": "Grabado sin recoger al dia siguiente",
-            "DESTINATARIO": "={{ $('Preparar Alerta 0000').item.json.destinatario }}",
-            "CREDENCIAL": "={{ $('Preparar Alerta 0000').item.json.credencial }}"
-          },
-          "matchingColumns": [],
-          "schema": []
-        },
-        "options": {}
-      },
-      "id": "a0000001-0000-4000-8000-000000000012",
-      "name": "Log Test IA 0000",
-      "type": "n8n-nodes-base.googleSheets",
-      "typeVersion": 4.7,
-      "position": [-4336, 1700],
-      "credentials": {
-        "googleSheetsOAuth2Api": {
-          "id": "vUMIiZSNk60SoDGg",
-          "name": "Google Sheets account"
-        }
-      }
+      "position": [-6320, 1184],
+      "webhookId": "fw-damage-0001-0000-4000-8000-000000000006",
+      "credentials": { "gmailOAuth2": { "id": "ATDngCzgo2CXlgvv", "name": "SNAPPY" } }
     }
   ],
   "connections": {
@@ -1377,8 +1269,27 @@
             "node": "If Sigue Incidencia",
             "type": "main",
             "index": 0
+          },
+          {
+            "node": "If Daño FW",
+            "type": "main",
+            "index": 0
           }
         ]
+      ]
+    },
+    "If Daño FW": {
+      "main": [
+        [{ "node": "Switch Daño FW", "type": "main", "index": 0 }],
+        []
+      ]
+    },
+    "Switch Daño FW": {
+      "main": [
+        [{ "node": "Gmail Daño FW H", "type": "main", "index": 0 }],
+        [{ "node": "Gmail Daño FW M", "type": "main", "index": 0 }],
+        [{ "node": "Gmail Daño FW K", "type": "main", "index": 0 }],
+        [{ "node": "Gmail Daño FW S", "type": "main", "index": 0 }]
       ]
     },
     "If Sigue Incidencia": {
