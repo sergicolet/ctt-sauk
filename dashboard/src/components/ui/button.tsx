@@ -54,12 +54,13 @@ function Button({
       <ButtonPrimitive
         data-slot="button"
         render={(buttonProps) => {
-          return React.cloneElement(children as React.ReactElement, {
+          const child = children as React.ReactElement<any>
+          return React.cloneElement(child, {
             ...buttonProps,
-            ...children.props,
+            ...child.props,
             className: cn(
               buttonVariants({ variant, size, className }),
-              children.props.className
+              child.props.className
             ),
           })
         }}
