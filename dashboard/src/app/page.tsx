@@ -217,7 +217,7 @@ export default function Dashboard() {
 
               <div className="space-y-1.5">
                 <label className="text-xs font-semibold text-slate-500 uppercase ml-1">Tienda</label>
-                <Select value={tiendaFiltro} onValueChange={setTiendaFiltro}>
+                <Select value={tiendaFiltro} onValueChange={(val) => setTiendaFiltro(val || "")}>
                   <SelectTrigger className="w-full !h-11 bg-slate-50/50 rounded-xl border-slate-200 shadow-none">
                     <SelectValue />
                   </SelectTrigger>
@@ -232,7 +232,7 @@ export default function Dashboard() {
 
               <div className="space-y-1.5">
                 <label className="text-xs font-semibold text-slate-500 uppercase ml-1">Estado</label>
-                <Select value={estadoFiltro} onValueChange={setEstadoFiltro}>
+                <Select value={estadoFiltro} onValueChange={(val) => setEstadoFiltro(val || "")}>
                   <SelectTrigger className="w-full !h-11 bg-slate-50/50 rounded-xl border-slate-200 shadow-none">
                     <SelectValue />
                   </SelectTrigger>
@@ -247,7 +247,7 @@ export default function Dashboard() {
 
               <div className="space-y-1.5">
                 <label className="text-xs font-semibold text-slate-500 uppercase ml-1">Origen Alerta</label>
-                <Select value={tipoFiltro} onValueChange={setTipoFiltro}>
+                <Select value={tipoFiltro} onValueChange={(val) => setTipoFiltro(val || "")}>
                   <SelectTrigger className="w-full !h-11 bg-slate-50/50 rounded-xl border-slate-200 shadow-none">
                     <SelectValue />
                   </SelectTrigger>
@@ -261,7 +261,7 @@ export default function Dashboard() {
 
               <div className="space-y-1.5">
                 <label className="text-xs font-semibold text-slate-500 uppercase ml-1">Notificado</label>
-                <Select value={emailFiltro} onValueChange={setEmailFiltro}>
+                <Select value={emailFiltro} onValueChange={(val) => setEmailFiltro(val || "")}>
                   <SelectTrigger className="w-full !h-11 bg-slate-50/50 rounded-xl border-slate-200 shadow-none">
                     <SelectValue />
                   </SelectTrigger>
