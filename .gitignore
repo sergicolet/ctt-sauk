@@ -6,3 +6,14 @@ dashboard/.env.local
 dashboard/.env*.local
 dashboard/next-env.d.ts
 dashboard/*.tsbuildinfo
+
+# Claude Code
+.claude/
+
+# Firebase
+firestore.rules
+firestore.indexes.json
+.firebaserc
+firebase-debug.log
+firebase-debug.*.log
+.firebase/

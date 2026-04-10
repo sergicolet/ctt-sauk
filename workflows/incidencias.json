@@ -605,29 +605,19 @@
     },
     {
       "parameters": {
-        "operation": "update",
+        "operation": "upsert",
         "projectId": "ctt-dashboard",
         "collection": "incidencias",
-        "documentId": "={{ $('Code FW JS2').item.json.shipping_code }}",
-        "updateFields": {
-          "values": [
-            {
-              "key": "seguimiento",
-              "value": "={{ $('Code FW JS2').item.json.estado_actual }}"
-            },
-            {
-              "key": "resultado_followup",
-              "value": "=Aviso interno enviado {{ $now.toFormat('dd-MM-yyyy HH:mm') }}"
-            }
-          ]
-        }
+        "documentId": "_docid",
+        "updateKey": "_docid",
+        "columns": "seguimiento,resultado_followup"
       },
       "id": "7c3130d9-946c-44fa-a971-c77481a2da76",
       "name": "Update Sigue Incidencia",
       "type": "n8n-nodes-base.googleFirebaseCloudFirestore",
       "typeVersion": 1.1,
       "position": [
-        -6096,
+        -5872,
         1248
       ],
       "credentials": {
@@ -639,29 +629,19 @@
     },
     {
       "parameters": {
-        "operation": "update",
+        "operation": "upsert",
         "projectId": "ctt-dashboard",
         "collection": "incidencias",
-        "documentId": "={{ $json.shipping_code }}",
-        "updateFields": {
-          "values": [
-            {
-              "key": "seguimiento",
-              "value": "={{ $json.estado_actual }}"
-            },
-            {
-              "key": "resultado_followup",
-              "value": "=Resuelta {{ $now.toFormat('dd-MM-yyyy HH:mm') }}"
-            }
-          ]
-        }
+        "documentId": "_docid",
+        "updateKey": "_docid",
+        "columns": "seguimiento,resultado_followup"
       },
       "id": "77b8ac9d-545c-4b22-9a10-676695313e97",
       "name": "Update Resuelta",
       "type": "n8n-nodes-base.googleFirebaseCloudFirestore",
       "typeVersion": 1.1,
       "position": [
-        -6544,
+        -6320,
         1584
       ],
       "credentials": {
@@ -1136,6 +1116,77 @@
       "position": [-6320, 1184],
       "webhookId": "fw-damage-0001-0000-4000-8000-000000000006",
       "credentials": { "gmailOAuth2": { "id": "ATDngCzgo2CXlgvv", "name": "SNAPPY" } }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            { "id": "fw-set-dano-1", "name": "_docid", "value": "={{ $json.shipping_code }}", "type": "string" },
+            { "id": "fw-set-dano-2", "name": "resultado_followup", "value": "=Daño notificado {{ $now.toFormat('dd-MM-yyyy HH:mm') }}", "type": "string" }
+          ]
+        },
+        "options": { "ignoreConversionErrors": true }
+      },
+      "id": "fw-set-dano-0001-4000-8000-000000000001",
+      "name": "Preparar Update Daño FW",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [-6096, 800]
+    },
+    {
+      "parameters": {
+        "operation": "upsert",
+        "projectId": "ctt-dashboard",
+        "collection": "incidencias",
+        "documentId": "_docid",
+        "updateKey": "_docid",
+        "columns": "resultado_followup"
+      },
+      "id": "fw-firebase-dano-0001-4000-8000-000000000001",
+      "name": "Update Daño FW",
+      "type": "n8n-nodes-base.googleFirebaseCloudFirestore",
+      "typeVersion": 1.1,
+      "position": [-5872, 800],
+      "credentials": {
+        "googleFirebaseCloudFirestoreOAuth2Api": {
+          "id": "EXM0epVP1YsMfolr",
+          "name": "haminos"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            { "id": "fw-set-sigue-1", "name": "_docid", "value": "={{ $json.shipping_code }}", "type": "string" },
+            { "id": "fw-set-sigue-2", "name": "seguimiento", "value": "={{ $json.estado_actual }}", "type": "string" },
+            { "id": "fw-set-sigue-3", "name": "resultado_followup", "value": "=Aviso interno enviado {{ $now.toFormat('dd-MM-yyyy HH:mm') }}", "type": "string" }
+          ]
+        },
+        "options": { "ignoreConversionErrors": true }
+      },
+      "id": "fw-set-sigue-0001-4000-8000-000000000001",
+      "name": "Preparar Update Sigue",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [-6096, 1248]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            { "id": "fw-set-res-1", "name": "_docid", "value": "={{ $json.shipping_code }}", "type": "string" },
+            { "id": "fw-set-res-2", "name": "seguimiento", "value": "={{ $json.estado_actual }}", "type": "string" },
+            { "id": "fw-set-res-3", "name": "resultado_followup", "value": "=Resuelta {{ $now.toFormat('dd-MM-yyyy HH:mm') }}", "type": "string" }
+          ]
+        },
+        "options": { "ignoreConversionErrors": true }
+      },
+      "id": "fw-set-res-0001-4000-8000-000000000001",
+      "name": "Preparar Update Resuelta",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [-6544, 1584]
     }
   ],
   "connections": {
@@ -1285,7 +1336,7 @@
     "If Daño FW": {
       "main": [
         [{ "node": "Switch Daño FW", "type": "main", "index": 0 }],
-        []
+        [{ "node": "Loop Followup", "type": "main", "index": 0 }]
       ]
     },
     "Switch Daño FW": {
@@ -1293,8 +1344,27 @@
         [{ "node": "Gmail Daño FW H", "type": "main", "index": 0 }],
         [{ "node": "Gmail Daño FW M", "type": "main", "index": 0 }],
         [{ "node": "Gmail Daño FW K", "type": "main", "index": 0 }],
-        [{ "node": "Gmail Daño FW S", "type": "main", "index": 0 }]
+        [{ "node": "Gmail Daño FW S", "type": "main", "index": 0 }],
+        [{ "node": "Loop Followup", "type": "main", "index": 0 }]
       ]
+    },
+    "Gmail Daño FW H": {
+      "main": [[{ "node": "Preparar Update Daño FW", "type": "main", "index": 0 }]]
+    },
+    "Gmail Daño FW M": {
+      "main": [[{ "node": "Preparar Update Daño FW", "type": "main", "index": 0 }]]
+    },
+    "Gmail Daño FW K": {
+      "main": [[{ "node": "Preparar Update Daño FW", "type": "main", "index": 0 }]]
+    },
+    "Gmail Daño FW S": {
+      "main": [[{ "node": "Preparar Update Daño FW", "type": "main", "index": 0 }]]
+    },
+    "Preparar Update Daño FW": {
+      "main": [[{ "node": "Update Daño FW", "type": "main", "index": 0 }]]
+    },
+    "Update Daño FW": {
+      "main": [[{ "node": "Loop Followup", "type": "main", "index": 0 }]]
     },
     "If Sigue Incidencia": {
       "main": [
@@ -1307,7 +1377,7 @@
         ],
         [
           {
-            "node": "Update Resuelta",
+            "node": "Preparar Update Resuelta",
             "type": "main",
             "index": 0
           }
@@ -1354,48 +1424,22 @@
       ]
     },
     "FW Gmail H": {
-      "main": [
-        [
-          {
-            "node": "Update Sigue Incidencia",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
+      "main": [[{ "node": "Preparar Update Sigue", "type": "main", "index": 0 }]]
     },
     "FW Gmail M": {
-      "main": [
-        [
-          {
-            "node": "Update Sigue Incidencia",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
+      "main": [[{ "node": "Preparar Update Sigue", "type": "main", "index": 0 }]]
     },
     "FW Gmail K": {
-      "main": [
-        [
-          {
-            "node": "Update Sigue Incidencia",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
+      "main": [[{ "node": "Preparar Update Sigue", "type": "main", "index": 0 }]]
     },
     "FW Gmail S": {
-      "main": [
-        [
-          {
-            "node": "Update Sigue Incidencia",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
+      "main": [[{ "node": "Preparar Update Sigue", "type": "main", "index": 0 }]]
+    },
+    "Preparar Update Sigue": {
+      "main": [[{ "node": "Update Sigue Incidencia", "type": "main", "index": 0 }]]
+    },
+    "Preparar Update Resuelta": {
+      "main": [[{ "node": "Update Resuelta", "type": "main", "index": 0 }]]
     },
     "Update Sigue Incidencia": {
       "main": [
