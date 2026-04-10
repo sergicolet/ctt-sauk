@@ -165,7 +165,9 @@ export default function Dashboard() {
         <div className="flex items-center gap-3">
           <div className="bg-slate-100 p-1 rounded-lg flex gap-1">
             <div className="px-3 py-1 bg-white rounded-md shadow-sm text-sm font-semibold text-primary">Admin</div>
-            <div className="px-3 py-1 text-sm text-slate-500 font-medium">{state.user?.name}</div>
+            <div className="px-3 py-1 text-sm text-slate-500 font-medium">
+              {state.status === "authenticated" ? state.user.displayName : ""}
+            </div>
           </div>
           <Button variant="ghost" size="icon" onClick={logout} className="text-slate-400 hover:text-destructive transition-colors">
             <LogOut className="h-5 w-5" />
