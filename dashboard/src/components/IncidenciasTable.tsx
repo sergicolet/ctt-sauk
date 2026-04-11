@@ -23,14 +23,10 @@ import {
   History, 
   Info, 
   Mail, 
-  MailWarning, 
-  Clock, 
   Store, 
   MapPin, 
   User,
-  AlertCircle,
-  ShieldCheck,
-  FileEdit
+  AlertCircle
 } from "lucide-react";
 import { 
   getShopFromCenter, 
@@ -110,23 +106,7 @@ export function IncidenciasTable({ incidencias }: Props) {
     );
   }
 
-  function renderTypeBadge(type?: string, forced?: boolean) {
-    const t = (type || "").toLowerCase();
-    if (t.includes("internal") || forced) {
-      return (
-        <Badge variant="outline" className="text-amber-600 border-amber-200 bg-amber-50 gap-1.5 font-medium px-2 shadow-none">
-          <ShieldCheck className="h-3 w-3" />
-          Interno
-        </Badge>
-      );
-    }
-    return (
-      <Badge variant="outline" className="text-blue-600 border-blue-200 bg-blue-50 gap-1.5 font-medium px-2 shadow-none">
-        <FileEdit className="h-3 w-3" />
-        Draft CTT
-      </Badge>
-    );
-  }
+
 
   return (
     <>

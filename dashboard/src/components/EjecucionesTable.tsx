@@ -23,7 +23,6 @@ import {
   History, 
   Info, 
   Mail, 
-  Clock, 
   Store, 
   MapPin, 
   User,

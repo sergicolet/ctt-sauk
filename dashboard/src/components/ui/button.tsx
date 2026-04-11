@@ -54,7 +54,7 @@ function Button({
       <ButtonPrimitive
         data-slot="button"
         render={(buttonProps) => {
-          const child = children as React.ReactElement<any>
+          const child = children as React.ReactElement<React.HTMLAttributes<HTMLElement>>
           return React.cloneElement(child, {
             ...buttonProps,
             ...child.props,

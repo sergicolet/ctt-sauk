@@ -19,7 +19,7 @@ function PopoverTrigger({
       <PopoverPrimitive.Trigger
         data-slot="popover-trigger"
         render={(triggerProps) => {
-          const child = children as React.ReactElement<any>
+          const child = children as React.ReactElement<React.HTMLAttributes<HTMLElement>>
           return React.cloneElement(child, {
             ...triggerProps,
             ...child.props,

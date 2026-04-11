@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
-import { collection, getDocs, orderBy, query, limit, where, Timestamp } from "firebase/firestore";
+import { collection, getDocs, orderBy, query, limit } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { useAuth } from "@/lib/auth-context";
 import { Ejecucion, Incidencia, Historial } from "@/lib/types";
@@ -19,7 +19,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
 import { Calendar as CalendarIcon, FilterX, LogOut, Search, SlidersHorizontal } from "lucide-react";
-import { SHOP_NAMES, STATUS_LABELS, getStatusLabel } from "@/lib/status-map";
+import { SHOP_NAMES, getStatusLabel } from "@/lib/status-map";
 
 export default function Dashboard() {
   const { state, logout } = useAuth();
@@ -83,7 +83,7 @@ export default function Dashboard() {
   const filteredData = useMemo(() => {
     const term = busqueda.trim().toLowerCase();
     
-    const filterFn = (item: any, isIncidencia: boolean) => {
+    const filterFn = (item: Ejecucion | Incidencia, isIncidencia: boolean) => {
       // 1. Busqueda
       const searchMatch = !term || 
         (item.numero_envio || "").toLowerCase().includes(term) || 
@@ -95,7 +95,7 @@ export default function Dashboard() {
 
       // 3. Estado (Filtro por Nombre, no por codigo)
       if (estadoFiltro !== "TODOS") {
-        const itemEstado = isIncidencia ? item.incidencia : item.estado;
+        const itemEstado = isIncidencia ? (item as Incidencia).incidencia : (item as Ejecucion).estado;
         const itemLabel = getStatusLabel(itemEstado);
         if (itemLabel !== estadoFiltro) return false;
       }

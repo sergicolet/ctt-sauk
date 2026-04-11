@@ -22,9 +22,7 @@ import {
   History, 
   Cpu, 
   FileText, 
-  Mail, 
-  ExternalLink,
-  AlertCircle
+  ExternalLink
 } from "lucide-react";
 import { cleanTracking } from "@/lib/status-map";
 
