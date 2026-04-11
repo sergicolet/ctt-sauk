@@ -1,5 +1,5 @@
 {
-  "buildCommand": "cd dashboard && npm run build",
-  "installCommand": "cd dashboard && npm install",
+  "buildCommand": "cd dashboard && npm run build || npm run build",
+  "installCommand": "ls -R && (cd dashboard && npm install || npm install)",
   "framework": "nextjs"
 }
