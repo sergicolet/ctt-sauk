@@ -103,7 +103,10 @@ export default function Dashboard() {
       // 4. Email (bool)
       if (emailFiltro !== "TODOS") {
         const sent = emailFiltro === "SÍ";
-        if (item.email_enviado !== sent) return false;
+        const isNotified = isIncidencia 
+          ? (item as Incidencia).numero_avisos > 0 
+          : (item as Ejecucion).email_enviado;
+        if (isNotified !== sent) return false;
       }
 
       // 5. Tipo Notificacion (Draft vs Internal)
