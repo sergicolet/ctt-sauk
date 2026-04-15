@@ -69,9 +69,10 @@ function parseBultos(bultos_historial_json?: string, historial_formateado?: stri
     : [];
 }
 
-function formatEvents(history: string) {
-  if (!history) return <p className="text-muted-foreground italic text-sm">Sin eventos disponibles.</p>;
-  const events = history.trim().split(/(?=\d{4}-\d{2}-\d{2} \d{2}:\d{2})/);
+function formatEvents(history: any) {
+  const h = String(history || "");
+  if (!h) return <p className="text-muted-foreground italic text-sm">Sin eventos disponibles.</p>;
+  const events = h.trim().split(/(?=\d{4}-\d{2}-\d{2} \d{2}:\d{2})/);
   return (
     <div className="space-y-3 pt-1">
       {events.filter(Boolean).map((event, i) => (

@@ -66,9 +66,10 @@ function parseBultos(bultos_historial_json?: string, historial_formateado?: stri
     : [];
 }
 
-function formatEvents(history: string) {
-  if (!history) return <p className="text-muted-foreground italic text-sm">Sin eventos disponibles.</p>;
-  const events = history.trim().split(/(?=\d{4}-\d{2}-\d{2} \d{2}:\d{2})/);
+function formatEvents(history: any) {
+  const h = String(history || "");
+  if (!h) return <p className="text-muted-foreground italic text-sm">Sin eventos disponibles.</p>;
+  const events = h.trim().split(/(?=\d{4}-\d{2}-\d{2} \d{2}:\d{2})/);
   return (
     <div className="space-y-3 pt-1">
       {events.filter(Boolean).map((event, i) => (
@@ -215,15 +216,12 @@ export function IncidenciasTable({ incidencias, sortOrder }: Props) {
                   <TableHead className="py-3 px-3 font-bold text-slate-500 uppercase tracking-wider text-[10px]">Estado Actual</TableHead>
                   <TableHead className="py-3 px-3 font-bold text-slate-500 uppercase tracking-wider text-[10px]">Notificación</TableHead>
                   <TableHead className="py-3 px-3 font-bold text-slate-500 uppercase tracking-wider text-[10px] text-right">T. Activo</TableHead>
-                  <TableHead
-                    className="py-3 px-5 text-right cursor-pointer select-none group/sort"
-                    onClick={() => setSortOrder(o => o === "desc" ? "asc" : "desc")}
-                  >
+                  <TableHead className="py-3 px-5 text-right">
                     <div className="flex items-center justify-end gap-1.5">
-                      <span className="font-bold text-slate-500 uppercase tracking-wider text-[10px] group-hover/sort:text-primary transition-colors">Fecha Revisión</span>
+                      <span className="font-bold text-slate-500 uppercase tracking-wider text-[10px]">Fecha Revisión</span>
                       <span className="flex flex-col gap-px">
-                        <ArrowUp className={`h-2.5 w-2.5 transition-colors ${sortOrder === "asc" ? "text-primary" : "text-slate-300 group-hover/sort:text-slate-400"}`} />
-                        <ArrowDown className={`h-2.5 w-2.5 transition-colors ${sortOrder === "desc" ? "text-primary" : "text-slate-300 group-hover/sort:text-slate-400"}`} />
+                        <ArrowUp className={`h-2.5 w-2.5 transition-colors ${sortOrder === "asc" ? "text-primary" : "text-slate-300"}`} />
+                        <ArrowDown className={`h-2.5 w-2.5 transition-colors ${sortOrder === "desc" ? "text-primary" : "text-slate-300"}`} />
                       </span>
                     </div>
                   </TableHead>

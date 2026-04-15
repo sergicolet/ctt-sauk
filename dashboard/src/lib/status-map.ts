@@ -71,7 +71,7 @@ export function getStatusLabel(code: string): string {
   if (paddedLabel) return paddedLabel;
 
   // Normalize free-text written by AI
-  const normalized = FREE_TEXT_NORMALIZE[code.trim().toLowerCase()];
+  const normalized = FREE_TEXT_NORMALIZE[String(code).trim().toLowerCase()];
   if (normalized) return normalized;
 
   // Unknown code — return as-is so it stays visible but won't pollute the filter
@@ -99,7 +99,7 @@ export function getActiveHours(item: Ejecucion | Incidencia): { hours: number; l
   return { hours: 0, label: "" };
 }
 
-export function cleanTracking(code: string): string {
+export function cleanTracking(code: any): string {
   if (!code) return "";
-  return code.replace(/^"+|"+$/g, '').trim();
+  return String(code).replace(/^"+|"+$/g, '').trim();
 }
