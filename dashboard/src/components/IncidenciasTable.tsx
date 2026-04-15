@@ -28,6 +28,8 @@ import {
   User,
   AlertCircle,
   Package,
+  Clock,
+  CalendarClock,
 } from "lucide-react";
 import {
   getShopFromCenter,
@@ -46,14 +48,14 @@ interface Props {
   incidencias: Incidencia[];
 }
 
+const TERMINAL_CODES = ["2500", "2300", "2310"];
+
 function parseBultos(bultos_historial_json?: string, historial_formateado?: string): BultoHistorial[] {
   if (bultos_historial_json) {
     try {
       const parsed = JSON.parse(bultos_historial_json) as BultoHistorial[];
       if (Array.isArray(parsed) && parsed.length > 0) return parsed;
-    } catch {
-      // fall through
-    }
+    } catch { /* fall through */ }
   }
   return historial_formateado
     ? [{ item_code: "bulto_1", formatted_history: historial_formateado, total_events: 0 }]
@@ -64,12 +66,12 @@ function formatEvents(history: string) {
   if (!history) return <p className="text-muted-foreground italic text-sm">Sin eventos disponibles.</p>;
   const events = history.trim().split(/(?=\d{4}-\d{2}-\d{2} \d{2}:\d{2})/);
   return (
-    <div className="space-y-4 pt-2">
+    <div className="space-y-3 pt-1">
       {events.filter(Boolean).map((event, i) => (
-        <div key={i} className="flex gap-4 border-l-2 border-slate-100 pl-4 py-1 hover:border-primary/50 transition-colors">
-          <div className="flex flex-col gap-1">
-            <span className="text-xs font-bold text-slate-950 whitespace-nowrap">{event.substring(0, 16)}</span>
-            <span className="text-sm font-semibold text-slate-950 leading-snug">{event.substring(18)}</span>
+        <div key={i} className="flex gap-3 border-l-2 border-slate-100 pl-3 py-0.5 hover:border-primary/50 transition-colors">
+          <div className="flex flex-col gap-0.5">
+            <span className="text-[11px] font-bold text-slate-500 whitespace-nowrap">{event.substring(0, 16)}</span>
+            <span className="text-sm font-semibold text-slate-900 leading-snug">{event.substring(18)}</span>
           </div>
         </div>
       ))}
@@ -90,43 +92,45 @@ function BultoHistorialView({ bultos }: { bultos: BultoHistorial[] }) {
   };
 
   return (
-    <div className="space-y-3">
+    <div className="flex flex-col h-full gap-3">
       {bultos.length > 1 && (
-        <div className="flex gap-2 flex-wrap">
+        <div className="flex gap-2 flex-wrap shrink-0">
           {bultos.map((b, i) => (
             <button
               key={i}
               onClick={() => setActiveBulto(i)}
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold border transition-colors ${
                 activeBulto === i
-                  ? "bg-primary text-white border-primary"
+                  ? "bg-primary text-white border-primary shadow-sm"
                   : "bg-white text-slate-600 border-slate-200 hover:border-primary/40"
               }`}
             >
               <Package className="h-3 w-3" />
               {label(b, i)}
-              <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-bold ${activeBulto === i ? "bg-white/20 text-white" : "bg-slate-100 text-slate-500"}`}>
-                {b.total_events || "—"}
-              </span>
+              {b.total_events > 0 && (
+                <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-bold ${activeBulto === i ? "bg-white/20 text-white" : "bg-slate-100 text-slate-500"}`}>
+                  {b.total_events}
+                </span>
+              )}
             </button>
           ))}
         </div>
       )}
 
-      <div className="border border-slate-200 rounded-xl overflow-hidden shadow-sm">
-        <div className="flex items-center justify-between px-4 py-2.5 bg-slate-50 border-b border-slate-100">
-          <div className="flex items-center gap-2 text-slate-600">
-            <Package className="h-3.5 w-3.5" />
-            <span className="text-[11px] font-bold uppercase tracking-wider">
+      <div className="flex flex-col flex-1 border border-slate-200 rounded-xl overflow-hidden shadow-sm min-h-0">
+        <div className="flex items-center justify-between px-4 py-2.5 bg-slate-50 border-b border-slate-100 shrink-0">
+          <div className="flex items-center gap-2">
+            <Package className="h-3.5 w-3.5 text-primary" />
+            <span className="text-[11px] font-extrabold uppercase tracking-wider text-slate-800">
               {label(bultos[activeBulto], activeBulto)}
             </span>
-            <span className="text-[10px] text-slate-400 font-mono">{bultos[activeBulto].item_code}</span>
+            <span className="text-[10px] text-slate-400 font-mono hidden sm:inline">{bultos[activeBulto].item_code}</span>
           </div>
           {bultos[activeBulto].total_events > 0 && (
             <span className="text-[10px] font-bold text-slate-400">{bultos[activeBulto].total_events} eventos</span>
           )}
         </div>
-        <div className="max-h-[350px] overflow-y-auto p-6 bg-white custom-scrollbar">
+        <div className="flex-1 overflow-y-auto p-5 bg-white custom-scrollbar">
           {formatEvents(bultos[activeBulto].formatted_history)}
         </div>
       </div>
@@ -139,8 +143,9 @@ export function IncidenciasTable({ incidencias }: Props) {
 
   function renderStatusBadge(code: string, dano: boolean) {
     const label = getStatusLabel(code);
+    const isTerminal = TERMINAL_CODES.includes(code);
 
-    if (dano) {
+    if (!isTerminal && dano) {
       return (
         <Badge variant="outline" className="bg-red-50 text-red-600 border-red-200 px-3 py-1 font-bold gap-1 shadow-none">
           <AlertCircle className="h-3 w-3" />
@@ -189,7 +194,6 @@ export function IncidenciasTable({ incidencias }: Props) {
               {incidencias.map((inc) => {
                 const cleanedCode = cleanTracking(inc.numero_envio);
                 const timing = getActiveHours(inc);
-
                 return (
                   <TableRow
                     key={inc.id}
@@ -199,20 +203,12 @@ export function IncidenciasTable({ incidencias }: Props) {
                     <TableCell className="py-6 px-6">
                       <div className="flex items-center gap-3">
                         <span className="text-sm font-bold text-slate-950">{cleanedCode}</span>
-                        <a
-                          href={`https://www.cttexpress.com/localizador-de-envios/?sc=${cleanedCode}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-blue-500 hover:text-blue-700 transition-colors"
-                          onClick={(e) => e.stopPropagation()}
-                        >
+                        <a href={`https://www.cttexpress.com/localizador-de-envios/?sc=${cleanedCode}`} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:text-blue-700 transition-colors" onClick={(e) => e.stopPropagation()}>
                           <ExternalLink className="h-4 w-4" />
                         </a>
                       </div>
                     </TableCell>
-                    <TableCell className="py-6">
-                      <span className="text-sm font-bold text-slate-950">{inc.numero_pedido}</span>
-                    </TableCell>
+                    <TableCell className="py-6"><span className="text-sm font-bold text-slate-950">{inc.numero_pedido}</span></TableCell>
                     <TableCell className="py-6">
                       <div className="flex items-center gap-2">
                         <Store className="h-4 w-4 text-slate-950" />
@@ -234,14 +230,10 @@ export function IncidenciasTable({ incidencias }: Props) {
                     <TableCell className="py-6 text-right">
                       {timing.hours > 0 ? (
                         <div className="flex flex-col items-end">
-                          <span className={`text-sm font-bold ${timing.hours > 24 ? "text-red-700" : "text-slate-950"}`}>
-                            {timing.hours}h
-                          </span>
+                          <span className={`text-sm font-bold ${timing.hours > 24 ? "text-red-700" : "text-slate-950"}`}>{timing.hours}h</span>
                           <span className="text-[10px] uppercase font-bold text-slate-950 tracking-tighter">{timing.label}</span>
                         </div>
-                      ) : (
-                        <span className="text-slate-950">—</span>
-                      )}
+                      ) : <span className="text-slate-950">—</span>}
                     </TableCell>
                     <TableCell className="py-6 text-right">
                       <span className="text-[11px] font-bold text-slate-950">{inc.fecha_procesado}</span>
@@ -255,92 +247,121 @@ export function IncidenciasTable({ incidencias }: Props) {
       </div>
 
       <Sheet open={!!selectedInc} onOpenChange={(open) => !open && setSelectedInc(null)}>
-        <SheetContent className="w-full sm:!max-w-[80vw] overflow-y-auto !transition-all">
-          {selectedInc && (
-            <div className="space-y-8 pt-6 px-4">
-              <SheetHeader className="text-left">
-                <SheetTitle className="text-xl md:text-3xl font-extrabold break-all leading-tight flex items-center gap-3">
-                  <AlertCircle className="h-6 w-6 text-primary shrink-0" />
-                  Envío <span className="text-primary">{cleanTracking(selectedInc.numero_envio)}</span>
-                  <a
-                    href={`https://www.cttexpress.com/localizador-de-envios/?sc=${cleanTracking(selectedInc.numero_envio)}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-primary hover:text-primary/80 transition-opacity"
-                  >
-                    <ExternalLink className="h-6 w-6" />
-                  </a>
-                </SheetTitle>
-                <SheetDescription className="text-base font-bold text-slate-950">
-                  Incidencia de Pedido {selectedInc.numero_pedido} &middot; {selectedInc.tienda}
-                </SheetDescription>
-              </SheetHeader>
+        <SheetContent className="w-full sm:!max-w-[90vw] overflow-hidden flex flex-col !transition-all p-0">
+          {selectedInc && (() => {
+            const bultos = parseBultos(selectedInc.bultos_historial_json, selectedInc.historial_formateado);
+            const timing = getActiveHours(selectedInc);
+            const cleanedCode = cleanTracking(selectedInc.numero_envio);
+            const isInternal = (selectedInc.tipo_email || "").toLowerCase().includes("internal") || selectedInc.forzado_interno;
 
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-8 py-6 border-y border-slate-100">
-                <div className="space-y-1.5">
-                  <p className="text-[10px] font-bold text-slate-950 uppercase tracking-wider">Gravedad</p>
-                  <div className="flex">{renderStatusBadge(selectedInc.incidencia, selectedInc.dano)}</div>
+            return (
+              <div className="flex flex-col h-full">
+                {/* Header */}
+                <div className="px-6 pt-6 pb-4 border-b border-slate-100 shrink-0">
+                  <SheetHeader className="text-left">
+                    <SheetTitle className="text-xl font-extrabold break-all leading-tight flex items-center gap-2">
+                      <AlertCircle className="h-5 w-5 text-primary shrink-0" />
+                      <span className="text-slate-500 font-medium text-base">Incidencia</span>
+                      <span className="text-primary">{cleanedCode}</span>
+                      <a href={`https://www.cttexpress.com/localizador-de-envios/?sc=${cleanedCode}`} target="_blank" rel="noopener noreferrer" className="text-primary hover:text-primary/80 transition-opacity">
+                        <ExternalLink className="h-5 w-5" />
+                      </a>
+                    </SheetTitle>
+                    <SheetDescription className="text-sm font-bold text-slate-600">
+                      {selectedInc.numero_pedido} &middot; {selectedInc.tienda}
+                    </SheetDescription>
+                  </SheetHeader>
                 </div>
-                <div className="space-y-1">
-                  <p className="text-[10px] font-bold text-slate-950 uppercase tracking-wider">Notificación</p>
-                  <p className="text-sm font-bold text-slate-950">
-                    {(selectedInc.tipo_email || "").toLowerCase().includes("internal") || selectedInc.forzado_interno ? "Alerta Interna" : "Draft CTT"}
-                  </p>
-                </div>
-                <div className="space-y-1">
-                  <p className="text-[10px] font-bold text-slate-950 uppercase tracking-wider">Tiempo Abierto</p>
-                  <p className="text-sm font-bold text-slate-950">{getActiveHours(selectedInc).hours}h</p>
-                </div>
-              </div>
 
-              <div className="space-y-3 p-6 bg-slate-50 rounded-xl border">
-                <div className="flex items-center gap-2 text-primary">
-                  <Info className="h-4 w-4" />
-                  <h3 className="text-xs font-bold uppercase tracking-wider">Justificación Auditoría</h3>
-                </div>
-                <p className="text-sm text-slate-600 leading-relaxed font-medium italic">
-                  &ldquo;{selectedInc.razon}&rdquo;
-                </p>
-              </div>
+                {/* Body: two columns */}
+                <div className="flex flex-col md:grid md:grid-cols-[280px_1fr] flex-1 min-h-0 overflow-hidden">
 
-              <div className="grid grid-cols-2 gap-12">
-                <div className="space-y-4">
-                  <div className="flex items-center gap-2 text-slate-950">
-                    <MapPin className="h-4 w-4" />
-                    <span className="text-xs font-bold uppercase tracking-wider">Centro Logístico</span>
-                  </div>
-                  <div className="space-y-0.5">
-                    <p className="text-sm font-bold text-slate-950">{selectedInc.centro}</p>
-                    <p className="text-xs text-primary font-bold">{getShopFromCenter(selectedInc.centro)}</p>
-                  </div>
-                </div>
-                <div className="space-y-4">
-                  <div className="flex items-center gap-2 text-slate-950">
-                    <User className="h-4 w-4" />
-                    <span className="text-xs font-bold uppercase tracking-wider">Destinatario Alerta</span>
-                  </div>
-                  <div className="space-y-0.5">
-                    <p className="text-sm font-bold text-slate-950 truncate">{selectedInc.destinatario || "—"}</p>
-                    <div className="flex items-center gap-2">
-                      <span className="text-xs text-slate-950 font-bold">Avisos:</span>
-                      <span className="text-[10px] px-2 py-0.5 bg-blue-100 text-blue-900 font-extrabold rounded-md uppercase border border-blue-200">
-                        {selectedInc.numero_avisos} Enviados
+                  {/* LEFT — metadata */}
+                  <div className="md:border-r border-slate-100 px-5 py-5 space-y-5 overflow-y-auto custom-scrollbar shrink-0 md:shrink bg-slate-50/40">
+
+                    <div className="space-y-1.5">
+                      <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Gravedad</p>
+                      {renderStatusBadge(selectedInc.incidencia, selectedInc.dano)}
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Tipo Notificación</p>
+                      <p className="text-sm font-bold text-slate-800">
+                        {isInternal ? "Alerta Interna" : "Draft CTT"}
+                      </p>
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Tiempo Abierto</p>
+                      <div className="flex items-center gap-1.5">
+                        <Clock className="h-3.5 w-3.5 text-slate-400" />
+                        <span className={`text-sm font-bold ${timing.hours > 24 ? "text-red-600" : "text-slate-900"}`}>
+                          {timing.hours}h
+                        </span>
+                        {timing.label && <span className="text-[10px] text-slate-400 font-bold uppercase">{timing.label}</span>}
+                      </div>
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Destinatario Alerta</p>
+                      <div className="flex items-center gap-1.5">
+                        <User className="h-3.5 w-3.5 text-slate-400" />
+                        <span className="text-sm font-bold text-slate-800">{selectedInc.destinatario || "—"}</span>
+                      </div>
+                      <span className="text-[10px] px-2 py-0.5 bg-blue-100 text-blue-900 font-extrabold rounded-md uppercase border border-blue-200 inline-block mt-0.5">
+                        {selectedInc.numero_avisos} Avisos enviados
                       </span>
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Centro Logístico</p>
+                      <div className="flex items-center gap-1.5">
+                        <MapPin className="h-3.5 w-3.5 text-slate-400" />
+                        <div>
+                          <p className="text-sm font-bold text-slate-800">{selectedInc.centro}</p>
+                          <p className="text-[11px] text-primary font-bold">{getShopFromCenter(selectedInc.centro)}</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Fecha Revisión</p>
+                      <div className="flex items-center gap-1.5">
+                        <CalendarClock className="h-3.5 w-3.5 text-slate-400" />
+                        <span className="text-sm font-bold text-slate-800">{selectedInc.fecha_procesado}</span>
+                      </div>
+                    </div>
+
+                    <div className="space-y-1.5 p-3 bg-white rounded-xl border border-slate-200">
+                      <div className="flex items-center gap-1.5 text-primary">
+                        <Info className="h-3.5 w-3.5" />
+                        <span className="text-[10px] font-bold uppercase tracking-wider">Justificación IA</span>
+                      </div>
+                      <p className="text-xs text-slate-600 leading-relaxed font-medium italic">
+                        &ldquo;{selectedInc.razon}&rdquo;
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* RIGHT — historial de bultos */}
+                  <div className="flex flex-col flex-1 min-h-0 px-5 py-5 overflow-hidden">
+                    <div className="flex items-center gap-2 mb-4 shrink-0">
+                      <History className="h-4 w-4 text-slate-700" />
+                      <h3 className="text-sm font-extrabold uppercase tracking-wider text-slate-900">Historial de Bultos</h3>
+                      {bultos.length > 1 && (
+                        <span className="text-[10px] px-2 py-0.5 bg-primary/10 text-primary font-bold rounded-full">
+                          {bultos.length} bultos
+                        </span>
+                      )}
+                    </div>
+                    <div className="flex-1 min-h-0">
+                      <BultoHistorialView bultos={bultos} />
                     </div>
                   </div>
                 </div>
               </div>
-
-              {/* Historial de Bultos */}
-              <div className="space-y-4 pt-4">
-                <div className="flex items-center gap-2 text-slate-950">
-                  <History className="h-5 w-5" />
-                  <h3 className="text-sm font-extrabold uppercase tracking-wider">Historial de Bultos</h3>
-                </div>
-                <BultoHistorialView bultos={parseBultos(selectedInc.bultos_historial_json, selectedInc.historial_formateado)} />
-              </div>
-            </div>
-          )}
+            );
+          })()}
         </SheetContent>
       </Sheet>
     </>
