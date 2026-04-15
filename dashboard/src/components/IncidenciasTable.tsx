@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { Badge } from "@/components/ui/badge";
 import {
   Table,
@@ -30,6 +30,8 @@ import {
   Package,
   Clock,
   CalendarClock,
+  ArrowDown,
+  ArrowUp,
 } from "lucide-react";
 import {
   getShopFromCenter,
@@ -46,9 +48,11 @@ interface BultoHistorial {
 
 interface Props {
   incidencias: Incidencia[];
+  sortOrder: "desc" | "asc";
 }
 
 const TERMINAL_CODES = ["2500", "2300", "2310"];
+const PAGE_SIZE = 50;
 
 function parseBultos(bultos_historial_json?: string, historial_formateado?: string): BultoHistorial[] {
   if (bultos_historial_json) {
@@ -138,8 +142,34 @@ function BultoHistorialView({ bultos }: { bultos: BultoHistorial[] }) {
   );
 }
 
-export function IncidenciasTable({ incidencias }: Props) {
+export function IncidenciasTable({ incidencias, sortOrder }: Props) {
   const [selectedInc, setSelectedInc] = useState<Incidencia | null>(null);
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
+  const sentinelRef = useRef<HTMLDivElement>(null);
+
+  // Reset visible count when data changes
+  useEffect(() => {
+    setVisibleCount(PAGE_SIZE);
+  }, [incidencias, sortOrder]);
+
+  // Infinite scroll
+  const handleIntersect = useCallback((entries: IntersectionObserverEntry[]) => {
+    if (entries[0].isIntersecting) {
+      setVisibleCount(prev => prev + PAGE_SIZE);
+    }
+  }, []);
+
+  useEffect(() => {
+    const el = sentinelRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(handleIntersect, { threshold: 0.1 });
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [handleIntersect]);
+
+  const sorted = sortOrder === "desc" ? incidencias : [...incidencias].reverse();
+  const visible = sorted.slice(0, visibleCount);
+  const hasMore = visibleCount < sorted.length;
 
   function renderStatusBadge(code: string, dano: boolean) {
     const label = getStatusLabel(code);
@@ -147,7 +177,7 @@ export function IncidenciasTable({ incidencias }: Props) {
 
     if (!isTerminal && dano) {
       return (
-        <Badge variant="outline" className="bg-red-50 text-red-600 border-red-200 px-3 py-1 font-bold gap-1 shadow-none">
+        <Badge variant="outline" className="bg-red-50 text-red-600 border-red-200 px-2.5 py-0.5 font-bold gap-1 shadow-none text-xs">
           <AlertCircle className="h-3 w-3" />
           Daño Detectado
         </Badge>
@@ -158,92 +188,135 @@ export function IncidenciasTable({ incidencias }: Props) {
     const isSuccess = ["2000"].includes(code);
     const isWarning = ["2500", "2300"].includes(code);
 
-    if (isError) return <Badge variant="outline" className="bg-red-50 text-red-600 border-red-100 px-3 py-1 font-semibold shadow-none">{label}</Badge>;
-    if (isSuccess) return <Badge variant="outline" className="bg-emerald-50 text-emerald-600 border-emerald-100 px-3 py-1 font-semibold shadow-none">{label}</Badge>;
-    if (isWarning) return <Badge variant="outline" className="bg-orange-50 text-orange-600 border-orange-100 px-3 py-1 font-semibold shadow-none">{label}</Badge>;
-    return <Badge variant="secondary" className="bg-slate-50 text-slate-600 border-slate-100 px-3 py-1 font-medium shadow-none">{label}</Badge>;
+    if (isError) return <Badge variant="outline" className="bg-red-50 text-red-600 border-red-100 px-2.5 py-0.5 font-semibold shadow-none text-xs">{label}</Badge>;
+    if (isSuccess) return <Badge variant="outline" className="bg-emerald-50 text-emerald-600 border-emerald-100 px-2.5 py-0.5 font-semibold shadow-none text-xs">{label}</Badge>;
+    if (isWarning) return <Badge variant="outline" className="bg-orange-50 text-orange-600 border-orange-100 px-2.5 py-0.5 font-semibold shadow-none text-xs">{label}</Badge>;
+    return <Badge variant="secondary" className="bg-slate-50 text-slate-600 border-slate-100 px-2.5 py-0.5 font-medium shadow-none text-xs">{label}</Badge>;
   }
 
   return (
     <>
-      <div className="rounded-2xl border bg-white shadow-sm overflow-x-auto custom-scrollbar">
-        <div className="min-w-[1000px] w-full">
-          <Table>
-            <TableHeader className="bg-slate-50 border-b">
-              <TableRow className="hover:bg-transparent">
-                <TableHead className="py-6 px-6 font-bold text-slate-950 uppercase tracking-wider text-[11px]">Envío / Tracking</TableHead>
-                <TableHead className="py-6 font-bold text-slate-950 uppercase tracking-wider text-[11px]">Pedido</TableHead>
-                <TableHead className="py-6 font-bold text-slate-950 uppercase tracking-wider text-[11px]">Tienda</TableHead>
-                <TableHead className="py-6 font-bold text-slate-950 uppercase tracking-wider text-[11px]">Estado Actual</TableHead>
-                <TableHead className="py-6 font-bold text-slate-950 uppercase tracking-wider text-[11px]">Notificación</TableHead>
-                <TableHead className="py-6 font-bold text-slate-950 uppercase tracking-wider text-[11px] text-right">Tiempo Activo</TableHead>
-                <TableHead className="py-6 font-bold text-slate-950 uppercase tracking-wider text-[11px] text-right">Fecha Revisión</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {incidencias.length === 0 && (
-                <TableRow>
-                  <TableCell colSpan={7} className="text-center text-slate-400 py-24">
-                    <div className="flex flex-col items-center gap-2">
-                      <AlertCircle className="h-10 w-10 opacity-20" />
-                      <p className="text-lg font-medium">No se han encontrado incidencias</p>
-                    </div>
-                  </TableCell>
-                </TableRow>
-              )}
-              {incidencias.map((inc) => {
-                const cleanedCode = cleanTracking(inc.numero_envio);
-                const timing = getActiveHours(inc);
-                return (
-                  <TableRow
-                    key={inc.id}
-                    className={`group cursor-pointer hover:bg-slate-50 transition-colors border-b last:border-0 ${inc.dano ? "bg-red-50/20" : ""}`}
-                    onClick={() => setSelectedInc(inc)}
+      <div className="rounded-2xl border bg-white shadow-sm overflow-hidden">
+        {/* Table toolbar */}
+        <div className="flex items-center px-5 py-2.5 border-b bg-slate-50/60">
+          <span className="text-xs font-semibold text-slate-400">
+            {incidencias.length === 0 ? "Sin registros" : `${visible.length} de ${incidencias.length} incidencias`}
+          </span>
+        </div>
+
+        <div className="overflow-x-auto custom-scrollbar">
+          <div className="min-w-[900px] w-full">
+            <Table>
+              <TableHeader className="bg-slate-50 border-b">
+                <TableRow className="hover:bg-transparent">
+                  <TableHead className="py-3 px-5 font-bold text-slate-500 uppercase tracking-wider text-[10px]">Envío / Tracking</TableHead>
+                  <TableHead className="py-3 px-3 font-bold text-slate-500 uppercase tracking-wider text-[10px]">Pedido</TableHead>
+                  <TableHead className="py-3 px-3 font-bold text-slate-500 uppercase tracking-wider text-[10px]">Tienda</TableHead>
+                  <TableHead className="py-3 px-3 font-bold text-slate-500 uppercase tracking-wider text-[10px]">Estado Actual</TableHead>
+                  <TableHead className="py-3 px-3 font-bold text-slate-500 uppercase tracking-wider text-[10px]">Notificación</TableHead>
+                  <TableHead className="py-3 px-3 font-bold text-slate-500 uppercase tracking-wider text-[10px] text-right">T. Activo</TableHead>
+                  <TableHead
+                    className="py-3 px-5 text-right cursor-pointer select-none group/sort"
+                    onClick={() => setSortOrder(o => o === "desc" ? "asc" : "desc")}
                   >
-                    <TableCell className="py-6 px-6">
-                      <div className="flex items-center gap-3">
-                        <span className="text-sm font-bold text-slate-950">{cleanedCode}</span>
-                        <a href={`https://www.cttexpress.com/localizador-de-envios/?sc=${cleanedCode}`} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:text-blue-700 transition-colors" onClick={(e) => e.stopPropagation()}>
-                          <ExternalLink className="h-4 w-4" />
-                        </a>
+                    <div className="flex items-center justify-end gap-1.5">
+                      <span className="font-bold text-slate-500 uppercase tracking-wider text-[10px] group-hover/sort:text-primary transition-colors">Fecha Revisión</span>
+                      <span className="flex flex-col gap-px">
+                        <ArrowUp className={`h-2.5 w-2.5 transition-colors ${sortOrder === "asc" ? "text-primary" : "text-slate-300 group-hover/sort:text-slate-400"}`} />
+                        <ArrowDown className={`h-2.5 w-2.5 transition-colors ${sortOrder === "desc" ? "text-primary" : "text-slate-300 group-hover/sort:text-slate-400"}`} />
+                      </span>
+                    </div>
+                  </TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {incidencias.length === 0 && (
+                  <TableRow>
+                    <TableCell colSpan={7} className="text-center text-slate-400 py-20">
+                      <div className="flex flex-col items-center gap-2">
+                        <AlertCircle className="h-9 w-9 opacity-20" />
+                        <p className="text-sm font-medium">No se han encontrado incidencias</p>
                       </div>
-                    </TableCell>
-                    <TableCell className="py-6"><span className="text-sm font-bold text-slate-950">{inc.numero_pedido}</span></TableCell>
-                    <TableCell className="py-6">
-                      <div className="flex items-center gap-2">
-                        <Store className="h-4 w-4 text-slate-950" />
-                        <span className="text-sm font-bold text-slate-950">{inc.tienda}</span>
-                      </div>
-                    </TableCell>
-                    <TableCell className="py-6">{renderStatusBadge(inc.incidencia, inc.dano)}</TableCell>
-                    <TableCell className="py-6">
-                      <div className="flex flex-col gap-0.5">
-                        <div className="flex items-center gap-1.5 text-xs font-bold text-slate-950">
-                          <Mail className="h-3 w-3 text-blue-600" />
-                          {inc.destinatario || "Sin nombre"}
-                        </div>
-                        <span className="text-[9px] font-bold text-primary uppercase tracking-tight">
-                          {(inc.tipo_email || "").toLowerCase().includes("internal") || inc.forzado_interno ? "Alerta Interna" : "Draft CTT"}
-                        </span>
-                      </div>
-                    </TableCell>
-                    <TableCell className="py-6 text-right">
-                      {timing.hours > 0 ? (
-                        <div className="flex flex-col items-end">
-                          <span className={`text-sm font-bold ${timing.hours > 24 ? "text-red-700" : "text-slate-950"}`}>{timing.hours}h</span>
-                          <span className="text-[10px] uppercase font-bold text-slate-950 tracking-tighter">{timing.label}</span>
-                        </div>
-                      ) : <span className="text-slate-950">—</span>}
-                    </TableCell>
-                    <TableCell className="py-6 text-right">
-                      <span className="text-[11px] font-bold text-slate-950">{inc.fecha_procesado}</span>
                     </TableCell>
                   </TableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
+                )}
+                {visible.map((inc) => {
+                  const cleanedCode = cleanTracking(inc.numero_envio);
+                  const timing = getActiveHours(inc);
+                  return (
+                    <TableRow
+                      key={inc.id}
+                      className={`group cursor-pointer hover:bg-slate-50/80 transition-colors border-b last:border-0 ${inc.dano ? "bg-red-50/20" : ""}`}
+                      onClick={() => setSelectedInc(inc)}
+                    >
+                      <TableCell className="py-3.5 px-5">
+                        <div className="flex items-center gap-2">
+                          <span className="text-sm font-bold text-slate-900">{cleanedCode}</span>
+                          <a
+                            href={`https://www.cttexpress.com/localizador-de-envios/?sc=${cleanedCode}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-blue-400 hover:text-blue-600 transition-colors opacity-0 group-hover:opacity-100"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            <ExternalLink className="h-3.5 w-3.5" />
+                          </a>
+                        </div>
+                      </TableCell>
+                      <TableCell className="py-3.5 px-3">
+                        <span className="text-sm text-slate-700 font-medium">{inc.numero_pedido}</span>
+                      </TableCell>
+                      <TableCell className="py-3.5 px-3">
+                        <div className="flex items-center gap-1.5">
+                          <Store className="h-3.5 w-3.5 text-slate-400 shrink-0" />
+                          <span className="text-sm font-semibold text-slate-800">{inc.tienda}</span>
+                        </div>
+                      </TableCell>
+                      <TableCell className="py-3.5 px-3">{renderStatusBadge(inc.incidencia, inc.dano)}</TableCell>
+                      <TableCell className="py-3.5 px-3">
+                        <div className="flex flex-col gap-0.5">
+                          <div className="flex items-center gap-1.5 text-xs font-semibold text-slate-700">
+                            <Mail className="h-3 w-3 text-blue-500 shrink-0" />
+                            {inc.destinatario || "Sin nombre"}
+                          </div>
+                          <span className="text-[9px] font-bold text-primary uppercase tracking-tight">
+                            {(inc.tipo_email || "").toLowerCase().includes("internal") || inc.forzado_interno ? "Alerta Interna" : "Draft CTT"}
+                          </span>
+                        </div>
+                      </TableCell>
+                      <TableCell className="py-3.5 px-3 text-right">
+                        {timing.hours > 0 ? (
+                          <div className="flex flex-col items-end">
+                            <span className={`text-sm font-bold ${timing.hours > 24 ? "text-red-700" : "text-slate-800"}`}>{timing.hours}h</span>
+                            <span className="text-[9px] uppercase font-semibold text-slate-400 tracking-tight">{timing.label}</span>
+                          </div>
+                        ) : <span className="text-slate-300">—</span>}
+                      </TableCell>
+                      <TableCell className="py-3.5 px-5 text-right">
+                        <span className="text-[11px] font-semibold text-slate-500 tabular-nums">{inc.fecha_procesado}</span>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
+              </TableBody>
+            </Table>
+          </div>
         </div>
+
+        {/* Infinite scroll sentinel */}
+        {hasMore && (
+          <div ref={sentinelRef} className="py-4 flex justify-center">
+            <div className="flex items-center gap-2 text-xs text-slate-400 font-medium">
+              <div className="h-4 w-4 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+              Cargando más...
+            </div>
+          </div>
+        )}
+        {!hasMore && incidencias.length > PAGE_SIZE && (
+          <div className="py-3 text-center text-xs text-slate-300 font-medium border-t">
+            — {incidencias.length} registros totales —
+          </div>
+        )}
       </div>
 
       <Sheet open={!!selectedInc} onOpenChange={(open) => !open && setSelectedInc(null)}>

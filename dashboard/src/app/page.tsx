@@ -18,7 +18,7 @@ import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
-import { Calendar as CalendarIcon, FilterX, LogOut, Search, SlidersHorizontal } from "lucide-react";
+import { Calendar as CalendarIcon, FilterX, LogOut, Search, SlidersHorizontal, ArrowDownUp } from "lucide-react";
 import { SHOP_NAMES, getStatusLabel } from "@/lib/status-map";
 
 export default function Dashboard() {
@@ -36,6 +36,7 @@ export default function Dashboard() {
   const [tipoFiltro, setTipoFiltro] = useState("TODOS");
   const [busqueda, setBusqueda] = useState("");
   const [fechaInicio, setFechaInicio] = useState<Date | undefined>(undefined);
+  const [sortOrder, setSortOrder] = useState<"desc" | "asc">("desc");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -150,11 +151,27 @@ export default function Dashboard() {
     );
   }
 
-  // Get Unique Labels for filter, not Codes
-  const allLabels = Array.from(new Set([
-    ...ejecuciones.map(e => getStatusLabel(e.estado)),
-    ...incidencias.map(i => getStatusLabel(i.incidencia))
-  ])).filter(Boolean).sort();
+  // Fixed canonical state labels — never derived from raw data to avoid junk values
+  const allLabels = [
+    "Manifestado",
+    "Envío recogido",
+    "Recogida fallida",
+    "En tránsito",
+    "Delegación de tránsito",
+    "Delegación destino",
+    "En reparto",
+    "Reparto fallido",
+    "Reparto fallido (Incidencia)",
+    "Envío estacionado",
+    "Estacionado ubicado",
+    "Pendiente de extracción",
+    "Entregado",
+    "Disponible en Punto CTT",
+    "Pendiente de nuevos datos",
+    "Devolución en proceso",
+    "Incidencia (Dirección)",
+    "Incidencia (Destinatario)",
+  ];
 
   return (
     <main className="min-h-screen bg-slate-50/50 p-2 md:p-6 space-y-6 w-full">
@@ -204,7 +221,7 @@ export default function Dashboard() {
               </Button>
             </div>
             
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-7 gap-4">
               <div className="space-y-1.5">
                 <label className="text-xs font-semibold text-slate-500 uppercase ml-1">Búsqueda</label>
                 <div className="relative">
@@ -299,8 +316,36 @@ export default function Dashboard() {
                   </PopoverContent>
                 </Popover>
               </div>
+
+              {/* Ordenar */}
+              <div className="space-y-1.5">
+                <label className="text-xs font-semibold text-slate-500 uppercase ml-1">Ordenar</label>
+                <div className="flex items-center h-11 bg-slate-50/50 border border-slate-200 rounded-xl px-1 gap-1">
+                  <button
+                    onClick={() => setSortOrder("desc")}
+                    className={`flex-1 flex items-center justify-center gap-1.5 h-9 rounded-lg text-xs font-bold transition-all ${
+                      sortOrder === "desc"
+                        ? "bg-white shadow-sm text-primary border border-slate-200"
+                        : "text-slate-400 hover:text-slate-600"
+                    }`}
+                  >
+                    <ArrowDownUp className="h-3 w-3" />
+                    Reciente
+                  </button>
+                  <button
+                    onClick={() => setSortOrder("asc")}
+                    className={`flex-1 flex items-center justify-center gap-1.5 h-9 rounded-lg text-xs font-bold transition-all ${
+                      sortOrder === "asc"
+                        ? "bg-white shadow-sm text-primary border border-slate-200"
+                        : "text-slate-400 hover:text-slate-600"
+                    }`}
+                  >
+                    <ArrowDownUp className="h-3 w-3 rotate-180" />
+                    Antiguo
+                  </button>
+                </div>
+              </div>
             </div>
-            
 
           </div>
 
@@ -320,11 +365,11 @@ export default function Dashboard() {
             </div>
 
             <TabsContent value="ejecuciones" className="animate-in fade-in slide-in-from-bottom-2 duration-300">
-              <EjecucionesTable ejecuciones={filteredData.ej} />
+              <EjecucionesTable ejecuciones={filteredData.ej} sortOrder={sortOrder} />
             </TabsContent>
-            
+
             <TabsContent value="incidencias" className="animate-in fade-in slide-in-from-bottom-2 duration-300">
-              <IncidenciasTable incidencias={filteredData.inc} />
+              <IncidenciasTable incidencias={filteredData.inc} sortOrder={sortOrder} />
             </TabsContent>
             
             <TabsContent value="historial" className="animate-in fade-in slide-in-from-bottom-2 duration-300">

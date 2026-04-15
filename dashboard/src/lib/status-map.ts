@@ -45,14 +45,37 @@ export function getShopFromCenter(centerCode: string): string {
   return SHOP_NAMES[prefix] || "N/A";
 }
 
+// Normalize free-text values the AI occasionally writes instead of codes
+const FREE_TEXT_NORMALIZE: Record<string, string> = {
+  "reparto fallido": "Reparto fallido",
+  "en reparto": "En reparto",
+  "en tránsito": "En tránsito",
+  "en transito": "En tránsito",
+  "entregado": "Entregado",
+  "devolucion en proceso": "Devolución en proceso",
+  "devolución en proceso": "Devolución en proceso",
+  "incidencia": "Reparto fallido (Incidencia)",
+  "ninguna": "Sin estado",
+  "none": "Sin estado",
+  "sin estado": "Sin estado",
+};
+
 export function getStatusLabel(code: string): string {
   if (!code) return "Sin estado";
   const label = STATUS_LABELS[code];
   if (label) return label;
-  
+
   // Clean variations like 0500 vs 500
   const padded = String(code).padStart(4, '0');
-  return STATUS_LABELS[padded] || code;
+  const paddedLabel = STATUS_LABELS[padded];
+  if (paddedLabel) return paddedLabel;
+
+  // Normalize free-text written by AI
+  const normalized = FREE_TEXT_NORMALIZE[code.trim().toLowerCase()];
+  if (normalized) return normalized;
+
+  // Unknown code — return as-is so it stays visible but won't pollute the filter
+  return code;
 }
 
 export function getActiveHours(item: Ejecucion | Incidencia): { hours: number; label: string } {
