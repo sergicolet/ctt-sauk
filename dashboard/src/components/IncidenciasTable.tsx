@@ -18,50 +18,128 @@ import {
   SheetDescription,
 } from "@/components/ui/sheet";
 import { Incidencia } from "@/lib/types";
-import { 
-  ExternalLink, 
-  History, 
-  Info, 
-  Mail, 
-  Store, 
-  MapPin, 
+import {
+  ExternalLink,
+  History,
+  Info,
+  Mail,
+  Store,
+  MapPin,
   User,
-  AlertCircle
+  AlertCircle,
+  Package,
 } from "lucide-react";
-import { 
-  getShopFromCenter, 
-  getStatusLabel, 
-  getActiveHours, 
-  cleanTracking 
+import {
+  getShopFromCenter,
+  getStatusLabel,
+  getActiveHours,
+  cleanTracking,
 } from "@/lib/status-map";
+
+interface BultoHistorial {
+  item_code: string;
+  formatted_history: string;
+  total_events: number;
+}
 
 interface Props {
   incidencias: Incidencia[];
 }
 
+function parseBultos(bultos_historial_json?: string, historial_formateado?: string): BultoHistorial[] {
+  if (bultos_historial_json) {
+    try {
+      const parsed = JSON.parse(bultos_historial_json) as BultoHistorial[];
+      if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+    } catch {
+      // fall through
+    }
+  }
+  return historial_formateado
+    ? [{ item_code: "bulto_1", formatted_history: historial_formateado, total_events: 0 }]
+    : [];
+}
+
+function formatEvents(history: string) {
+  if (!history) return <p className="text-muted-foreground italic text-sm">Sin eventos disponibles.</p>;
+  const events = history.trim().split(/(?=\d{4}-\d{2}-\d{2} \d{2}:\d{2})/);
+  return (
+    <div className="space-y-4 pt-2">
+      {events.filter(Boolean).map((event, i) => (
+        <div key={i} className="flex gap-4 border-l-2 border-slate-100 pl-4 py-1 hover:border-primary/50 transition-colors">
+          <div className="flex flex-col gap-1">
+            <span className="text-xs font-bold text-slate-950 whitespace-nowrap">{event.substring(0, 16)}</span>
+            <span className="text-sm font-semibold text-slate-950 leading-snug">{event.substring(18)}</span>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function BultoHistorialView({ bultos }: { bultos: BultoHistorial[] }) {
+  const [activeBulto, setActiveBulto] = useState(0);
+
+  if (bultos.length === 0) {
+    return <p className="text-muted-foreground italic text-sm">No hay historial disponible.</p>;
+  }
+
+  const label = (b: BultoHistorial, i: number) => {
+    const match = b.item_code.match(/(\d{3})$/);
+    return match ? `Bulto ${parseInt(match[1], 10)}` : `Bulto ${i + 1}`;
+  };
+
+  return (
+    <div className="space-y-3">
+      {bultos.length > 1 && (
+        <div className="flex gap-2 flex-wrap">
+          {bultos.map((b, i) => (
+            <button
+              key={i}
+              onClick={() => setActiveBulto(i)}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold border transition-colors ${
+                activeBulto === i
+                  ? "bg-primary text-white border-primary"
+                  : "bg-white text-slate-600 border-slate-200 hover:border-primary/40"
+              }`}
+            >
+              <Package className="h-3 w-3" />
+              {label(b, i)}
+              <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-bold ${activeBulto === i ? "bg-white/20 text-white" : "bg-slate-100 text-slate-500"}`}>
+                {b.total_events || "—"}
+              </span>
+            </button>
+          ))}
+        </div>
+      )}
+
+      <div className="border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+        <div className="flex items-center justify-between px-4 py-2.5 bg-slate-50 border-b border-slate-100">
+          <div className="flex items-center gap-2 text-slate-600">
+            <Package className="h-3.5 w-3.5" />
+            <span className="text-[11px] font-bold uppercase tracking-wider">
+              {label(bultos[activeBulto], activeBulto)}
+            </span>
+            <span className="text-[10px] text-slate-400 font-mono">{bultos[activeBulto].item_code}</span>
+          </div>
+          {bultos[activeBulto].total_events > 0 && (
+            <span className="text-[10px] font-bold text-slate-400">{bultos[activeBulto].total_events} eventos</span>
+          )}
+        </div>
+        <div className="max-h-[350px] overflow-y-auto p-6 bg-white custom-scrollbar">
+          {formatEvents(bultos[activeBulto].formatted_history)}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function IncidenciasTable({ incidencias }: Props) {
   const [selectedInc, setSelectedInc] = useState<Incidencia | null>(null);
 
-  function formatHistory(history?: string) {
-    if (!history) return <p className="text-muted-foreground italic">No hay historial disponible.</p>;
-    const events = history.split(/(?=\d{4}-\d{2}-\d{2} \d{2}:\d{2})/);
-    return (
-      <div className="space-y-4 pt-2">
-        {events.map((event, i) => (
-          <div key={i} className="flex gap-4 border-l-2 border-slate-100 pl-4 py-1 hover:border-primary/50 transition-colors">
-            <div className="flex flex-col gap-1">
-              <span className="text-xs font-bold text-slate-950 whitespace-nowrap">{event.substring(0, 16)}</span>
-              <span className="text-sm font-semibold text-slate-950 leading-snug">{event.substring(18)}</span>
-            </div>
-          </div>
-        ))}
-      </div>
-    );
-  }
-
   function renderStatusBadge(code: string, dano: boolean) {
     const label = getStatusLabel(code);
-    
+
     if (dano) {
       return (
         <Badge variant="outline" className="bg-red-50 text-red-600 border-red-200 px-3 py-1 font-bold gap-1 shadow-none">
@@ -70,43 +148,16 @@ export function IncidenciasTable({ incidencias }: Props) {
         </Badge>
       );
     }
-    
+
     const isError = ["1600", "2400", "2600", "2700", "0600", "2310"].includes(code);
     const isSuccess = ["2000"].includes(code);
     const isWarning = ["2500", "2300"].includes(code);
 
-    if (isError) {
-      return (
-        <Badge variant="outline" className="bg-red-50 text-red-600 border-red-100 px-3 py-1 font-semibold shadow-none">
-          {label}
-        </Badge>
-      );
-    }
-
-    if (isSuccess) {
-      return (
-        <Badge variant="outline" className="bg-emerald-50 text-emerald-600 border-emerald-100 px-3 py-1 font-semibold shadow-none">
-          {label}
-        </Badge>
-      );
-    }
-
-    if (isWarning) {
-      return (
-        <Badge variant="outline" className="bg-orange-50 text-orange-600 border-orange-100 px-3 py-1 font-semibold shadow-none">
-          {label}
-        </Badge>
-      );
-    }
-    
-    return (
-      <Badge variant="secondary" className="bg-slate-50 text-slate-600 border-slate-100 px-3 py-1 font-medium shadow-none">
-        {label}
-      </Badge>
-    );
+    if (isError) return <Badge variant="outline" className="bg-red-50 text-red-600 border-red-100 px-3 py-1 font-semibold shadow-none">{label}</Badge>;
+    if (isSuccess) return <Badge variant="outline" className="bg-emerald-50 text-emerald-600 border-emerald-100 px-3 py-1 font-semibold shadow-none">{label}</Badge>;
+    if (isWarning) return <Badge variant="outline" className="bg-orange-50 text-orange-600 border-orange-100 px-3 py-1 font-semibold shadow-none">{label}</Badge>;
+    return <Badge variant="secondary" className="bg-slate-50 text-slate-600 border-slate-100 px-3 py-1 font-medium shadow-none">{label}</Badge>;
   }
-
-
 
   return (
     <>
@@ -140,15 +191,15 @@ export function IncidenciasTable({ incidencias }: Props) {
                 const timing = getActiveHours(inc);
 
                 return (
-                  <TableRow 
-                    key={inc.id} 
+                  <TableRow
+                    key={inc.id}
                     className={`group cursor-pointer hover:bg-slate-50 transition-colors border-b last:border-0 ${inc.dano ? "bg-red-50/20" : ""}`}
                     onClick={() => setSelectedInc(inc)}
                   >
                     <TableCell className="py-6 px-6">
                       <div className="flex items-center gap-3">
                         <span className="text-sm font-bold text-slate-950">{cleanedCode}</span>
-                        <a 
+                        <a
                           href={`https://www.cttexpress.com/localizador-de-envios/?sc=${cleanedCode}`}
                           target="_blank"
                           rel="noopener noreferrer"
@@ -171,12 +222,12 @@ export function IncidenciasTable({ incidencias }: Props) {
                     <TableCell className="py-6">{renderStatusBadge(inc.incidencia, inc.dano)}</TableCell>
                     <TableCell className="py-6">
                       <div className="flex flex-col gap-0.5">
-                         <div className="flex items-center gap-1.5 text-xs font-bold text-slate-950">
-                            <Mail className="h-3 w-3 text-blue-600" />
-                            {inc.destinatario || "Sin nombre"}
-                         </div>
+                        <div className="flex items-center gap-1.5 text-xs font-bold text-slate-950">
+                          <Mail className="h-3 w-3 text-blue-600" />
+                          {inc.destinatario || "Sin nombre"}
+                        </div>
                         <span className="text-[9px] font-bold text-primary uppercase tracking-tight">
-                          {(inc.tipo_email || "").toLowerCase().includes("internal") || inc.forzado_interno ? "alertas@sergi.com" : "Draft CTT"}
+                          {(inc.tipo_email || "").toLowerCase().includes("internal") || inc.forzado_interno ? "Alerta Interna" : "Draft CTT"}
                         </span>
                       </div>
                     </TableCell>
@@ -211,7 +262,7 @@ export function IncidenciasTable({ incidencias }: Props) {
                 <SheetTitle className="text-xl md:text-3xl font-extrabold break-all leading-tight flex items-center gap-3">
                   <AlertCircle className="h-6 w-6 text-primary shrink-0" />
                   Envío <span className="text-primary">{cleanTracking(selectedInc.numero_envio)}</span>
-                  <a 
+                  <a
                     href={`https://www.cttexpress.com/localizador-de-envios/?sc=${cleanTracking(selectedInc.numero_envio)}`}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -225,7 +276,7 @@ export function IncidenciasTable({ incidencias }: Props) {
                 </SheetDescription>
               </SheetHeader>
 
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-8 py-2 border-y border-slate-100 py-6">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-8 py-6 border-y border-slate-100">
                 <div className="space-y-1.5">
                   <p className="text-[10px] font-bold text-slate-950 uppercase tracking-wider">Gravedad</p>
                   <div className="flex">{renderStatusBadge(selectedInc.incidencia, selectedInc.dano)}</div>
@@ -280,16 +331,13 @@ export function IncidenciasTable({ incidencias }: Props) {
                 </div>
               </div>
 
+              {/* Historial de Bultos */}
               <div className="space-y-4 pt-4">
                 <div className="flex items-center gap-2 text-slate-950">
                   <History className="h-5 w-5" />
-                  <h3 className="text-sm font-extrabold uppercase tracking-wider">Historial Completo</h3>
+                  <h3 className="text-sm font-extrabold uppercase tracking-wider">Historial de Bultos</h3>
                 </div>
-                <div className="border border-slate-200 rounded-xl overflow-hidden shadow-sm">
-                  <div className="max-h-[350px] overflow-y-auto p-6 bg-white custom-scrollbar">
-                    {formatHistory(selectedInc.historial_formateado)}
-                  </div>
-                </div>
+                <BultoHistorialView bultos={parseBultos(selectedInc.bultos_historial_json, selectedInc.historial_formateado)} />
               </div>
             </div>
           )}

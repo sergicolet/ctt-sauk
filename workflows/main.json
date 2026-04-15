@@ -192,7 +192,7 @@
             {
               "id": "log-1",
               "name": "_docid",
-              "value": "={{ $now.toMillis() + '_' + $('Preparar Contexto Avisos').item.json.shipping_code }}",
+              "value": "={{ $('Preparar Contexto Avisos').item.json.shipping_code }}",
               "type": "string"
             },
             {
@@ -306,7 +306,13 @@
             {
               "id": "log-20",
               "name": "historial_formateado",
-              "value": "={{ $('Calcular Estados y Horas').item.json.formatted_history }}",
+              "value": "={{ $('Agregar Bultos del Envío').item.json.formatted_history }}",
+              "type": "string"
+            },
+            {
+              "id": "log-21",
+              "name": "bultos_historial_json",
+              "value": "={{ $('Agregar Bultos del Envío').item.json.bultos_historial_json }}",
               "type": "string"
             }
           ]
@@ -332,7 +338,7 @@
         "projectId": "ctt-dashboard",
         "collection": "ejecuciones",
         "updateKey": "_docid",
-        "columns": "fecha_procesado,numero_envio,numero_pedido,tienda,centro,estado,fecha_estado,h_en_estado,email_enviado,tipo_email,razon,destinatario,credencial,transit_hours,delivery_hours,manifest_hours,forzado_interno,dano,historial_formateado"
+        "columns": "fecha_procesado,numero_envio,numero_pedido,tienda,centro,estado,fecha_estado,h_en_estado,email_enviado,tipo_email,razon,destinatario,credencial,transit_hours,delivery_hours,manifest_hours,forzado_interno,dano,historial_formateado,bultos_historial_json"
       },
       "id": "9ea3406c-8db7-4033-967d-b105c729092d",
       "name": "Firebase Log Ejecucion",
@@ -472,7 +478,13 @@
             {
               "id": "inc-20",
               "name": "historial_formateado",
-              "value": "={{ $('Calcular Estados y Horas').item.json.formatted_history }}",
+              "value": "={{ $('Agregar Bultos del Envío').item.json.formatted_history }}",
+              "type": "string"
+            },
+            {
+              "id": "inc-21",
+              "name": "bultos_historial_json",
+              "value": "={{ $('Agregar Bultos del Envío').item.json.bultos_historial_json }}",
               "type": "string"
             }
           ]
@@ -494,7 +506,7 @@
         "projectId": "ctt-dashboard",
         "collection": "incidencias",
         "updateKey": "_docid",
-        "columns": "fecha_procesado,numero_envio,numero_pedido,tienda,centro,incidencia,fecha_incidencia,h_en_incidencia,tipo_email,razon,destinatario,credencial,numero_avisos,transit_hours,delivery_hours,manifest_hours,forzado_interno,dano,historial_formateado"
+        "columns": "fecha_procesado,numero_envio,numero_pedido,tienda,centro,incidencia,fecha_incidencia,h_en_incidencia,tipo_email,razon,destinatario,credencial,numero_avisos,transit_hours,delivery_hours,manifest_hours,forzado_interno,dano,historial_formateado,bultos_historial_json"
       },
       "id": "e1443eff-4dc1-425a-98a0-f0ba6a4318e0",
       "name": "Firebase Incidencia",
@@ -1138,7 +1150,20 @@
     },
     {
       "parameters": {
-        "url": "=https://api.cttexpress.com/integrations-info/trf/item-history-api/history/{{ $json.shipping_code }}",
+        "jsCode": "// Expande el envío en N items, uno por bulto (item_code)\nconst shipment = $input.first().json;\nconst items = shipment.items || [];\n\nif (items.length === 0) {\n  return [{ json: { ...shipment, current_item_code: shipment.shipping_code + '001' } }];\n}\n\nreturn items.map(item => ({\n  json: {\n    ...shipment,\n    current_item_code: item.item_code,\n    current_item_other_code: item.item_other_code || null,\n    current_item_weight: item.item_weight_declared || null\n  }\n}));"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -37888,
+        13560
+      ],
+      "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+      "name": "Expandir Items por Bulto"
+    },
+    {
+      "parameters": {
+        "url": "=https://api.cttexpress.com/integrations-info/trf/item-history-api/history/{{ $json.current_item_code }}",
         "sendQuery": true,
         "queryParameters": {
           "parameters": [
@@ -1157,14 +1182,14 @@
           "parameters": [
             {
               "name": "Authorization",
-              "value": "={{ 'Bearer ' + ($('Loop: Processar 1 a 2').item.json.client_code == '47352' ? $('Token CTT SNAPPY').first().json.access_token : $('Loop: Processar 1 a 2').item.json.client_code == '48630' ? $('Token CTT HAMINOS').first().json.access_token : $('Loop: Processar 1 a 2').item.json.client_code == '47685' ? $('Token CTT MIESTERY').first().json.access_token : $('Token CTT KULTUDENDA').first().json.access_token) }}"
+              "value": "={{ 'Bearer ' + ($json.client_code == '47352' ? $('Token CTT SNAPPY').first().json.access_token : $json.client_code == '48630' ? $('Token CTT HAMINOS').first().json.access_token : $json.client_code == '47685' ? $('Token CTT MIESTERY').first().json.access_token : $('Token CTT KULTUDENDA').first().json.access_token) }}"
             }
           ]
         },
         "options": {}
       },
       "id": "00bda2e2-7c73-4112-a29d-6997f1652ef4",
-      "name": "Obtenir Historial Detallat1",
+      "name": "Obtenir Historial Detallat1 (item)",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
@@ -1262,6 +1287,19 @@
       ],
       "id": "07fcd04a-abb9-4929-9bd7-c86699301147",
       "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Agrega todos los bultos del mismo envío en un único item\nconst all = $input.all();\n\nif (all.length === 0) throw new Error('[Agregar Bultos] Sin items de entrada');\n\n// Construir array de historiales por bulto\nconst bultosHistorial = all.map((it, i) => ({\n  item_code: it.json.current_item_code || `bulto_${i + 1}`,\n  formatted_history: it.json.formatted_history || 'Sin eventos',\n  total_events: it.json.total_events || 0\n}));\n\n// Historial combinado para la IA (con cabecera por bulto)\nconst combinedHistory = bultosHistorial.map((b, i) =>\n  `=== BULTO ${i + 1} (${b.item_code}) ===\\n${b.formatted_history}`\n).join('\\n\\n');\n\n// Peor caso para horas (la IA ve el caso más crítico)\nconst maxOf = key => Math.max(...all.map(i => i.json[key] || 0));\n\n// Incidencia: si algún bulto tiene incidencia activa, el envío la tiene\nconst hasActiveIncident = all.some(i => i.json.has_active_incident);\nconst activeItem = all.find(i => i.json.active_incident_code);\nconst activeIncidentCode = activeItem ? activeItem.json.active_incident_code : '';\nconst hasDamage = all.some(i => i.json.has_damage);\n\n// Base: datos a nivel de envío del primer bulto\nconst base = all[0].json;\n\nreturn {\n  json: {\n    ...base,\n    // Historial por bulto (para guardar en Firebase)\n    bultos_historial: bultosHistorial,\n    bultos_historial_json: JSON.stringify(bultosHistorial),\n    // Historial combinado para IA (reemplaza formatted_history)\n    formatted_history: combinedHistory,\n    // Horas peor caso\n    transit_hours:    maxOf('transit_hours'),\n    manifest_hours:   maxOf('manifest_hours'),\n    delivery_hours:   maxOf('delivery_hours'),\n    stationary_hours: maxOf('stationary_hours'),\n    // Incidencia\n    has_active_incident: hasActiveIncident,\n    active_incident_code: activeIncidentCode,\n    has_damage: hasDamage\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -37440,
+        13560
+      ],
+      "id": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+      "name": "Agregar Bultos del Envío"
     },
     {
       "parameters": {
@@ -1998,7 +2036,7 @@
         ],
         [
           {
-            "node": "Preparar Log Firebase",
+            "node": "If Daño",
             "type": "main",
             "index": 0
           }
@@ -2037,7 +2075,7 @@
         ],
         [
           {
-            "node": "Preparar Log Firebase",
+            "node": "If Daño",
             "type": "main",
             "index": 0
           }
@@ -2062,7 +2100,7 @@
         ],
         [
           {
-            "node": "Preparar Log Firebase",
+            "node": "If Daño",
             "type": "main",
             "index": 0
           }
@@ -2080,7 +2118,7 @@
         ],
         [
           {
-            "node": "Preparar Log Firebase",
+            "node": "If Daño",
             "type": "main",
             "index": 0
           }
@@ -2092,11 +2130,6 @@
         [
           {
             "node": "¿Es Alerta Forzada? (Terminal)",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "If Daño",
             "type": "main",
             "index": 0
           }
@@ -2158,6 +2191,17 @@
       "main": [
         [
           {
+            "node": "Agregar Bultos del Envío",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Agregar Bultos del Envío": {
+      "main": [
+        [
+          {
             "node": "Buscar Avisos Previos",
             "type": "main",
             "index": 0
@@ -2165,11 +2209,22 @@
         ]
       ]
     },
-    "Obtenir Historial Detallat1": {
+    "Obtenir Historial Detallat1 (item)": {
       "main": [
         [
           {
             "node": "Calcular Estados y Horas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Expandir Items por Bulto": {
+      "main": [
+        [
+          {
+            "node": "Obtenir Historial Detallat1 (item)",
             "type": "main",
             "index": 0
           }
@@ -2181,7 +2236,7 @@
         [],
         [
           {
-            "node": "Obtenir Historial Detallat1",
+            "node": "Expandir Items por Bulto",
             "type": "main",
             "index": 0
           }
