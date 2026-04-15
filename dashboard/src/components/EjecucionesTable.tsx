@@ -198,7 +198,7 @@ export function EjecucionesTable({ ejecuciones, sortOrder }: Props) {
   }
 
   function renderTypeBadge(type?: string, forced?: boolean) {
-    const t = (type || "").toLowerCase();
+    const t = String(type || "").toLowerCase();
     if (t.includes("internal") || forced) {
       return (
         <Badge variant="outline" className="text-amber-600 border-amber-200 bg-amber-50 gap-1.5 font-medium px-2 shadow-none text-xs">
@@ -301,7 +301,7 @@ export function EjecucionesTable({ ejecuciones, sortOrder }: Props) {
                               {ej.destinatario || "Sin nombre"}
                             </div>
                             <span className="text-[9px] font-bold text-primary uppercase tracking-tight">
-                              {(ej.tipo_email || "").toLowerCase().includes("internal") || ej.forzado_interno ? "Alerta Interna" : "Draft CTT"}
+                              {String(ej.tipo_email || "").toLowerCase().includes("internal") || ej.forzado_interno ? "Alerta Interna" : "Draft CTT"}
                             </span>
                           </div>
                         ) : <span className="text-slate-300 text-sm">—</span>}
@@ -339,7 +339,7 @@ export function EjecucionesTable({ ejecuciones, sortOrder }: Props) {
             const bultos = parseBultos(selectedEj.bultos_historial_json, selectedEj.historial_formateado);
             const timing = getActiveHours(selectedEj);
             const cleanedCode = cleanTracking(selectedEj.numero_envio);
-            const isInternal = (selectedEj.tipo_email || "").toLowerCase().includes("internal") || selectedEj.forzado_interno;
+            const isInternal = String(selectedEj.tipo_email || "").toLowerCase().includes("internal") || selectedEj.forzado_interno;
 
             return (
               <div className="flex flex-col h-full">

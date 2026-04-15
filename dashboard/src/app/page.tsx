@@ -112,7 +112,7 @@ export default function Dashboard() {
 
       // 5. Tipo Notificacion (Draft vs Internal)
       if (tipoFiltro !== "TODOS") {
-        const itemTipo = (item.tipo_email || "").toLowerCase();
+        const itemTipo = String(item.tipo_email || "").toLowerCase();
         if (tipoFiltro === "DRAFT" && !itemTipo.includes("standard")) return false;
         if (tipoFiltro === "INTERNO" && !itemTipo.includes("internal") && !item.forzado_interno) return false;
       }

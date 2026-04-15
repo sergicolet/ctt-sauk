@@ -17,8 +17,8 @@ export function StatsCards({ ejecuciones, incidencias }: Props) {
   const incidenciasActivas = incidencias.length;
 
   // Split between Draft CTT and Internal
-  const draftCtt = allItems.filter((e) => (e.tipo_email || "").toLowerCase().includes("standard")).length;
-  const interno = allItems.filter((e) => (e.tipo_email || "").toLowerCase().includes("internal") || e.forzado_interno).length;
+  const draftCtt = allItems.filter((e) => String(e.tipo_email || "").toLowerCase().includes("standard")).length;
+  const interno = allItems.filter((e) => String(e.tipo_email || "").toLowerCase().includes("internal") || e.forzado_interno).length;
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">

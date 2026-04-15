@@ -280,7 +280,7 @@ export function IncidenciasTable({ incidencias, sortOrder }: Props) {
                             {inc.destinatario || "Sin nombre"}
                           </div>
                           <span className="text-[9px] font-bold text-primary uppercase tracking-tight">
-                            {(inc.tipo_email || "").toLowerCase().includes("internal") || inc.forzado_interno ? "Alerta Interna" : "Draft CTT"}
+                            {String(inc.tipo_email || "").toLowerCase().includes("internal") || inc.forzado_interno ? "Alerta Interna" : "Draft CTT"}
                           </span>
                         </div>
                       </TableCell>
@@ -325,7 +325,7 @@ export function IncidenciasTable({ incidencias, sortOrder }: Props) {
             const bultos = parseBultos(selectedInc.bultos_historial_json, selectedInc.historial_formateado);
             const timing = getActiveHours(selectedInc);
             const cleanedCode = cleanTracking(selectedInc.numero_envio);
-            const isInternal = (selectedInc.tipo_email || "").toLowerCase().includes("internal") || selectedInc.forzado_interno;
+            const isInternal = String(selectedInc.tipo_email || "").toLowerCase().includes("internal") || selectedInc.forzado_interno;
 
             return (
               <div className="flex flex-col h-full">
