@@ -18,6 +18,9 @@ export interface Ejecucion {
   manifest_hours: number;
   forzado_interno: boolean;
   dano: boolean;
+  isEjecucionOk?: boolean;
+  asunto?: string;
+  cuerpo?: string;
   historial_formateado?: string;
   bultos_historial_json?: string;
   stationary_hours?: number;
@@ -43,6 +46,9 @@ export interface Incidencia {
   manifest_hours: number;
   forzado_interno: boolean;
   dano: boolean;
+  isEjecucionOk?: boolean;
+  asunto?: string;
+  cuerpo?: string;
   historial_formateado?: string;
   bultos_historial_json?: string;
   stationary_hours?: number;

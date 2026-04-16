@@ -32,6 +32,8 @@ import {
   CalendarClock,
   ArrowDown,
   ArrowUp,
+  CheckCircle2,
+  XCircle,
 } from "lucide-react";
 import {
   getShopFromCenter,
@@ -249,6 +251,11 @@ export function IncidenciasTable({ incidencias, sortOrder }: Props) {
                     >
                       <TableCell className="py-3.5 px-5">
                         <div className="flex items-center gap-2">
+                          {inc.isEjecucionOk !== false ? (
+                            <CheckCircle2 className="h-4 w-4 text-emerald-500 shrink-0" />
+                          ) : (
+                            <XCircle className="h-4 w-4 text-red-500 shrink-0" />
+                          )}
                           <span className="text-sm font-bold text-slate-900">{cleanedCode}</span>
                           <a
                             href={`https://www.cttexpress.com/localizador-de-envios/?sc=${cleanedCode}`}
@@ -412,6 +419,25 @@ export function IncidenciasTable({ incidencias, sortOrder }: Props) {
                         &ldquo;{selectedInc.razon}&rdquo;
                       </p>
                     </div>
+
+                    {(selectedInc.asunto || selectedInc.cuerpo) && (
+                      <div className="space-y-2.5 p-3 bg-blue-50/50 rounded-xl border border-blue-100 mt-2">
+                        <div className="flex items-center gap-1.5 text-blue-600">
+                          <Mail className="h-3.5 w-3.5" />
+                          <span className="text-[10px] font-bold uppercase tracking-wider">Detalles del Email</span>
+                        </div>
+                        <div className="space-y-1">
+                          <p className="text-[9px] font-bold text-slate-400 uppercase tracking-tight">Asunto</p>
+                          <p className="text-xs font-bold text-slate-800 leading-snug">{selectedInc.asunto}</p>
+                        </div>
+                        <div className="space-y-1">
+                          <p className="text-[9px] font-bold text-slate-400 uppercase tracking-tight">Cuerpo</p>
+                          <p className="text-[11px] text-slate-600 font-medium leading-relaxed whitespace-pre-wrap line-clamp-6">
+                            {selectedInc.cuerpo}
+                          </p>
+                        </div>
+                      </div>
+                    )}
                   </div>
 
                   {/* RIGHT — historial de bultos */}
