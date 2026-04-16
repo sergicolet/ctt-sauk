@@ -55,7 +55,7 @@
           "conditions": [
             {
               "id": "f1",
-              "leftValue": "={{ $json.email_enviado }}",
+              "leftValue": "={{ $json.email_enviado !== false }}",
               "rightValue": true,
               "operator": {
                 "type": "boolean",

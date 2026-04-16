@@ -71,8 +71,14 @@ const PAGE_SIZE = 50;
 function parseBultos(bultos_historial_json?: string, historial_formateado?: string): BultoHistorial[] {
   if (bultos_historial_json) {
     try {
-      const parsed = JSON.parse(bultos_historial_json) as BultoHistorial[];
-      if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      const parsed = JSON.parse(bultos_historial_json);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        return parsed.map((item: any) => ({
+          item_code: item.item_code || "Unknown",
+          formatted_history: item.history || item.formatted_history || "",
+          total_events: item.total_events || 0
+        }));
+      }
     } catch { /* fall through */ }
   }
   return historial_formateado
