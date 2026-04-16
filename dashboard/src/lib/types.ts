@@ -21,6 +21,8 @@ export interface Ejecucion {
   isEjecucionOk?: boolean;
   asunto?: string;
   cuerpo?: string;
+  email_subject?: string;
+  email_body?: string;
   historial_formateado?: string;
   bultos_historial_json?: string;
   stationary_hours?: number;
@@ -49,6 +51,8 @@ export interface Incidencia {
   isEjecucionOk?: boolean;
   asunto?: string;
   cuerpo?: string;
+  email_subject?: string;
+  email_body?: string;
   historial_formateado?: string;
   bultos_historial_json?: string;
   stationary_hours?: number;

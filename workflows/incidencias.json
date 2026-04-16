@@ -16,7 +16,7 @@
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.2,
       "position": [
-        -9584,
+        -1084,
         2256
       ]
     },
@@ -33,7 +33,7 @@
       "type": "n8n-nodes-base.googleFirebaseCloudFirestore",
       "typeVersion": 1.1,
       "position": [
-        -8464,
+        36,
         1776
       ],
       "credentials": {
@@ -99,7 +99,7 @@
       "type": "n8n-nodes-base.filter",
       "typeVersion": 2,
       "position": [
-        -8240,
+        260,
         1776
       ]
     },
@@ -112,7 +112,7 @@
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
       "position": [
-        -8016,
+        484,
         1776
       ]
     },
@@ -149,7 +149,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        -9360,
+        -860,
         2256
       ]
     },
@@ -186,7 +186,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        -9136,
+        -636,
         2256
       ]
     },
@@ -223,7 +223,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        -8912,
+        -412,
         2256
       ]
     },
@@ -260,7 +260,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        -8688,
+        -188,
         2256
       ]
     },
@@ -292,11 +292,11 @@
         "options": {}
       },
       "id": "62c9fd23-a4ea-44e8-adb5-50a6a9f17475",
-      "name": "HTTP: Historial Cabecera FW",
+      "name": "Obtener Historial FW",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        -7792,
+        708,
         1360
       ],
       "retryOnFail": true,
@@ -311,7 +311,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -7568,
+        932,
         1360
       ]
     },
@@ -344,7 +344,7 @@
       "type": "@n8n/n8n-nodes-langchain.openAi",
       "typeVersion": 2.1,
       "position": [
-        -7344,
+        1156,
         1360
       ],
       "credentials": {
@@ -363,7 +363,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -6992,
+        1508,
         1360
       ]
     },
@@ -396,7 +396,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        -6768,
+        1732,
         1360
       ]
     },
@@ -507,7 +507,7 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.4,
       "position": [
-        -6544,
+        1956,
         1200
       ]
     },
@@ -523,7 +523,7 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
       "position": [
-        -6320,
+        2180,
         976
       ],
       "webhookId": "45217402-ac7a-4e20-af92-7d40e1ad1d87",
@@ -546,7 +546,7 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
       "position": [
-        -6320,
+        2180,
         1168
       ],
       "webhookId": "bf8672e7-5a5f-485e-bdf7-413976cccfc9",
@@ -569,7 +569,7 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
       "position": [
-        -6320,
+        2180,
         1360
       ],
       "webhookId": "d7f0234e-d878-43af-ab6f-e0f26618cc9b",
@@ -592,7 +592,7 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
       "position": [
-        -6320,
+        2180,
         1552
       ],
       "webhookId": "2384e059-84af-4d9e-9017-1b1e870accf6",
@@ -617,7 +617,7 @@
       "type": "n8n-nodes-base.googleFirebaseCloudFirestore",
       "typeVersion": 1.1,
       "position": [
-        -5872,
+        2628,
         1248
       ],
       "credentials": {
@@ -641,8 +641,8 @@
       "type": "n8n-nodes-base.googleFirebaseCloudFirestore",
       "typeVersion": 1.1,
       "position": [
-        -6320,
-        1584
+        2180,
+        1456
       ],
       "credentials": {
         "googleFirebaseCloudFirestoreOAuth2Api": {
@@ -660,7 +660,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -8464,
+        36,
         2512
       ]
     },
@@ -673,7 +673,7 @@
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
       "position": [
-        -8240,
+        260,
         2512
       ]
     },
@@ -687,7 +687,7 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1,
       "position": [
-        -8016,
+        484,
         2080
       ]
     },
@@ -700,7 +700,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -7792,
+        708,
         2080
       ]
     },
@@ -713,7 +713,7 @@
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
       "position": [
-        -7568,
+        932,
         2512
       ]
     },
@@ -726,7 +726,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -7280,
+        1220,
         2352
       ]
     },
@@ -837,7 +837,7 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.4,
       "position": [
-        -6992,
+        1508,
         2304
       ]
     },
@@ -855,7 +855,7 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
       "position": [
-        -6768,
+        1732,
         2064
       ],
       "webhookId": "b1000001-0000-4000-8000-000000000001",
@@ -880,7 +880,7 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
       "position": [
-        -6768,
+        1732,
         2256
       ],
       "webhookId": "b1000001-0000-4000-8000-000000000002",
@@ -905,7 +905,7 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
       "position": [
-        -6768,
+        1732,
         2448
       ],
       "webhookId": "b1000001-0000-4000-8000-000000000003",
@@ -930,7 +930,7 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
       "position": [
-        -6768,
+        1732,
         2640
       ],
       "webhookId": "b1000001-0000-4000-8000-000000000004",
@@ -975,7 +975,7 @@
       "type": "n8n-nodes-base.googleFirebaseCloudFirestore",
       "typeVersion": 1.1,
       "position": [
-        -6544,
+        1956,
         2448
       ],
       "credentials": {
@@ -1005,7 +1005,7 @@
       "name": "If Daño FW",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
-      "position": [-6768, 800]
+      "position": [1732, 800]
     },
     {
       "parameters": {
@@ -1055,7 +1055,7 @@
       "name": "Switch Daño FW",
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.4,
-      "position": [-6544, 800]
+      "position": [1956, 800]
     },
     {
       "parameters": {
@@ -1068,7 +1068,7 @@
       "name": "Gmail Daño FW H",
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
-      "position": [-6320, 608],
+      "position": [2180, 608],
       "webhookId": "fw-damage-0001-0000-4000-8000-000000000003",
       "credentials": { "gmailOAuth2": { "id": "xvnQhr5hfD4gc3Uk", "name": "HAMINOS" } }
     },
@@ -1083,7 +1083,7 @@
       "name": "Gmail Daño FW M",
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
-      "position": [-6320, 800],
+      "position": [2180, 800],
       "webhookId": "fw-damage-0001-0000-4000-8000-000000000004",
       "credentials": { "gmailOAuth2": { "id": "QJJKjkTiSoxnKucv", "name": "MIESTERY / SERVICE CORP WORLD" } }
     },
@@ -1098,7 +1098,7 @@
       "name": "Gmail Daño FW K",
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
-      "position": [-6320, 992],
+      "position": [2180, 992],
       "webhookId": "fw-damage-0001-0000-4000-8000-000000000005",
       "credentials": { "gmailOAuth2": { "id": "I8iOQCCkF5dchDft", "name": "KULTURDENDA" } }
     },
@@ -1113,7 +1113,7 @@
       "name": "Gmail Daño FW S",
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
-      "position": [-6320, 1184],
+      "position": [2180, 1184],
       "webhookId": "fw-damage-0001-0000-4000-8000-000000000006",
       "credentials": { "gmailOAuth2": { "id": "ATDngCzgo2CXlgvv", "name": "SNAPPY" } }
     },
@@ -1131,7 +1131,7 @@
       "name": "Preparar Update Daño FW",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
-      "position": [-6096, 800]
+      "position": [2404, 800]
     },
     {
       "parameters": {
@@ -1146,7 +1146,7 @@
       "name": "Update Daño FW",
       "type": "n8n-nodes-base.googleFirebaseCloudFirestore",
       "typeVersion": 1.1,
-      "position": [-5872, 800],
+      "position": [2628, 800],
       "credentials": {
         "googleFirebaseCloudFirestoreOAuth2Api": {
           "id": "EXM0epVP1YsMfolr",
@@ -1169,7 +1169,7 @@
       "name": "Preparar Update Sigue",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
-      "position": [-6096, 1248]
+      "position": [2404, 1248]
     },
     {
       "parameters": {
@@ -1186,7 +1186,7 @@
       "name": "Preparar Update Resuelta",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
-      "position": [-6544, 1584]
+      "position": [1956, 1584]
     }
   ],
   "connections": {
@@ -1563,6 +1563,13 @@
         [
           {
             "node": "Gmail 0000 S",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Loop Pedidos 0000",
             "type": "main",
             "index": 0
           }

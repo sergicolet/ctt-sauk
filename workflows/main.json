@@ -372,6 +372,16 @@
     },
     {
       "parameters": {
+        "jsCode": "const item = $input.item.json;\nconst bultos = item.bultos || [];\nconst now = new Date();\n\nlet manifest_hours = 0;\nlet transit_hours = 0;\nlet delivery_hours = 0;\nlet stationary_hours = 0;\nlet last_event_date = null;\n\nbultos.forEach(b => {\n  const lines = (b.history || \"\").split('\\n').filter(Boolean);\n  const events = lines.map(line => {\n    const parts = line.split(' | ');\n    const dateStr = parts[0];\n    const codeMatch = parts[1]?.match(/\\[(\\d+)\\]/);\n    const code = codeMatch ? codeMatch[1] : null;\n    return { date: new Date(dateStr), code };\n  }).filter(e => !isNaN(e.date.getTime()));\n\n  if (events.length === 0) return;\n\n  const latest = events.reduce((max, e) => e.date > max.date ? e : max, events[0]);\n  if (!last_event_date || latest.date > last_event_date) last_event_date = latest.date;\n\n  const lastManifest = [...events].reverse().find(e => ['0000', '0030'].includes(e.code));\n  const lastTransit  = [...events].reverse().find(e => ['0900', '1000'].includes(e.code));\n  const lastDelivery = [...events].reverse().find(e => ['1200', '1500'].includes(e.code));\n  const lastStationary = [...events].reverse().find(e => ['1700', '1800'].includes(e.code));\n\n  const diffNow = (d) => d ? (now - d) / 3600000 : 0;\n\n  if (lastManifest) manifest_hours = Math.max(manifest_hours, diffNow(lastManifest.date));\n  if (lastTransit)  transit_hours  = Math.max(transit_hours,  diffNow(lastTransit.date));\n  if (lastDelivery) delivery_hours = Math.max(delivery_hours, diffNow(lastDelivery.date));\n  if (lastStationary) stationary_hours = Math.max(stationary_hours, diffNow(lastStationary.date));\n});\n\nreturn {\n  json: {\n    ...item,\n    manifest_hours: Number(manifest_hours.toFixed(1)),\n    transit_hours: Number(transit_hours.toFixed(1)),\n    delivery_hours: Number(delivery_hours.toFixed(1)),\n    stationary_hours: Number(stationary_hours.toFixed(1)),\n    h_en_estado: last_event_date ? Number(((now - last_event_date)/3600000).toFixed(1)) : 0\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [3440, 528],
+      "id": "sla-0001-0001-0001-000000000016",
+      "name": "Code: Calcular SLA Horas"
+    },
+    {
+      "parameters": {
         "modelId": { "__rl": true, "value": "gpt-4o-mini", "mode": "list", "cachedResultName": "GPT-4O-MINI" },
         "responses": {
           "values": [
@@ -380,7 +390,7 @@
             },
             {
               "role": "system",
-              "content": "Eres un auditor logístico de CTT Express. Tu prioridad absoluta es el ESTADO ACTUAL (la última línea del historial de cada bulto). Analiza el historial y decide si requiere notificación.\n\n### REGLA DE ORO DE PRIORIDAD (Paso 0)\nSi el ÚLTIMO estado detectado en CUALQUIER bulto es [2500], [2300] o [2310]:\n- is_incident: true (Es un fallo crítico de entrega)\n- should_notify: true\n- incident_type: \"return\"\n- FIN DEL ANÁLISIS. No sigas evaluando otros pasos. Una devolución anula cualquier incidencia de reparto previa.\n\n### JERARQUÍA DE EVALUACIÓN\n1. DAÑO: ¿Aparece el código [6_INCT] en el historial?\n   - Si tras el daño NO hay una entrega [2100] -> incident_type: \"damage\", is_incident: true.\n2. INCIDENCIA ACTIVA: ¿El último estado relevante es [1600], [2400], [2600], [2700] o [0600]?\n   - Si NO hay un evento [1500] (En reparto) posterior -> incident_type: \"delivery_failure\", is_incident: true.\n3. RETRASO: ¿El último evento tiene fecha de hace más de 24h y no es un estado final (1700, 1800, 2100)?\n   - Si sí -> incident_type: \"delay\", is_incident: true.\n\n### PLANTILLAS DE EMAIL (Uso obligatorio - [SEG] es shipping_code, [BULTO] es item_code)\n- return: \"Estimados, el envío [SEG] ha entrado en proceso de devolución. Iniciamos seguimiento manual.\"\n- damage: \"Buenos días. El envío [SEG] (bulto [BULTO]) presenta daños físicos. Solicitamos apertura de expediente.\"\n- delivery_failure: \"Buenos días. El envío [SEG] (bulto [BULTO]) presenta incidencia en reparto. Solicitamos nuevo intento.\"\n- delay: \"Buenos días. El envío [SEG] lleva más de 24h sin avance. Solicitamos actualización.\"\n\n### REGLAS DE RESPUESTA (OBLIGATORIO)\n- RESPONDE SOLO CON JSON PURO.\n- PROHIBIDO USAR BLOQUES DE CÓDIGO MARKDOWN (SIN ```json).\n- Si is_incident es false, incident_type debe ser \"none\" y email_body \"\".\n\n### FORMATO JSON\n{\n  \"analysis\": {\n    \"ultimo_estado_detectado\": \"Cita la última línea del historial\",\n    \"item_afectado\": \"item_code\",\n    \"justificacion\": \"Explicación breve de por qué se aplica el paso X\"\n  },\n  \"decision\": {\n    \"is_incident\": true,\n    \"should_notify\": true,\n    \"incident_type\": \"return\" | \"damage\" | \"delivery_failure\" | \"delay\" | \"none\",\n    \"email_subject\": \"Asunto detallado\",\n    \"email_body\": \"Cuerpo del mensaje según plantilla\"\n  }\n}"
+              "content": "Eres un auditor logístico de CTT Express. Tu prioridad absoluta es el ESTADO ACTUAL y el tiempo transcurrido desde el último evento relevante.\n\n### REGLAS DE NOTIFICACIÓN CON UMBRAL (SLA)\nNotificar solo si se superan las 24h (usa los valores precalculados facilitados en el JSON):\n- Códigos [0000] o [0030] (Manifestado) -> si manifest_hours > 24 notificas Alerta Interna.\n- Códigos [0900] o [1000] (En Tránsito / Delegación) -> si transit_hours > 24 notificas.\n- Códigos [1200] o [1500] (En Reparto) -> si delivery_hours > 24 notificas.\n- Códigos [1700] o [1800] (Almacén) -> si stationary_hours > 24 notificas.\n\n### REGLA ESPECIAL TRANSITO\nSi transit_hours > 24 y NO existe ningún evento [1200] o [1500] en el historial completo facilitado -> should_notify: true.\n\n### ALERTAS INSTANTÁNEAS (SIN UMBRAL)\nNotificar SIEMPRE si el último estado es uno de los siguientes incidencias activas:\n- [1600], [2400], [2600], [2700] -> Reparto fallido.\n- [0600] -> Recogida fallida.\n- [2310], [2900] -> Datos incorrectos.\n- [1012], [1006], [1008] -> Incidencias graves.\n\n### REGLAS DE RESPUESTA\n- RESPONDE SOLO CON JSON PURO.\n- Si is_incident es false, incident_type debe ser \"none\" y email_body \"\".\n\n### FORMATO JSON\n{\n  \"analysis\": { \"ultimo_estado_detectado\": \"string\", \"item_afectado\": \"string\", \"justificacion\": \"string\" },\n  \"decision\": { \"is_incident\": boolean, \"should_notify\": boolean, \"incident_type\": \"string\", \"email_subject\": \"string\", \"email_body\": \"string\" }\n}"
             }
           ]
         },
@@ -619,7 +629,10 @@
             { "id": "ri-16", "name": "bultos_historial_json", "value": "={{ $('Code: Procesar Respuesta IA').item.json.bultos_raw }}", "type": "string" },
             { "id": "ri-17", "name": "forzado_interno",  "value": "={{ $('Code: Procesar Respuesta IA').item.json.force_internal }}", "type": "boolean" },
             { "id": "ri-18", "name": "shipping_code",    "value": "={{ $('Code: Procesar Respuesta IA').item.json.shipping_code.toJsonString() }}", "type": "string" },
-            { "id": "ri-19", "name": "isEjecucionOk",    "value": true, "type": "boolean" }
+            { "id": "ri-h1", "name": "transit_hours",    "value": "={{ $('Code: Calcular SLA Horas').item.json.transit_hours }}", "type": "number" },
+            { "id": "ri-h2", "name": "delivery_hours",   "value": "={{ $('Code: Calcular SLA Horas').item.json.delivery_hours }}", "type": "number" },
+            { "id": "ri-h3", "name": "manifest_hours",   "value": "={{ $('Code: Calcular SLA Horas').item.json.manifest_hours }}", "type": "number" },
+            { "id": "ri-h4", "name": "stationary_hours", "value": "={{ $('Code: Calcular SLA Horas').item.json.stationary_hours }}", "type": "number" }
           ]
         },
         "options": {}
@@ -637,7 +650,7 @@
         "collection": "incidencias",
         "documentId": "={{ $json.shipping_code.toString() }}",
         "updateKey": "_docid",
-        "columns": "fecha_procesado,numero_envio,numero_pedido,tienda,centro,incidencia,email_enviado,tipo_email,razon,destinatario,asunto,cuerpo,numero_avisos,bulto_afectado,bultos_historial_json,forzado_interno,isEjecucionOk"
+        "columns": "fecha_procesado,numero_envio,numero_pedido,tienda,centro,incidencia,email_enviado,tipo_email,razon,destinatario,asunto,cuerpo,numero_avisos,bulto_afectado,bultos_historial_json,forzado_interno,transit_hours,delivery_hours,manifest_hours,stationary_hours"
       },
       "type": "n8n-nodes-base.googleFirebaseCloudFirestore",
       "typeVersion": 1.1,
@@ -675,10 +688,14 @@
             { "id": "lg-19", "name": "dano",            "value": "={{ $node['Code: Procesar Respuesta IA'] ? ($node['Code: Procesar Respuesta IA'].json.incident_type === 'damage') : false }}", "type": "boolean" },
             { "id": "lg-20", "name": "historial_formateado", "value": "={{ $node['Code: Procesar Respuesta IA'] ? $node['Code: Procesar Respuesta IA'].json.formatted_history : '' }}", "type": "string" },
             { "id": "lg-21", "name": "shipping_code",    "value": "={{ ($node['Code: Procesar Respuesta IA'] ? $node['Code: Procesar Respuesta IA'].json.shipping_code : $node['Code: Preparar Contexto'].json.shipping_code).toJsonString() }}", "type": "string" },
-            { "id": "lg-22", "name": "isEjecucionOk",    "value": true, "type": "boolean" },
             { "id": "lg-23", "name": "asunto",           "value": "={{ $node['Code: Procesar Respuesta IA'] ? $node['Code: Procesar Respuesta IA'].json.asunto : '' }}", "type": "string" },
             { "id": "lg-24", "name": "cuerpo",           "value": "={{ $node['Code: Procesar Respuesta IA'] ? $node['Code: Procesar Respuesta IA'].json.cuerpo : '' }}", "type": "string" },
-            { "id": "lg-25", "name": "bultos_historial_json", "value": "={{ $node['Code: Procesar Respuesta IA'] ? $node['Code: Procesar Respuesta IA'].json.bultos_raw : $node['Code: Preparar Contexto'].json.bultos_raw }}", "type": "string" }
+            { "id": "lg-25", "name": "bultos_historial_json", "value": "={{ $node['Code: Procesar Respuesta IA'] ? $node['Code: Procesar Respuesta IA'].json.bultos_raw : $node['Code: Preparar Contexto'].json.bultos_raw }}", "type": "string" },
+            { "id": "lg-h1", "name": "transit_hours",    "value": "={{ $('Code: Calcular SLA Horas').item.json.transit_hours }}", "type": "number" },
+            { "id": "lg-h2", "name": "delivery_hours",   "value": "={{ $('Code: Calcular SLA Horas').item.json.delivery_hours }}", "type": "number" },
+            { "id": "lg-h3", "name": "manifest_hours",   "value": "={{ $('Code: Calcular SLA Horas').item.json.manifest_hours }}", "type": "number" },
+            { "id": "lg-h4", "name": "stationary_hours", "value": "={{ $('Code: Calcular SLA Horas').item.json.stationary_hours }}", "type": "number" },
+            { "id": "lg-h5", "name": "h_en_estado",      "value": "={{ $('Code: Calcular SLA Horas').item.json.h_en_estado }}", "type": "number" }
           ]
         },
         "options": { "ignoreConversionErrors": true }
@@ -697,7 +714,7 @@
         "projectId": "ctt-dashboard",
         "collection": "ejecuciones",
         "updateKey": "_docid",
-        "columns": "fecha_procesado,numero_envio,numero_pedido,tienda,centro,estado,fecha_estado,h_en_estado,email_enviado,tipo_email,razon,destinatario,credencial,transit_hours,delivery_hours,manifest_hours,forzado_interno,dano,historial_formateado,isEjecucionOk,asunto,cuerpo,bultos_historial_json"
+        "columns": "fecha_procesado,numero_envio,numero_pedido,tienda,centro,estado,fecha_estado,h_en_estado,email_enviado,tipo_email,razon,destinatario,credencial,transit_hours,delivery_hours,manifest_hours,stationary_hours,forzado_interno,dano,historial_formateado,asunto,cuerpo,bultos_historial_json"
       },
       "type": "n8n-nodes-base.googleFirebaseCloudFirestore",
       "typeVersion": 1.1,
@@ -772,6 +789,9 @@
       "main": [[{ "node": "Code: Extraer Historial", "type": "main", "index": 0 }]]
     },
     "Code: Extraer Historial": {
+      "main": [[{ "node": "Code: Calcular SLA Horas", "type": "main", "index": 0 }]]
+    },
+    "Code: Calcular SLA Horas": {
       "main": [[{ "node": "AI: Analizar Historiales", "type": "main", "index": 0 }]]
     },
     "AI: Analizar Historiales": {

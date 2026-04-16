@@ -4,15 +4,15 @@ export const STATUS_LABELS: Record<string, string> = {
   "0000": "Manifestado",
   "0030": "Manifestado",
   "0500": "Envío recogido",
-  "500":  "Envío recogido", // Add numerical alias
+  "500":  "Envío recogido",
   "0600": "Recogida fallida",
-  "600":  "Recogida fallida",  // Add numerical alias
+  "600":  "Recogida fallida",
   "0900": "En tránsito",
-  "900":  "En tránsito",      // Add numerical alias
+  "900":  "En tránsito",
   "1000": "Delegación de tránsito",
   "1200": "Delegación destino",
   "1500": "En reparto",
-  "20":   "En proceso", // Mapping 20 to En proceso / En reparto logic
+  "20":   "En proceso",
   "1600": "Reparto fallido",
   "1700": "Envío estacionado",
   "1800": "Estacionado ubicado",
@@ -21,12 +21,70 @@ export const STATUS_LABELS: Record<string, string> = {
   "2300": "Disponible en Punto CTT",
   "2310": "Pendiente de nuevos datos",
   "2400": "Reparto fallido (Incidencia)",
-  "2500": "Devolución en proceso",
+  "2500": "En devolución",
   "2600": "Incidencia (Dirección)",
   "2700": "Incidencia (Destinatario)",
   "71_INAT": "Nueva fecha de entrega",
   "6_INCT": "Daño detectado",
+  "0": "Draft",
+  "none": "Sin estado",
 };
+
+export interface StatusTheme {
+  bg: string;
+  text: string;
+  border: string;
+  dot: string;
+}
+
+export const STATUS_THEMES: Record<string, StatusTheme> = {
+  // Green - Success
+  "2000": { bg: "bg-emerald-50", text: "text-emerald-700", border: "border-emerald-200", dot: "bg-emerald-500" },
+  "2300": { bg: "bg-emerald-50", text: "text-emerald-700", border: "border-emerald-200", dot: "bg-emerald-500" },
+  
+  // Amber / Orange - Active / Transit
+  "0900": { bg: "bg-amber-50", text: "text-amber-700", border: "border-amber-200", dot: "bg-amber-500" },
+  "900":  { bg: "bg-amber-50", text: "text-amber-700", border: "border-amber-200", dot: "bg-amber-500" },
+  "1000": { bg: "bg-amber-50", text: "text-amber-700", border: "border-amber-200", dot: "bg-amber-500" },
+  "1200": { bg: "bg-amber-50", text: "text-amber-700", border: "border-amber-200", dot: "bg-amber-500" },
+  "1500": { bg: "bg-orange-50", text: "text-orange-700", border: "border-orange-200", dot: "bg-orange-500" },
+  "20":   { bg: "bg-orange-50", text: "text-orange-700", border: "border-orange-200", dot: "bg-orange-500" },
+  
+  // Red - Failure / Incident
+  "0600": { bg: "bg-red-50", text: "text-red-700", border: "border-red-200", dot: "bg-red-500" },
+  "600":  { bg: "bg-red-50", text: "text-red-700", border: "border-red-200", dot: "bg-red-500" },
+  "1600": { bg: "bg-red-50", text: "text-red-700", border: "border-red-200", dot: "bg-red-500" },
+  "2400": { bg: "bg-red-50", text: "text-red-700", border: "border-red-200", dot: "bg-red-500" },
+  "2600": { bg: "bg-red-50", text: "text-red-700", border: "border-red-200", dot: "bg-red-600" },
+  "2700": { bg: "bg-red-50", text: "text-red-700", border: "border-red-200", dot: "bg-red-600" },
+  "6_INCT": { bg: "bg-red-100", text: "text-red-800", border: "border-red-300", dot: "bg-red-600" },
+  
+  // Slate / Blue - Admin / Others
+  "0000": { bg: "bg-blue-50", text: "text-blue-700", border: "border-blue-200", dot: "bg-blue-500" },
+  "0030": { bg: "bg-blue-50", text: "text-blue-700", border: "border-blue-200", dot: "bg-blue-500" },
+  "0500": { bg: "bg-blue-50", text: "text-blue-700", border: "border-blue-200", dot: "bg-blue-500" },
+  "500":  { bg: "bg-blue-50", text: "text-blue-700", border: "border-blue-200", dot: "bg-blue-500" },
+  "1700": { bg: "bg-slate-50", text: "text-slate-700", border: "border-slate-200", dot: "bg-slate-400" },
+  "1800": { bg: "bg-slate-50", text: "text-slate-700", border: "border-slate-200", dot: "bg-slate-400" },
+  "1900": { bg: "bg-slate-50", text: "text-slate-700", border: "border-slate-200", dot: "bg-slate-500" },
+  "2310": { bg: "bg-amber-50", text: "text-amber-700", border: "border-amber-200", dot: "bg-amber-500" }, // Pendiente nuevos datos
+  "2500": { bg: "bg-purple-50", text: "text-purple-700", border: "border-purple-200", dot: "bg-purple-500" }, // En devolución
+  "71_INAT": { bg: "bg-indigo-50", text: "text-indigo-700", border: "border-indigo-200", dot: "bg-indigo-500" }, // Nueva fecha
+};
+
+const DEFAULT_THEME: StatusTheme = { bg: "bg-slate-50", text: "text-slate-600", border: "border-slate-200", dot: "bg-slate-300" };
+
+export function getStatusTheme(code: string): StatusTheme {
+  if (!code) return DEFAULT_THEME;
+  const theme = STATUS_THEMES[code];
+  if (theme) return theme;
+
+  const padded = String(code).padStart(4, '0');
+  const paddedTheme = STATUS_THEMES[padded];
+  if (paddedTheme) return paddedTheme;
+
+  return DEFAULT_THEME;
+}
 
 export const SHOP_NAMES: Record<string, string> = {
   "48630": "HAMINOS",

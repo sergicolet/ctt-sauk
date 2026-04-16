@@ -17,7 +17,14 @@ import {
   SheetTitle,
   SheetDescription,
 } from "@/components/ui/sheet";
-import { Ejecucion } from "@/lib/types";
+import { doc, updateDoc } from "firebase/firestore";
+import { db } from "@/lib/firebase";
+import { Ejecucion as BaseEjecucion } from "@/lib/types";
+
+// Unified type for merged display
+interface Ejecucion extends BaseEjecucion {
+  _collection?: 'ejecuciones' | 'incidencias';
+}
 import {
   ExternalLink,
   History,
@@ -36,12 +43,15 @@ import {
   ArrowDown,
   ArrowUp,
   XCircle,
+  ThumbsUp,
+  ThumbsDown,
 } from "lucide-react";
 import {
   getShopFromCenter,
   getStatusLabel,
   getActiveHours,
   cleanTracking,
+  getStatusTheme,
 } from "@/lib/status-map";
 
 interface BultoHistorial {
@@ -73,17 +83,66 @@ function parseBultos(bultos_historial_json?: string, historial_formateado?: stri
 function formatEvents(history: any) {
   const h = String(history || "");
   if (!h) return <p className="text-muted-foreground italic text-sm">Sin eventos disponibles.</p>;
-  const events = h.trim().split(/(?=\d{4}-\d{2}-\d{2} \d{2}:\d{2})/);
+  
+  // Limpiar el inicio
+  const eventString = h.replace(/^Item:\s*\S+\s*/, '');
+  const events = eventString.trim().split(/(?=\d{4}-\d{2}-\d{2} \d{2}:\d{2})/);
+  
   return (
-    <div className="space-y-3 pt-1">
-      {events.filter(Boolean).map((event, i) => (
-        <div key={i} className="flex gap-3 border-l-2 border-slate-100 pl-3 py-0.5 hover:border-primary/50 transition-colors">
-          <div className="flex flex-col gap-0.5">
-            <span className="text-[11px] font-bold text-slate-500 whitespace-nowrap">{event.substring(0, 16)}</span>
-            <span className="text-sm font-semibold text-slate-900 leading-snug">{event.substring(18)}</span>
+    <div className="relative pt-4 pb-6 space-y-3 before:absolute before:inset-0 before:ml-2.5 before:-translate-x-px before:w-0.5 before:bg-slate-200 before:rounded-full">
+      {events.filter(Boolean).map((event, i) => {
+        const str = event.trim();
+        const dateMatch = str.match(/^(\d{4}-\d{2}-\d{2} \d{2}:\d{2})/);
+        const dateStr = dateMatch ? dateMatch[1] : "";
+        
+        let desc = str.substring(dateStr.length).replace(/^ \| /, '').trim();
+        
+        const codeMatch = desc.match(/^\[([A-Za-z0-9_]+)\]/);
+        let finalTitle = "";
+        let code = "";
+        if (codeMatch) {
+          code = codeMatch[1];
+          desc = desc.replace(codeMatch[0], '').trim();
+          finalTitle = getStatusLabel(code);
+          
+          // Remove redundant label name from description
+          const labelLower = finalTitle.toLowerCase();
+          if (desc.toLowerCase().startsWith(labelLower)) {
+            desc = desc.substring(labelLower.length).trim();
+            if (desc.startsWith('-')) {
+              desc = desc.substring(1).trim();
+            }
+          }
+        } else {
+          finalTitle = desc.split(' - ')[0] || "Evento";
+        }
+        
+        desc = desc.replace(/^- /, '').trim();
+        const isLast = i === events.filter(Boolean).length - 1;
+        const theme = code ? getStatusTheme(code) : getStatusTheme("");
+        
+        return (
+          <div key={i} className="relative flex items-center gap-4 group py-0.5">
+            <div className={`flex items-center justify-center w-5 h-5 rounded-full border-[3px] border-white z-10 shrink-0 ${theme.dot} shadow-sm group-hover:scale-125 transition-transform`} />
+            
+            <div className={`flex-1 flex items-center justify-between gap-3 p-2.5 rounded-xl border ${theme.bg} ${theme.border} ${isLast ? "shadow-md ring-1 ring-primary/20 scale-[1.01]" : "shadow-sm"} transition-all`}>
+              <div className="flex flex-wrap items-center gap-2">
+                <span className={`text-xs font-extrabold uppercase tracking-tight ${theme.text}`}>
+                   {finalTitle}
+                </span>
+                {desc && (
+                  <span className="text-[11px] text-slate-600 font-medium">
+                    &bull; {desc}
+                  </span>
+                )}
+              </div>
+              <span className="text-[11px] font-bold text-slate-900 bg-white/80 px-2 py-0.5 rounded-md border border-slate-200 shrink-0">
+                 {dateStr ? `${dateStr.substring(8, 10)}-${dateStr.substring(5, 7)}-${dateStr.substring(2, 4)} ${dateStr.substring(11, 16)}` : ""}
+              </span>
+            </div>
           </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 }
@@ -164,6 +223,24 @@ export function EjecucionesTable({ ejecuciones, sortOrder }: Props) {
     }
   }, []);
 
+  const [isUpdating, setIsUpdating] = useState(false);
+
+  const handleUpdateStatus = async (item: Ejecucion, ok: boolean) => {
+    try {
+      setIsUpdating(true);
+      const collectionName = item._collection || 'ejecuciones';
+      const docRef = doc(db, collectionName, item.id);
+      await updateDoc(docRef, { isEjecucionOk: ok });
+      if (selectedEj && selectedEj.id === item.id) {
+        setSelectedEj({ ...selectedEj, isEjecucionOk: ok });
+      }
+    } catch (error) {
+      console.error("Error updating status:", error);
+    } finally {
+      setIsUpdating(false);
+    }
+  };
+
   useEffect(() => {
     const el = sentinelRef.current;
     if (!el) return;
@@ -176,31 +253,31 @@ export function EjecucionesTable({ ejecuciones, sortOrder }: Props) {
   const visible = sorted.slice(0, visibleCount);
   const hasMore = visibleCount < sorted.length;
 
-  function renderStatusBadge(code: string, dano: boolean) {
+  function renderStatusBadge(rawCode: string, dano: boolean) {
+    const code = String(rawCode || "").replace(/^"+|"+$/g, "").trim();
     const label = getStatusLabel(code);
+    const theme = getStatusTheme(code);
     const isTerminal = TERMINAL_CODES.includes(code);
 
     if (!isTerminal && dano) {
       return (
-        <Badge variant="outline" className="bg-red-50 text-red-600 border-red-200 px-2.5 py-0.5 font-bold gap-1 shadow-none text-xs">
+        <Badge variant="outline" className="bg-red-50 text-red-700 border-red-200 px-2.5 py-0.5 font-bold gap-1 shadow-none text-xs">
           <AlertCircle className="h-3 w-3" />
           Daño Detectado
         </Badge>
       );
     }
 
-    const isError = ["1600", "2400", "2600", "2700", "0600", "2310"].includes(code);
-    const isSuccess = ["2000"].includes(code);
-    const isWarning = ["2500", "2300"].includes(code);
-
-    if (isError) return <Badge variant="outline" className="bg-red-50 text-red-600 border-red-100 px-2.5 py-0.5 font-semibold shadow-none text-xs">{label}</Badge>;
-    if (isSuccess) return <Badge variant="outline" className="bg-emerald-50 text-emerald-600 border-emerald-100 px-2.5 py-0.5 font-semibold shadow-none text-xs">{label}</Badge>;
-    if (isWarning) return <Badge variant="outline" className="bg-orange-50 text-orange-600 border-orange-100 px-2.5 py-0.5 font-semibold shadow-none text-xs">{label}</Badge>;
-    return <Badge variant="secondary" className="bg-slate-50 text-slate-600 border-slate-100 px-2.5 py-0.5 font-medium shadow-none text-xs">{label}</Badge>;
+    return (
+      <Badge variant="outline" className={`${theme.bg} ${theme.text} ${theme.border} px-2.5 py-0.5 font-bold shadow-none text-xs`}>
+        {label}
+      </Badge>
+    );
   }
 
   function renderTypeBadge(type?: string, forced?: boolean) {
     const t = String(type || "").toLowerCase();
+    if (t === "none") return null;
     if (t.includes("internal") || forced) {
       return (
         <Badge variant="outline" className="text-amber-600 border-amber-200 bg-amber-50 gap-1.5 font-medium px-2 shadow-none text-xs">
@@ -262,12 +339,16 @@ export function EjecucionesTable({ ejecuciones, sortOrder }: Props) {
                       className="group cursor-pointer hover:bg-slate-50/80 transition-colors border-b last:border-0"
                       onClick={() => setSelectedEj(ej)}
                     >
-                      <TableCell className="py-3.5 px-5">
+                       <TableCell className="py-3.5 px-5">
                         <div className="flex items-center gap-2">
-                          {ej.isEjecucionOk !== false ? (
+                          {ej.isEjecucionOk === true && (
                             <CheckCircle2 className="h-4 w-4 text-emerald-500 shrink-0" />
-                          ) : (
+                          )}
+                          {ej.isEjecucionOk === false && (
                             <XCircle className="h-4 w-4 text-red-500 shrink-0" />
+                          )}
+                          {ej.isEjecucionOk === undefined && (
+                            <div className="h-4 w-4 rounded-full border border-slate-200 border-dashed shrink-0" />
                           )}
                           <span className="text-sm font-bold text-slate-900">{cleanedCode}</span>
                           <a
@@ -354,7 +435,9 @@ export function EjecucionesTable({ ejecuciones, sortOrder }: Props) {
                 <div className="px-6 pt-6 pb-4 border-b border-slate-100 shrink-0">
                   <SheetHeader className="text-left">
                     <SheetTitle className="text-xl font-extrabold break-all leading-tight flex items-center gap-2">
-                      <span className="text-slate-500 font-medium text-base">Envío</span>
+                      <span className="text-slate-500 font-medium text-base">
+                        {selectedEj._collection === 'incidencias' ? 'Incidencia' : 'Envío'}
+                      </span>
                       <span className="text-primary">{cleanedCode}</span>
                       <a href={`https://www.cttexpress.com/localizador-de-envios/?sc=${cleanedCode}`} target="_blank" rel="noopener noreferrer" className="text-primary hover:text-primary/80 transition-opacity">
                         <ExternalLink className="h-5 w-5" />
@@ -367,7 +450,7 @@ export function EjecucionesTable({ ejecuciones, sortOrder }: Props) {
                 </div>
 
                 {/* Body: two columns */}
-                <div className="flex flex-col md:grid md:grid-cols-[280px_1fr] flex-1 min-h-0 overflow-hidden">
+                <div className="flex flex-col md:grid md:grid-cols-2 flex-1 min-h-0 overflow-hidden">
 
                   {/* LEFT — metadata */}
                   <div className="md:border-r border-slate-100 px-5 py-5 space-y-5 overflow-y-auto md:overflow-y-auto custom-scrollbar shrink-0 md:shrink bg-slate-50/40">
@@ -380,17 +463,6 @@ export function EjecucionesTable({ ejecuciones, sortOrder }: Props) {
                     <div className="space-y-1.5">
                       <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Canal Notificación</p>
                       {renderTypeBadge(selectedEj.tipo_email, selectedEj.forzado_interno)}
-                    </div>
-
-                    <div className="space-y-1.5">
-                      <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Tiempo Activo</p>
-                      <div className="flex items-center gap-1.5">
-                        <Clock className="h-3.5 w-3.5 text-slate-400" />
-                        <span className={`text-sm font-bold ${timing.hours > 24 ? "text-red-600" : "text-slate-900"}`}>
-                          {timing.hours}h
-                        </span>
-                        {timing.label && <span className="text-[10px] text-slate-400 font-bold uppercase">{timing.label}</span>}
-                      </div>
                     </div>
 
                     <div className="space-y-1.5">
@@ -420,6 +492,36 @@ export function EjecucionesTable({ ejecuciones, sortOrder }: Props) {
                       </div>
                     </div>
 
+                    <div className="space-y-1.5 pt-2 border-t border-slate-100">
+                      <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Validación de Auditoría</p>
+                      <div className="grid grid-cols-2 gap-2">
+                        <button
+                          disabled={isUpdating}
+                          onClick={() => handleUpdateStatus(selectedEj, true)}
+                          className={`flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg text-[11px] font-bold transition-all border ${
+                            selectedEj.isEjecucionOk === true
+                               ? "bg-emerald-500 text-white border-emerald-500 shadow-sm"
+                               : "bg-white text-slate-600 border-slate-200 hover:border-emerald-300 hover:text-emerald-600"
+                           }`}
+                         >
+                           <ThumbsUp className="h-3 w-3" />
+                           ES CORRECTO
+                         </button>
+                         <button
+                           disabled={isUpdating}
+                           onClick={() => handleUpdateStatus(selectedEj, false)}
+                           className={`flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg text-[11px] font-bold transition-all border ${
+                             selectedEj.isEjecucionOk === false
+                               ? "bg-red-500 text-white border-red-500 shadow-sm"
+                               : "bg-white text-slate-600 border-slate-200 hover:border-red-300 hover:text-red-600"
+                           }`}
+                         >
+                           <ThumbsDown className="h-3 w-3" />
+                           ANÁLISIS ERROR
+                         </button>
+                      </div>
+                    </div>
+
                     <div className="space-y-1.5">
                       <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Fecha Revisión</p>
                       <div className="flex items-center gap-1.5">
@@ -438,24 +540,41 @@ export function EjecucionesTable({ ejecuciones, sortOrder }: Props) {
                       </p>
                     </div>
 
-                    {(selectedEj.asunto || selectedEj.cuerpo) && (
-                      <div className="space-y-2.5 p-3 bg-blue-50/50 rounded-xl border border-blue-100 mt-2">
-                        <div className="flex items-center gap-1.5 text-blue-600">
-                          <Mail className="h-3.5 w-3.5" />
-                          <span className="text-[10px] font-bold uppercase tracking-wider">Detalles del Email</span>
+                    {(() => {
+                      const asuntoText = selectedEj.asunto || selectedEj.email_subject || "";
+                      const cuerpoText = selectedEj.cuerpo || selectedEj.email_body || "";
+                      
+                      const hasContent = !!(asuntoText || cuerpoText);
+                      
+                      return (
+                        <div className="space-y-2.5 p-3 bg-blue-50/50 rounded-xl border border-blue-100 mt-2">
+                          <div className="flex items-center gap-1.5 text-blue-600">
+                            <Mail className="h-3.5 w-3.5" />
+                            <span className="text-[10px] font-bold uppercase tracking-wider">Detalles del Email / Alerta</span>
+                          </div>
+                          {!hasContent ? (
+                            <p className="text-xl text-slate-300 font-medium">—</p>
+                          ) : (
+                            <>
+                              {asuntoText && (
+                                <div className="space-y-1">
+                                  <p className="text-[9px] font-bold text-slate-400 uppercase tracking-tight">Asunto</p>
+                                  <p className="text-xs font-bold text-slate-800 leading-snug">{asuntoText}</p>
+                                </div>
+                              )}
+                              {cuerpoText && (
+                                <div className="space-y-1">
+                                  <p className="text-[9px] font-bold text-slate-400 uppercase tracking-tight">Cuerpo</p>
+                                  <p className="text-[11px] text-slate-600 font-medium leading-relaxed whitespace-pre-wrap">
+                                    {cuerpoText}
+                                  </p>
+                                </div>
+                              )}
+                            </>
+                          )}
                         </div>
-                        <div className="space-y-1">
-                          <p className="text-[9px] font-bold text-slate-400 uppercase tracking-tight">Asunto</p>
-                          <p className="text-xs font-bold text-slate-800 leading-snug">{selectedEj.asunto}</p>
-                        </div>
-                        <div className="space-y-1">
-                          <p className="text-[9px] font-bold text-slate-400 uppercase tracking-tight">Cuerpo</p>
-                          <p className="text-[11px] text-slate-600 font-medium leading-relaxed whitespace-pre-wrap line-clamp-6">
-                            {selectedEj.cuerpo}
-                          </p>
-                        </div>
-                      </div>
-                    )}
+                      );
+                    })()}
                   </div>
 
                   {/* RIGHT — historial de bultos */}

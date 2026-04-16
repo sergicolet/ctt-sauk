@@ -5,12 +5,9 @@ import { useRouter } from "next/navigation";
 import { collection, getDocs, orderBy, query, limit } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { useAuth } from "@/lib/auth-context";
-import { Ejecucion, Incidencia, Historial } from "@/lib/types";
+import { Ejecucion, Incidencia } from "@/lib/types";
 import { StatsCards } from "@/components/StatsCards";
 import { EjecucionesTable } from "@/components/EjecucionesTable";
-import { IncidenciasTable } from "@/components/IncidenciasTable";
-import { HistorialTable } from "@/components/HistorialTable";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -27,7 +24,6 @@ export default function Dashboard() {
   
   const [ejecuciones, setEjecuciones] = useState<Ejecucion[]>([]);
   const [incidencias, setIncidencias] = useState<Incidencia[]>([]);
-  const [historial, setHistorial] = useState<Historial[]>([]);
   
   // Filters
   const [tiendaFiltro, setTiendaFiltro] = useState("TODAS");
@@ -37,6 +33,7 @@ export default function Dashboard() {
   const [busqueda, setBusqueda] = useState("");
   const [fechaInicio, setFechaInicio] = useState<Date | undefined>(undefined);
   const [sortOrder, setSortOrder] = useState<"desc" | "asc">("desc");
+  const [mostrarSoloIncidencias, setMostrarSoloIncidencias] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -50,14 +47,12 @@ export default function Dashboard() {
     async function load() {
       setLoading(true);
       try {
-        const [ejSnap, incSnap, histSnap] = await Promise.all([
+        const [ejSnap, incSnap] = await Promise.all([
           getDocs(query(collection(db, "ejecuciones"), orderBy("fecha_procesado", "desc"), limit(1000))),
           getDocs(query(collection(db, "incidencias"), orderBy("fecha_procesado", "desc"), limit(1000))),
-          getDocs(query(collection(db, "historial"), orderBy("fecha", "desc"), limit(500))),
         ]);
         setEjecuciones(ejSnap.docs.map((d) => ({ id: d.id, ...d.data() } as Ejecucion)));
         setIncidencias(incSnap.docs.map((d) => ({ id: d.id, ...d.data() } as Incidencia)));
-        setHistorial(histSnap.docs.map((d) => ({ id: d.id, ...d.data() } as Historial)));
       } catch (e) {
         console.error("Error loading Firestore data:", e);
       }
@@ -73,6 +68,7 @@ export default function Dashboard() {
     setTipoFiltro("TODOS");
     setBusqueda("");
     setFechaInicio(undefined);
+    setMostrarSoloIncidencias(false);
   };
 
   const parseProcessDate = (dateStr: string) => {
@@ -127,18 +123,15 @@ export default function Dashboard() {
     };
 
     return {
-      ej: ejecuciones.filter(e => filterFn(e, false)),
-      inc: incidencias.filter(i => filterFn(i, true)),
-      hist: historial.filter(h => {
-        const searchMatch = !term || 
-          (h.numero_envio || "").toLowerCase().includes(term) || 
-          (h.numero_pedido || "").toLowerCase().includes(term);
-        if (!searchMatch) return false;
-        if (tiendaFiltro !== "TODAS" && h.tienda !== tiendaFiltro) return false;
-        return true;
-      })
+      ej: (mostrarSoloIncidencias 
+        ? incidencias.map(i => ({ ...i, estado: i.incidencia, h_en_estado: i.h_en_incidencia, email_enviado: i.numero_avisos > 0, _collection: 'incidencias' } as any))
+        : [
+            ...ejecuciones.map(e => ({ ...e, _collection: 'ejecuciones' } as any)),
+            ...incidencias.map(i => ({ ...i, estado: i.incidencia, h_en_estado: i.h_en_incidencia, email_enviado: i.numero_avisos > 0, _collection: 'incidencias' } as any))
+          ]
+      ).filter(e => filterFn(e, false))
     };
-  }, [ejecuciones, incidencias, historial, busqueda, tiendaFiltro, estadoFiltro, emailFiltro, tipoFiltro, fechaInicio]);
+  }, [ejecuciones, incidencias, busqueda, tiendaFiltro, estadoFiltro, emailFiltro, tipoFiltro, fechaInicio, mostrarSoloIncidencias]);
 
   if (state.status === "loading" || state.status !== "authenticated") {
     return (
@@ -201,7 +194,7 @@ export default function Dashboard() {
         </div>
       ) : (
         <>
-          <StatsCards ejecuciones={filteredData.ej} incidencias={filteredData.inc} />
+          <StatsCards ejecuciones={ejecuciones} incidencias={incidencias} />
 
           {/* Filters Bar */}
           <div className="bg-white p-4 rounded-2xl shadow-sm border space-y-4">
@@ -221,8 +214,26 @@ export default function Dashboard() {
               </Button>
             </div>
             
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-7 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-8 gap-4">
               <div className="space-y-1.5">
+                <label className="text-xs font-semibold text-slate-500 uppercase ml-1">Capa Visual</label>
+                <Button
+                  variant="outline"
+                  onClick={() => setMostrarSoloIncidencias(!mostrarSoloIncidencias)}
+                  className={`w-full h-11 rounded-xl font-bold transition-all border shadow-none flex items-center justify-between px-4 ${
+                    mostrarSoloIncidencias 
+                      ? "bg-orange-50 text-orange-600 border-orange-200" 
+                      : "bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100"
+                  }`}
+                >
+                  <span className="text-[11px] uppercase tracking-wider">Incidencias</span>
+                  <div className={`w-8 h-4 rounded-full relative transition-colors ${mostrarSoloIncidencias ? "bg-orange-500" : "bg-slate-300"}`}>
+                    <div className={`absolute top-1 w-2 h-2 rounded-full bg-white transition-all ${mostrarSoloIncidencias ? "left-5" : "left-1"}`} />
+                  </div>
+                </Button>
+              </div>
+
+              <div className="space-y-1.5 lg:col-span-1">
                 <label className="text-xs font-semibold text-slate-500 uppercase ml-1">Búsqueda</label>
                 <div className="relative">
                   <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
@@ -349,33 +360,14 @@ export default function Dashboard() {
 
           </div>
 
-          <Tabs defaultValue="ejecuciones" className="w-full">
-            <div className="flex items-center justify-between mb-4 overflow-x-auto no-scrollbar">
-              <TabsList className="bg-white p-1 rounded-xl shadow-sm border w-fit">
-                <TabsTrigger value="ejecuciones" className="px-6 rounded-lg data-[state=active]:bg-slate-100 data-[state=active]:text-primary font-bold">
-                  Ejecuciones ({filteredData.ej.length})
-                </TabsTrigger>
-                <TabsTrigger value="incidencias" className="px-6 rounded-lg data-[state=active]:bg-slate-100 data-[state=active]:text-primary font-bold">
-                  Incidencias ({filteredData.inc.length})
-                </TabsTrigger>
-                <TabsTrigger value="historial" className="px-6 rounded-lg data-[state=active]:bg-slate-100 data-[state=active]:text-primary font-bold">
-                  Logs IA ({filteredData.hist.length})
-                </TabsTrigger>
-              </TabsList>
+          <div className="space-y-4">
+            <div className="flex items-center justify-between">
+              <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wider">
+                Listado de Ejecuciones ({filteredData.ej.length})
+              </h3>
             </div>
-
-            <TabsContent value="ejecuciones" className="animate-in fade-in slide-in-from-bottom-2 duration-300">
-              <EjecucionesTable ejecuciones={filteredData.ej} sortOrder={sortOrder} />
-            </TabsContent>
-
-            <TabsContent value="incidencias" className="animate-in fade-in slide-in-from-bottom-2 duration-300">
-              <IncidenciasTable incidencias={filteredData.inc} sortOrder={sortOrder} />
-            </TabsContent>
-            
-            <TabsContent value="historial" className="animate-in fade-in slide-in-from-bottom-2 duration-300">
-              <HistorialTable historial={filteredData.hist} />
-            </TabsContent>
-          </Tabs>
+            <EjecucionesTable ejecuciones={filteredData.ej} sortOrder={sortOrder} />
+          </div>
         </>
       )}
     </main>
