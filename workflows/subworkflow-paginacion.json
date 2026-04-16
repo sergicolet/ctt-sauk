@@ -133,7 +133,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const item = $input.first().json;\nconst lastPage = item.pagination?.page_offsets?.last ?? 1;\nconst centerCode = item.data?.[0]?.client_center_code || '';\n\nconst pages = [];\nfor (let i = 2; i <= lastPage; i++) {\n  pages.push({ json: { page: i, center_code: centerCode } });\n}\nreturn pages;"
+        "jsCode": "const item = $input.first().json;\n// Forzamos que lastPage sea un número válido\nconst lastPage = Math.max(Number(item.pagination?.page_offsets?.last || 1), 1);\n\n// BUGFIX: Obtenemos el center_code directamente del nodo Loop.\n// Obtenerlo de item.data[0] es peligroso porque puede venir vacío\nlet centerCode = '';\ntry {\n  centerCode = $('3.LoopTiendas_Sub').first().json.center_code;\n} catch(e) {\n  centerCode = item.data?.[0]?.client_center_code || '';\n}\n\nconst pages = [];\nfor (let i = 2; i <= lastPage; i++) {\n  pages.push({ json: { page: i, center_code: centerCode } });\n}\nreturn pages;"
       },
       "id": "e495f4a6-d6e1-4f1c-aec6-55de9443e00e",
       "name": "7.GenerarPáginasExtra_Sub",
@@ -194,13 +194,12 @@
     },
     {
       "parameters": {
-        "fieldToSplitOut": "data",
-        "options": {}
+        "jsCode": "const items = $input.all();\nconst result = [];\nfor (const item of items) {\n  const data = item.json.data;\n  if (!data || !Array.isArray(data)) continue;\n  for (const shipping of data) {\n    if (shipping && shipping.shipping_code) {\n      result.push({ json: shipping });\n    }\n  }\n}\nreturn result;"
       },
       "id": "25e18d59-0073-4c07-83cb-672e8127609c",
       "name": "9.SepararResto_Sub",
-      "type": "n8n-nodes-base.itemLists",
-      "typeVersion": 3,
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
       "position": [
         8224,
         -144

@@ -17,3 +17,8 @@ firestore.indexes.json
 firebase-debug.log
 firebase-debug.*.log
 .firebase/
+
+# Scripts
+scripts/node_modules/
+scripts/config/serviceAccountKey.json
+
