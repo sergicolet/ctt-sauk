@@ -1056,7 +1056,7 @@
       "parameters": {
         "sendTo": "={{ $json.to_email }}",
         "subject": "={{ $json.email_subject }}",
-        "message": "={{ $json.email_body }}\n\n--- DETALLES INTERNOS ---\nJUSTIFICACION IA: {{ $json.ai_justification }}\nENVIO: {{ $json.shipping_code }}\nPEDIDO: {{ $json.client_references[0] }}\nBULTO AFECTADO: {{ $json.affected_bulto || 'N/A' }}",
+        "message": "={{ $json.email_body }}\n\nPEDIDO: {{ $json.numero_pedido }}\nBULTO AFECTADO: {{ $json.affected_bulto || 'N/A' }}",
         "options": {
           "appendAttribution": false
         }
@@ -1104,7 +1104,7 @@
       "parameters": {
         "sendTo": "={{ $json.to_email }}",
         "subject": "={{ $json.email_subject }}",
-        "message": "={{ $json.email_body }}\n\n--- DETALLES INTERNOS ---\nJUSTIFICACION IA: {{ $json.ai_justification }}\nENVIO: {{ $json.shipping_code }}\nPEDIDO: {{ $json.client_references[0] }}\nBULTO AFECTADO: {{ $json.affected_bulto || 'N/A' }}",
+        "message": "={{ $json.email_body }}\n\nPEDIDO: {{ $json.numero_pedido }}\nBULTO AFECTADO: {{ $json.affected_bulto || 'N/A' }}",
         "options": {
           "appendAttribution": false
         }
@@ -1152,7 +1152,7 @@
       "parameters": {
         "sendTo": "={{ $json.to_email }}",
         "subject": "={{ $json.email_subject }}",
-        "message": "={{ $json.email_body }}\n\n--- DETALLES INTERNOS ---\nJUSTIFICACION IA: {{ $json.ai_justification }}\nENVIO: {{ $json.shipping_code }}\nPEDIDO: {{ $json.client_references[0] }}\nBULTO AFECTADO: {{ $json.affected_bulto || 'N/A' }}",
+        "message": "={{ $json.email_body }}\n\nPEDIDO: {{ $json.numero_pedido }}\nBULTO AFECTADO: {{ $json.affected_bulto || 'N/A' }}",
         "options": {
           "appendAttribution": false
         }
@@ -1200,7 +1200,7 @@
       "parameters": {
         "sendTo": "={{ $json.to_email }}",
         "subject": "={{ $json.email_subject }}",
-        "message": "={{ $json.email_body }}\n\n--- DETALLES INTERNOS ---\nJUSTIFICACION IA: {{ $json.ai_justification }}\nENVIO: {{ $json.shipping_code }}\nPEDIDO: {{ $json.client_references[0] }}\nBULTO AFECTADO: {{ $json.affected_bulto || 'N/A' }}",
+        "message": "={{ $json.email_body }}\n\nPEDIDO: {{ $json.numero_pedido }}\nBULTO AFECTADO: {{ $json.affected_bulto || 'N/A' }}",
         "options": {
           "appendAttribution": false
         }
