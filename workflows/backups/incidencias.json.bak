@@ -304,14 +304,14 @@
     },
     {
       "parameters": {
-        "jsCode": "const data = $input.item.json;\nconst itemsRaw = data.items_raw || [];\nlet aggregatedInfo = [];\n\nfor (const it of itemsRaw) {\n  const item_code = it.item_code || 'N/A';\n  const events = Array.isArray(it.events) ? it.events : [];\n  const historyLines = events.map(e => {\n    const raw_date = e.event_date || e.item_event_date || '';\n    const date = raw_date ? raw_date.substring(0, 10) + ' ' + raw_date.substring(11,16).replace('T', ' ') : 'N/A';\n    const code = e.event_code || e.code || '???';\n    const desc = e.event_description || e.description || '';\n    const detail = e.detail?.External_event_text || e.detail?.item_event_text || '';\n    return `${date} | [${code}] ${desc}${detail ? ' - ' + detail : ''}`;\n  });\n  aggregatedInfo.push(`Item: ${item_code}\\nHistorial:\\n${historyLines.join('\\n')}`);\n}\n\nreturn {\n  shipping_code: data.numero_envio,\n  numero_pedido: data.numero_pedido,\n  tienda: data.tienda,\n  credencial: data.credencial,\n  incidencia_registrada: data.incidencia,\n  bultos_text: aggregatedInfo.join('\\n\\n---\\n\\n'),\n  transit_hours: data.transit_hours,\n  manifest_hours: data.manifest_hours,\n  delivery_hours: data.delivery_hours,\n  stationary_hours: data.stationary_hours,\n  any_damage: data.any_damage\n};"
+        "jsCode": "try {\n  const incidencia = $('Loop Followup').first().json;\n  const httpResp = $input.item.json;\n  \n  // Normalizamos: shipping_history puede ser objeto (1 bulto) o array (N bultos)\n  let itemsRaw = [];\n  const rawData = httpResp?.data?.shipping_history;\n  if (Array.isArray(rawData)) {\n    itemsRaw = rawData;\n  } else if (rawData && typeof rawData === 'object') {\n    itemsRaw = [rawData];\n  } else {\n    throw new Error('No se encontró historial de bultos');\n  }\n\n  // ─── FUNCION AUXILIAR: HORAS LABORABLES ────────────────────────────────\n  function businessHours(startDate, endDate) {\n    if (!startDate || !endDate || endDate <= startDate) return 0;\n    let hours = 0;\n    let cur = new Date(startDate.getTime());\n    while (cur < endDate) {\n      const dow = cur.getDay(); // 0=Dom, 6=Sab\n      if (dow !== 0 && dow !== 6) {\n        const y = cur.getFullYear(), m = cur.getMonth(), d = cur.getDate();\n        const nextMidnight = new Date(y, m, d + 1);\n        const seg = endDate < nextMidnight ? endDate : nextMidnight;\n        hours += (seg - cur) / 3600000;\n      }\n      const y = cur.getFullYear(), m = cur.getMonth(), d = cur.getDate();\n      cur = new Date(y, m, d + 1);\n    }\n    return parseFloat(hours.toFixed(1));\n  }\n\n  const now = new Date();\n  const TRANSIT    = ['0900', '1000'];\n  const DELIVERY   = ['1200', '1500'];\n  const STATIONARY = ['1700', '1800'];\n  const MANIFEST   = ['0000', '0030'];\n\n  let aggregatedInfo = []; // Formato texto para la IA\n  let maxTransit = 0, maxManifest = 0, maxDelivery = 0, maxStationary = 0;\n  let anyDamage = false;\n\n  // PROCESAMOS CADA BULTO\n  for (const it of itemsRaw) {\n    const item_code = it.item_code || 'N/A';\n    const events = Array.isArray(it.events) ? it.events : [];\n    \n    // 1. Texto para IA\n    const historyLines = events.map(e => {\n      const raw_date = e.event_date || e.item_event_date || '';\n      const date = raw_date ? raw_date.substring(0, 16).replace('T', ' ') : 'N/A';\n      const code = e.event_code || e.code || '???';\n      const desc = e.event_description || e.description || '';\n      const detail = e.detail?.External_event_text || e.detail?.item_event_text || '';\n      return `${date} | [${code}] ${desc}${detail ? ' - ' + detail : ''}`;\n    });\n    aggregatedInfo.push(`Item: ${item_code}\\nHistorial:\\n${historyLines.join('\\n')}`);\n\n    // 2. Cálculos de tiempo (solo si hay eventos)\n    if (events.length > 0) {\n      const parsedEvents = events.map(e => ({\n        date: new Date(e.event_date || e.item_event_date),\n        code: e.event_code || e.code\n      })).filter(e => !isNaN(e.date.getTime()));\n\n      if (parsedEvents.some(e => e.code === '6_INCT')) anyDamage = true;\n\n      // Tránsito\n      const firstTransit = parsedEvents.find(e => TRANSIT.includes(e.code));\n      if (firstTransit && !parsedEvents.some(e => e.code === '1500' && e.date > firstTransit.date)) {\n        maxTransit = Math.max(maxTransit, businessHours(firstTransit.date, now));\n      }\n      // Manifestado\n      const firstManifest = parsedEvents.find(e => MANIFEST.includes(e.code));\n      if (firstManifest && !parsedEvents.some(e => TRANSIT.includes(e.code))) {\n        maxManifest = Math.max(maxManifest, businessHours(firstManifest.date, now));\n      }\n      // Reparto\n      let deliveryStart = null;\n      parsedEvents.forEach(e => {\n        if (DELIVERY.includes(e.code)) deliveryStart = e.date;\n        else if (e.code === '1000') deliveryStart = null;\n      });\n      if (deliveryStart) maxDelivery = Math.max(maxDelivery, businessHours(deliveryStart, now));\n      \n      // Estacionado\n      const lastStat = [...parsedEvents].reverse().find(e => STATIONARY.includes(e.code));\n      if (lastStat) maxStationary = Math.max(maxStationary, businessHours(lastStat.date, now));\n    }\n  }\n\n  return {\n    json: {\n      shipping_code:              incidencia.numero_envio,\n      numero_pedido:              incidencia.numero_pedido,\n      tienda:                     incidencia.tienda,\n      credencial:                 incidencia.credencial,\n      incidencia_registrada:      incidencia.incidencia,\n      fecha_incidencia_original:  incidencia.fecha_procesado,\n      bultos_text:                aggregatedInfo.join('\\n\\n---\\n\\n'),\n      has_damage:                 anyDamage,\n      transit_hours:              maxTransit,\n      manifest_hours:             maxManifest,\n      delivery_hours:             maxDelivery,\n      stationary_hours:           maxStationary\n    }\n  };\n} catch (error) {\n  throw new Error(`[Code FW JS3 Aggregator] ${error.message}`);\n}"
       },
       "id": "ce8d34e2-f606-4b61-bdeb-90e339feee18",
-      "name": "Code: Preparar Contexto IA FW",
+      "name": "Code FW JS3",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1182,
+        932,
         1360
       ]
     },
@@ -330,7 +330,7 @@
             },
             {
               "role": "system",
-              "content": "Eres un auditor logístico de CTT Express. Tu misión es analizar si una incidencia registrada ayer sigue activa o se ha resuelto.\n\n### REGLA DE ORO DE PRIORIDAD\nSi el ÚLTIMO estado detectado es [2500], [2300], [2310] o [2000/2100]:\n- sigue_incidencia: false (En estas fases ya hay un proceso de cierre o punto PUDO)\n- FIN DEL ANÁLISIS.\n\n### JERARQUÍA DE EVALUACIÓN\n1. RESOLUCIÓN: ¿Hay un evento [1500] (En reparto) posterior a la incidencia? ¿Estado actual tránsito < 24h?\n   - Si sí -> sigue_incidencia: false.\n2. INCIDENCIA ACTIVA: ¿Último evento sigue siendo un fallo activo [1600, 1700, 1800, 2400, 2600, 2700]?\n   - Si sí -> sigue_incidencia: true. Categoria: \"Fallo Reparto\".\n3. ESTANCAMIENTO:\n   - transit_hours > 24 -> sigue_incidencia: true. Categoria: \"Transito Estancado\".\n   - delivery_hours > 24 -> sigue_incidencia: true. Categoria: \"Reparto Estancado\".\n\n### FORMATO JSON\n{\n  \"sigue_incidencia\": true | false,\n  \"categoria\": \"Transito Estancado\" | \"Reparto Estancado\" | \"Fallo Reparto\" | \"Otros\",\n  \"justificacion\": \"Breve explicación\",\n  \"estado_actual\": \"Código CTT final\"\n}"
+              "content": "Eres un auditor logístico de CTT Express. Tu misión es analizar si una incidencia registrada ayer sigue activa o se ha resuelto.\n\n### REGLA DE ORO DE PRIORIDAD (Paso 0)\nSi el ÚLTIMO estado detectado en CUALQUIER bulto es [2500], [2300], [2310] o [2000/2100]:\n- sigue_incidencia: false (Se considera resuelta o en estado terminal final)\n- FIN DEL ANÁLISIS. No sigas evaluando otros pasos.\n\n### JERARQUÍA DE EVALUACIÓN\n1. RESOLUCIÓN: ¿Hay un evento [1500] (En reparto) posterior a la incidencia de ayer? ¿O el estado actual es tránsito [0900/1000] con menos de 24h?\n   - Si sí -> sigue_incidencia: false.\n2. INCIDENCIA ACTIVA: ¿El último evento sigue siendo un fallo [1600, 1700, 1800, 2400, 2600, 2700]?\n   - Si sí -> sigue_incidencia: true.\n3. ESTANCAMIENTO (Horas Precalculadas):\n   - transit_hours > 24 -> sigue_incidencia: true.\n   - delivery_hours > 24 -> sigue_incidencia: true.\n   - stationary_hours > 24 -> sigue_incidencia: true.\n\n### PLANTILLAS EMAIL_BODY (Solo si sigue_incidencia: true - [SEG] es shipping_code)\n- Transito estancado: \"Buenos dias. El envio [SEG] estuvo en transito el dia anterior y hoy aun no ha cambiado a reparto. Solicitamos que el envio salga a reparto al dia siguiente. Gracias.\"\n- Reparto estancado: \"Buenos dias. El envio [SEG] se encuentra en reparto desde ayer sin entregarse. Solicitamos que el pedido sea sacado nuevamente a reparto hoy mismo. Gracias.\"\n- Reparto fallido activo: \"Buenos dias. El envio [SEG] presenta su primera incidencia. Solicitamos explicitamente un segundo intento de reparto para el siguiente dia habil. Gracias.\"\n- Punto CTT / PUDO (2300): \"Hola equipo de CTT, necesitamos la direccion detallada del punto de recogida para el siguiente envio: EXPEDICION: - [SEG]. Gracias de antemano.\"\n- Otros: Usar mensaje descriptivo pidiendo gestión urgente de [SEG].\n\n### REGLAS DE RESPUESTA\n- RESPONDE SOLO CON JSON PURO.\n- PROHIBIDO USAR BLOQUES DE CÓDIGO MARKDOWN.\n- Si sigue_incidencia es false, email_body debe ser \"\".\n\n### FORMATO JSON\n{\n  \"sigue_incidencia\": true | false,\n  \"estado_actual\": \"Cita el último evento relevante\",\n  \"justificacion\": \"Explicación breve de por qué sigue activa o se cerró\",\n  \"item_afectado\": \"item_code\",\n  \"email_body\": \"Texto del correo según plantilla o vacío\"\n}"
             }
           ]
         },
@@ -356,14 +356,14 @@
     },
     {
       "parameters": {
-        "jsCode": "const raw = $input.item.json;\nconst SEG = raw.shipping_code;\nconst PED = raw.numero_pedido;\n\nconst TEMPLATES = {\n  pendiente:         { subject: 'ALERTA PENDIENTE (0000)',                                     body: 'Hola, se ha detectado que el siguiente envío lleva más de 24 horas en estado 0000. Por favor, revisadlo.\\nPEDIDO: - ' + (PED || SEG) },\n  devolucion:        { subject: 'Devolución en proceso: ' + (PED || SEG),                        body: 'Hola, el siguiente pedido ha entrado en proceso de devolución. Iniciamos seguimiento manual.\\nCÓDIGO: - ' + SEG },\n  siniestro:         { subject: 'Apertura de siniestro: ' + (PED || SEG),                        body: 'Buenos días CTT, solicitamos la apertura oficial de expediente de siniestro por pérdida/daño para el envío:\\nREFERENCIA: - ' + SEG + '. Quedamos a la espera del número de expediente.' },\n  segundo_intento:   { subject: 'Incidencia en el envío ' + (PED || SEG),                        body: 'Buenos días. Tras la incidencia en el primer intento, solicitamos automáticamente un segundo intento de reparto para el siguiente día hábil.\\nEXPEDICIÓN: - ' + SEG + '. Gracias.' },\n  recogida_fallida:  { subject: 'Incidencia en el envío ' + (PED || SEG),                        body: 'Buenos días. Solicitamos que se reintente la recogida fallida del siguiente envío:\\nEXPEDICIÓN: - ' + SEG + '. Gracias.' },\n  agilizar_transito: { subject: 'Incidencia en el envío ' + (PED || SEG),                        body: 'Buenos días. El envío ' + SEG + ' lleva más de 24 horas en tránsito sin pasar a reparto. Solicitamos que salga a reparto el próximo día hábil. Gracias.' },\n  agilizar_reparto:  { subject: 'Incidencia en el envío ' + (PED || SEG),                        body: 'Buenos días. El envío ' + SEG + ' lleva más de 24 horas en reparto sin entregarse. Solicitamos que sea sacado nuevamente a reparto hoy mismo. Gracias.' },\n  punto_ctt:         { subject: 'Envío en punto CTT: ' + (PED || SEG),                           body: 'Buenos días. Necesitamos la dirección detallada del punto de recogida para el siguiente envío:\\nEXPEDICIÓN: - ' + SEG + '. Gracias de antemano.' },\n  recogida_0030:     { subject: 'Incidencia en el envío ' + (PED || SEG),                        body: 'Buenos días. Solicitamos agilizar la recogida del siguiente envío que lleva más de 24 horas pendiente:\\nLISTADO DE ENVÍOS: - ' + SEG + '. Gracias.' },\n};\n\nlet res = { ...raw, email_subject: '', email_body: '', target_type: 'none', to_email: '' };\n\nconst active = raw.sigue_incidencia === true || raw.is_incident === true || raw.should_notify === true;\n\nif (active) {\n  const cat = (raw.notification_type || raw.categoria || raw.decision || 'Otros').toLowerCase();\n  \n  if (cat.includes('reparto_estancado') || cat.includes('agilizar_reparto')) { \n    res.target_type = 'standard'; res.email_subject = TEMPLATES.agilizar_reparto.subject; res.email_body = TEMPLATES.agilizar_reparto.body; \n  }\n  else if (cat.includes('transito_estancado') || cat.includes('agilizar_transito')) { \n    res.target_type = 'standard'; res.email_subject = TEMPLATES.agilizar_transito.subject; res.email_body = TEMPLATES.agilizar_transito.body; \n  }\n  else if (cat.includes('segundo_intento') || cat.includes('fallo reparto')) { \n    res.target_type = 'standard'; res.email_subject = TEMPLATES.segundo_intento.subject; res.email_body = TEMPLATES.segundo_intento.body; \n  }\n  else if (cat.includes('punto_ctt') || cat.includes('pudo') || cat.includes('2300') || cat.includes('2310')) { \n    res.target_type = 'standard'; res.email_subject = TEMPLATES.punto_ctt.subject; res.email_body = TEMPLATES.punto_ctt.body; \n  }\n  else if (cat.includes('recogida_fallida') || cat.includes('0600')) {\n    res.target_type = 'standard'; res.email_subject = TEMPLATES.recogida_fallida.subject; res.email_body = TEMPLATES.recogida_fallida.body;\n  }\n  else if (cat.includes('pendiente') || cat.includes('0000')) { \n    res.target_type = 'internal'; res.email_subject = TEMPLATES.pendiente.subject; res.email_body = TEMPLATES.pendiente.body; \n  }\n  else if (cat.includes('recogida_0030') || cat.includes('0030')) {\n    res.target_type = 'standard'; res.email_subject = TEMPLATES.recogida_0030.subject; res.email_body = TEMPLATES.recogida_0030.body;\n  }\n  else if (cat.includes('devolucion') || cat.includes('2500')) { \n    res.target_type = 'internal'; res.email_subject = TEMPLATES.devolucion.subject; res.email_body = TEMPLATES.devolucion.body; \n  }\n  else if (cat.includes('siniestro') || cat.includes('6_inct') || cat.includes('1006') || cat.includes('1008') || cat.includes('1012')) { \n    res.target_type = 'internal'; res.email_subject = TEMPLATES.siniestro.subject; res.email_body = TEMPLATES.siniestro.body; \n  }\n  else {\n    res.target_type = 'internal';\n    res.email_subject = 'Gestión Urgente: ' + SEG;\n    res.email_body = 'Hola, se requiere revisión manual para el envío ' + SEG + '.\\nJustificación: ' + (raw.justificacion || raw.justification || raw.ai_justification || 'Sin detalle');\n  }\n\n  const avisos = parseInt(raw.numero_avisos) || 0;\n  if (avisos > 0 && res.target_type === 'standard') {\n    res.target_type = 'internal';\n    res.email_subject = '[RE-INCIDENCIA] ' + res.email_subject;\n    res.email_body = 'Hola equipo, este envío ya fue notificado previamente y sigue en incidencia. Por favor, gestionad manualmente.\\n\\n--- MENSAJE ORIGINAL ---\\n' + res.email_body;\n  }\n\n  if (res.target_type === 'internal') {\n    res.to_email = raw.internal_email || 'incidenciasamzdiscounts01@gmail.com';\n  } else if (res.target_type === 'standard') {\n    res.to_email = raw.cca_zone || 'cca.z3@cttexpress.com';\n  }\n}\n\nreturn res;"
+        "jsCode": "const raw = $input.item.json;\nconst aiText = raw.output?.[0]?.content?.[0]?.text || '{}';\nlet aiData;\ntry {\n  aiData = JSON.parse(aiText.replace(/```json|```/g, '').trim());\n} catch (e) {\n  aiData = { sigue_incidencia: true, justification: 'Error parsing AI response', email_body: '' };\n}\n\nconst incidencia = $('Loop Followup').first().json;\nconst hasDamage = $('Code FW JS3').first().json.any_damage === true;\n\nreturn {\n  shipping_code:          incidencia.numero_envio,\n  numero_pedido:          incidencia.numero_pedido,\n  tienda:                 incidencia.tienda,\n  credencial:             incidencia.credencial,\n  incidencia_registrada:  incidencia.incidencia,\n  sigue_incidencia:       aiData.sigue_incidencia === true,\n  estado_actual:          aiData.estado_actual || '',\n  // Mapeo bilingüe\n  justification:          aiData.justificacion || aiData.justification || '',\n  item_afectado:          aiData.item_afectado || aiData.item || null,\n  email_body:             aiData.email_body || '',\n  has_damage:             hasDamage\n};"
       },
       "id": "ddc84277-2f19-4f55-94e9-a44b527dd191",
-      "name": "Code: Procesar Respuesta IA FW",
+      "name": "Code FW JS2",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1758,
+        1508,
         1360
       ]
     },
@@ -514,7 +514,7 @@
     {
       "parameters": {
         "resource": "draft",
-        "subject": "={{ $json.email_subject }}",
+        "subject": "=Incidencia en el envio {{ $json.shipping_code }}",
         "message": "={{ $json.email_body }}",
         "options": {}
       },
@@ -537,7 +537,7 @@
     {
       "parameters": {
         "resource": "draft",
-        "subject": "={{ $json.email_subject }}",
+        "subject": "=Incidencia en el envio {{ $json.shipping_code }}",
         "message": "={{ $json.email_body }}",
         "options": {}
       },
@@ -560,7 +560,7 @@
     {
       "parameters": {
         "resource": "draft",
-        "subject": "={{ $json.email_subject }}",
+        "subject": "=Incidencia en el envio {{ $json.shipping_code }}",
         "message": "={{ $json.email_body }}",
         "options": {}
       },
@@ -583,7 +583,7 @@
     {
       "parameters": {
         "resource": "draft",
-        "subject": "={{ $json.email_subject }}",
+        "subject": "=Incidencia en el envio {{ $json.shipping_code }}",
         "message": "={{ $json.email_body }}",
         "options": {}
       },
@@ -719,7 +719,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const pedido = $input.item.json;\nconst SEG = pedido.shipping_code;\nconst PED = (pedido.client_references && pedido.client_references[0]) || '';\nconst centerCode = String(pedido.client_center_code || '');\nconst credencial = pedido.credencial;\n\nconst emailMap = {\n  'HAMINOS': 'incidenciashaminos@gmail.com',\n  'MIESTERY': 'incidenciasamzdiscounts01@gmail.com',\n  'KULTUDENDA': 'incidenciaskulturdenda@gmail.com',\n  'SNAPPY': 'incidenciassnappyblue@gmail.com'\n};\nconst destinatario = emailMap[credencial] || '';\n\nreturn [{\n  json: {\n    shipping_code: SEG,\n    numero_pedido: PED,\n    tienda: credencial,\n    centro: centerCode,\n    credencial,\n    fecha_estado: pedido.fecha_estado_local || '',\n    destinatario,\n    to_email: destinatario,\n    email_subject: 'ALERTA PENDIENTE (0000)',\n    email_body: 'Hola, se ha detectado que el siguiente envío lleva más de 24 horas en estado 0000. Por favor, revisadlo.\\nPEDIDO: - ' + (PED || SEG)\n  }\n}];"
+        "jsCode": "const pedido = $input.item.json;\nconst shippingCode = pedido.shipping_code;\nconst numeroPedido = (pedido.client_references && pedido.client_references[0]) || '';\nconst centerCode = String(pedido.client_center_code || '');\nconst credencial = pedido.credencial;\n\nconst emailMap = {\n  'HAMINOS': 'incidenciashaminos@gmail.com',\n  'MIESTERY': 'incidenciasamzdiscounts01@gmail.com',\n  'KULTUDENDA': 'incidenciaskulturdenda@gmail.com',\n  'SNAPPY': 'incidenciassnappyblue@gmail.com'\n};\nconst destinatario = emailMap[credencial] || '';\n\nreturn [{\n  json: {\n    shipping_code: shippingCode,\n    numero_pedido: numeroPedido,\n    tienda: credencial,\n    centro: centerCode,\n    credencial,\n    fecha_estado: pedido.fecha_estado_local || '',\n    destinatario,\n    email_subject: `ALERTA INTERNA: Envio ${shippingCode} grabado sin recoger`,\n    email_body: `El envio ${shippingCode} figura como grabado o recogida sin programar desde ayer. Revisar con almacen.`\n  }\n}];"
       },
       "id": "046d6989-cdee-480f-bf70-3dcb7dad2c27",
       "name": "Preparar Alerta 0000",
@@ -1357,32 +1357,6 @@
         1956,
         1584
       ]
-    },
-    {
-      "parameters": {
-        "jsCode": "try {\n  const incidencia = $('Loop Followup').item.json;\n  const httpResp = $input.item.json;\n  \n  let itemsRaw = [];\n  const rawData = httpResp?.data?.shipping_history;\n  if (Array.isArray(rawData)) itemsRaw = rawData;\n  else if (rawData && typeof rawData === 'object') itemsRaw = [rawData];\n  else throw new Error('No se encontró historial de bultos');\n\n  function businessHours(startDate, endDate) {\n    if (!startDate || !endDate || endDate <= startDate) return 0;\n    let hours = 0;\n    let cur = new Date(startDate.getTime());\n    while (cur < endDate) {\n      const dow = cur.getDay();\n      if (dow !== 0 && dow !== 6) {\n        const y = cur.getFullYear(), m = cur.getMonth(), d = cur.getDate();\n        const nextMidnight = new Date(y, m, d + 1);\n        const seg = endDate < nextMidnight ? endDate : nextMidnight;\n        hours += (seg - cur) / 3600000;\n      }\n      const y = cur.getFullYear(), m = cur.getMonth(), d = cur.getDate();\n      cur = new Date(y, m, d + 1);\n    }\n    return parseFloat(hours.toFixed(1));\n  }\n\n  const now = new Date();\n  const TRANSIT    = ['0900', '1000'];\n  const DELIVERY   = ['1200', '1500'];\n  const STATIONARY = ['1700', '1800'];\n  const MANIFEST   = ['0000', '0030'];\n\n  let maxTransit = 0, maxManifest = 0, maxDelivery = 0, maxStationary = 0;\n  let anyDamage = false;\n\n  for (const it of itemsRaw) {\n    const events = Array.isArray(it.events) ? it.events : [];\n    if (events.length > 0) {\n      const parsedEvents = events.map(e => ({\n        date: new Date(e.event_date || e.item_event_date),\n        code: e.event_code || e.code\n      })).filter(e => !isNaN(e.date.getTime()));\n\n      if (parsedEvents.some(e => e.code === '6_INCT')) anyDamage = true;\n      const firstTransit = parsedEvents.find(e => TRANSIT.includes(e.code));\n      if (firstTransit && !parsedEvents.some(e => e.code === '1500' && e.date > firstTransit.date)) {\n        maxTransit = Math.max(maxTransit, businessHours(firstTransit.date, now));\n      }\n      const firstManifest = parsedEvents.find(e => MANIFEST.includes(e.code));\n      if (firstManifest && !parsedEvents.some(e => TRANSIT.includes(e.code))) {\n        maxManifest = Math.max(maxManifest, businessHours(firstManifest.date, now));\n      }\n      let deliveryStart = null;\n      parsedEvents.forEach(e => {\n        if (DELIVERY.includes(e.code)) deliveryStart = e.date;\n        else if (e.code === '1000') deliveryStart = null;\n      });\n      if (deliveryStart) maxDelivery = Math.max(maxDelivery, businessHours(deliveryStart, now));\n      const lastStat = [...parsedEvents].reverse().find(e => STATIONARY.includes(e.code));\n      if (lastStat) maxStationary = Math.max(maxStationary, businessHours(lastStat.date, now));\n    }\n  }\n\n  return {\n    ...incidencia,\n    transit_hours: maxTransit,\n    manifest_hours: maxManifest,\n    delivery_hours: maxDelivery,\n    stationary_hours: maxStationary,\n    any_damage: anyDamage,\n    items_raw: itemsRaw\n  };\n} catch (error) {\n  throw new Error('[Code: Calcular Horas FW] ' + error.message);\n}"
-      },
-      "id": "fw-calc-0001-0000-4000-8000-000000000001",
-      "name": "Code: Calcular Horas FW",
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        932,
-        1360
-      ]
-    },
-    {
-      "parameters": {
-        "jsCode": "const raw = $input.item.json;\nconst aiText = raw.output?.[0]?.content?.[0]?.text || '{}';\nlet aiData;\ntry {\n  aiData = JSON.parse(aiText.replace(/\\`\\`\\`json|\\`\\`\\`/g, '').trim());\n} catch (e) {\n  aiData = { sigue_incidencia: true, categoria: 'Otros', justificacion: 'Error parsing AI response' };\n}\n\nconst ctx = $('Code: Calcular Horas FW').item.json;\n\n// Override Matemático (Paracaídas)\nif (ctx.transit_hours > 24 || ctx.delivery_hours > 24 || ctx.stationary_hours > 24) {\n  aiData.sigue_incidencia = true;\n  if (!aiData.categoria || aiData.categoria === 'Otros') {\n     if (ctx.transit_hours > 24) aiData.categoria = 'Transito Estancado';\n     else if (ctx.delivery_hours > 24) aiData.categoria = 'Reparto Estancado';\n  }\n}\n\nreturn {\n  ...aiData,\n  shipping_code: ctx.numero_envio || ctx.shipping_code,\n  numero_pedido: ctx.numero_pedido,\n  tienda: ctx.tienda,\n  credencial: ctx.credencial,\n  any_damage: ctx.any_damage\n};"
-      },
-      "id": "fw-parse-0001-0000-4000-8000-000000000001",
-      "name": "Code: Parsear Respuesta IA FW",
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        1508,
-        1360
-      ]
     }
   ],
   "connections": {
@@ -1484,7 +1458,18 @@
       "main": [
         [
           {
-            "node": "Code: Calcular Horas FW",
+            "node": "Code FW JS3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code FW JS3": {
+      "main": [
+        [
+          {
+            "node": "IA Followup",
             "type": "main",
             "index": 0
           }
@@ -1495,7 +1480,23 @@
       "main": [
         [
           {
-            "node": "Code: Parsear Respuesta IA FW",
+            "node": "Code FW JS2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code FW JS2": {
+      "main": [
+        [
+          {
+            "node": "If Sigue Incidencia",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "If Daño FW",
             "type": "main",
             "index": 0
           }
@@ -1932,55 +1933,6 @@
         [
           {
             "node": "Loop Pedidos 0000",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Code: Calcular Horas FW": {
-      "main": [
-        [
-          {
-            "node": "Code: Preparar Contexto IA FW",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Code: Preparar Contexto IA FW": {
-      "main": [
-        [
-          {
-            "node": "IA Followup",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Code: Parsear Respuesta IA FW": {
-      "main": [
-        [
-          {
-            "node": "Code: Procesar Respuesta IA FW",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Code: Procesar Respuesta IA FW": {
-      "main": [
-        [
-          {
-            "node": "If Sigue Incidencia",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "If Daño FW",
             "type": "main",
             "index": 0
           }

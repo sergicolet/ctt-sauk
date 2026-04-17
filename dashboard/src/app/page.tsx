@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
-import { collection, getDocs, orderBy, query, limit } from "firebase/firestore";
+import { collection, getDocs, orderBy, query, limit, doc, getDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { useAuth } from "@/lib/auth-context";
 import { Ejecucion, Incidencia } from "@/lib/types";
@@ -60,6 +60,41 @@ export default function Dashboard() {
     }
     load();
   }, [state]);
+
+  const refreshData = async () => {
+    if (state.status !== "authenticated") return;
+    setLoading(true);
+    try {
+      const [ejSnap, incSnap] = await Promise.all([
+        getDocs(query(collection(db, "ejecuciones"), orderBy("fecha_procesado", "desc"), limit(1000))),
+        getDocs(query(collection(db, "incidencias"), orderBy("fecha_procesado", "desc"), limit(1000))),
+      ]);
+      setEjecuciones(ejSnap.docs.map((d) => ({ id: d.id, ...d.data() } as Ejecucion)));
+      setIncidencias(incSnap.docs.map((d) => ({ id: d.id, ...d.data() } as Incidencia)));
+    } catch (e) {
+      console.error("Error refreshing Firestore data:", e);
+    }
+    setLoading(false);
+  };
+
+  const refreshSingleItem = async (itemId: string, collectionName: "ejecuciones" | "incidencias") => {
+    try {
+      const docRef = doc(db, collectionName, itemId);
+      const docSnap = await getDoc(docRef);
+      
+      if (docSnap.exists()) {
+        const newData = { id: docSnap.id, ...docSnap.data() } as any;
+        if (collectionName === "ejecuciones") {
+          setEjecuciones(prev => prev.map(item => item.id === itemId ? newData : item));
+        } else {
+          setIncidencias(prev => prev.map(item => item.id === itemId ? newData : item));
+        }
+        return newData;
+      }
+    } catch (e) {
+      console.error("Error refreshing single item:", e);
+    }
+  };
 
   const resetFilters = () => {
     setTiendaFiltro("TODAS");
@@ -122,13 +157,25 @@ export default function Dashboard() {
       return true;
     };
 
+    const parseFecha = (f: string): number => {
+      if (!f) return 0;
+      // Support both "DD-MM-YYYY HH:mm:ss" (legacy) and "YYYY-MM-DD HH:mm:ss" (new)
+      const isoLike = /^\d{4}-\d{2}-\d{2}/.test(f);
+      if (isoLike) return new Date(f.replace(' ', 'T')).getTime();
+      const [datePart, timePart = ''] = f.split(' ');
+      const [d, m, y] = datePart.split('-');
+      return new Date(`${y}-${m}-${d}T${timePart}`).getTime();
+    };
+
+    const sortByFecha = (a: any, b: any) => parseFecha(b.fecha_procesado) - parseFecha(a.fecha_procesado);
+
     return {
-      ej: (mostrarSoloIncidencias 
+      ej: (mostrarSoloIncidencias
         ? incidencias.map(i => ({ ...i, estado: i.incidencia, h_en_estado: i.h_en_incidencia, email_enviado: i.numero_avisos > 0, _collection: 'incidencias' } as any))
         : [
             ...ejecuciones.map(e => ({ ...e, _collection: 'ejecuciones' } as any)),
             ...incidencias.map(i => ({ ...i, estado: i.incidencia, h_en_estado: i.h_en_incidencia, email_enviado: i.numero_avisos > 0, _collection: 'incidencias' } as any))
-          ]
+          ].sort(sortByFecha)
       ).filter(e => filterFn(e, false))
     };
   }, [ejecuciones, incidencias, busqueda, tiendaFiltro, estadoFiltro, emailFiltro, tipoFiltro, fechaInicio, mostrarSoloIncidencias]);
@@ -366,7 +413,11 @@ export default function Dashboard() {
                 Listado de Ejecuciones ({filteredData.ej.length})
               </h3>
             </div>
-            <EjecucionesTable ejecuciones={filteredData.ej} sortOrder={sortOrder} />
+            <EjecucionesTable 
+              ejecuciones={filteredData.ej} 
+              sortOrder={sortOrder} 
+              refreshSingleItem={refreshSingleItem} 
+            />
           </div>
         </>
       )}

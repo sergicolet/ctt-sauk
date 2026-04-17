@@ -45,6 +45,8 @@ import {
   XCircle,
   ThumbsUp,
   ThumbsDown,
+  RefreshCcw,
+  Loader2,
 } from "lucide-react";
 import {
   getShopFromCenter,
@@ -63,6 +65,7 @@ interface BultoHistorial {
 interface Props {
   ejecuciones: Ejecucion[];
   sortOrder: "desc" | "asc";
+  refreshSingleItem?: (id: string, col: "ejecuciones" | "incidencias") => Promise<any>;
 }
 
 const TERMINAL_CODES = ["2500", "2300", "2310"];
@@ -212,8 +215,43 @@ function BultoHistorialView({ bultos }: { bultos: BultoHistorial[] }) {
   );
 }
 
-export function EjecucionesTable({ ejecuciones, sortOrder }: Props) {
+export function EjecucionesTable({ ejecuciones, sortOrder, refreshSingleItem }: Props) {
   const [selectedEj, setSelectedEj] = useState<Ejecucion | null>(null);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
+  const handleRefresh = async (item: Ejecucion) => {
+    try {
+      setIsRefreshing(true);
+      const webhookUrl = process.env.NEXT_PUBLIC_N8N_WEBHOOK_URL || "https://n8n.ctt-lastmile.com/webhook/refresh-tracking";
+      const res = await fetch(webhookUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          shipping_code: item.numero_envio,
+          client_code: item.credencial === 'HAMINOS' ? '48630' : 
+                       item.credencial === 'SNAPPY' ? '47352' : 
+                       item.credencial === 'MIESTERY' ? '47685' : '45416',
+          collection: item._collection || 'ejecuciones',
+          doc_id: item.id
+        })
+      });
+      
+      
+      if (refreshSingleItem) {
+        const updated = await refreshSingleItem(item.id, item._collection);
+        if (updated) {
+          setSelectedEj(updated);
+        }
+      }
+      alert("✅ Historial actualizado");
+    } catch (error) {
+      console.error("Manual refresh error:", error);
+      alert("Error al actualizar el historial.");
+    } finally {
+      setIsRefreshing(false);
+    }
+  };
+
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
   const sentinelRef = useRef<HTMLDivElement>(null);
 
@@ -341,7 +379,7 @@ export function EjecucionesTable({ ejecuciones, sortOrder }: Props) {
                   const timing = getActiveHours(ej);
                   return (
                     <TableRow
-                      key={ej.id}
+                      key={`${ej._collection}-${ej.id}`}
                       className="group cursor-pointer hover:bg-slate-50/80 transition-colors border-b last:border-0"
                       onClick={() => setSelectedEj(ej)}
                     >
@@ -462,17 +500,17 @@ export function EjecucionesTable({ ejecuciones, sortOrder }: Props) {
                   <div className="md:border-r border-slate-100 px-5 py-5 space-y-5 overflow-y-auto md:overflow-y-auto custom-scrollbar shrink-0 md:shrink bg-slate-50/40">
 
                     <div className="space-y-1.5">
-                      <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Estado Actual</p>
+                      <p className="text-[10px] font-bold text-black uppercase tracking-wider">Estado Actual</p>
                       {renderStatusBadge(selectedEj.estado, selectedEj.dano)}
                     </div>
 
                     <div className="space-y-1.5">
-                      <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Canal Notificación</p>
+                      <p className="text-[10px] font-bold text-black uppercase tracking-wider">Canal Notificación</p>
                       {renderTypeBadge(selectedEj.tipo_email, selectedEj.forzado_interno)}
                     </div>
 
                     <div className="space-y-1.5">
-                      <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Destinatario</p>
+                      <p className="text-[10px] font-bold text-black uppercase tracking-wider">Destinatario</p>
                       <div className="flex items-center gap-1.5">
                         <User className="h-3.5 w-3.5 text-slate-400" />
                         <span className="text-sm font-bold text-slate-800">{selectedEj.destinatario || "—"}</span>
@@ -488,7 +526,7 @@ export function EjecucionesTable({ ejecuciones, sortOrder }: Props) {
                     </div>
 
                     <div className="space-y-1.5">
-                      <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Centro Logístico</p>
+                      <p className="text-[10px] font-bold text-black uppercase tracking-wider">Centro Logístico</p>
                       <div className="flex items-center gap-1.5">
                         <MapPin className="h-3.5 w-3.5 text-slate-400" />
                         <div>
@@ -499,7 +537,7 @@ export function EjecucionesTable({ ejecuciones, sortOrder }: Props) {
                     </div>
 
                     <div className="space-y-1.5 pt-2 border-t border-slate-100">
-                      <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Validación de Auditoría</p>
+                      <p className="text-[10px] font-bold text-black uppercase tracking-wider">Validación de Auditoría</p>
                       <div className="grid grid-cols-2 gap-2">
                         <button
                           disabled={isUpdating}
@@ -529,7 +567,7 @@ export function EjecucionesTable({ ejecuciones, sortOrder }: Props) {
                     </div>
 
                     <div className="space-y-1.5">
-                      <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Fecha Revisión</p>
+                      <p className="text-[10px] font-bold text-black uppercase tracking-wider">Fecha Revisión</p>
                       <div className="flex items-center gap-1.5">
                         <CalendarClock className="h-3.5 w-3.5 text-slate-400" />
                         <span className="text-sm font-bold text-slate-800">{selectedEj.fecha_procesado}</span>
@@ -570,7 +608,7 @@ export function EjecucionesTable({ ejecuciones, sortOrder }: Props) {
                               )}
                               {cuerpoText && (
                                 <div className="space-y-1">
-                                  <p className="text-[9px] font-bold text-slate-400 uppercase tracking-tight">Cuerpo</p>
+                                  <p className="text-[9px] font-bold text-black uppercase tracking-tight">Cuerpo</p>
                                   <p className="text-[11px] text-slate-600 font-medium leading-relaxed whitespace-pre-wrap">
                                     {cuerpoText}
                                   </p>
@@ -586,13 +624,27 @@ export function EjecucionesTable({ ejecuciones, sortOrder }: Props) {
                   {/* RIGHT — historial de bultos */}
                   <div className="flex flex-col flex-1 min-h-0 px-5 py-5 overflow-hidden">
                     <div className="flex items-center gap-2 mb-4 shrink-0">
-                      <History className="h-4 w-4 text-slate-700" />
-                      <h3 className="text-sm font-extrabold uppercase tracking-wider text-slate-900">Historial de Bultos</h3>
-                      {bultos.length > 1 && (
-                        <span className="text-[10px] px-2 py-0.5 bg-primary/10 text-primary font-bold rounded-full">
-                          {bultos.length} bultos
-                        </span>
-                      )}
+                      <div className="flex items-center gap-2">
+                        <History className="h-4 w-4 text-slate-700" />
+                        <h3 className="text-sm font-extrabold uppercase tracking-wider text-slate-900">Historial de Bultos</h3>
+                        {bultos.length > 1 && (
+                          <span className="text-[10px] px-2 py-0.5 bg-primary/10 text-primary font-bold rounded-full">
+                            {bultos.length} bultos
+                          </span>
+                        )}
+                      </div>
+                      <button
+                        disabled={isRefreshing}
+                        onClick={() => handleRefresh(selectedEj)}
+                        className={`ml-auto flex items-center gap-2 px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-tight transition-all ${
+                          isRefreshing 
+                            ? "bg-slate-100 text-slate-400 cursor-not-allowed" 
+                            : "bg-primary text-white hover:bg-primary/90 shadow-sm active:scale-95"
+                        }`}
+                      >
+                        {isRefreshing ? <Loader2 className="h-3 w-3 animate-spin" /> : <RefreshCcw className="h-3 w-3" />}
+                        {isRefreshing ? "Actualizando" : "Actualizar"}
+                      </button>
                     </div>
                     <div className="flex-1 min-h-0">
                       <BultoHistorialView bultos={bultos} />
