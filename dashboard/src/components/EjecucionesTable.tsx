@@ -238,7 +238,7 @@ export function EjecucionesTable({ ejecuciones, sortOrder, refreshSingleItem }: 
       
       
       if (refreshSingleItem) {
-        const updated = await refreshSingleItem(item.id, item._collection);
+        const updated = await refreshSingleItem(item.id, item._collection || "ejecuciones");
         if (updated) {
           setSelectedEj(updated);
         }
