@@ -18,10 +18,10 @@
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.3,
       "position": [
-        -80,
-        528
+        -54304,
+        18816
       ],
-      "id": "09fa140c-e6aa-43ed-97be-98fec47ad77d",
+      "id": "85a88508-a822-4700-9c47-9eb4b7940ae2",
       "name": "Schedule Trigger"
     },
     {
@@ -47,10 +47,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        144,
-        528
+        -54080,
+        18816
       ],
-      "id": "1dae2f7e-92b4-4852-915d-93760a7908ef",
+      "id": "f0a6526f-6f56-4a2f-bf25-d40a9b7fc4fc",
       "name": "Edit Fields"
     },
     {
@@ -84,10 +84,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        368,
-        240
+        -53856,
+        18528
       ],
-      "id": "acca4322-4e1b-4f2d-8ddb-0243dadadfd4",
+      "id": "c2d62aa0-8390-4f30-a8a3-1db7591fcc30",
       "name": "Token CTT HAMINOS"
     },
     {
@@ -121,10 +121,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        368,
-        432
+        -53856,
+        18720
       ],
-      "id": "ed1e4521-416f-445e-9c27-2201f962664d",
+      "id": "8a25cbdd-aab0-4830-8bfb-4311ce6beee5",
       "name": "Token CTT MIESTERY"
     },
     {
@@ -158,10 +158,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        368,
-        624
+        -53856,
+        18912
       ],
-      "id": "28a198d1-9497-4e84-ad2e-5f79f99d7028",
+      "id": "77e99d1c-afd7-454c-897e-e5f1697ce196",
       "name": "Token CTT KULTUDENDA"
     },
     {
@@ -195,10 +195,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        368,
-        816
+        -53856,
+        19104
       ],
-      "id": "11bd2b49-1370-442b-9bdd-d8e30fd1780c",
+      "id": "16c501b3-5939-4dd1-8a54-a7aeb93d08c5",
       "name": "Token CTT SNAPPY"
     },
     {
@@ -226,10 +226,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        592,
-        240
+        -53632,
+        18528
       ],
-      "id": "cf771531-3f2b-44fd-a226-dcb4c79de06d",
+      "id": "451854b6-1c45-49f6-a0c9-a56108f6708b",
       "name": "Config HAMINOS Centers"
     },
     {
@@ -257,10 +257,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        592,
-        432
+        -53632,
+        18720
       ],
-      "id": "71d14398-b6bb-4919-82f9-0ea4cf02e730",
+      "id": "6098a499-a0f5-4e57-aa6b-5f349c0017f0",
       "name": "Config SERVICE CORP WORLD Centers"
     },
     {
@@ -289,10 +289,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        592,
-        624
+        -53632,
+        18912
       ],
-      "id": "92a22c30-1861-4941-83b2-02cd0a6f6025",
+      "id": "12013243-9ec9-4f23-9400-8a45a8274d4d",
       "name": "Config KULTUDENDA Centers"
     },
     {
@@ -324,10 +324,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        592,
-        816
+        -53632,
+        19104
       ],
-      "id": "a55c2480-b3e1-4cdd-bc06-3084d22ae7a9",
+      "id": "0b7eacb3-74d0-4233-b57e-616968ca3db8",
       "name": "Config SNAPPY Centers"
     },
     {
@@ -338,10 +338,10 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1,
       "position": [
-        816,
-        240
+        -53408,
+        18528
       ],
-      "id": "779b44ca-e4c9-4cc6-953b-d7ae3952d32f",
+      "id": "cb4fc5b6-66ad-41f6-a153-ea771a14bfcc",
       "name": "Call SubWf HAMINOS"
     },
     {
@@ -352,10 +352,10 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1,
       "position": [
-        816,
-        432
+        -53408,
+        18720
       ],
-      "id": "9f80fbcf-fa40-426e-a420-fd86900c0731",
+      "id": "133fda38-eb46-4d34-a1f9-2b0b09a7b050",
       "name": "Call SubWf SERVICE CORP WORLD"
     },
     {
@@ -366,10 +366,10 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1,
       "position": [
-        816,
-        624
+        -53408,
+        18912
       ],
-      "id": "02c71ccb-2d12-4b6e-ac19-5cab3e82cc6a",
+      "id": "4475de07-2f21-4723-ad88-7b62f653c947",
       "name": "Call SubWf KULTUDENDA"
     },
     {
@@ -380,10 +380,10 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1,
       "position": [
-        816,
-        816
+        -53408,
+        19104
       ],
-      "id": "1f01ad47-9d66-41f1-b418-ba7369ea93c6",
+      "id": "cce35d65-4e67-4b07-9da9-42a3d1485979",
       "name": "Call SubWf SNAPPY"
     },
     {
@@ -393,10 +393,10 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
       "position": [
-        1040,
-        528
+        -53184,
+        18784
       ],
-      "id": "51cd6fab-9d34-4586-b500-bcd7320a8a00",
+      "id": "5d70c5a7-aabc-4357-985d-af1edb6dfc7b",
       "name": "Merge2"
     },
     {
@@ -406,10 +406,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1280,
-        528
+        -52960,
+        18816
       ],
-      "id": "enr-0001-0001-0001-000000000001",
+      "id": "1387a14e-1e58-4a0b-8f51-f3386d976104",
       "name": "Code: Enriquecer Cliente"
     },
     {
@@ -419,24 +419,23 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1520,
-        528
+        -52736,
+        18816
       ],
-      "id": "flt-0001-0001-0001-000000000008",
+      "id": "82aab0ea-cd47-43e1-8edc-c6123c458d73",
       "name": "Filter: Estados Activos"
     },
     {
       "parameters": {
-        "batchSize": 1,
         "options": {}
       },
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
       "position": [
-        1760,
-        528
+        -52512,
+        18816
       ],
-      "id": "lop-0001-0001-0001-000000000009",
+      "id": "da11d6a7-ea15-455a-b1b9-fd5ebd02539b",
       "name": "Loop: Un envío a la vez"
     },
     {
@@ -462,10 +461,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        1880,
-        528
+        -52288,
+        18752
       ],
-      "id": "set-tracking-vars",
+      "id": "6c7a2195-602d-4e1e-bd06-63a81e25a44e",
       "name": "Set: Variables de Envío"
     },
     {
@@ -477,10 +476,10 @@
       "type": "n8n-nodes-base.googleFirebaseCloudFirestore",
       "typeVersion": 1.1,
       "position": [
-        2000,
-        528
+        -52064,
+        18752
       ],
-      "id": "fbs-0001-0001-0001-000000000010",
+      "id": "a9865888-5a5f-49df-9209-a892044b0741",
       "name": "Firestore: Buscar Incidencia Previa",
       "alwaysOutputData": true,
       "retryOnFail": true,
@@ -493,15 +492,15 @@
     },
     {
       "parameters": {
-        "jsCode": "// Determina skip, force_internal y numero_avisos a partir del doc Firestore\nconst firestoreDoc = $input.item.json;\nconst shipment = $('Loop: Un envío a la vez').item.json;\nconst hoy = $now.toFormat('yyyy-MM-dd');\nconst ayer = $now.minus({days: 1}).toFormat('yyyy-MM-dd');\n\nconst is2500 = String(shipment.shipping_status_code || '') === '2500';\nconst docValido = firestoreDoc?.numero_envio || firestoreDoc?.shipping_code;\nconst doc = docValido ? firestoreDoc : null;\n\n// Normaliza fecha_procesado a YYYY-MM-DD independientemente del formato almacenado\nfunction normalizeFecha(f) {\n  if (!f) return '';\n  const s = String(f).substring(0, 10);\n  // Detect legacy DD-MM-YYYY format\n  if (/^\\d{2}-\\d{2}-\\d{4}$/.test(s)) {\n    const [d, m, y] = s.split('-');\n    return `${y}-${m}-${d}`;\n  }\n  return s; // Already YYYY-MM-DD\n}\n\nlet skip = false;\nlet force_internal = false;\nlet numero_avisos = 0;\n\nif (doc) {\n  const fecha = normalizeFecha(doc.fecha_procesado);\n  skip = !is2500 && fecha === hoy;\n  force_internal = !skip && (fecha === ayer || is2500);\n  numero_avisos = (parseInt(doc.numero_avisos) || 0);\n} else {\n  force_internal = is2500;\n}\n\nreturn {\n  json: {\n    ...shipment,\n    skip,\n    force_internal,\n    is_2500: is2500,\n    numero_avisos\n  }\n};\n"
+        "jsCode": "// Determina skip, force_internal y numero_avisos a partir del doc Firestore\nconst firestoreDoc = $input.item.json;\nconst shipment = $('Loop: Un envío a la vez').item.json;\nconst hoy = $now.toFormat('yyyy-MM-dd');\nconst ayer = $now.minus({days: 1}).toFormat('yyyy-MM-dd');\n\nconst is2500 = String(shipment.shipping_status_code || '') === '2500';\nconst docValido = firestoreDoc?.numero_envio || firestoreDoc?.shipping_code;\nconst doc = docValido ? firestoreDoc : null;\n\n// Normaliza fecha_procesado a YYYY-MM-DD independientemente del formato almacenado\nfunction normalizeFecha(f) {\n  if (!f) return '';\n  const s = String(f).replace(/\\\"/g, '').substring(0, 10);\n  // Detect legacy DD-MM-YYYY format\n  if (/^\\d{2}-\\d{2}-\\d{4}$/.test(s)) {\n    const [d, m, y] = s.split('-');\n    return `${y}-${m}-${d}`;\n  }\n  return s; // Already YYYY-MM-DD\n}\n\nlet skip = false;\nlet force_internal = false;\n\n// Saneamiento de numero_avisos (evita el bug de concatenación previo)\nlet raw_avisos = String(doc?.numero_avisos || 0).replace(/\\\"/g, '');\nlet numero_avisos = parseInt(raw_avisos) || 0;\nif (numero_avisos > 100) {\n  // Si el número es absurdamente alto (ej: 11116), probablemente está corrupto\n  numero_avisos = raw_avisos.length; // Una aproximación razonable: contar cuántos reintentos hubo\n}\n\nif (doc) {\n  const fecha = normalizeFecha(doc.fecha_procesado);\n  skip = !is2500 && fecha === hoy;\n  force_internal = !skip && (fecha === ayer || is2500);\n} else {\n  force_internal = is2500;\n}\n\nreturn {\n  json: {\n    ...shipment,\n    _docid: (doc?._docid || shipment.shipping_code || '').toString().replace(/\\\"/g, ''),\n    fecha_procesado: $now.toFormat('yyyy-MM-dd HH:mm:ss'),\n    skip,\n    force_internal,\n    is_2500: is2500,\n    numero_avisos\n  }\n};\n"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        2240,
-        528
+        -51840,
+        18752
       ],
-      "id": "ctx-0001-0001-0001-000000000011",
+      "id": "53c45e0c-ece1-481a-a2bf-0fdd00bc6c40",
       "name": "Code: Preparar Contexto"
     },
     {
@@ -531,10 +530,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        2480,
-        528
+        -51616,
+        18752
       ],
-      "id": "ifp-0001-0001-0001-000000000012",
+      "id": "4c945048-839a-4b1e-bbf0-0f824090bed7",
       "name": "IF: ¿Ya Procesado Hoy?"
     },
     {
@@ -544,10 +543,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        2720,
-        528
+        -51392,
+        18672
       ],
-      "id": "blt-0001-0001-0001-000000000013",
+      "id": "31e309c6-11fc-4e00-897c-b5653f6fd472",
       "name": "Code: Expandir Bultos"
     },
     {
@@ -580,10 +579,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        2960,
-        528
+        -51168,
+        18672
       ],
-      "id": "his-0001-0001-0001-000000000014",
+      "id": "d94da0d0-9d37-4d93-ba1d-712bd3d60fef",
       "name": "HTTP: Historial Bulto",
       "retryOnFail": true,
       "maxRetries": 3,
@@ -591,28 +590,28 @@
     },
     {
       "parameters": {
-        "jsCode": "// Colapsa N bultos en 1 item ligero para la IA: { shipping_code, bultos[{ item_code, history }] }\nconst all = $input.all();\nif (all.length === 0) throw new Error('[Extraer Historial] Sin items');\n\nconst ctx = $('Code: Preparar Contexto').item.json;\n\nconst bultos = all.map(it => {\n  const httpResp = it.json;\n  const item_code = httpResp?.data?.shipping_history?.item_code || httpResp?.shipping_code || 'unknown';\n\n  let events = [];\n  if (httpResp?.data?.shipping_history?.events) {\n    events = httpResp.data.shipping_history.events;\n  } else if (Array.isArray(httpResp?.data?.shipping_history)) {\n    events = httpResp.data.shipping_history;\n  } else if (httpResp?.events) {\n    events = httpResp.events;\n  }\n\n  const history_text = events.map(e => {\n    const raw_date = e.event_date || e.item_event_date || '';\n    const date = raw_date ? raw_date.substring(0, 16).replace('T', ' ') : '????-??-?? ??:??';\n    const code = e.code || e.event_code || '????';\n    const desc = e.description || e.event_description || '';\n    const detail = e.detail?.External_event_text || e.detail?.item_event_text || '';\n    \n    // Filtro de detalles nulos o vacíos\n    const cleanDetail = (detail && detail !== 'null' && detail !== 'undefined' && detail !== '') ? ` - ${detail}` : '';\n    \n    return `${date} | [${code}] ${desc}${cleanDetail}`;\n  }).join('\\n');\n\n  // Determine the most recent event code (use max event_date to be safe)\n  let latestEvent = null;\n  for (const e of events) {\n    const d = e.event_date || e.item_event_date || '';\n    if (!latestEvent || d > (latestEvent.event_date || latestEvent.item_event_date || '')) {\n      latestEvent = e;\n    }\n  }\n  const shipping_status_code = latestEvent ? String(latestEvent.code || latestEvent.event_code || '') : '';\n\n  return {\n    item_code,\n    history: history_text,\n    shipping_status_code\n  };\n});\n\n// Ordenar por item_code para consistencia\nbultos.sort((a, b) => a.item_code.localeCompare(b.item_code));\n\nreturn [{\n  json: {\n    ...ctx,\n    bultos\n  }\n}];"
+        "jsCode": "// Optimizamos para evitar bloqueos del runner por exceso de datos\nconst all = $input.all();\nif (all.length === 0) throw new Error('[Extraer Historial] Sin items');\n\nconst ctxNode = $('Code: Preparar Contexto');\nconst ctx = ctxNode.all().length > 0 ? ctxNode.item.json : ($('Loop: Un envío a la vez').all().length > 0 ? $('Loop: Un envío a la vez').item.json : {});\n\n// IMPORTANTE: Eliminamos el array original de items para no duplicar datos pesados en memoria\nif (ctx.items) delete ctx.items;\n\nconst bultos = all.map(it => {\n  const httpResp = it.json;\n  const item_code = httpResp?.data?.shipping_history?.item_code || httpResp?.shipping_code || 'unknown';\n\n  let rawEvents = [];\n  if (httpResp?.data?.shipping_history?.events) {\n    rawEvents = httpResp.data.shipping_history.events;\n  } else if (Array.isArray(httpResp?.data?.shipping_history)) {\n    rawEvents = httpResp.data.shipping_history;\n  } else if (httpResp?.events) {\n    rawEvents = httpResp.events;\n  }\n\n  // Limitamos a los últimos 40 eventos para evitar desbordamiento\n  const events = rawEvents.slice(-40);\n\n  let latestEvent = null;\n  const historyLines = events.map(e => {\n    const raw_date = e.event_date || e.item_event_date || '';\n    const date = raw_date ? raw_date.substring(0, 16).replace('T', ' ') : '????-??-?? ??:??';\n    \n    // Mantener rastro del último evento para el status code\n    if (!latestEvent || raw_date > (latestEvent.event_date || latestEvent.item_event_date || '')) {\n      latestEvent = e;\n    }\n\n    const code = e.code || e.event_code || '????';\n    const desc = e.description || e.event_description || '';\n    const detail = e.detail?.External_event_text || e.detail?.item_event_text || '';\n    const cleanDetail = (detail && detail !== 'null' && detail !== 'undefined' && detail !== '') ? ` - ${detail}` : '';\n    \n    return `${date} | [${code}] ${desc}${cleanDetail}`;\n  });\n\n  return {\n    item_code,\n    history: historyLines.join('\\n'),\n    shipping_status_code: latestEvent ? String(latestEvent.code || latestEvent.event_code || '') : ''\n  };\n});\n\n// Ordenación rápida sin localeCompare\nbultos.sort((a, b) => (a.item_code < b.item_code ? -1 : 1));\n\nreturn [{ json: { ...ctx, bultos } }];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        3200,
-        528
+        -50944,
+        18672
       ],
-      "id": "exh-0001-0001-0001-000000000015",
+      "id": "ae760717-4b42-49bf-a706-a66d270f2fb0",
       "name": "Code: Extraer Historial"
     },
     {
       "parameters": {
-        "jsCode": "const item   = $input.item.json;\nconst bultos = item.bultos || [];\nconst now    = new Date();\n\nlet manifest_hours   = 0;\nlet transit_hours    = 0;\nlet delivery_hours   = 0;\nlet stationary_hours = 0;\nlet last_event_date  = null;\n\nbultos.forEach(b => {\n  const lines = (b.history || '').split('\\n').filter(Boolean);\n  const events = lines.map(line => {\n    const parts    = line.split(' | ');\n    const dateStr  = parts[0];\n    const match    = parts[1]?.match(/\\[(\\d+)\\]/);\n    const code     = match ? match[1] : null;\n    return { date: new Date(dateStr), code };\n  }).filter(e => !isNaN(e.date.getTime()));\n\n  if (events.length === 0) return;\n\n  const latest = events.reduce((a, b) => b.date > a.date ? b : a, events[0]);\n  if (!last_event_date || latest.date > last_event_date) last_event_date = latest.date;\n\n  const lastManifest   = [...events].reverse().find(e => ['0000','0030'].includes(e.code));\n  const lastTransit    = [...events].reverse().find(e => ['0900','1000'].includes(e.code));\n  const lastDelivery   = [...events].reverse().find(e => ['1200','1500','1600','2400','2600','2700'].includes(e.code));\n  const lastStationary = [...events].reverse().find(e => ['1700','1800'].includes(e.code));\n\n  const diffNow = (d) => d ? (now - d) / 3600000 : 0;\n\n  if (lastManifest)   manifest_hours   = Math.max(manifest_hours,   diffNow(lastManifest.date));\n  if (lastTransit)    transit_hours    = Math.max(transit_hours,    diffNow(lastTransit.date));\n  if (lastDelivery)   delivery_hours   = Math.max(delivery_hours,   diffNow(lastDelivery.date));\n  if (lastStationary) stationary_hours = Math.max(stationary_hours, diffNow(lastStationary.date));\n});\n\nreturn {\n  json: {\n    ...item,\n    manifest_hours:   Number(manifest_hours.toFixed(1)),\n    transit_hours:    Number(transit_hours.toFixed(1)),\n    delivery_hours:   Number(delivery_hours.toFixed(1)),\n    stationary_hours: Number(stationary_hours.toFixed(1)),\n    h_en_estado: last_event_date ? Number(((now - last_event_date) / 3600000).toFixed(1)) : 0\n  }\n};"
+        "jsCode": "const item   = $input.item.json;\nconst bultos = item.bultos || [];\nconst now    = new Date();\n\nlet manifest_hours   = 0;\nlet transit_hours    = 0;\nlet delivery_hours   = 0;\nlet stationary_hours = 0;\nlet last_event_date  = null;\n\nbultos.forEach(b => {\n  const historyStr = b.history || '';\n  if (!historyStr) return;\n\n  // Procesamos eventos de una vez sin split/map pesados\n  const lines = historyStr.split('\\n');\n  const events = [];\n  for (let i = 0; i < lines.length; i++) {\n    const line = lines[i];\n    if (!line) continue;\n    const parts = line.split(' | ');\n    if (parts.length < 2) continue;\n    \n    const d = new Date(parts[0]);\n    if (isNaN(d.getTime())) continue;\n\n    const match = parts[1].match(/\\[(\\d+)\\]/);\n    const code = match ? match[1] : null;\n    events.push({ date: d, code });\n  }\n\n  if (events.length === 0) return;\n\n  // Encontrar el último de cada tipo (recorriendo una sola vez al revés)\n  let lManifest, lTransit, lDelivery, lStationary, latest;\n  \n  for (let i = events.length - 1; i >= 0; i--) {\n    const e = events[i];\n    if (!latest || e.date > (latest.date || 0)) latest = e;\n    \n    if (!lManifest && ['0000','0030'].includes(e.code)) lManifest = e;\n    if (!lTransit && ['0900','1000'].includes(e.code)) lTransit = e;\n    if (!lDelivery && ['1200','1500','1600','2400','2600','2700'].includes(e.code)) lDelivery = e;\n    if (!lStationary && ['1700','1800'].includes(e.code)) lStationary = e;\n  }\n\n  if (latest && (!last_event_date || latest.date > last_event_date)) last_event_date = latest.date;\n\n  const diffNow = (d) => d ? (now - d) / 3600000 : 0;\n  if (lManifest)   manifest_hours   = Math.max(manifest_hours,   diffNow(lManifest.date));\n  if (lTransit)    transit_hours    = Math.max(transit_hours,    diffNow(lTransit.date));\n  if (lDelivery)   delivery_hours   = Math.max(delivery_hours,   diffNow(lDelivery.date));\n  if (lStationary) stationary_hours = Math.max(stationary_hours, diffNow(lStationary.date));\n});\n\nreturn {\n  json: {\n    ...item,\n    manifest_hours:   Number(manifest_hours.toFixed(1)),\n    transit_hours:    Number(transit_hours.toFixed(1)),\n    delivery_hours:   Number(delivery_hours.toFixed(1)),\n    stationary_hours: Number(stationary_hours.toFixed(1)),\n    h_en_estado: last_event_date ? Number(((now - last_event_date) / 3600000).toFixed(1)) : 0\n  }\n};"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        3440,
-        528
+        -50272,
+        18416
       ],
-      "id": "horas-0001-0001-0001-000000000016",
+      "id": "dd1358d0-b42f-42dc-b093-24c4769ea7eb",
       "name": "Code: Calcular Horas Fase"
     },
     {
@@ -622,10 +621,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        3560,
-        528
+        -50048,
+        18416
       ],
-      "id": "sla-0001-0001-0001-000000000016",
+      "id": "b11298db-03d8-4c48-aaf3-1dd52c4a92a6",
       "name": "Code: Calcular SLA Horas"
     },
     {
@@ -635,10 +634,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        3320,
-        528
+        -50720,
+        18672
       ],
-      "id": "fba-0001-0001-0001-000000000017",
+      "id": "831c21c0-8d2f-4e63-9f76-b2200b967bf9",
       "name": "Code: Filtrar Bultos Activos"
     },
     {
@@ -668,10 +667,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        3380,
-        640
+        -50496,
+        18672
       ],
-      "id": "if-active-bultos",
+      "id": "bcd02c3d-43ac-4ca9-a565-bac1fe4563cb",
       "name": "IF: ¿Bultos Activos?"
     },
     {
@@ -701,10 +700,10 @@
       "type": "@n8n/n8n-nodes-langchain.openAi",
       "typeVersion": 2.1,
       "position": [
-        3720,
-        528
+        -49824,
+        18416
       ],
-      "id": "aia-0001-0001-0001-000000000017",
+      "id": "76f37bbd-5148-4d02-9f17-7f7deabb6848",
       "name": "AI: Analizar Historiales",
       "credentials": {
         "openAiApi": {
@@ -720,23 +719,23 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        3920,
-        528
+        -49472,
+        18416
       ],
-      "id": "parsear-0001-0001-0001-000000000018",
+      "id": "28773390-0258-4848-89c3-b2d50b1d4569",
       "name": "Code: Parsear y Override IA"
     },
     {
       "parameters": {
-        "jsCode": "const raw = $input.item.json;\nconst SEG = raw.shipping_code;\nconst PED = raw.numero_pedido;\n\nconst TEMPLATES = {\n  pendiente:         { subject: 'ALERTA PENDIENTE (0000)',                                     body: 'Hola, se ha detectado que el siguiente envío lleva más de 24 horas en estado 0000. Por favor, revisadlo.\\nPEDIDO: - ' + (PED || SEG) },\n  devolucion:        { subject: 'Devolución en proceso: ' + (PED || SEG),                        body: 'Hola, el siguiente pedido ha entrado en proceso de devolución. Iniciamos seguimiento manual.\\nCÓDIGO: - ' + SEG },\n  siniestro:         { subject: 'Apertura de siniestro: ' + (PED || SEG),                        body: 'Buenos días CTT, solicitamos la apertura oficial de expediente de siniestro por pérdida/daño para el envío:\\nREFERENCIA: - ' + SEG + '. Quedamos a la espera del número de expediente.' },\n  segundo_intento:   { subject: 'Incidencia en el envío ' + (PED || SEG),                        body: 'Buenos días. Tras la incidencia en el primer intento, solicitamos automáticamente un segundo intento de reparto para el siguiente día hábil.\\nEXPEDICIÓN: - ' + SEG + '. Gracias.' },\n  recogida_fallida:  { subject: 'Incidencia en el envío ' + (PED || SEG),                        body: 'Buenos días. Solicitamos que se reintente la recogida fallida del siguiente envío:\\nEXPEDICIÓN: - ' + SEG + '. Gracias.' },\n  agilizar_transito: { subject: 'Incidencia en el envío ' + (PED || SEG),                        body: 'Buenos días. El envío ' + SEG + ' lleva más de 24 horas en tránsito sin pasar a reparto. Solicitamos que salga a reparto el próximo día hábil. Gracias.' },\n  agilizar_reparto:  { subject: 'Incidencia en el envío ' + (PED || SEG),                        body: 'Buenos días. El envío ' + SEG + ' lleva más de 24 horas en reparto sin entregarse. Solicitamos que sea sacado nuevamente a reparto hoy mismo. Gracias.' },\n  punto_ctt:         { subject: 'Envío en punto CTT: ' + (PED || SEG),                           body: 'Buenos días. Necesitamos la dirección detallada del punto de recogida para el siguiente envío:\\nEXPEDICIÓN: - ' + SEG + '. Gracias de antemano.' },\n  recogida_0030:     { subject: 'Incidencia en el envío ' + (PED || SEG),                        body: 'Buenos días. Solicitamos agilizar la recogida del siguiente envío que lleva más de 24 horas pendiente:\\nLISTADO DE ENVÍOS: - ' + SEG + '. Gracias.' },\n};\n\nlet res = { ...raw, email_subject: '', email_body: '', target_type: 'none', to_email: '' };\n\nconst active = raw.sigue_incidencia === true || raw.is_incident === true || raw.should_notify === true;\n\nif (active) {\n  const cat = (raw.notification_type || raw.categoria || raw.decision || 'Otros').toLowerCase();\n  \n  if (cat.includes('reparto_estancado') || cat.includes('agilizar_reparto')) { \n    res.target_type = 'standard'; res.email_subject = TEMPLATES.agilizar_reparto.subject; res.email_body = TEMPLATES.agilizar_reparto.body; \n  }\n  else if (cat.includes('transito_estancado') || cat.includes('agilizar_transito')) { \n    res.target_type = 'standard'; res.email_subject = TEMPLATES.agilizar_transito.subject; res.email_body = TEMPLATES.agilizar_transito.body; \n  }\n  else if (cat.includes('segundo_intento') || cat.includes('fallo reparto')) { \n    res.target_type = 'standard'; res.email_subject = TEMPLATES.segundo_intento.subject; res.email_body = TEMPLATES.segundo_intento.body; \n  }\n  else if (cat.includes('punto_ctt') || cat.includes('pudo') || cat.includes('2300') || cat.includes('2310')) { \n    res.target_type = 'standard'; res.email_subject = TEMPLATES.punto_ctt.subject; res.email_body = TEMPLATES.punto_ctt.body; \n  }\n  else if (cat.includes('recogida_fallida') || cat.includes('0600')) {\n    res.target_type = 'standard'; res.email_subject = TEMPLATES.recogida_fallida.subject; res.email_body = TEMPLATES.recogida_fallida.body;\n  }\n  else if (cat.includes('pendiente') || cat.includes('0000')) { \n    res.target_type = 'internal'; res.email_subject = TEMPLATES.pendiente.subject; res.email_body = TEMPLATES.pendiente.body; \n  }\n  else if (cat.includes('recogida_0030') || cat.includes('0030')) {\n    res.target_type = 'standard'; res.email_subject = TEMPLATES.recogida_0030.subject; res.email_body = TEMPLATES.recogida_0030.body;\n  }\n  else if (cat.includes('devolucion') || cat.includes('2500')) { \n    res.target_type = 'internal'; res.email_subject = TEMPLATES.devolucion.subject; res.email_body = TEMPLATES.devolucion.body; \n  }\n  else if (cat.includes('siniestro') || cat.includes('6_inct') || cat.includes('1006') || cat.includes('1008') || cat.includes('1012')) { \n    res.target_type = 'internal'; res.email_subject = TEMPLATES.siniestro.subject; res.email_body = TEMPLATES.siniestro.body; \n  }\n  else {\n    res.target_type = 'internal';\n    res.email_subject = 'Gestión Urgente: ' + SEG;\n    res.email_body = 'Hola, se requiere revisión manual para el envío ' + SEG + '.\\nJustificación: ' + (raw.justificacion || raw.justification || raw.ai_justification || 'Sin detalle');\n  }\n\n  const avisos = parseInt(raw.numero_avisos) || 0;\n  if (avisos > 0 && res.target_type === 'standard') {\n    res.target_type = 'internal';\n    res.email_subject = '[RE-INCIDENCIA] ' + res.email_subject;\n    res.email_body = 'Hola equipo, este envío ya fue notificado previamente y sigue en incidencia. Por favor, gestionad manualmente.\\n\\n--- MENSAJE ORIGINAL ---\\n' + res.email_body;\n  }\n\n  if (res.target_type === 'internal') {\n    res.to_email = raw.internal_email || 'incidenciasamzdiscounts01@gmail.com';\n  } else if (res.target_type === 'standard') {\n    res.to_email = raw.cca_zone || 'cca.z3@cttexpress.com';\n  }\n}\n\nreturn res;"
+        "jsCode": "const raw = $input.item.json;\nconst SEG = raw.shipping_code;\nconst PED = raw.numero_pedido;\n\nconst TEMPLATES = {\n  pendiente:         { subject: 'ALERTA PENDIENTE (0000)',                                     body: 'Hola, se ha detectado que el siguiente envío lleva más de 24 horas en estado 0000. Por favor, revisadlo.\\nPEDIDO: - ' + (PED || SEG) },\n  devolucion:        { subject: 'Devolución en proceso: ' + (PED || SEG),                        body: 'Hola, el siguiente pedido ha entrado en proceso de devolución. Iniciamos seguimiento manual.\\nCÓDIGO: - ' + SEG },\n  siniestro:         { subject: 'Apertura de siniestro: ' + (PED || SEG),                        body: 'Buenos días CTT, solicitamos la apertura oficial de expediente de siniestro por pérdida/daño para el envío:\\nREFERENCIA: - ' + SEG + '. Quedamos a la espera del número de expediente.' },\n  segundo_intento:   { subject: 'Incidencia en el envío ' + (PED || SEG),                        body: 'Buenos días. Tras la incidencia en el primer intento, solicitamos automáticamente un segundo intento de reparto para el siguiente día hábil.\\nEXPEDICIÓN: - ' + SEG + '. Gracias.' },\n  recogida_fallida:  { subject: 'Incidencia en el envío ' + (PED || SEG),                        body: 'Buenos días. Solicitamos que se reintente la recogida fallida del siguiente envío:\\nEXPEDICIÓN: - ' + SEG + '. Gracias.' },\n  agilizar_transito: { subject: 'Incidencia en el envío ' + (PED || SEG),                        body: 'Buenos días. El envío ' + SEG + ' lleva más de 24 horas en tránsito sin pasar a reparto. Solicitamos que salga a reparto el próximo día hábil. Gracias.' },\n  agilizar_reparto:  { subject: 'Incidencia en el envío ' + (PED || SEG),                        body: 'Buenos días. El envío ' + SEG + ' lleva más de 24 horas en reparto sin entregarse. Solicitamos que sea sacado nuevamente a reparto hoy mismo. Gracias.' },\n  punto_ctt:         { subject: 'Envío en punto CTT: ' + (PED || SEG),                           body: 'Buenos días. Necesitamos la dirección detallada del punto de recogida para el siguiente envío:\\nEXPEDICIÓN: - ' + SEG + '. Gracias de antemano.' },\n  recogida_0030:     { subject: 'Incidencia en el envío ' + (PED || SEG),                        body: 'Buenos días. Solicitamos agilizar la recogida del siguiente envío que lleva más de 24 horas pendiente:\\nLISTADO DE ENVÍOS: - ' + SEG + '. Gracias.' },\n};\n\nlet res = { ...raw, asunto: '', cuerpo: '', target_type: 'none', destinatario: '', incidencia: '', razon: '', email_subject: '', email_body: '', to_email: '' };\n\nconst active = raw.sigue_incidencia === true || raw.is_incident === true || raw.should_notify === true;\n\nif (active) {\n  const cat = (raw.notification_type || raw.categoria || raw.decision || 'Otros').toLowerCase();\n  \n  if (cat.includes('reparto_estancado') || cat.includes('agilizar_reparto')) { \n    res.target_type = 'standard'; res.asunto = TEMPLATES.agilizar_reparto.subject; res.cuerpo = TEMPLATES.agilizar_reparto.body; \n  }\n  else if (cat.includes('transito_estancado') || cat.includes('agilizar_transito')) { \n    res.target_type = 'standard'; res.asunto = TEMPLATES.agilizar_transito.subject; res.cuerpo = TEMPLATES.agilizar_transito.body; \n  }\n  else if (cat.includes('segundo_intento') || cat.includes('fallo reparto')) { \n    res.target_type = 'standard'; res.asunto = TEMPLATES.segundo_intento.subject; res.cuerpo = TEMPLATES.segundo_intento.body; \n  }\n  else if (cat.includes('punto_ctt') || cat.includes('pudo') || cat.includes('2300') || cat.includes('2310')) { \n    res.target_type = 'standard'; res.asunto = TEMPLATES.punto_ctt.subject; res.cuerpo = TEMPLATES.punto_ctt.body; \n  }\n  else if (cat.includes('recogida_fallida') || cat.includes('0600')) {\n    res.target_type = 'standard'; res.asunto = TEMPLATES.recogida_fallida.subject; res.cuerpo = TEMPLATES.recogida_fallida.body;\n  }\n  else if (cat.includes('pendiente') || cat.includes('0000')) { \n    res.target_type = 'internal'; res.asunto = TEMPLATES.pendiente.subject; res.cuerpo = TEMPLATES.pendiente.body; \n  }\n  else if (cat.includes('recogida_0030') || cat.includes('0030')) {\n    res.target_type = 'standard'; res.asunto = TEMPLATES.recogida_0030.subject; res.cuerpo = TEMPLATES.recogida_0030.body;\n  }\n  else if (cat.includes('devolucion') || cat.includes('2500')) { \n    res.target_type = 'internal'; res.asunto = TEMPLATES.devolucion.subject; res.cuerpo = TEMPLATES.devolucion.body; \n  }\n  else if (cat.includes('siniestro') || cat.includes('6_inct') || cat.includes('1006') || cat.includes('1008') || cat.includes('1012')) { \n    res.target_type = 'internal'; res.asunto = TEMPLATES.siniestro.subject; res.cuerpo = TEMPLATES.siniestro.body; \n  }\n  else {\n    res.target_type = 'internal';\n    res.asunto = 'Gestión Urgente: ' + SEG;\n    res.cuerpo = 'Hola, se requiere revisión manual para el envío ' + SEG + '.\\nJustificación: ' + (raw.justificacion || raw.justification || raw.ai_justification || 'Sin detalle');\n  }\n\n  res.incidencia = res.asunto;\n  res.razon = raw.ai_justification || raw.justificacion || raw.justification || 'Análisis IA completado';\n  \n  // Aliases para Gmail nodes\n  res.email_subject = res.asunto;\n  res.email_body = res.cuerpo;\n  \n  const avisos = parseInt(raw.numero_avisos) || 0;\n  res.numero_avisos = avisos + 1;\n\n  if (avisos > 0 && res.target_type === 'standard') {\n    res.target_type = 'internal';\n    res.asunto = '[RE-INCIDENCIA] ' + res.asunto;\n    res.cuerpo = 'Hola equipo, este envío ya fue notificado previamente y sigue en incidencia. Por favor, gestionad manualmente.\\n\\n--- MENSAJE ORIGINAL ---\\n' + res.cuerpo;\n    res.email_subject = res.asunto;\n    res.email_body = res.cuerpo;\n  }\n\n  if (res.target_type === 'internal') {\n    res.destinatario = raw.internal_email || 'incidenciasamzdiscounts01@gmail.com';\n  } else if (res.target_type === 'standard') {\n    res.destinatario = raw.cca_zone || 'cca.z3@cttexpress.com';\n  }\n  res.to_email = res.destinatario;\n}\n\nreturn res;"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        4040,
-        528
+        -49248,
+        18416
       ],
-      "id": "pia-0001-0001-0001-000000000018",
+      "id": "f831b376-09e0-4600-be5d-258acf369548",
       "name": "Code: Procesar Respuesta IA"
     },
     {
@@ -766,10 +765,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        4280,
-        528
+        -49024,
+        18416
       ],
-      "id": "ifn-0001-0001-0001-000000000019",
+      "id": "8dd885bf-21ce-4d13-90cb-aa59da834aad",
       "name": "IF: ¿Debe Notificar?"
     },
     {
@@ -782,7 +781,7 @@
                   "caseSensitive": true,
                   "leftValue": "",
                   "typeValidation": "strict",
-                  "version": 3
+                  "version": 2
                 },
                 "conditions": [
                   {
@@ -815,7 +814,7 @@
                   "caseSensitive": true,
                   "leftValue": "",
                   "typeValidation": "strict",
-                  "version": 3
+                  "version": 2
                 },
                 "conditions": [
                   {
@@ -848,7 +847,7 @@
                   "caseSensitive": true,
                   "leftValue": "",
                   "typeValidation": "strict",
-                  "version": 3
+                  "version": 2
                 },
                 "conditions": [
                   {
@@ -881,7 +880,7 @@
                   "caseSensitive": true,
                   "leftValue": "",
                   "typeValidation": "strict",
-                  "version": 3
+                  "version": 2
                 },
                 "conditions": [
                   {
@@ -914,7 +913,7 @@
                   "caseSensitive": true,
                   "leftValue": "",
                   "typeValidation": "strict",
-                  "version": 3
+                  "version": 2
                 },
                 "conditions": [
                   {
@@ -947,7 +946,7 @@
                   "caseSensitive": true,
                   "leftValue": "",
                   "typeValidation": "strict",
-                  "version": 3
+                  "version": 2
                 },
                 "conditions": [
                   {
@@ -980,7 +979,7 @@
                   "caseSensitive": true,
                   "leftValue": "",
                   "typeValidation": "strict",
-                  "version": 3
+                  "version": 2
                 },
                 "conditions": [
                   {
@@ -1013,7 +1012,7 @@
                   "caseSensitive": true,
                   "leftValue": "",
                   "typeValidation": "strict",
-                  "version": 3
+                  "version": 2
                 },
                 "conditions": [
                   {
@@ -1047,10 +1046,10 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.2,
       "position": [
-        4520,
-        528
+        -48800,
+        18576
       ],
-      "id": "swt-0001-0001-0001-000000000020",
+      "id": "4241ed52-eaee-40a1-9a99-e493280bba15",
       "name": "Switch: Email Routing"
     },
     {
@@ -1065,11 +1064,12 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
       "position": [
-        4760,
-        228
+        -48576,
+        18000
       ],
-      "id": "gsh-0001-0001-0001-000000000021",
+      "id": "b01e9739-6235-40a3-97e6-87a9be6c695a",
       "name": "Gmail: Send HAMINOS",
+      "webhookId": "78bf4fd4-b253-45a1-8b2c-509ac20357b1",
       "credentials": {
         "gmailOAuth2": {
           "id": "xvnQhr5hfD4gc3Uk",
@@ -1087,11 +1087,12 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
       "position": [
-        4760,
-        368
+        -48576,
+        18192
       ],
-      "id": "gdh-0001-0001-0001-000000000022",
+      "id": "67269471-e75a-4f86-874e-32630c38b73b",
       "name": "Gmail: Draft HAMINOS",
+      "webhookId": "3ed7602c-fb35-4418-80a0-a021f31264c7",
       "credentials": {
         "gmailOAuth2": {
           "id": "xvnQhr5hfD4gc3Uk",
@@ -1111,11 +1112,12 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
       "position": [
-        4760,
-        508
+        -48576,
+        18384
       ],
-      "id": "gss-0001-0001-0001-000000000023",
+      "id": "9b0a9a8f-8b0f-4f43-87b1-8bf1b66470c3",
       "name": "Gmail: Send SNAPPY",
+      "webhookId": "a6bba74a-c77a-4932-b227-8b10eb867e6b",
       "credentials": {
         "gmailOAuth2": {
           "id": "ATDngCzgo2CXlgvv",
@@ -1133,11 +1135,12 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
       "position": [
-        4760,
-        648
+        -48576,
+        18576
       ],
-      "id": "gds-0001-0001-0001-000000000024",
+      "id": "b4aa54d4-902f-40dc-9f7f-5e3b26e95873",
       "name": "Gmail: Draft SNAPPY",
+      "webhookId": "0008cc27-6e98-4e9b-a32d-4c460ca424a4",
       "credentials": {
         "gmailOAuth2": {
           "id": "ATDngCzgo2CXlgvv",
@@ -1157,11 +1160,12 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
       "position": [
-        4760,
-        788
+        -48576,
+        18768
       ],
-      "id": "gsk-0001-0001-0001-000000000025",
+      "id": "1a826805-81b5-4b52-a0ff-402adf8475eb",
       "name": "Gmail: Send KULTUDENDA",
+      "webhookId": "fc999209-8dab-4cdc-90e5-fbcfe00aa4bb",
       "credentials": {
         "gmailOAuth2": {
           "id": "I8iOQCCkF5dchDft",
@@ -1179,11 +1183,12 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
       "position": [
-        4760,
-        928
+        -48576,
+        18960
       ],
-      "id": "gdk-0001-0001-0001-000000000026",
+      "id": "250736f3-2e07-469f-b158-a17c72ea4036",
       "name": "Gmail: Draft KULTUDENDA",
+      "webhookId": "70c2bb16-30c3-457a-8044-7e0a3e3ada68",
       "credentials": {
         "gmailOAuth2": {
           "id": "I8iOQCCkF5dchDft",
@@ -1203,11 +1208,12 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
       "position": [
-        4760,
-        1068
+        -48576,
+        19152
       ],
-      "id": "gsm-0001-0001-0001-000000000027",
+      "id": "9a009c53-d3ad-49df-9422-08087ef6f577",
       "name": "Gmail: Send MIESTERY",
+      "webhookId": "036479f8-4fd5-4ed0-92ac-41d54ba73a41",
       "credentials": {
         "gmailOAuth2": {
           "id": "QJJKjkTiSoxnKucv",
@@ -1225,11 +1231,12 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
       "position": [
-        4760,
-        1208
+        -48576,
+        19344
       ],
-      "id": "gdm-0001-0001-0001-000000000028",
+      "id": "d62bcdcc-ec24-48a6-87b7-a2d006103598",
       "name": "Gmail: Draft MIESTERY",
+      "webhookId": "954dc4b2-aabe-46fe-817b-d10691618631",
       "credentials": {
         "gmailOAuth2": {
           "id": "QJJKjkTiSoxnKucv",
@@ -1264,10 +1271,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        5000,
-        500
+        -48352,
+        18576
       ],
-      "id": "if-0001-0001-0001-000000000031",
+      "id": "06ea0c74-79f6-460c-86b3-4741c1a39a3c",
       "name": "¿Es Incidencia Real?",
       "alwaysOutputData": true
     },
@@ -1278,133 +1285,133 @@
             {
               "id": "ri-1",
               "name": "_docid",
-              "value": "={{ $('Code: Procesar Respuesta IA').item.json._docid.toString() }}",
+              "value": "={{ $('Code: Procesar Respuesta IA').all().length > 0 ? $('Code: Procesar Respuesta IA').item.json._docid.toString() : '' }}",
               "type": "string"
             },
             {
               "id": "ri-2",
               "name": "fecha_procesado",
-              "value": "={{ $('Code: Procesar Respuesta IA').item.json.fecha_procesado }}",
+              "value": "={{ $('Code: Procesar Respuesta IA').all().length > 0 ? $('Code: Procesar Respuesta IA').item.json.fecha_procesado : ($now.toFormat('yyyy-MM-dd HH:mm:ss')) }}",
               "type": "string"
             },
             {
               "id": "ri-3",
               "name": "numero_envio",
-              "value": "={{ $('Code: Procesar Respuesta IA').item.json.shipping_code.toJsonString() }}",
+              "value": "={{ ($('Code: Procesar Respuesta IA').all().length > 0 ? $('Code: Procesar Respuesta IA').item.json.shipping_code : ($('Code: Preparar Contexto').all().length > 0 ? $('Code: Preparar Contexto').item.json.shipping_code : '')).toJsonString() }}",
               "type": "string"
             },
             {
               "id": "ri-4",
               "name": "numero_pedido",
-              "value": "={{ $('Code: Procesar Respuesta IA').item.json.client_references[0].toJsonString() }}",
+              "value": "={{ ($('Code: Procesar Respuesta IA').all().length > 0 ? ($('Code: Procesar Respuesta IA').item.json.client_references?.[0] || '') : ($('Code: Preparar Contexto').all().length > 0 ? ($('Code: Preparar Contexto').item.json.client_references?.[0] || '') : '')).toJsonString() }}",
               "type": "string"
             },
             {
               "id": "ri-5",
               "name": "tienda",
-              "value": "={{ $('Code: Procesar Respuesta IA').item.json.client_name }}",
+              "value": "={{ $('Code: Procesar Respuesta IA').all().length > 0 ? $('Code: Procesar Respuesta IA').item.json.client_name : ($('Code: Preparar Contexto').all().length > 0 ? $('Code: Preparar Contexto').item.json.client_name : '') }}",
               "type": "string"
             },
             {
               "id": "ri-6",
               "name": "centro",
-              "value": "={{ $('Code: Procesar Respuesta IA').item.json.client_center_code.toJsonString() }}",
+              "value": "={{ ($('Code: Procesar Respuesta IA').all().length > 0 ? $('Code: Procesar Respuesta IA').item.json.client_center_code : ($('Code: Preparar Contexto').all().length > 0 ? $('Code: Preparar Contexto').item.json.client_center_code : '')).toJsonString() }}",
               "type": "string"
             },
             {
               "id": "ri-7",
               "name": "incidencia",
-              "value": "={{ $('Code: Procesar Respuesta IA').item.json.incidencia }}",
+              "value": "={{ $('Code: Procesar Respuesta IA').all().length > 0 ? $('Code: Procesar Respuesta IA').item.json.incidencia : '' }}",
               "type": "string"
             },
             {
               "id": "ri-8",
               "name": "email_enviado",
-              "value": "={{ $('Code: Procesar Respuesta IA').item.json.should_notify }}",
+              "value": "={{ $('Code: Procesar Respuesta IA').all().length > 0 ? $('Code: Procesar Respuesta IA').item.json.should_notify : false }}",
               "type": "boolean"
             },
             {
               "id": "ri-9",
               "name": "tipo_email",
-              "value": "={{ $('Code: Procesar Respuesta IA').item.json.target_type }}",
+              "value": "={{ $('Code: Procesar Respuesta IA').all().length > 0 ? $('Code: Procesar Respuesta IA').item.json.target_type : 'none' }}",
               "type": "string"
             },
             {
               "id": "ri-10",
               "name": "razon",
-              "value": "={{ $('Code: Procesar Respuesta IA').item.json.razon }}",
+              "value": "={{ $('Code: Procesar Respuesta IA').all().length > 0 ? $('Code: Procesar Respuesta IA').item.json.razon : '' }}",
               "type": "string"
             },
             {
               "id": "ri-11",
               "name": "destinatario",
-              "value": "={{ $('Code: Procesar Respuesta IA').item.json.destinatario }}",
+              "value": "={{ $('Code: Procesar Respuesta IA').all().length > 0 ? $('Code: Procesar Respuesta IA').item.json.destinatario : '' }}",
               "type": "string"
             },
             {
               "id": "ri-12",
               "name": "asunto",
-              "value": "={{ $('Code: Procesar Respuesta IA').item.json.asunto }}",
+              "value": "={{ $('Code: Procesar Respuesta IA').all().length > 0 ? $('Code: Procesar Respuesta IA').item.json.asunto : '' }}",
               "type": "string"
             },
             {
               "id": "ri-13",
               "name": "cuerpo",
-              "value": "={{ $('Code: Procesar Respuesta IA').item.json.cuerpo }}",
+              "value": "={{ $('Code: Procesar Respuesta IA').all().length > 0 ? $('Code: Procesar Respuesta IA').item.json.cuerpo : '' }}",
               "type": "string"
             },
             {
               "id": "ri-14",
               "name": "numero_avisos",
-              "value": "={{ $('Code: Procesar Respuesta IA').item.json.numero_avisos }}",
+              "value": "={{ $('Code: Procesar Respuesta IA').all().length > 0 ? $('Code: Procesar Respuesta IA').item.json.numero_avisos : 1 }}",
               "type": "number"
             },
             {
               "id": "ri-15",
               "name": "bulto_afectado",
-              "value": "={{ $('Code: Procesar Respuesta IA').item.json.affected_bulto.toJsonString() }}",
+              "value": "={{ ($('Code: Procesar Respuesta IA').all().length > 0 ? ($('Code: Procesar Respuesta IA').item.json.affected_bulto || '') : '').toJsonString() }}",
               "type": "string"
             },
             {
               "id": "ri-16",
               "name": "bultos_historial_json",
-              "value": "={{ $('Code: Procesar Respuesta IA').item.json.bultos_raw }}",
+              "value": "={{ $('Code: Procesar Respuesta IA').all().length > 0 ? $('Code: Procesar Respuesta IA').item.json.bultos_raw : '[]' }}",
               "type": "string"
             },
             {
               "id": "ri-17",
               "name": "forzado_interno",
-              "value": "={{ $('Code: Procesar Respuesta IA').item.json.force_internal }}",
+              "value": "={{ $('Code: Procesar Respuesta IA').all().length > 0 ? $('Code: Procesar Respuesta IA').item.json.force_internal : false }}",
               "type": "boolean"
             },
             {
               "id": "ri-18",
               "name": "shipping_code",
-              "value": "={{ $('Code: Procesar Respuesta IA').item.json.shipping_code.toJsonString() }}",
+              "value": "={{ ($('Code: Procesar Respuesta IA').all().length > 0 ? $('Code: Procesar Respuesta IA').item.json.shipping_code : ($('Code: Preparar Contexto').all().length > 0 ? $('Code: Preparar Contexto').item.json.shipping_code : '')).toJsonString() }}",
               "type": "string"
             },
             {
               "id": "ri-h1",
               "name": "transit_hours",
-              "value": "={{ $('Code: Calcular SLA Horas').item.json.transit_hours }}",
+              "value": "={{ $('Code: Calcular SLA Horas').all().length > 0 ? $('Code: Calcular SLA Horas').item.json.transit_hours : 0 }}",
               "type": "number"
             },
             {
               "id": "ri-h2",
               "name": "delivery_hours",
-              "value": "={{ $('Code: Calcular SLA Horas').item.json.delivery_hours }}",
+              "value": "={{ $('Code: Calcular SLA Horas').all().length > 0 ? $('Code: Calcular SLA Horas').item.json.delivery_hours : 0 }}",
               "type": "number"
             },
             {
               "id": "ri-h3",
               "name": "manifest_hours",
-              "value": "={{ $('Code: Calcular SLA Horas').item.json.manifest_hours }}",
+              "value": "={{ $('Code: Calcular SLA Horas').all().length > 0 ? $('Code: Calcular SLA Horas').item.json.manifest_hours : 0 }}",
               "type": "number"
             },
             {
               "id": "ri-h4",
               "name": "stationary_hours",
-              "value": "={{ $('Code: Calcular SLA Horas').item.json.stationary_hours }}",
+              "value": "={{ $('Code: Calcular SLA Horas').all().length > 0 ? $('Code: Calcular SLA Horas').item.json.stationary_hours : 0 }}",
               "type": "number"
             }
           ]
@@ -1414,10 +1421,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        5120,
-        360
+        -48128,
+        18512
       ],
-      "id": "set-prep-incidencia",
+      "id": "2c5de26f-92a4-4354-b6ce-8ec6161d42e8",
       "name": "Set: Preparar Registro Incidencia"
     },
     {
@@ -1425,218 +1432,37 @@
         "operation": "upsert",
         "projectId": "ctt-dashboard",
         "collection": "incidencias",
-        "documentId": "={{ $json.shipping_code.toString() }}",
         "updateKey": "_docid",
         "columns": "fecha_procesado,numero_envio,numero_pedido,tienda,centro,incidencia,email_enviado,tipo_email,razon,destinatario,asunto,cuerpo,numero_avisos,bulto_afectado,bultos_historial_json,forzado_interno,transit_hours,delivery_hours,manifest_hours,stationary_hours"
       },
       "type": "n8n-nodes-base.googleFirebaseCloudFirestore",
       "typeVersion": 1.1,
       "position": [
-        5220,
-        428
+        -47904,
+        18512
       ],
-      "id": "fbl-0001-0001-0001-000000000032",
+      "id": "3b741ed5-6784-403b-9b32-f17ee6deea85",
       "name": "Firestore: Registrar Incidencia",
       "alwaysOutputData": true,
-      "onError": "continueRegularOutput",
       "credentials": {
         "googleFirebaseCloudFirestoreOAuth2Api": {
           "id": "EXM0epVP1YsMfolr",
           "name": "haminos"
         }
-      }
+      },
+      "onError": "continueRegularOutput"
     },
     {
       "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "lg-01",
-              "name": "_docid",
-              "value": "={{ ($node['Code: Procesar Respuesta IA'] ? $node['Code: Procesar Respuesta IA'].json._docid : $node['Code: Preparar Contexto'].json.shipping_code).toString() }}",
-              "type": "string"
-            },
-            {
-              "id": "lg-02",
-              "name": "fecha_procesado",
-              "value": "={{ $node['Code: Procesar Respuesta IA'] ? $node['Code: Procesar Respuesta IA'].json.fecha_procesado : $now.toFormat('dd-MM-yyyy HH:mm:ss') }}",
-              "type": "string"
-            },
-            {
-              "id": "lg-03",
-              "name": "numero_envio",
-              "value": "={{ ($node['Code: Procesar Respuesta IA'] ? $node['Code: Procesar Respuesta IA'].json.shipping_code : $node['Code: Preparar Contexto'].json.shipping_code).toJsonString() }}",
-              "type": "string"
-            },
-            {
-              "id": "lg-04",
-              "name": "numero_pedido",
-              "value": "={{ ($node['Code: Procesar Respuesta IA'] ? $node['Code: Procesar Respuesta IA'].json.client_references[0] : $node['Code: Preparar Contexto'].json.client_references[0]).toJsonString() }}",
-              "type": "string"
-            },
-            {
-              "id": "lg-05",
-              "name": "tienda",
-              "value": "={{ $node['Code: Procesar Respuesta IA'] ? $node['Code: Procesar Respuesta IA'].json.client_name : $node['Code: Preparar Contexto'].json.client_name }}",
-              "type": "string"
-            },
-            {
-              "id": "lg-06",
-              "name": "centro",
-              "value": "={{ ($node['Code: Procesar Respuesta IA'] ? $node['Code: Procesar Respuesta IA'].json.client_center_code : $node['Code: Preparar Contexto'].json.client_center_code).toJsonString() }}",
-              "type": "string"
-            },
-            {
-              "id": "lg-07",
-              "name": "estado",
-              "value": "={{ ($node['Code: Procesar Respuesta IA'] ? $node['Code: Procesar Respuesta IA'].json.shipping_status_code : $node['Code: Preparar Contexto'].json.shipping_status_code).toJsonString() }}",
-              "type": "string"
-            },
-            {
-              "id": "lg-08",
-              "name": "fecha_estado",
-              "value": "={{ $node['Code: Procesar Respuesta IA'] ? $node['Code: Procesar Respuesta IA'].json.shipping_status_datetime : $node['Code: Preparar Contexto'].json.shipping_status_datetime }}",
-              "type": "string"
-            },
-            {
-              "id": "lg-09",
-              "name": "h_en_estado",
-              "value": "0",
-              "type": "number"
-            },
-            {
-              "id": "lg-10",
-              "name": "email_enviado",
-              "value": "={{ $node['Code: Procesar Respuesta IA'] ? $node['Code: Procesar Respuesta IA'].json.should_notify : false }}",
-              "type": "boolean"
-            },
-            {
-              "id": "lg-11",
-              "name": "tipo_email",
-              "value": "={{ $node['Code: Procesar Respuesta IA'] ? $node['Code: Procesar Respuesta IA'].json.target_type : 'none' }}",
-              "type": "string"
-            },
-            {
-              "id": "lg-12",
-              "name": "razon",
-              "value": "={{ $node['Code: Procesar Respuesta IA'] ? $node['Code: Procesar Respuesta IA'].json.razon : 'Skipped: Already processed today' }}",
-              "type": "string"
-            },
-            {
-              "id": "lg-13",
-              "name": "destinatario",
-              "value": "={{ $node['Code: Procesar Respuesta IA'] ? $node['Code: Procesar Respuesta IA'].json.destinatario : '' }}",
-              "type": "string"
-            },
-            {
-              "id": "lg-14",
-              "name": "credencial",
-              "value": "={{ $node['Code: Procesar Respuesta IA'] ? $node['Code: Procesar Respuesta IA'].json.client_name : $node['Code: Preparar Contexto'].json.client_name }}",
-              "type": "string"
-            },
-            {
-              "id": "lg-15",
-              "name": "transit_hours",
-              "value": "0",
-              "type": "number"
-            },
-            {
-              "id": "lg-16",
-              "name": "delivery_hours",
-              "value": "0",
-              "type": "number"
-            },
-            {
-              "id": "lg-17",
-              "name": "manifest_hours",
-              "value": "0",
-              "type": "number"
-            },
-            {
-              "id": "lg-18",
-              "name": "forzado_interno",
-              "value": "={{ $node['Code: Procesar Respuesta IA'] ? $node['Code: Procesar Respuesta IA'].json.force_internal : $node['Code: Preparar Contexto'].json.force_internal }}",
-              "type": "boolean"
-            },
-            {
-              "id": "lg-19",
-              "name": "dano",
-              "value": "={{ $node['Code: Procesar Respuesta IA'] ? ($node['Code: Procesar Respuesta IA'].json.incident_type === 'damage') : false }}",
-              "type": "boolean"
-            },
-            {
-              "id": "lg-20",
-              "name": "historial_formateado",
-              "value": "={{ $node['Code: Procesar Respuesta IA'] ? $node['Code: Procesar Respuesta IA'].json.formatted_history : '' }}",
-              "type": "string"
-            },
-            {
-              "id": "lg-21",
-              "name": "shipping_code",
-              "value": "={{ ($node['Code: Procesar Respuesta IA'] ? $node['Code: Procesar Respuesta IA'].json.shipping_code : $node['Code: Preparar Contexto'].json.shipping_code).toJsonString() }}",
-              "type": "string"
-            },
-            {
-              "id": "lg-23",
-              "name": "asunto",
-              "value": "={{ $node['Code: Procesar Respuesta IA'] ? $node['Code: Procesar Respuesta IA'].json.asunto : '' }}",
-              "type": "string"
-            },
-            {
-              "id": "lg-24",
-              "name": "cuerpo",
-              "value": "={{ $node['Code: Procesar Respuesta IA'] ? $node['Code: Procesar Respuesta IA'].json.cuerpo : '' }}",
-              "type": "string"
-            },
-            {
-              "id": "lg-25",
-              "name": "bultos_historial_json",
-              "value": "={{ $node['Code: Procesar Respuesta IA'] ? $node['Code: Procesar Respuesta IA'].json.bultos_raw : $node['Code: Preparar Contexto'].json.bultos_raw }}",
-              "type": "string"
-            },
-            {
-              "id": "lg-h1",
-              "name": "transit_hours",
-              "value": "={{ $('Code: Calcular SLA Horas').item.json.transit_hours }}",
-              "type": "number"
-            },
-            {
-              "id": "lg-h2",
-              "name": "delivery_hours",
-              "value": "={{ $('Code: Calcular SLA Horas').item.json.delivery_hours }}",
-              "type": "number"
-            },
-            {
-              "id": "lg-h3",
-              "name": "manifest_hours",
-              "value": "={{ $('Code: Calcular SLA Horas').item.json.manifest_hours }}",
-              "type": "number"
-            },
-            {
-              "id": "lg-h4",
-              "name": "stationary_hours",
-              "value": "={{ $('Code: Calcular SLA Horas').item.json.stationary_hours }}",
-              "type": "number"
-            },
-            {
-              "id": "lg-h5",
-              "name": "h_en_estado",
-              "value": "={{ $('Code: Calcular SLA Horas').item.json.h_en_estado }}",
-              "type": "number"
-            }
-          ]
-        },
-        "options": {
-          "ignoreConversionErrors": true
-        }
+        "jsCode": "let ia = {};\nlet sla = {};\nlet ctx = {};\n\ntry { ia = $('Code: Procesar Respuesta IA').item.json; } catch (e) {}\ntry { sla = $('Code: Calcular SLA Horas').item.json; } catch (e) {}\ntry { ctx = $('Code: Preparar Contexto').item.json; } catch (e) {}\n\nconst base = $input.item.json || ctx;\n\nreturn {\n  json: {\n    _docid: (ia._docid || base._docid || base.shipping_code || '').toString().replace(/\\\"/g, ''),\n    fecha_procesado: ia.fecha_procesado || base.fecha_procesado || $now.toFormat('yyyy-MM-dd HH:mm:ss'),\n    numero_envio: (ia.shipping_code || base.shipping_code || '').toString(),\n    numero_pedido: (ia.client_references?.[0] || base.client_references?.[0] || '').toString(),\n    tienda: ia.client_name || base.client_name || '',\n    centro: (ia.client_center_code || base.client_center_code || '').toString(),\n    estado: (ia.shipping_status_code || base.shipping_status_code || '').toString(),\n    fecha_estado: ia.shipping_status_datetime || base.shipping_status_datetime || '',\n    h_en_estado: sla.h_en_estado || 0,\n    email_enviado: ia.should_notify || false,\n    tipo_email: ia.target_type || base.target_type || 'none',\n    razon: ia.razon || base.razon || (base.skip ? 'Skipped: Already processed today' : 'No incident detected'),\n    destinatario: ia.destinatario || base.destinatario || '',\n    credencial: ia.client_name || base.client_name || '',\n    transit_hours: sla.transit_hours || 0,\n    delivery_hours: sla.delivery_hours || 0,\n    manifest_hours: sla.manifest_hours || 0,\n    stationary_hours: sla.stationary_hours || 0,\n    forzado_interno: ia.force_internal || base.force_internal || false,\n    dano: (ia.incident_type === 'damage'),\n    historial_formateado: ia.formatted_history || '',\n    asunto: ia.asunto || '',\n    cuerpo: ia.cuerpo || '',\n    bultos_historial_json: ia.bultos_raw || base.bultos_raw || '[]'\n  }\n};"
       },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
       "position": [
-        5440,
-        528
+        -47680,
+        19424
       ],
-      "id": "slg-0001-0001-0001-000000000029",
+      "id": "b3d2f7fd-3b00-4020-9c02-9eb66e963273",
       "name": "Set: Preparar Log",
       "alwaysOutputData": true,
       "onError": "continueRegularOutput"
@@ -1647,24 +1473,24 @@
         "projectId": "ctt-dashboard",
         "collection": "ejecuciones",
         "updateKey": "_docid",
-        "columns": "fecha_procesado,numero_envio,numero_pedido,tienda,centro,estado,fecha_estado,h_en_estado,email_enviado,tipo_email,razon,destinatario,credencial,transit_hours,delivery_hours,manifest_hours,stationary_hours,forzado_interno,dano,historial_formateado,asunto,cuerpo,bultos_historial_json"
+        "columns": "fecha_procesado,numero_pedido,tienda,centro,estado,fecha_estado,h_en_estado,email_enviado,tipo_email,razon,destinatario,credencial,transit_hours,delivery_hours,manifest_hours,stationary_hours,forzado_interno,dano,historial_formateado,asunto,cuerpo,bultos_historial_json"
       },
       "type": "n8n-nodes-base.googleFirebaseCloudFirestore",
       "typeVersion": 1.1,
       "position": [
-        5660,
-        528
+        -47456,
+        19632
       ],
-      "id": "fbl-0001-0001-0001-000000000030",
+      "id": "e99e89d0-9d1d-49db-8f8c-cb03e945f7b1",
       "name": "Firestore: Log Ejecucion",
       "alwaysOutputData": true,
-      "onError": "continueRegularOutput",
       "credentials": {
         "googleFirebaseCloudFirestoreOAuth2Api": {
           "id": "EXM0epVP1YsMfolr",
           "name": "haminos"
         }
-      }
+      },
+      "onError": "continueRegularOutput"
     }
   ],
   "connections": {
@@ -1966,6 +1792,28 @@
         ]
       ]
     },
+    "Code: Calcular Horas Fase": {
+      "main": [
+        [
+          {
+            "node": "Code: Calcular SLA Horas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code: Calcular SLA Horas": {
+      "main": [
+        [
+          {
+            "node": "AI: Analizar Historiales",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
     "Code: Filtrar Bultos Activos": {
       "main": [
         [
@@ -1995,22 +1843,22 @@
         ]
       ]
     },
-    "Code: Calcular SLA Horas": {
+    "AI: Analizar Historiales": {
       "main": [
         [
           {
-            "node": "AI: Analizar Historiales",
+            "node": "Code: Parsear y Override IA",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "AI: Analizar Historiales": {
+    "Code: Parsear y Override IA": {
       "main": [
         [
           {
-            "node": "Code: Parsear y Override IA",
+            "node": "Code: Procesar Respuesta IA",
             "type": "main",
             "index": 0
           }
@@ -2255,36 +2103,10 @@
           }
         ]
       ]
-    },
-    "Code: Calcular Horas Fase": {
-      "main": [
-        [
-          {
-            "node": "Code: Calcular SLA Horas",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Code: Parsear y Override IA": {
-      "main": [
-        [
-          {
-            "node": "Code: Procesar Respuesta IA",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
     }
   },
   "pinData": {},
-  "settings": {
-    "executionOrder": "v1"
-  },
   "meta": {
-    "templateCredsSetupCompleted": true,
     "instanceId": "1c2aee663286167ca5973273ceb0c60aa2fcbae95195db0810f62f8c4797daff"
   }
 }

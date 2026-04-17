@@ -157,12 +157,15 @@ export default function Dashboard() {
       return true;
     };
 
-    const parseFecha = (f: string): number => {
+    const parseFecha = (f: any): number => {
       if (!f) return 0;
+      // Handle Firestore Timestamp objects
+      if (typeof f === 'object' && typeof f.toDate === 'function') return f.toDate().getTime();
+      const s = String(f);
       // Support both "DD-MM-YYYY HH:mm:ss" (legacy) and "YYYY-MM-DD HH:mm:ss" (new)
-      const isoLike = /^\d{4}-\d{2}-\d{2}/.test(f);
-      if (isoLike) return new Date(f.replace(' ', 'T')).getTime();
-      const [datePart, timePart = ''] = f.split(' ');
+      const isoLike = /^\d{4}-\d{2}-\d{2}/.test(s);
+      if (isoLike) return new Date(s.replace(' ', 'T')).getTime();
+      const [datePart, timePart = ''] = s.split(' ');
       const [d, m, y] = datePart.split('-');
       return new Date(`${y}-${m}-${d}T${timePart}`).getTime();
     };

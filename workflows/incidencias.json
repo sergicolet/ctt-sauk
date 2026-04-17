@@ -63,15 +63,6 @@
               }
             },
             {
-              "id": "f2",
-              "leftValue": "={{ $json.tipo_email }}",
-              "rightValue": "standard",
-              "operator": {
-                "type": "string",
-                "operation": "equals"
-              }
-            },
-            {
               "id": "f3",
               "leftValue": "={{ $json.resultado_followup ?? '' }}",
               "rightValue": "",
@@ -266,7 +257,7 @@
     },
     {
       "parameters": {
-        "url": "=https://api.cttexpress.com/integrations-info/trf/item-history-api/history/{{ $('Loop Followup').item.json['NUMERO DE ENVIO'] }}",
+        "url": "=https://api.cttexpress.com/integrations-info/trf/item-history-api/history/{{ $('Loop Followup').item.json.numero_envio.toString().split('\"').join('') }}",
         "sendQuery": true,
         "queryParameters": {
           "parameters": [
@@ -285,7 +276,7 @@
           "parameters": [
             {
               "name": "Authorization",
-              "value": "={{'Bearer ' + $('Token ' + $json['TIENDA'] + ' FW').item.json.access_token}}"
+              "value": "={{'Bearer ' + $('Token ' + ($json.tienda || $json.credencial) + ' FW').item.json.access_token}}"
             }
           ]
         },
@@ -693,7 +684,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const ayer = $now.minus({days: 1}).toFormat('yyyy-MM-dd');\nconst credencial = $('Loop Clientes 0000').item.json.credencial;\nconst client = $('Loop Clientes 0000').item.json.client;\n\nconst result = [];\nfor (const item of $input.all()) {\n  const code = String(item.json.shipping_status_code || '');\n  const rawDate = String(item.json.shipping_status_datetime || '');\n  let fecha = '';\n  if (rawDate) {\n    try {\n      const d = new Date(rawDate);\n      d.setHours(d.getHours() + 1);\n      fecha = d.toISOString().substring(0, 10);\n    } catch(e) {\n      fecha = rawDate.substring(0, 10);\n    }\n  }\n  if ((code === '0000' || code === '0030') && fecha === ayer) {\n    result.push({ json: { ...item.json, credencial, client, fecha_estado_local: fecha } });\n  }\n}\nreturn result;"
+        "jsCode": "const ayer = $now.minus({days: 1}).toFormat('dd-MM-yyyy');\nconst credencial = $('Loop Clientes 0000').item.json.credencial;\nconst client = $('Loop Clientes 0000').item.json.client;\n\nconst result = [];\nfor (const item of $input.all()) {\n  const code = String(item.json.shipping_status_code || '');\n  const rawDate = String(item.json.shipping_status_datetime || '');\n  let fecha = '';\n  if (rawDate) {\n    try {\n      const d = new Date(rawDate);\n      d.setHours(d.getHours() + 1);\n      fecha = d.getDate().toString().padStart(2, '0') + '-' + (d.getMonth() + 1).toString().padStart(2, '0') + '-' + d.getFullYear();\n    } catch(e) {\n      fecha = rawDate.substring(0, 10);\n    }\n  }\n  if ((code === '0000' || code === '0030') && fecha === ayer) {\n    result.push({ json: { ...item.json, credencial, client, fecha_estado_local: fecha } });\n  }\n}\nreturn result;"
       },
       "id": "01446102-b2b9-4852-8f2a-29a4bfea600a",
       "name": "Filtrar 0000 Ayer",
@@ -951,7 +942,7 @@
           "mappingMode": "defineBelow",
           "value": {
             "fecha_procesado": "={{ $now.toFormat('dd-MM-yyyy HH:mm:ss') }}",
-            "numero_envio": "={{ $('Preparar Alerta 0000').item.json.shipping_code.toJsonString() }}",
+            "numero_envio": "={{ $('Preparar Alerta 0000').item.json.shipping_code.toString() }}",
             "numero_pedido": "={{ $('Preparar Alerta 0000').item.json.numero_pedido }}",
             "tienda": "={{ $('Preparar Alerta 0000').item.json.tienda }}",
             "centro": "={{ $('Preparar Alerta 0000').item.json.centro }}",
@@ -1383,6 +1374,59 @@
         1508,
         1360
       ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "set-cuadrado-1",
+              "name": "resultado_followup",
+              "value": "=Cuadrado {{ $now.toFormat('dd-MM-yyyy HH:mm') }}",
+              "type": "string"
+            },
+            {
+              "id": "set-cuadrado-2",
+              "name": "_docid",
+              "value": "={{ $json.shipping_code.toString() }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "node-preparar-cuadrado",
+      "name": "Preparar Cuadrado",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1000,
+        2300
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "upsert",
+        "projectId": "ctt-dashboard",
+        "collection": "incidencias",
+        "documentId": "={{ $json.shipping_code.toString() }}",
+        "updateKey": "_docid",
+        "columns": "resultado_followup"
+      },
+      "id": "node-marcar-cuadrado",
+      "name": "Marcar Cuadrado",
+      "type": "n8n-nodes-base.googleFirebaseCloudFirestore",
+      "typeVersion": 1.1,
+      "position": [
+        1250,
+        2300
+      ],
+      "credentials": {
+        "googleFirebaseCloudFirestoreOAuth2Api": {
+          "id": "EXM0epVP1YsMfolr",
+          "name": "haminos"
+        }
+      }
     }
   ],
   "connections": {
@@ -1826,7 +1870,7 @@
         ],
         [
           {
-            "node": "Preparar Alerta 0000",
+            "node": "Preparar Cuadrado",
             "type": "main",
             "index": 0
           }
@@ -1981,6 +2025,28 @@
           },
           {
             "node": "If Daño FW",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Marcar Cuadrado": {
+      "main": [
+        [
+          {
+            "node": "Preparar Alerta 0000",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Preparar Cuadrado": {
+      "main": [
+        [
+          {
+            "node": "Marcar Cuadrado",
             "type": "main",
             "index": 0
           }
