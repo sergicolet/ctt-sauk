@@ -51,8 +51,22 @@ export default function Dashboard() {
           getDocs(query(collection(db, "ejecuciones"), orderBy("fecha_procesado", "desc"), limit(1000))),
           getDocs(query(collection(db, "incidencias"), orderBy("fecha_procesado", "desc"), limit(1000))),
         ]);
-        setEjecuciones(ejSnap.docs.map((d) => ({ id: d.id, ...d.data() } as Ejecucion)));
-        setIncidencias(incSnap.docs.map((d) => ({ id: d.id, ...d.data() } as Incidencia)));
+        setEjecuciones(ejSnap.docs.map((d) => {
+          const data = d.data();
+          return {
+            id: d.id,
+            ...data,
+            fecha_procesado: data.fecha_procesado?.toDate?.() ? new Date(data.fecha_procesado.toDate()).toISOString().replace('T', ' ').substring(0, 19) : data.fecha_procesado
+          } as Ejecucion;
+        }));
+        setIncidencias(incSnap.docs.map((d) => {
+          const data = d.data();
+          return {
+            id: d.id,
+            ...data,
+            fecha_procesado: data.fecha_procesado?.toDate?.() ? new Date(data.fecha_procesado.toDate()).toISOString().replace('T', ' ').substring(0, 19) : data.fecha_procesado
+          } as Incidencia;
+        }));
       } catch (e) {
         console.error("Error loading Firestore data:", e);
       }
@@ -69,8 +83,22 @@ export default function Dashboard() {
         getDocs(query(collection(db, "ejecuciones"), orderBy("fecha_procesado", "desc"), limit(1000))),
         getDocs(query(collection(db, "incidencias"), orderBy("fecha_procesado", "desc"), limit(1000))),
       ]);
-      setEjecuciones(ejSnap.docs.map((d) => ({ id: d.id, ...d.data() } as Ejecucion)));
-      setIncidencias(incSnap.docs.map((d) => ({ id: d.id, ...d.data() } as Incidencia)));
+      setEjecuciones(ejSnap.docs.map((d) => {
+        const data = d.data();
+        return {
+          id: d.id,
+          ...data,
+          fecha_procesado: data.fecha_procesado?.toDate?.() ? new Date(data.fecha_procesado.toDate()).toISOString().replace('T', ' ').substring(0, 19) : data.fecha_procesado
+        } as Ejecucion;
+      }));
+      setIncidencias(incSnap.docs.map((d) => {
+        const data = d.data();
+        return {
+          id: d.id,
+          ...data,
+          fecha_procesado: data.fecha_procesado?.toDate?.() ? new Date(data.fecha_procesado.toDate()).toISOString().replace('T', ' ').substring(0, 19) : data.fecha_procesado
+        } as Incidencia;
+      }));
     } catch (e) {
       console.error("Error refreshing Firestore data:", e);
     }
@@ -83,7 +111,12 @@ export default function Dashboard() {
       const docSnap = await getDoc(docRef);
       
       if (docSnap.exists()) {
-        const newData = { id: docSnap.id, ...docSnap.data() } as any;
+        const data = docSnap.data();
+        const newData = {
+          id: docSnap.id,
+          ...data,
+          fecha_procesado: data.fecha_procesado?.toDate?.() ? new Date(data.fecha_procesado.toDate()).toISOString().replace('T', ' ').substring(0, 19) : data.fecha_procesado
+        } as any;
         if (collectionName === "ejecuciones") {
           setEjecuciones(prev => prev.map(item => item.id === itemId ? newData : item));
         } else {
