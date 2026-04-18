@@ -18,10 +18,12 @@ export const STATUS_LABELS: Record<string, string> = {
   "1800": "Estacionado ubicado",
   "1900": "Pendiente de extracción",
   "2000": "Entregado",
+  "2100": "Entregado",
   "2300": "Disponible en Punto CTT",
   "2310": "Pendiente de nuevos datos",
   "2400": "Reparto fallido (Incidencia)",
   "2500": "En devolución",
+  "3000": "Envío anulado",
   "2600": "Incidencia (Dirección)",
   "2700": "Incidencia (Destinatario)",
   "71_INAT": "Nueva fecha de entrega",
@@ -38,53 +40,89 @@ export interface StatusTheme {
 }
 
 export const STATUS_THEMES: Record<string, StatusTheme> = {
-  // Green - Success
+  // ✅ Verde — Entregado / Éxito
   "2000": { bg: "bg-emerald-50", text: "text-emerald-700", border: "border-emerald-200", dot: "bg-emerald-500" },
-  "2300": { bg: "bg-emerald-50", text: "text-emerald-700", border: "border-emerald-200", dot: "bg-emerald-500" },
-  
-  // Amber / Orange - Active / Transit
-  "0900": { bg: "bg-amber-50", text: "text-amber-700", border: "border-amber-200", dot: "bg-amber-500" },
-  "900":  { bg: "bg-amber-50", text: "text-amber-700", border: "border-amber-200", dot: "bg-amber-500" },
-  "1000": { bg: "bg-amber-50", text: "text-amber-700", border: "border-amber-200", dot: "bg-amber-500" },
-  "1200": { bg: "bg-amber-50", text: "text-amber-700", border: "border-amber-200", dot: "bg-amber-500" },
-  "1500": { bg: "bg-orange-50", text: "text-orange-700", border: "border-orange-200", dot: "bg-orange-500" },
-  "20":   { bg: "bg-orange-50", text: "text-orange-700", border: "border-orange-200", dot: "bg-orange-500" },
-  
-  // Red - Failure / Incident
-  "0600": { bg: "bg-red-50", text: "text-red-700", border: "border-red-200", dot: "bg-red-500" },
-  "600":  { bg: "bg-red-50", text: "text-red-700", border: "border-red-200", dot: "bg-red-500" },
-  "1600": { bg: "bg-red-50", text: "text-red-700", border: "border-red-200", dot: "bg-red-500" },
-  "2400": { bg: "bg-red-50", text: "text-red-700", border: "border-red-200", dot: "bg-red-500" },
-  "2600": { bg: "bg-red-50", text: "text-red-700", border: "border-red-200", dot: "bg-red-600" },
-  "2700": { bg: "bg-red-50", text: "text-red-700", border: "border-red-200", dot: "bg-red-600" },
-  "6_INCT": { bg: "bg-red-100", text: "text-red-800", border: "border-red-300", dot: "bg-red-600" },
-  
-  // Slate / Blue - Admin / Others
-  "0000": { bg: "bg-blue-50", text: "text-blue-700", border: "border-blue-200", dot: "bg-blue-500" },
-  "0030": { bg: "bg-blue-50", text: "text-blue-700", border: "border-blue-200", dot: "bg-blue-500" },
+  "2100": { bg: "bg-emerald-50", text: "text-emerald-700", border: "border-emerald-200", dot: "bg-emerald-500" },
+  "2300": { bg: "bg-emerald-100", text: "text-emerald-800", border: "border-emerald-300", dot: "bg-emerald-600" },
+
+  // 🔵 Azul — Inicio / Recogida
+  "0000": { bg: "bg-sky-50",  text: "text-sky-700",  border: "border-sky-200",  dot: "bg-sky-500" },
+  "0030": { bg: "bg-sky-50",  text: "text-sky-700",  border: "border-sky-200",  dot: "bg-sky-500" },
   "0500": { bg: "bg-blue-50", text: "text-blue-700", border: "border-blue-200", dot: "bg-blue-500" },
   "500":  { bg: "bg-blue-50", text: "text-blue-700", border: "border-blue-200", dot: "bg-blue-500" },
-  "1700": { bg: "bg-slate-50", text: "text-slate-700", border: "border-slate-200", dot: "bg-slate-400" },
-  "1800": { bg: "bg-slate-50", text: "text-slate-700", border: "border-slate-200", dot: "bg-slate-400" },
-  "1900": { bg: "bg-slate-50", text: "text-slate-700", border: "border-slate-200", dot: "bg-slate-500" },
-  "2310": { bg: "bg-amber-50", text: "text-amber-700", border: "border-amber-200", dot: "bg-amber-500" }, // Pendiente nuevos datos
-  "2500": { bg: "bg-purple-50", text: "text-purple-700", border: "border-purple-200", dot: "bg-purple-500" }, // En devolución
-  "71_INAT": { bg: "bg-indigo-50", text: "text-indigo-700", border: "border-indigo-200", dot: "bg-indigo-500" }, // Nueva fecha
+
+  // 🟡 Ámbar — En tránsito
+  "0900": { bg: "bg-amber-50",  text: "text-amber-700",  border: "border-amber-200",  dot: "bg-amber-500" },
+  "900":  { bg: "bg-amber-50",  text: "text-amber-700",  border: "border-amber-200",  dot: "bg-amber-500" },
+  "1000": { bg: "bg-amber-50",  text: "text-amber-700",  border: "border-amber-200",  dot: "bg-amber-500" },
+  "1200": { bg: "bg-yellow-50", text: "text-yellow-700", border: "border-yellow-200", dot: "bg-yellow-500" },
+
+  // 🟠 Naranja — En reparto activo
+  "1500": { bg: "bg-orange-50", text: "text-orange-700", border: "border-orange-200", dot: "bg-orange-500" },
+  "20":   { bg: "bg-orange-50", text: "text-orange-700", border: "border-orange-200", dot: "bg-orange-500" },
+
+  // 🔴 Rojo — Fallos e incidencias
+  "0600":   { bg: "bg-red-50",  text: "text-red-700",  border: "border-red-200",  dot: "bg-red-500" },
+  "600":    { bg: "bg-red-50",  text: "text-red-700",  border: "border-red-200",  dot: "bg-red-500" },
+  "1600":   { bg: "bg-red-50",  text: "text-red-700",  border: "border-red-200",  dot: "bg-red-500" },
+  "2400":   { bg: "bg-red-50",  text: "text-red-700",  border: "border-red-200",  dot: "bg-red-500" },
+  "2600":   { bg: "bg-red-100", text: "text-red-800",  border: "border-red-300",  dot: "bg-red-600" },
+  "2700":   { bg: "bg-red-100", text: "text-red-800",  border: "border-red-300",  dot: "bg-red-600" },
+  "6_INCT": { bg: "bg-red-100", text: "text-red-800",  border: "border-red-300",  dot: "bg-red-700" },
+  "3000":   { bg: "bg-red-50",  text: "text-red-600",  border: "border-red-200",  dot: "bg-red-400" },
+
+  // ⚫ Gris — Estacionado / Parado
+  "1700": { bg: "bg-slate-50",  text: "text-slate-600", border: "border-slate-200", dot: "bg-slate-400" },
+  "1800": { bg: "bg-slate-50",  text: "text-slate-600", border: "border-slate-200", dot: "bg-slate-400" },
+  "1900": { bg: "bg-slate-100", text: "text-slate-700", border: "border-slate-300", dot: "bg-slate-500" },
+
+  // 🟣 Púrpura — Devolución
+  "2500": { bg: "bg-purple-50", text: "text-purple-700", border: "border-purple-200", dot: "bg-purple-500" },
+
+  // 🟤 Ámbar oscuro — Pendiente / Sin datos
+  "2310":   { bg: "bg-yellow-50",  text: "text-yellow-800",  border: "border-yellow-300",  dot: "bg-yellow-600" },
+
+  // 🔷 Índigo — Reprogramado
+  "71_INAT": { bg: "bg-indigo-50", text: "text-indigo-700", border: "border-indigo-200", dot: "bg-indigo-500" },
 };
 
 const DEFAULT_THEME: StatusTheme = { bg: "bg-slate-50", text: "text-slate-600", border: "border-slate-200", dot: "bg-slate-300" };
 
-export function getStatusTheme(code: string): StatusTheme {
-  if (!code) return DEFAULT_THEME;
-  const theme = STATUS_THEMES[code];
+export function getStatusTheme(code: string | number): StatusTheme {
+  if (code === null || code === undefined || code === '') return DEFAULT_THEME;
+  const str = String(code).replace(/^"+|"+$/g, '').trim();
+  const theme = STATUS_THEMES[str];
   if (theme) return theme;
-
-  const padded = String(code).padStart(4, '0');
+  const padded = str.padStart(4, '0');
   const paddedTheme = STATUS_THEMES[padded];
   if (paddedTheme) return paddedTheme;
-
   return DEFAULT_THEME;
 }
+
+// Ordered list for filter dropdown — code + label for colored rendering
+export const STATUS_FILTER_OPTIONS: { code: string; label: string }[] = [
+  { code: "0000", label: "Manifestado" },
+  { code: "0500", label: "Envío recogido" },
+  { code: "0600", label: "Recogida fallida" },
+  { code: "0900", label: "En tránsito" },
+  { code: "1000", label: "Delegación de tránsito" },
+  { code: "1200", label: "Delegación destino" },
+  { code: "1500", label: "En reparto" },
+  { code: "1600", label: "Reparto fallido" },
+  { code: "1700", label: "Envío estacionado" },
+  { code: "1800", label: "Estacionado ubicado" },
+  { code: "1900", label: "Pendiente de extracción" },
+  { code: "2000", label: "Entregado" },
+  { code: "2300", label: "Disponible en Punto CTT" },
+  { code: "2310", label: "Pendiente de nuevos datos" },
+  { code: "2400", label: "Reparto fallido (Incidencia)" },
+  { code: "2500", label: "En devolución" },
+  { code: "2600", label: "Incidencia (Dirección)" },
+  { code: "2700", label: "Incidencia (Destinatario)" },
+  { code: "3000", label: "Envío anulado" },
+  { code: "71_INAT", label: "Nueva fecha de entrega" },
+  { code: "6_INCT",  label: "Daño detectado" },
+];
 
 export const SHOP_NAMES: Record<string, string> = {
   "48630": "HAMINOS",
@@ -118,22 +156,18 @@ const FREE_TEXT_NORMALIZE: Record<string, string> = {
   "sin estado": "Sin estado",
 };
 
-export function getStatusLabel(code: string): string {
-  if (!code) return "Sin estado";
-  const label = STATUS_LABELS[code];
+export function getStatusLabel(code: string | number): string {
+  if (code === null || code === undefined || code === '') return "Sin estado";
+  const str = String(code).replace(/^"+|"+$/g, '').trim();
+  if (!str || str === 'none') return "Sin estado";
+  const label = STATUS_LABELS[str];
   if (label) return label;
-
-  // Clean variations like 0500 vs 500
-  const padded = String(code).padStart(4, '0');
+  const padded = str.padStart(4, '0');
   const paddedLabel = STATUS_LABELS[padded];
   if (paddedLabel) return paddedLabel;
-
-  // Normalize free-text written by AI
-  const normalized = FREE_TEXT_NORMALIZE[String(code).trim().toLowerCase()];
+  const normalized = FREE_TEXT_NORMALIZE[str.toLowerCase()];
   if (normalized) return normalized;
-
-  // Unknown code — return as-is so it stays visible but won't pollute the filter
-  return code;
+  return str;
 }
 
 export function getActiveHours(item: Ejecucion | Incidencia): { hours: number; label: string } {

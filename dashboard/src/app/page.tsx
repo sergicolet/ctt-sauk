@@ -16,7 +16,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
 import { Calendar as CalendarIcon, FilterX, LogOut, Search, SlidersHorizontal, ArrowDownUp } from "lucide-react";
-import { SHOP_NAMES, getStatusLabel } from "@/lib/status-map";
+import { SHOP_NAMES, getStatusLabel, getStatusTheme, STATUS_FILTER_OPTIONS } from "@/lib/status-map";
 
 export default function Dashboard() {
   const { state, logout } = useAuth();
@@ -205,12 +205,23 @@ export default function Dashboard() {
 
     const sortByFecha = (a: any, b: any) => parseFecha(b.fecha_procesado) - parseFecha(a.fecha_procesado);
 
+    const ejecucionIds = new Set(ejecuciones.map(e => e.id));
+
     return {
       ej: (mostrarSoloIncidencias
-        ? incidencias.map(i => ({ ...i, estado: i.incidencia, h_en_estado: i.h_en_incidencia, email_enviado: i.numero_avisos > 0, _collection: 'incidencias' } as any))
+        ? incidencias.map(i => ({ ...i, estado: i.estado || i.incidencia, h_en_estado: i.h_en_incidencia, email_enviado: i.numero_avisos > 0, _collection: 'incidencias' } as any))
         : [
             ...ejecuciones.map(e => ({ ...e, _collection: 'ejecuciones' } as any)),
-            ...incidencias.map(i => ({ ...i, estado: i.incidencia, h_en_estado: i.h_en_incidencia, email_enviado: i.numero_avisos > 0, _collection: 'incidencias' } as any))
+            ...incidencias
+              .filter(i => !ejecucionIds.has(i.id))
+              .map(i => ({
+                ...i,
+                // Use the CTT status code (estado) not the free-text notification label (incidencia)
+                estado: i.estado || i.incidencia,
+                h_en_estado: i.h_en_incidencia,
+                email_enviado: i.numero_avisos > 0,
+                _collection: 'incidencias'
+              } as any))
           ].sort(sortByFecha)
       ).filter(e => filterFn(e, false))
     };
@@ -227,27 +238,6 @@ export default function Dashboard() {
     );
   }
 
-  // Fixed canonical state labels — never derived from raw data to avoid junk values
-  const allLabels = [
-    "Manifestado",
-    "Envío recogido",
-    "Recogida fallida",
-    "En tránsito",
-    "Delegación de tránsito",
-    "Delegación destino",
-    "En reparto",
-    "Reparto fallido",
-    "Reparto fallido (Incidencia)",
-    "Envío estacionado",
-    "Estacionado ubicado",
-    "Pendiente de extracción",
-    "Entregado",
-    "Disponible en Punto CTT",
-    "Pendiente de nuevos datos",
-    "Devolución en proceso",
-    "Incidencia (Dirección)",
-    "Incidencia (Destinatario)",
-  ];
 
   return (
     <main className="min-h-screen bg-slate-50/50 p-2 md:p-6 space-y-6 w-full">
@@ -352,9 +342,17 @@ export default function Dashboard() {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="TODOS">Cualquier Estado</SelectItem>
-                    {allLabels.map(label => (
-                      <SelectItem key={label} value={label}>{label}</SelectItem>
-                    ))}
+                    {STATUS_FILTER_OPTIONS.map(({ code, label }) => {
+                      const theme = getStatusTheme(code);
+                      return (
+                        <SelectItem key={code} value={label}>
+                          <span className="flex items-center gap-2">
+                            <span className={`inline-block w-2 h-2 rounded-full flex-shrink-0 ${theme.dot}`} />
+                            <span className={`font-medium ${theme.text}`}>{label}</span>
+                          </span>
+                        </SelectItem>
+                      );
+                    })}
                   </SelectContent>
                 </Select>
               </div>

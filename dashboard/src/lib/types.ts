@@ -35,6 +35,7 @@ export interface Incidencia {
   numero_pedido: string;
   tienda: string;
   centro: string;
+  estado?: string;
   incidencia: string;
   fecha_incidencia: string;
   h_en_incidencia: number;

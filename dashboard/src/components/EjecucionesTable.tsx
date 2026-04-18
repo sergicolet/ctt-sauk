@@ -68,7 +68,7 @@ interface Props {
   refreshSingleItem?: (id: string, col: "ejecuciones" | "incidencias") => Promise<any>;
 }
 
-const TERMINAL_CODES = ["2500", "2300", "2310"];
+const TERMINAL_CODES = ["2500", "2300", "2310", "3000"];
 const PAGE_SIZE = 50;
 
 function parseBultos(bultos_historial_json?: string, historial_formateado?: string): BultoHistorial[] {
