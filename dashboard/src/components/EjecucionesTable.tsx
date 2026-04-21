@@ -285,17 +285,18 @@ export function EjecucionesTable({ ejecuciones, sortOrder, refreshSingleItem }: 
     }
   };
 
+  const sorted = sortOrder === "desc" ? ejecuciones : [...ejecuciones].reverse();
+  const visible = sorted.slice(0, visibleCount);
+  const hasMore = visibleCount < sorted.length;
+
   useEffect(() => {
+    if (!hasMore) return;
     const el = sentinelRef.current;
     if (!el) return;
     const observer = new IntersectionObserver(handleIntersect, { threshold: 0.1 });
     observer.observe(el);
     return () => observer.disconnect();
-  }, [handleIntersect]);
-
-  const sorted = sortOrder === "desc" ? ejecuciones : [...ejecuciones].reverse();
-  const visible = sorted.slice(0, visibleCount);
-  const hasMore = visibleCount < sorted.length;
+  }, [handleIntersect, hasMore]);
 
   function renderStatusBadge(rawCode: string, dano: boolean) {
     const code = String(rawCode || "").replace(/^"+|"+$/g, "").trim();

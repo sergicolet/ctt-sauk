@@ -13,6 +13,7 @@ export const STATUS_LABELS: Record<string, string> = {
   "1200": "Delegación destino",
   "1500": "En reparto",
   "20":   "En proceso",
+  "0020": "En proceso",
   "1600": "Reparto fallido",
   "1700": "Envío estacionado",
   "1800": "Estacionado ubicado",
@@ -60,6 +61,7 @@ export const STATUS_THEMES: Record<string, StatusTheme> = {
   // 🟠 Naranja — En reparto activo
   "1500": { bg: "bg-orange-50", text: "text-orange-700", border: "border-orange-200", dot: "bg-orange-500" },
   "20":   { bg: "bg-orange-50", text: "text-orange-700", border: "border-orange-200", dot: "bg-orange-500" },
+  "0020": { bg: "bg-orange-50", text: "text-orange-700", border: "border-orange-200", dot: "bg-orange-500" },
 
   // 🔴 Rojo — Fallos e incidencias
   "0600":   { bg: "bg-red-50",  text: "text-red-700",  border: "border-red-200",  dot: "bg-red-500" },

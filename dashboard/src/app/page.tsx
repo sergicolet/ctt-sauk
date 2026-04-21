@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
-import { collection, getDocs, orderBy, query, limit, doc, getDoc } from "firebase/firestore";
+import { collection, getDocs, query, limit, doc, getDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { useAuth } from "@/lib/auth-context";
 import { Ejecucion, Incidencia } from "@/lib/types";
@@ -48,8 +48,8 @@ export default function Dashboard() {
       setLoading(true);
       try {
         const [ejSnap, incSnap] = await Promise.all([
-          getDocs(query(collection(db, "ejecuciones"), orderBy("fecha_procesado", "desc"), limit(1000))),
-          getDocs(query(collection(db, "incidencias"), orderBy("fecha_procesado", "desc"), limit(1000))),
+          getDocs(query(collection(db, "ejecuciones"), limit(1000))),
+          getDocs(query(collection(db, "incidencias"), limit(1000))),
         ]);
         setEjecuciones(ejSnap.docs.map((d) => {
           const data = d.data();
@@ -80,8 +80,8 @@ export default function Dashboard() {
     setLoading(true);
     try {
       const [ejSnap, incSnap] = await Promise.all([
-        getDocs(query(collection(db, "ejecuciones"), orderBy("fecha_procesado", "desc"), limit(1000))),
-        getDocs(query(collection(db, "incidencias"), orderBy("fecha_procesado", "desc"), limit(1000))),
+        getDocs(query(collection(db, "ejecuciones"), limit(1000))),
+        getDocs(query(collection(db, "incidencias"), limit(1000))),
       ]);
       setEjecuciones(ejSnap.docs.map((d) => {
         const data = d.data();
@@ -140,9 +140,12 @@ export default function Dashboard() {
   };
 
   const parseProcessDate = (dateStr: string) => {
-    const parts = dateStr.split(' ');
-    const [d, m, y] = parts[0].split('-').map(Number);
-    return new Date(y, m - 1, d);
+    const datePart = dateStr.split(' ')[0];
+    const segments = datePart.split('-').map(Number);
+    // ISO format: YYYY-MM-DD
+    if (segments[0] > 31) return new Date(segments[0], segments[1] - 1, segments[2]);
+    // Legacy format: DD-MM-YYYY
+    return new Date(segments[2], segments[1] - 1, segments[0]);
   };
 
   const filteredData = useMemo(() => {
