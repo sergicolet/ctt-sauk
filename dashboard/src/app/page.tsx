@@ -28,7 +28,7 @@ export default function Dashboard() {
   // Filters
   const [tiendaFiltro, setTiendaFiltro] = useState("TODAS");
   const [estadoFiltro, setEstadoFiltro] = useState("TODOS");
-  const [emailFiltro, setEmailFiltro] = useState("TODOS");
+  const [emailFiltro, setEmailFiltro] = useState("SÍ");
   const [tipoFiltro, setTipoFiltro] = useState("TODOS");
   const [busqueda, setBusqueda] = useState("");
   const [fechaInicio, setFechaInicio] = useState<Date | undefined>(undefined);
@@ -169,7 +169,7 @@ export default function Dashboard() {
       }
 
       // 4. Email (bool)
-      if (emailFiltro !== "TODOS") {
+      if (emailFiltro !== "TODOS" && !term) {
         const sent = emailFiltro === "SÍ";
         const isNotified = isIncidencia 
           ? (item as Incidencia).numero_avisos > 0 
