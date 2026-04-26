@@ -1,0 +1,165 @@
+{
+  "name": "Send Draft Email",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "send-draft",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "daa4cc68-64bf-4e09-8ec2-a2aacb0f3805",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [-784, 128],
+      "webhookId": "send-draft-webhook"
+    },
+    {
+      "parameters": {
+        "dataType": "string",
+        "value1": "={{ $json.body.tienda }}",
+        "rules": {
+          "rules": [
+            { "value2": "HAMINOS" },
+            { "value2": "SNAPPY" },
+            { "value2": "KULTUDENDA" },
+            { "value2": "MIESTERY" }
+          ]
+        }
+      },
+      "id": "cf7677b0-88b5-400f-a3cb-089daa4163c9",
+      "name": "Switch: Tienda",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 1,
+      "position": [-560, 96]
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Webhook').item.json.body.destinatario }}",
+        "subject": "={{ $('Webhook').item.json.body.asunto }}",
+        "emailType": "text",
+        "message": "={{ $('Webhook').item.json.body.cuerpo }}",
+        "options": {}
+      },
+      "id": "2b7ee9e7-1366-43a5-ab01-3188becd499b",
+      "name": "Gmail: Send HAMINOS",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [-336, -160],
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "xvnQhr5hfD4gc3Uk",
+          "name": "HAMINOS"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Webhook').item.json.body.destinatario }}",
+        "subject": "={{ $('Webhook').item.json.body.asunto }}",
+        "emailType": "text",
+        "message": "={{ $('Webhook').item.json.body.cuerpo }}",
+        "options": {}
+      },
+      "id": "dd115a4f-5b8c-4dd4-bfcf-0cadf7ae6fa6",
+      "name": "Gmail: Send SNAPPY",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [-336, 32],
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "ATDngCzgo2CXlgvv",
+          "name": "SNAPPY"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Webhook').item.json.body.destinatario }}",
+        "subject": "={{ $('Webhook').item.json.body.asunto }}",
+        "emailType": "text",
+        "message": "={{ $('Webhook').item.json.body.cuerpo }}",
+        "options": {}
+      },
+      "id": "3ff7936c-f887-4292-b3e1-cea1406e4d04",
+      "name": "Gmail: Send KULTUDENDA",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [-336, 224],
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "I8iOQCCkF5dchDft",
+          "name": "KULTURDENDA"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Webhook').item.json.body.destinatario }}",
+        "subject": "={{ $('Webhook').item.json.body.asunto }}",
+        "emailType": "text",
+        "message": "={{ $('Webhook').item.json.body.cuerpo }}",
+        "options": {}
+      },
+      "id": "87a6311c-0490-4b87-8453-8fbce1dab068",
+      "name": "Gmail: Send MIESTERY",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [-336, 416],
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "QJJKjkTiSoxnKucv",
+          "name": "MIESTERY / SERVICE CORP WORLD"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={ \"success\": true }",
+        "options": {}
+      },
+      "id": "5d101791-bef8-4312-b731-f8371ac5dd20",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [-112, 128]
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [{ "node": "Switch: Tienda", "type": "main", "index": 0 }]
+      ]
+    },
+    "Switch: Tienda": {
+      "main": [
+        [{ "node": "Gmail: Send HAMINOS", "type": "main", "index": 0 }],
+        [{ "node": "Gmail: Send SNAPPY", "type": "main", "index": 0 }],
+        [{ "node": "Gmail: Send KULTUDENDA", "type": "main", "index": 0 }],
+        [{ "node": "Gmail: Send MIESTERY", "type": "main", "index": 0 }]
+      ]
+    },
+    "Gmail: Send HAMINOS": {
+      "main": [[{ "node": "Respond to Webhook", "type": "main", "index": 0 }]]
+    },
+    "Gmail: Send SNAPPY": {
+      "main": [[{ "node": "Respond to Webhook", "type": "main", "index": 0 }]]
+    },
+    "Gmail: Send KULTUDENDA": {
+      "main": [[{ "node": "Respond to Webhook", "type": "main", "index": 0 }]]
+    },
+    "Gmail: Send MIESTERY": {
+      "main": [[{ "node": "Respond to Webhook", "type": "main", "index": 0 }]]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "meta": {
+    "instanceId": "1c2aee663286167ca5973273ceb0c60aa2fcbae95195db0810f62f8c4797daff"
+  },
+  "tags": []
+}

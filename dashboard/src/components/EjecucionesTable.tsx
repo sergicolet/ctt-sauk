@@ -34,6 +34,7 @@ import {
   MapPin,
   User,
   CheckCircle2,
+  CheckCircle,
   AlertCircle,
   ShieldCheck,
   FileEdit,
@@ -47,6 +48,7 @@ import {
   ThumbsDown,
   RefreshCcw,
   Loader2,
+  Send,
 } from "lucide-react";
 import {
   getShopFromCenter,
@@ -87,6 +89,31 @@ function parseBultos(bultos_historial_json?: string, historial_formateado?: stri
   return historial_formateado
     ? [{ item_code: "bulto_1", formatted_history: historial_formateado, total_events: 0 }]
     : [];
+}
+
+function extractPuntoNombre(item: Ejecucion): string | null {
+  const rawHistory = (() => {
+    if (item.bultos_historial_json) {
+      try {
+        const parsed = JSON.parse(item.bultos_historial_json);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          return String(parsed[0].history || parsed[0].formatted_history || "");
+        }
+      } catch { /* fall through */ }
+    }
+    return String(item.historial_formateado || "");
+  })();
+
+  const eventStr = rawHistory.replace(/^Item:\s*\S+\s*/, '');
+  const events = eventStr.trim().split(/(?=\d{4}-\d{2}-\d{2} \d{2}:\d{2})/);
+
+  for (const event of events) {
+    if (/\[(2300|2310)\]/.test(event)) {
+      const afterCode = event.replace(/^.*\[(2300|2310)\]\s*/, '').trim();
+      return afterCode.replace(/^Punto CTT\s*[-–]\s*/i, '').trim() || null;
+    }
+  }
+  return null;
 }
 
 function formatEvents(history: any) {
@@ -268,6 +295,36 @@ export function EjecucionesTable({ ejecuciones, sortOrder, refreshSingleItem }: 
   }, []);
 
   const [isUpdating, setIsUpdating] = useState(false);
+  const [sendingDraft, setSendingDraft] = useState(false);
+
+  const handleSendDraft = async (item: Ejecucion) => {
+    setSendingDraft(true);
+    try {
+      const sendDraftUrl = process.env.NEXT_PUBLIC_N8N_SEND_DRAFT_URL || "https://haminos-ecom-n8n.5pbmxd.easypanel.host/webhook/send-draft";
+      await fetch(sendDraftUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          numero_envio: item.numero_envio,
+          tienda: item.tienda,
+          asunto: item.asunto || item.email_subject || "",
+          cuerpo: item.cuerpo || item.email_body || "",
+          destinatario: item.destinatario,
+        }),
+      });
+      const collectionName = item._collection || 'ejecuciones';
+      const docRef = doc(db, collectionName, item.id);
+      await updateDoc(docRef, { draft_enviado: true, draft_sent_at: new Date().toISOString() });
+      if (selectedEj && selectedEj.id === item.id) {
+        setSelectedEj({ ...selectedEj, draft_enviado: true });
+      }
+    } catch (error) {
+      console.error("Error sending draft:", error);
+      alert("Error al enviar el email.");
+    } finally {
+      setSendingDraft(false);
+    }
+  };
 
   const handleUpdateStatus = async (item: Ejecucion, ok: boolean) => {
     try {
@@ -537,6 +594,20 @@ export function EjecucionesTable({ ejecuciones, sortOrder, refreshSingleItem }: 
                       </div>
                     </div>
 
+                    {(() => {
+                      const puntoNombre = extractPuntoNombre(selectedEj);
+                      if (!puntoNombre) return null;
+                      return (
+                        <div className="flex items-start gap-2.5 p-3 bg-blue-50 rounded-xl border border-blue-200">
+                          <MapPin className="h-4 w-4 text-blue-600 mt-0.5 shrink-0" />
+                          <div>
+                            <p className="text-[10px] font-bold text-blue-700 uppercase tracking-wider mb-0.5">Punto CTT</p>
+                            <p className="text-sm font-bold text-blue-900">{puntoNombre}</p>
+                          </div>
+                        </div>
+                      );
+                    })()}
+
                     <div className="space-y-1.5 pt-2 border-t border-slate-100">
                       <p className="text-[10px] font-bold text-black uppercase tracking-wider">Validación de Auditoría</p>
                       <div className="grid grid-cols-2 gap-2">
@@ -613,6 +684,33 @@ export function EjecucionesTable({ ejecuciones, sortOrder, refreshSingleItem }: 
                                   <p className="text-[11px] text-slate-600 font-medium leading-relaxed whitespace-pre-wrap">
                                     {cuerpoText}
                                   </p>
+                                </div>
+                              )}
+                              {String(selectedEj.tipo_email || "").toLowerCase() === "standard" && (
+                                <div className="pt-2 border-t border-blue-100">
+                                  {selectedEj.draft_enviado ? (
+                                    <div className="flex items-center gap-1.5 text-emerald-700 text-[11px] font-bold">
+                                      <CheckCircle className="h-3.5 w-3.5" />
+                                      Email enviado correctamente
+                                    </div>
+                                  ) : (
+                                    <button
+                                      disabled={sendingDraft}
+                                      onClick={() => handleSendDraft(selectedEj)}
+                                      className={`flex items-center gap-2 px-3 py-2 rounded-lg text-[11px] font-bold transition-all border w-full justify-center ${
+                                        sendingDraft
+                                          ? "bg-slate-100 text-slate-400 border-slate-200 cursor-not-allowed"
+                                          : "bg-blue-600 text-white border-blue-600 hover:bg-blue-700 shadow-sm active:scale-95"
+                                      }`}
+                                    >
+                                      {sendingDraft ? (
+                                        <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                                      ) : (
+                                        <Send className="h-3.5 w-3.5" />
+                                      )}
+                                      {sendingDraft ? "Enviando..." : "Enviar Email (Draft → Enviado)"}
+                                    </button>
+                                  )}
                                 </div>
                               )}
                             </>

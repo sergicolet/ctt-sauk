@@ -26,6 +26,8 @@ export interface Ejecucion {
   historial_formateado?: string;
   bultos_historial_json?: string;
   stationary_hours?: number;
+  draft_enviado?: boolean;
+  draft_sent_at?: string;
 }
 
 export interface Incidencia {
@@ -57,6 +59,8 @@ export interface Incidencia {
   historial_formateado?: string;
   bultos_historial_json?: string;
   stationary_hours?: number;
+  draft_enviado?: boolean;
+  draft_sent_at?: string;
 }
 
 export interface Historial {
