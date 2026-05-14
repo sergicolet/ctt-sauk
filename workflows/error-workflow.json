@@ -1,0 +1,79 @@
+{
+  "name": "CTT Error Notifier",
+  "nodes": [
+    {
+      "parameters": {},
+      "name": "Error Trigger",
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const err = $input.first().json;\n\nconst workflow_name = err.workflow?.name || \"unknown workflow\";\nconst node_name = err.execution?.lastNodeExecuted || \"unknown node\";\nconst error_message = err.execution?.error?.message || \"No error message\";\nconst execution_id = err.execution?.id || \"\";\nconst execution_url = \"https://n8n.sauc.cat/execution/\" + execution_id;\n\nlet shipping_code = \"\";\ntry {\n  const lastData = err.execution?.data?.resultData?.runData;\n  if (lastData) {\n    const keys = Object.keys(lastData);\n    for (const key of keys.slice(-5)) {\n      const items = lastData[key]?.[0]?.data?.main?.[0] || [];\n      for (const item of items) {\n        if (item?.json?.shipping_code) {\n          shipping_code = item.json.shipping_code;\n          break;\n        }\n      }\n      if (shipping_code) break;\n    }\n  }\n} catch(e) {}\n\nconst subject = \"[CTT ERROR] \" + workflow_name + \" → \" + node_name;\nconst body = [\n  \"<h2>Error en workflow CTT</h2>\",\n  \"<p><strong>Workflow:</strong> \" + workflow_name + \"</p>\",\n  \"<p><strong>Nodo:</strong> \" + node_name + \"</p>\",\n  \"<p><strong>Error:</strong> \" + error_message + \"</p>\",\n  shipping_code ? \"<p><strong>Envio:</strong> \" + shipping_code + \"</p>\" : \"\",\n  \"<p><strong>Ejecucion:</strong> <a href=\"\" + execution_url + \"\">\" + execution_id + \"</a></p>\",\n  \"<p><strong>Fecha:</strong> \" + new Date().toISOString().replace(\"T\",\" \").substring(0,19) + \"</p>\"\n].filter(Boolean).join(\"\n\");\n\nreturn { subject, body };"
+      },
+      "name": "Format Error",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        220,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "sendTo": "sergicrafols@gmail.com",
+        "subject": "={{ $json.subject }}",
+        "emailType": "html",
+        "message": "={{ $json.body }}",
+        "options": {}
+      },
+      "name": "Gmail: Alert Admin",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        440,
+        0
+      ],
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "xvnQhr5hfD4gc3Uk",
+          "name": "HAMINOS"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Error Trigger": {
+      "main": [
+        [
+          {
+            "node": "Format Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Error": {
+      "main": [
+        [
+          {
+            "node": "Gmail: Alert Admin",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true
+  }
+}

@@ -12,7 +12,10 @@
       "name": "Webhook",
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2,
-      "position": [-784, 128],
+      "position": [
+        -784,
+        128
+      ],
       "webhookId": "send-draft-webhook"
     },
     {
@@ -21,10 +24,18 @@
         "value1": "={{ $json.body.tienda }}",
         "rules": {
           "rules": [
-            { "value2": "HAMINOS" },
-            { "value2": "SNAPPY" },
-            { "value2": "KULTUDENDA" },
-            { "value2": "MIESTERY" }
+            {
+              "value2": "HAMINOS"
+            },
+            {
+              "value2": "SNAPPY"
+            },
+            {
+              "value2": "KULTUDENDA"
+            },
+            {
+              "value2": "MIESTERY"
+            }
           ]
         }
       },
@@ -32,7 +43,10 @@
       "name": "Switch: Tienda",
       "type": "n8n-nodes-base.switch",
       "typeVersion": 1,
-      "position": [-560, 96]
+      "position": [
+        -560,
+        96
+      ]
     },
     {
       "parameters": {
@@ -46,7 +60,10 @@
       "name": "Gmail: Send HAMINOS",
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
-      "position": [-336, -160],
+      "position": [
+        -336,
+        -160
+      ],
       "credentials": {
         "gmailOAuth2": {
           "id": "xvnQhr5hfD4gc3Uk",
@@ -66,7 +83,10 @@
       "name": "Gmail: Send SNAPPY",
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
-      "position": [-336, 32],
+      "position": [
+        -336,
+        32
+      ],
       "credentials": {
         "gmailOAuth2": {
           "id": "ATDngCzgo2CXlgvv",
@@ -86,7 +106,10 @@
       "name": "Gmail: Send KULTUDENDA",
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
-      "position": [-336, 224],
+      "position": [
+        -336,
+        224
+      ],
       "credentials": {
         "gmailOAuth2": {
           "id": "I8iOQCCkF5dchDft",
@@ -106,7 +129,10 @@
       "name": "Gmail: Send MIESTERY",
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
-      "position": [-336, 416],
+      "position": [
+        -336,
+        416
+      ],
       "credentials": {
         "gmailOAuth2": {
           "id": "QJJKjkTiSoxnKucv",
@@ -124,39 +150,105 @@
       "name": "Respond to Webhook",
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.1,
-      "position": [-112, 128]
+      "position": [
+        -112,
+        128
+      ]
     }
   ],
   "connections": {
     "Webhook": {
       "main": [
-        [{ "node": "Switch: Tienda", "type": "main", "index": 0 }]
+        [
+          {
+            "node": "Switch: Tienda",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     },
     "Switch: Tienda": {
       "main": [
-        [{ "node": "Gmail: Send HAMINOS", "type": "main", "index": 0 }],
-        [{ "node": "Gmail: Send SNAPPY", "type": "main", "index": 0 }],
-        [{ "node": "Gmail: Send KULTUDENDA", "type": "main", "index": 0 }],
-        [{ "node": "Gmail: Send MIESTERY", "type": "main", "index": 0 }]
+        [
+          {
+            "node": "Gmail: Send HAMINOS",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Gmail: Send SNAPPY",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Gmail: Send KULTUDENDA",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Gmail: Send MIESTERY",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     },
     "Gmail: Send HAMINOS": {
-      "main": [[{ "node": "Respond to Webhook", "type": "main", "index": 0 }]]
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Gmail: Send SNAPPY": {
-      "main": [[{ "node": "Respond to Webhook", "type": "main", "index": 0 }]]
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Gmail: Send KULTUDENDA": {
-      "main": [[{ "node": "Respond to Webhook", "type": "main", "index": 0 }]]
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Gmail: Send MIESTERY": {
-      "main": [[{ "node": "Respond to Webhook", "type": "main", "index": 0 }]]
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "active": false,
   "settings": {
-    "executionOrder": "v1"
+    "executionOrder": "v1",
+    "errorWorkflow": "CTT Error Notifier"
   },
   "meta": {
     "instanceId": "1c2aee663286167ca5973273ceb0c60aa2fcbae95195db0810f62f8c4797daff"

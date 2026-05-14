@@ -181,7 +181,14 @@
             }
           ]
         },
-        "options": {}
+        "options": {
+          "batching": {
+            "batch": {
+              "batchSize": 1,
+              "batchInterval": 500
+            }
+          }
+        }
       },
       "id": "822814fe-cb86-41a6-9e41-c1c73b24e6be",
       "name": "8.LeerRestoPáginas_Sub",
@@ -367,5 +374,8 @@
   "pinData": {},
   "meta": {
     "instanceId": "1c2aee663286167ca5973273ceb0c60aa2fcbae95195db0810f62f8c4797daff"
+  },
+  "settings": {
+    "errorWorkflow": "CTT Error Notifier"
   }
 }

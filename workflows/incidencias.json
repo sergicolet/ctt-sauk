@@ -2073,5 +2073,8 @@
   },
   "meta": {
     "instanceId": "1c2aee663286167ca5973273ceb0c60aa2fcbae95195db0810f62f8c4797daff"
+  },
+  "settings": {
+    "errorWorkflow": "CTT Error Notifier"
   }
 }

@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
-import { collection, getDocs, query, limit, doc, getDoc } from "firebase/firestore";
+import { collection, getDocs, query, limit, doc, getDoc, orderBy } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { useAuth } from "@/lib/auth-context";
 import { Ejecucion, Incidencia } from "@/lib/types";
@@ -48,8 +48,8 @@ export default function Dashboard() {
       setLoading(true);
       try {
         const [ejSnap, incSnap] = await Promise.all([
-          getDocs(query(collection(db, "ejecuciones"), limit(1000))),
-          getDocs(query(collection(db, "incidencias"), limit(1000))),
+          getDocs(query(collection(db, "ejecuciones"), orderBy("fecha_procesado", "desc"), limit(1000))),
+          getDocs(query(collection(db, "incidencias"), orderBy("fecha_procesado", "desc"), limit(1000))),
         ]);
         setEjecuciones(ejSnap.docs.map((d) => {
           const data = d.data();
@@ -80,8 +80,8 @@ export default function Dashboard() {
     setLoading(true);
     try {
       const [ejSnap, incSnap] = await Promise.all([
-        getDocs(query(collection(db, "ejecuciones"), limit(1000))),
-        getDocs(query(collection(db, "incidencias"), limit(1000))),
+        getDocs(query(collection(db, "ejecuciones"), orderBy("fecha_procesado", "desc"), limit(1000))),
+        getDocs(query(collection(db, "incidencias"), orderBy("fecha_procesado", "desc"), limit(1000))),
       ]);
       setEjecuciones(ejSnap.docs.map((d) => {
         const data = d.data();
@@ -252,6 +252,9 @@ export default function Dashboard() {
         </div>
         
         <div className="flex items-center gap-3">
+          <Button variant="outline" onClick={() => router.push('/trazabilidad')} className="font-semibold text-slate-600">
+            Trazabilidad
+          </Button>
           <div className="bg-slate-100 p-1 rounded-lg flex gap-1">
             <div className="px-3 py-1 bg-white rounded-md shadow-sm text-sm font-semibold text-primary">Admin</div>
             <div className="px-3 py-1 text-sm text-slate-500 font-medium">
