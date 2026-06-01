@@ -22,3 +22,17 @@ firebase-debug.*.log
 scripts/node_modules/
 scripts/config/serviceAccountKey.json
 
+# Batch (Cloud Run Job) — NO subir secretos
+batch/node_modules/
+batch/dist/
+batch/.env
+batch/*.log
+!batch/.env.example
+
+# Logs varios
+dashboard/dev.log
+*.log
+
+# Claves privadas (cualquier sitio)
+**/serviceAccountKey.json
+

@@ -41,7 +41,7 @@
                 },
                 "conditions": [
                   {
-                    "leftValue": "={{ $json.credencial }}",
+                    "leftValue": "={{ $('Prepare Vars').item.json.credencial }}",
                     "rightValue": "HAMINOS",
                     "operator": {
                       "type": "string",
@@ -64,7 +64,7 @@
                 },
                 "conditions": [
                   {
-                    "leftValue": "={{ $json.credencial }}",
+                    "leftValue": "={{ $('Prepare Vars').item.json.credencial }}",
                     "rightValue": "SNAPPY",
                     "operator": {
                       "type": "string",
@@ -87,7 +87,7 @@
                 },
                 "conditions": [
                   {
-                    "leftValue": "={{ $json.credencial }}",
+                    "leftValue": "={{ $('Prepare Vars').item.json.credencial }}",
                     "rightValue": "MIESTERY",
                     "operator": {
                       "type": "string",
@@ -110,7 +110,7 @@
                 },
                 "conditions": [
                   {
-                    "leftValue": "={{ $json.credencial }}",
+                    "leftValue": "={{ $('Prepare Vars').item.json.credencial }}",
                     "rightValue": "KULTUDENDA",
                     "operator": {
                       "type": "string",
@@ -241,7 +241,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const httpResp = $input.first().json;\nconst vars = $node[\"Prepare Vars\"].json;\n\nconst getDoc = $('Get Document').first().json || {};\nconst is_new = !getDoc.shipping_code && !getDoc.numero_envio;\n\n// Robust item extraction\nlet rawData = httpResp?.data?.shipping_history || httpResp?.data?.items_raw || [];\nconst items = Array.isArray(rawData) ? rawData : (rawData && typeof rawData === 'object' ? [rawData] : []);\n\nconst bultos = items.map(it => {\n  const events = it.events || [];\n  const history_text = events.map(e => {\n    const d = e.event_date || e.item_event_date || '';\n    const date = d ? d.substring(0,16).replace('T',' ') : '????';\n    const code = e.code || e.event_code || '????';\n    const desc = e.description || e.event_description || '';\n    return date + ' | [' + code + '] ' + desc;\n  }).join('\\n');\n  \n  const latest = events.reduce((a, b) => {\n    const dateA = a.event_date || a.item_event_date || '';\n    const dateB = b.event_date || b.item_event_date || '';\n    return (dateB > dateA ? b : a);\n  }, events[0] || {});\n  \n  return {\n    item_code: it.item_code,\n    history: history_text,\n    shipping_status_code: String(latest.code || latest.event_code || '')\n  };\n});\n\nconst now = new Date();\nconst fecha_actual = now.toISOString().replace('T',' ').substring(0,16);\n\nconst result = {\n  doc_id: vars.doc_id,\n  collection: vars.collection,\n  estado: String(bultos[0]?.shipping_status_code || ''),\n  shipping_code: String(vars.shipping_code),\n  numero_envio: String(vars.shipping_code),\n  tienda: vars.credencial,\n  client_code: String(vars.client_code),\n  bultos_historial_json: JSON.stringify(bultos),\n  fecha_procesado: fecha_actual + ' (Manual)',\n  razon: 'Actualizacion manual sin analisis IA.'\n};\n\nif (is_new) {\n  result.fecha_creacion = fecha_actual;\n}\n\nreturn result;"
+        "jsCode": "const httpResp = $input.first().json;\nconst vars = $node[\"Prepare Vars\"].json;\n\nlet getDoc = {};\ntry {\n  getDoc = $('Get Document').first().json || {};\n} catch (e) {}\nconst is_new = !getDoc.shipping_code && !getDoc.numero_envio;\n\n// Robust item extraction\nlet rawData = httpResp?.data?.shipping_history || httpResp?.data?.items_raw || [];\nconst items = Array.isArray(rawData) ? rawData : (rawData && typeof rawData === 'object' ? [rawData] : []);\n\nconst bultos = items.map(it => {\n  const events = it.events || [];\n  const history_text = events.map(e => {\n    const d = e.event_date || e.item_event_date || '';\n    const date = d ? d.substring(0,16).replace('T',' ') : '????';\n    const code = e.code || e.event_code || '????';\n    const desc = e.description || e.event_description || '';\n    return date + ' | [' + code + '] ' + desc;\n  }).join('\\n');\n  \n  const latest = events.reduce((a, b) => {\n    const dateA = a.event_date || a.item_event_date || '';\n    const dateB = b.event_date || b.item_event_date || '';\n    return (dateB > dateA ? b : a);\n  }, events[0] || {});\n  \n  return {\n    item_code: it.item_code,\n    history: history_text,\n    shipping_status_code: String(latest.code || latest.event_code || '')\n  };\n});\n\nconst latestEventDate = items[0]?.events?.reduce((a, b) => {\n  const dateA = a.event_date || a.item_event_date || '';\n  const dateB = b.event_date || b.item_event_date || '';\n  return (dateB > dateA ? b : a);\n}, items[0]?.events?.[0] || {})?.event_date || '';\n\nconst now = new Date();\nconst fecha_actual = now.toISOString().replace('T',' ').substring(0,16);\n\nlet h_en_estado = 0;\nif (latestEventDate) {\n  const eventTime = new Date(latestEventDate).getTime();\n  if (!isNaN(eventTime)) {\n    h_en_estado = Math.max(0, Math.round((now.getTime() - eventTime) / 3600000));\n  }\n}\n\nconst resData = httpResp?.data || {};\n\nconst flatResult = {\n  estado: String(bultos[0]?.shipping_status_code || ''),\n  shipping_code: String(vars.shipping_code),\n  numero_envio: String(vars.shipping_code),\n  numero_pedido: String(resData.client_reference || ''),\n  tienda: vars.credencial,\n  credencial: vars.credencial,\n  centro: String(resData.client_center_code || ''),\n  client_code: String(vars.client_code),\n  destinatario: String(resData.recipient_name || ''),\n  fecha_estado: latestEventDate ? latestEventDate.replace('T', ' ').substring(0, 16) : '',\n  h_en_estado: h_en_estado,\n  email_enviado: false,\n  tipo_email: 'none',\n  forzado_interno: false,\n  dano: String(bultos[0]?.shipping_status_code) === '1006',\n  historial_formateado: bultos[0]?.history || '',\n  asunto: '',\n  cuerpo: '',\n  bultos_historial_json: JSON.stringify(bultos),\n  fecha_procesado: fecha_actual + ' (Manual)',\n  razon: 'Actualizacion manual sin analisis IA.'\n};\n\nif (is_new) {\n  flatResult.fecha_creacion = { timestampValue: now.toISOString() };\n}\n\nfunction fv(val) {\n  if (val === null || val === undefined) return { nullValue: null };\n  if (val && val.timestampValue) return val;\n  if (typeof val === 'boolean') return { booleanValue: val };\n  if (typeof val === 'number') {\n    if (Number.isInteger(val)) return { integerValue: String(val) };\n    return { doubleValue: val };\n  }\n  return { stringValue: String(val) };\n}\n\nconst fields = {};\nfor (const [k, v] of Object.entries(flatResult)) {\n  fields[k] = fv(v);\n}\n\nreturn {\n  doc_id: vars.doc_id,\n  collection: vars.collection,\n  _body: JSON.stringify({ fields })\n};"
       },
       "name": "Format Update",
       "type": "n8n-nodes-base.code",
@@ -253,35 +253,30 @@
     },
     {
       "parameters": {
-        "operation": "upsert",
-        "projectId": "ctt-dashboard",
-        "collection": "={{ $json.collection }}",
-        "documentId": "={{ $json.doc_id }}",
-        "updateKey": "doc_id",
-        "columns": "estado,bultos_historial_json,fecha_procesado,razon,tienda,client_code,fecha_creacion",
-        "fieldsUi": {
-          "fieldValues": [
-            {
-              "fieldId": "shipping_code",
-              "fieldValue": "={{ $json.shipping_code.toString() }}"
-            },
-            {
-              "fieldId": "numero_envio",
-              "fieldValue": "={{ $json.numero_envio.toString() }}"
-            }
-          ]
-        },
-        "options": {
-          "typeConversion": false
-        }
+        "method": "PATCH",
+        "url": "=https://firestore.googleapis.com/v1/projects/ctt-dashboard/databases/(default)/documents/{{ $json.collection }}/{{ $json.doc_id }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleFirebaseCloudFirestoreOAuth2Api",
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{ $json._body }}",
+        "options": {}
       },
       "name": "Update Firestore",
-      "type": "n8n-nodes-base.googleFirebaseCloudFirestore",
-      "typeVersion": 1.1,
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
       "position": [
         1300,
         0
-      ]
+      ],
+      "id": "8c42618c-fd02-4e3f-b5ae-85a2839890e0",
+      "credentials": {
+        "googleFirebaseCloudFirestoreOAuth2Api": {
+          "id": "RPfhii0wUhxo1RCL",
+          "name": "phantom"
+        }
+      }
     },
     {
       "parameters": {

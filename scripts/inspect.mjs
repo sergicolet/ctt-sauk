@@ -1,15 +1,13 @@
-
-import admin from "firebase-admin";
 import fs from "fs";
 
-const serviceAccount = JSON.parse(fs.readFileSync("./config/serviceAccountKey.json", "utf8"));
-admin.initializeApp({ credential: admin.credential.cert(serviceAccount) });
-const db = admin.firestore();
+const workflow = JSON.parse(fs.readFileSync("../workflows/main.json", "utf8"));
+const nodes = workflow.nodes || [];
 
-async function run() {
-  const doc = await db.collection("ejecuciones").doc("0002070002079700436855").get();
-  console.log("Ejecucion 436855:", doc.data());
-  process.exit(0);
+const target = nodes.find(n => n.name === "Code: Extraer Historial");
+if (target) {
+  console.log("Found Node:", target.name);
+  console.log("JS Code:\n", target.parameters.jsCode);
+} else {
+  console.log("Node 'Code: Extraer Historial' not found!");
 }
-run();
-
+process.exit(0);

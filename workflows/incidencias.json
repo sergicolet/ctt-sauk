@@ -1,4 +1,5 @@
 {
+  "name": "Incidencias Followup",
   "nodes": [
     {
       "parameters": {
@@ -22,20 +23,26 @@
     },
     {
       "parameters": {
-        "operation": "getAll",
-        "projectId": "ctt-dashboard",
-        "collection": "incidencias",
-        "returnAll": true,
+        "method": "POST",
+        "url": "https://firestore.googleapis.com/v1/projects/ctt-dashboard/databases/(default)/documents:runQuery",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleFirebaseCloudFirestoreOAuth2Api",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"structuredQuery\": {\n    \"from\": [{\"collectionId\": \"incidencias\"}],\n    \"where\": {\n      \"compositeFilter\": {\n        \"op\": \"AND\",\n        \"filters\": [\n          {\"fieldFilter\": {\"field\": {\"fieldPath\": \"email_enviado\"}, \"op\": \"EQUAL\", \"value\": {\"booleanValue\": true}}},\n          {\"fieldFilter\": {\"field\": {\"fieldPath\": \"fecha_procesado\"}, \"op\": \"GREATER_THAN_OR_EQUAL\", \"value\": {\"stringValue\": \"{{ ($now.setZone('Europe/Madrid').weekday === 1 ? $now.setZone('Europe/Madrid').minus({days:3}) : $now.setZone('Europe/Madrid').minus({days:1})).toFormat('yyyy-MM-dd') }} 00:00:00\"}}},\n          {\"fieldFilter\": {\"field\": {\"fieldPath\": \"fecha_procesado\"}, \"op\": \"LESS_THAN\", \"value\": {\"stringValue\": \"{{ ($now.setZone('Europe/Madrid').weekday === 1 ? $now.setZone('Europe/Madrid').minus({days:3}) : $now.setZone('Europe/Madrid').minus({days:1})).plus({days:1}).toFormat('yyyy-MM-dd') }} 00:00:00\"}}}\n        ]\n      }\n    }\n  }\n}",
         "options": {}
       },
       "id": "c7629462-a070-4cdb-ac2f-ea26d34b3a64",
       "name": "Leer Incidencias",
-      "type": "n8n-nodes-base.googleFirebaseCloudFirestore",
-      "typeVersion": 1.1,
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
       "position": [
         36,
         1776
       ],
+      "retryOnFail": true,
+      "maxTries": 5,
+      "waitBetweenTries": 5000,
       "credentials": {
         "googleFirebaseCloudFirestoreOAuth2Api": {
           "id": "EXM0epVP1YsMfolr",
@@ -45,52 +52,31 @@
     },
     {
       "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 1
-          },
-          "conditions": [
-            {
-              "id": "f1",
-              "leftValue": "={{ $json.email_enviado !== false }}",
-              "rightValue": true,
-              "operator": {
-                "type": "boolean",
-                "operation": "equals"
-              }
-            },
-            {
-              "id": "f3",
-              "leftValue": "={{ $json.resultado_followup ?? '' }}",
-              "rightValue": "",
-              "operator": {
-                "type": "string",
-                "operation": "equals"
-              }
-            },
-            {
-              "id": "f4",
-              "leftValue": "={{ $json.fecha_procesado.substring(0, 10) }}",
-              "rightValue": "={{ $now.weekday === 1 ? $now.minus({days: 3}).toFormat('dd-MM-yyyy') : $now.minus({days: 1}).toFormat('dd-MM-yyyy') }}",
-              "operator": {
-                "type": "string",
-                "operation": "equals"
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
+        "mode": "runOnceForAllItems",
+        "language": "javaScript",
+        "jsCode": "function flatten(fields) {\n  const out = {};\n  if (!fields) return out;\n  for (const k of Object.keys(fields)) {\n    const v = fields[k];\n    if (v.stringValue !== undefined) out[k] = v.stringValue;\n    else if (v.booleanValue !== undefined) out[k] = v.booleanValue;\n    else if (v.integerValue !== undefined) out[k] = Number(v.integerValue);\n    else if (v.doubleValue !== undefined) out[k] = v.doubleValue;\n    else if (v.timestampValue !== undefined) out[k] = v.timestampValue;\n    else if (v.nullValue !== undefined) out[k] = null;\n    else if (v.mapValue !== undefined) out[k] = flatten(v.mapValue.fields);\n    else if (v.arrayValue !== undefined) out[k] = (v.arrayValue.values || []).map(x => { const wrap = {}; wrap.tmp = x; return flatten(wrap).tmp; });\n    else out[k] = null;\n  }\n  return out;\n}\nconst out = [];\nfor (const item of items) {\n  const arr = Array.isArray(item.json) ? item.json : [item.json];\n  for (const entry of arr) {\n    if (!entry || !entry.document) continue;\n    const flat = flatten(entry.document.fields);\n    flat._docid = entry.document.name.split('/').pop();\n    out.push({ json: flat });\n  }\n}\nconsole.log('[Parsear Firestore] docs=' + out.length);\nreturn out;"
+      },
+      "id": "parse-firestore-0001-0000-4000-8000-000000000001",
+      "name": "Parsear Firestore Docs",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        148,
+        1776
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "language": "javaScript",
+        "jsCode": "const nowMad = $now.setZone('Europe/Madrid');\nconst targetDate = (nowMad.weekday === 1 ? nowMad.minus({ days: 3 }) : nowMad.minus({ days: 1 })).toFormat('yyyy-MM-dd');\n\nfunction normalizeFecha(v) {\n  if (!v) return '';\n  if (typeof v === 'object' && typeof v.seconds === 'number') {\n    return nowMad.minus({ seconds: nowMad.toSeconds() - v.seconds }).setZone('Europe/Madrid').toFormat('yyyy-MM-dd');\n  }\n  const s = String(v);\n  if (s.length >= 10 && s[2] === '-' && s[5] === '-') {\n    return s.substring(0, 10).split('-').reverse().join('-');\n  }\n  return s.substring(0, 10);\n}\n\nconst kept = [];\nlet rejEmail = 0, rejFollowup = 0, rejFecha = 0;\nfor (const item of items) {\n  const j = item.json;\n  if (j.email_enviado === false) { rejEmail++; continue; }\n  const followup = j.resultado_followup;\n  if (followup !== undefined && followup !== null && String(followup).trim() !== '') { rejFollowup++; continue; }\n  if (normalizeFecha(j.fecha_procesado) !== targetDate) { rejFecha++; continue; }\n  kept.push(item);\n}\n\nconsole.log('[Filtrar Ayer] target=' + targetDate + ' total=' + items.length + ' kept=' + kept.length + ' rejEmail=' + rejEmail + ' rejFollowup=' + rejFollowup + ' rejFecha=' + rejFecha);\nreturn kept;"
       },
       "id": "677d72fc-e85d-4c56-8e97-bf5ac0b34ff5",
       "name": "Filtrar Incidencias Ayer",
-      "type": "n8n-nodes-base.filter",
+      "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        260,
+        372,
         1776
       ]
     },
@@ -370,7 +356,7 @@
           "conditions": [
             {
               "id": "if-sigue",
-              "leftValue": "={{ $json.sigue_incidencia }}",
+              "leftValue": "={{ $('Code: Procesar Respuesta IA FW').item.json.sigue_incidencia }}",
               "rightValue": true,
               "operator": {
                 "type": "boolean",
@@ -405,7 +391,7 @@
                 },
                 "conditions": [
                   {
-                    "leftValue": "={{ $json.credencial }}",
+                    "leftValue": "={{ $('Code: Procesar Respuesta IA FW').item.json.tienda }}",
                     "rightValue": "HAMINOS",
                     "operator": {
                       "type": "string",
@@ -428,7 +414,7 @@
                 },
                 "conditions": [
                   {
-                    "leftValue": "={{ $json.credencial }}",
+                    "leftValue": "={{ $('Code: Procesar Respuesta IA FW').item.json.tienda }}",
                     "rightValue": "MIESTERY",
                     "operator": {
                       "type": "string",
@@ -451,7 +437,7 @@
                 },
                 "conditions": [
                   {
-                    "leftValue": "={{ $json.credencial }}",
+                    "leftValue": "={{ $('Code: Procesar Respuesta IA FW').item.json.tienda }}",
                     "rightValue": "KULTUDENDA",
                     "operator": {
                       "type": "string",
@@ -474,7 +460,7 @@
                 },
                 "conditions": [
                   {
-                    "leftValue": "={{ $json.credencial }}",
+                    "leftValue": "={{ $('Code: Procesar Respuesta IA FW').item.json.tienda }}",
                     "rightValue": "SNAPPY",
                     "operator": {
                       "type": "string",
@@ -505,8 +491,8 @@
     {
       "parameters": {
         "resource": "draft",
-        "subject": "={{ $json.email_subject }}",
-        "message": "={{ $json.email_body }}",
+        "subject": "={{ $('Code: Procesar Respuesta IA FW').item.json.email_subject }}",
+        "message": "={{ $('Code: Procesar Respuesta IA FW').item.json.email_body }}",
         "options": {}
       },
       "id": "5698d8a6-58b8-453d-a47f-93a018b7dd74",
@@ -528,8 +514,8 @@
     {
       "parameters": {
         "resource": "draft",
-        "subject": "={{ $json.email_subject }}",
-        "message": "={{ $json.email_body }}",
+        "subject": "={{ $('Code: Procesar Respuesta IA FW').item.json.email_subject }}",
+        "message": "={{ $('Code: Procesar Respuesta IA FW').item.json.email_body }}",
         "options": {}
       },
       "id": "e2cd0b2b-2921-44f7-9bc8-67da838886e6",
@@ -551,8 +537,8 @@
     {
       "parameters": {
         "resource": "draft",
-        "subject": "={{ $json.email_subject }}",
-        "message": "={{ $json.email_body }}",
+        "subject": "={{ $('Code: Procesar Respuesta IA FW').item.json.email_subject }}",
+        "message": "={{ $('Code: Procesar Respuesta IA FW').item.json.email_body }}",
         "options": {}
       },
       "id": "0590cb8e-00d6-40a2-a235-5901f05bad88",
@@ -574,8 +560,8 @@
     {
       "parameters": {
         "resource": "draft",
-        "subject": "={{ $json.email_subject }}",
-        "message": "={{ $json.email_body }}",
+        "subject": "={{ $('Code: Procesar Respuesta IA FW').item.json.email_subject }}",
+        "message": "={{ $('Code: Procesar Respuesta IA FW').item.json.email_body }}",
         "options": {}
       },
       "id": "483f1ef1-0eb0-4cc9-af4c-230cff05522a",
@@ -599,7 +585,7 @@
         "operation": "upsert",
         "projectId": "ctt-dashboard",
         "collection": "incidencias",
-        "documentId": "={{ $json.shipping_code.toString() }}",
+        "documentId": "={{ $('Code: Procesar Respuesta IA FW').item.json.shipping_code.toString() }}",
         "updateKey": "_docid",
         "columns": "seguimiento,resultado_followup"
       },
@@ -623,7 +609,7 @@
         "operation": "upsert",
         "projectId": "ctt-dashboard",
         "collection": "incidencias",
-        "documentId": "={{ $json.shipping_code.toString() }}",
+        "documentId": "={{ $('Code: Procesar Respuesta IA FW').item.json.shipping_code.toString() }}",
         "updateKey": "_docid",
         "columns": "seguimiento,resultado_followup"
       },
@@ -670,13 +656,12 @@
     },
     {
       "parameters": {
-        "workflowId": "NtGW6lN2IMYIaKeYdTuot",
-        "options": {}
+        "jsCode": "const items = $input.all();\nif (items.length > 0 && items[0].json.centers && Array.isArray(items[0].json.centers)) {\n  return items[0].json.centers.map(center => ({ json: { center_code: center, shop_name: 'DYNAMIC_' + center } }));\n}\nreturn [];"
       },
-      "id": "7fb9e0c3-29ea-4ddf-af8e-f3030b161973",
-      "name": "Call SubWf 0000",
-      "type": "n8n-nodes-base.executeWorkflow",
-      "typeVersion": 1,
+      "id": "inc-pag-01edc6f0-d4e2-4bf1-b08e-c2d88a8177f7",
+      "name": "Inc.CodeTiendas",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
       "position": [
         484,
         2080
@@ -684,7 +669,252 @@
     },
     {
       "parameters": {
-        "jsCode": "const ayer = $now.minus({days: 1}).toFormat('dd-MM-yyyy');\nconst credencial = $('Loop Clientes 0000').item.json.credencial;\nconst client = $('Loop Clientes 0000').item.json.client;\n\nconst result = [];\nfor (const item of $input.all()) {\n  const code = String(item.json.shipping_status_code || '');\n  const rawDate = String(item.json.shipping_status_datetime || '');\n  let fecha = '';\n  if (rawDate) {\n    try {\n      const d = new Date(rawDate);\n      d.setHours(d.getHours() + 1);\n      fecha = d.getDate().toString().padStart(2, '0') + '-' + (d.getMonth() + 1).toString().padStart(2, '0') + '-' + d.getFullYear();\n    } catch(e) {\n      fecha = rawDate.substring(0, 10);\n    }\n  }\n  if ((code === '0000' || code === '0030') && fecha === ayer) {\n    result.push({ json: { ...item.json, credencial, client, fecha_estado_local: fecha } });\n  }\n}\nreturn result;"
+        "options": {}
+      },
+      "id": "inc-pag-e21f83c8-37a7-4262-b311-e396c00f3156",
+      "name": "Inc.LoopTiendas",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        684,
+        2080
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://api.cttexpress.com/integrations/trf/web-tracking/v1.0/shippings",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "mapping_table_code",
+              "value": "APITRACK"
+            },
+            {
+              "name": "client_center_code",
+              "value": "={{ $json.center_code }}"
+            },
+            {
+              "name": "shipping_date",
+              "value": "={{ $now.minus({days: 30}).toFormat('yyyy-MM-dd') }}[range]{{ $now.toFormat('yyyy-MM-dd') }}"
+            },
+            {
+              "name": "page_limit",
+              "value": "50"
+            },
+            {
+              "name": "page_offsets",
+              "value": "1"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $('Loop Clientes 0000').item.json.access_token }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "inc-pag-70440f53-7da9-4eae-aa09-15093048e4f8",
+      "name": "Inc.LeerPagina",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000,
+      "position": [
+        884,
+        2008
+      ],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "inc-cond-1",
+              "leftValue": "={{ $json.pagination?.page_offsets?.current ?? 1 }}",
+              "rightValue": "={{ $json.pagination?.page_offsets?.last ?? 1 }}",
+              "operator": {
+                "type": "number",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1084,
+        2008
+      ],
+      "id": "inc-pag-64b316df-0526-4ee9-a93a-5bdc79f17009",
+      "name": "Inc.UltimaPagina"
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\nconst result = [];\nfor (const item of items) {\n  const data = item.json.data;\n  if (!data || !Array.isArray(data)) continue;\n  for (const shipping of data) {\n    if (shipping && shipping.shipping_code) result.push({ json: shipping });\n  }\n}\nreturn result;"
+      },
+      "id": "inc-pag-0f15ca43-6989-4e19-bc41-419138975148",
+      "name": "Inc.SepararPagina",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1756,
+        1904
+      ],
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "jsCode": "const item = $input.first().json;\nconst lastPage = Math.max(Number(item.pagination?.page_offsets?.last || 1), 1);\nlet centerCode = '';\ntry {\n  centerCode = $('Inc.LoopTiendas').first().json.center_code;\n} catch(e) {\n  centerCode = item.data?.[0]?.client_center_code || '';\n}\nconst pages = [];\nfor (let i = 2; i <= lastPage; i++) {\n  pages.push({ json: { page: i, center_code: centerCode } });\n}\nreturn pages;"
+      },
+      "id": "inc-pag-bf2d51fc-78fc-492d-b3c1-8ae241149bf7",
+      "name": "Inc.GenerarPagsExtra",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1308,
+        2096
+      ],
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "url": "https://api.cttexpress.com/integrations/trf/web-tracking/v1.0/shippings",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "mapping_table_code",
+              "value": "APITRACK"
+            },
+            {
+              "name": "client_center_code",
+              "value": "={{ $json.center_code }}"
+            },
+            {
+              "name": "shipping_date",
+              "value": "={{ $now.minus({days: 30}).toFormat('yyyy-MM-dd') }}[range]{{ $now.toFormat('yyyy-MM-dd') }}"
+            },
+            {
+              "name": "page_limit",
+              "value": "50"
+            },
+            {
+              "name": "page_offsets",
+              "value": "={{ $json.page }}"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $('Loop Clientes 0000').item.json.access_token }}"
+            }
+          ]
+        },
+        "options": {
+          "batching": {
+            "batch": {
+              "batchSize": 1
+            }
+          }
+        }
+      },
+      "id": "inc-pag-86d30eae-659b-40b3-8fbe-a303afca9444",
+      "name": "Inc.LeerResto",
+      "type": "n8n-nodes-base.httpRequest",
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000,
+      "typeVersion": 4.1,
+      "position": [
+        1532,
+        2096
+      ],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\nconst result = [];\nfor (const item of items) {\n  const data = item.json.data;\n  if (!data || !Array.isArray(data)) continue;\n  for (const shipping of data) {\n    if (shipping && shipping.shipping_code) result.push({ json: shipping });\n  }\n}\nreturn result;"
+      },
+      "id": "inc-pag-e98bd064-c1d2-41cb-a98d-b310b0a33771",
+      "name": "Inc.SepararResto",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1756,
+        2096
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "inc-pag-7122ded8-2ffd-42e7-a80f-bbda92111aa0",
+      "name": "Inc.MergePedidos",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        1980,
+        2008
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "inc-pag-35f95a05-e13b-487a-9ea4-b1367714df68",
+      "name": "Inc.VolverLoop",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        2428,
+        2080
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const execId = $execution.id;\nconst staticData = $getWorkflowStaticData('node');\nconst key = 'acc_inc_' + execId;\nif (!Array.isArray(staticData[key])) staticData[key] = [];\nfor (const item of $input.all()) {\n  if (item && item.json) staticData[key].push(item.json);\n}\nreturn $input.all();"
+      },
+      "id": "inc-pag-d0a4752a-6b63-456a-ae8e-b2833bf71fd3",
+      "name": "Inc.AcumularPedidos",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2204,
+        2008
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const execId = $execution.id;\nconst staticData = $getWorkflowStaticData('node');\nconst key = 'acc_inc_' + execId;\nconst acc = Array.isArray(staticData[key]) ? staticData[key] : [];\ndelete staticData[key];\nconsole.log('[Inc.DevolverAcumulado] execId=' + execId + ' total=' + acc.length);\nreturn acc.map(json => ({ json }));"
+      },
+      "id": "inc-pag-f3a8c2e1-9b4d-4e7a-a1b2-c3d4e5f60001",
+      "name": "Inc.DevolverAcumulado",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        884,
+        2240
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const nowMadrid = $now.setZone('Europe/Madrid');\nconst days = nowMadrid.weekday === 1 ? 3 : 1;\nconst ayer = nowMadrid.minus({days: days}).toFormat('yyyy-MM-dd');\nconst credencial = $('Loop Clientes 0000').item.json.credencial;\nconst client = $('Loop Clientes 0000').item.json.client;\n\nconst result = [];\nfor (const item of $input.all()) {\n  const code = String(item.json.shipping_status_code || '');\n  const rawDate = String(item.json.shipping_status_datetime || '');\n  let fecha = '';\n  if (rawDate) {\n    try {\n      const d = new Date(rawDate);\n      if (!isNaN(d.getTime())) {\n        const y = d.getFullYear();\n        const m = String(d.getMonth() + 1).padStart(2, '0');\n        const r = String(d.getDate()).padStart(2, '0');\n        fecha = y + '-' + m + '-' + r;\n      } else {\n        const d2 = new Date(rawDate.replace(' ', 'T'));\n        if (!isNaN(d2.getTime())) {\n          const y = d2.getFullYear();\n          const m = String(d2.getMonth() + 1).padStart(2, '0');\n          const r = String(d2.getDate()).padStart(2, '0');\n          fecha = y + '-' + m + '-' + r;\n        } else {\n          fecha = rawDate.substring(0, 10);\n        }\n      }\n    } catch(e) {\n      fecha = rawDate.substring(0, 10);\n    }\n  }\n  if (fecha && fecha.includes('-') && fecha.indexOf('-') === 2) {\n    fecha = fecha.split('-').reverse().join('-');\n  }\n  if ((code === '0000' || code === '0030') && fecha === ayer) {\n    result.push({ json: { ...item.json, credencial, client, fecha_estado_local: fecha } });\n  }\n}\nreturn result;"
       },
       "id": "01446102-b2b9-4852-8f2a-29a4bfea600a",
       "name": "Filtrar 0000 Ayer",
@@ -941,7 +1171,7 @@
         "columns": {
           "mappingMode": "defineBelow",
           "value": {
-            "fecha_procesado": "={{ $now.toFormat('dd-MM-yyyy HH:mm:ss') }}",
+            "fecha_procesado": "={{ $now.toFormat('yyyy-MM-dd HH:mm:ss') }}",
             "numero_envio": "={{ $('Preparar Alerta 0000').item.json.shipping_code.toString() }}",
             "numero_pedido": "={{ $('Preparar Alerta 0000').item.json.numero_pedido }}",
             "tienda": "={{ $('Preparar Alerta 0000').item.json.tienda }}",
@@ -988,7 +1218,7 @@
           "conditions": [
             {
               "id": "if-damage-fw",
-              "leftValue": "={{ $json.has_damage }}",
+              "leftValue": "={{ $json.any_damage }}",
               "rightValue": true,
               "operator": {
                 "type": "boolean",
@@ -1023,7 +1253,7 @@
                 },
                 "conditions": [
                   {
-                    "leftValue": "={{ $json.credencial }}",
+                    "leftValue": "={{ $('Code: Procesar Respuesta IA FW').item.json.tienda }}",
                     "rightValue": "HAMINOS",
                     "operator": {
                       "type": "string",
@@ -1046,7 +1276,7 @@
                 },
                 "conditions": [
                   {
-                    "leftValue": "={{ $json.credencial }}",
+                    "leftValue": "={{ $('Code: Procesar Respuesta IA FW').item.json.tienda }}",
                     "rightValue": "MIESTERY",
                     "operator": {
                       "type": "string",
@@ -1069,7 +1299,7 @@
                 },
                 "conditions": [
                   {
-                    "leftValue": "={{ $json.credencial }}",
+                    "leftValue": "={{ $('Code: Procesar Respuesta IA FW').item.json.tienda }}",
                     "rightValue": "KULTUDENDA",
                     "operator": {
                       "type": "string",
@@ -1092,7 +1322,7 @@
                 },
                 "conditions": [
                   {
-                    "leftValue": "={{ $json.credencial }}",
+                    "leftValue": "={{ $('Code: Procesar Respuesta IA FW').item.json.tienda }}",
                     "rightValue": "SNAPPY",
                     "operator": {
                       "type": "string",
@@ -1124,7 +1354,7 @@
       "parameters": {
         "sendTo": "incidenciashaminos@gmail.com",
         "subject": "=DAÑO DETECTADO (followup): Envio {{ $json.shipping_code }}",
-        "message": "=ALERTA: El envio {{ $json.shipping_code }} tiene una incidencia de daño (6_INCT) registrada.\n\nPedido: {{ $json.numero_pedido }}\nJustificacion IA: {{ $json.justification }}",
+        "message": "=ALERTA: El envio {{ $json.shipping_code }} tiene una incidencia de daño (6_INCT) registrada.\n\nPedido: {{ $json.numero_pedido }}\nJustificacion IA: {{ $json.justificacion }}",
         "options": {
           "appendAttribution": false
         }
@@ -1149,7 +1379,7 @@
       "parameters": {
         "sendTo": "incidenciasamzdiscounts01@gmail.com",
         "subject": "=DAÑO DETECTADO (followup): Envio {{ $json.shipping_code }}",
-        "message": "=ALERTA: El envio {{ $json.shipping_code }} tiene una incidencia de daño (6_INCT) registrada.\n\nPedido: {{ $json.numero_pedido }}\nJustificacion IA: {{ $json.justification }}",
+        "message": "=ALERTA: El envio {{ $json.shipping_code }} tiene una incidencia de daño (6_INCT) registrada.\n\nPedido: {{ $json.numero_pedido }}\nJustificacion IA: {{ $json.justificacion }}",
         "options": {
           "appendAttribution": false
         }
@@ -1174,7 +1404,7 @@
       "parameters": {
         "sendTo": "incidenciaskulturdenda@gmail.com",
         "subject": "=DAÑO DETECTADO (followup): Envio {{ $json.shipping_code }}",
-        "message": "=ALERTA: El envio {{ $json.shipping_code }} tiene una incidencia de daño (6_INCT) registrada.\n\nPedido: {{ $json.numero_pedido }}\nJustificacion IA: {{ $json.justification }}",
+        "message": "=ALERTA: El envio {{ $json.shipping_code }} tiene una incidencia de daño (6_INCT) registrada.\n\nPedido: {{ $json.numero_pedido }}\nJustificacion IA: {{ $json.justificacion }}",
         "options": {
           "appendAttribution": false
         }
@@ -1199,7 +1429,7 @@
       "parameters": {
         "sendTo": "incidenciassnappyblue@gmail.com",
         "subject": "=DAÑO DETECTADO (followup): Envio {{ $json.shipping_code }}",
-        "message": "=ALERTA: El envio {{ $json.shipping_code }} tiene una incidencia de daño (6_INCT) registrada.\n\nPedido: {{ $json.numero_pedido }}\nJustificacion IA: {{ $json.justification }}",
+        "message": "=ALERTA: El envio {{ $json.shipping_code }} tiene una incidencia de daño (6_INCT) registrada.\n\nPedido: {{ $json.numero_pedido }}\nJustificacion IA: {{ $json.justificacion }}",
         "options": {
           "appendAttribution": false
         }
@@ -1227,7 +1457,7 @@
             {
               "id": "fw-set-dano-1",
               "name": "_docid",
-              "value": "={{ $('Code FW JS2').first().json.shipping_code.toString() }}",
+              "value": "={{ $('Code: Parsear Respuesta IA FW').first().json.shipping_code.toString() }}",
               "type": "string"
             },
             {
@@ -1282,13 +1512,13 @@
             {
               "id": "fw-set-sigue-1",
               "name": "_docid",
-              "value": "={{ $('Code FW JS2').first().json.shipping_code.toString() }}",
+              "value": "={{ $('Code: Parsear Respuesta IA FW').first().json.shipping_code.toString() }}",
               "type": "string"
             },
             {
               "id": "fw-set-sigue-2",
               "name": "seguimiento",
-              "value": "={{ $('Code FW JS2').first().json.estado_actual }}",
+              "value": "={{ $('Code: Parsear Respuesta IA FW').first().json.estado_actual }}",
               "type": "string"
             },
             {
@@ -1319,13 +1549,13 @@
             {
               "id": "fw-set-res-1",
               "name": "_docid",
-              "value": "={{ $('Code FW JS2').first().json.shipping_code.toString() }}",
+              "value": "={{ $('Code: Parsear Respuesta IA FW').first().json.shipping_code.toString() }}",
               "type": "string"
             },
             {
               "id": "fw-set-res-2",
               "name": "seguimiento",
-              "value": "={{ $('Code FW JS2').first().json.estado_actual }}",
+              "value": "={{ $('Code: Parsear Respuesta IA FW').first().json.estado_actual }}",
               "type": "string"
             },
             {
@@ -1445,7 +1675,7 @@
       "main": [
         [
           {
-            "node": "Filtrar Incidencias Ayer",
+            "node": "Parsear Firestore Docs",
             "type": "main",
             "index": 0
           }
@@ -1465,7 +1695,13 @@
     },
     "Loop Followup": {
       "main": [
-        [],
+        [
+          {
+            "node": "Preparar Configs 0000",
+            "type": "main",
+            "index": 0
+          }
+        ],
         [
           {
             "node": "Obtener Historial FW",
@@ -1515,11 +1751,6 @@
             "node": "Leer Incidencias",
             "type": "main",
             "index": 0
-          },
-          {
-            "node": "Preparar Configs 0000",
-            "type": "main",
-            "index": 0
           }
         ]
       ]
@@ -1557,7 +1788,7 @@
         ],
         [
           {
-            "node": "Loop Followup",
+            "node": "If Sigue Incidencia",
             "type": "main",
             "index": 0
           }
@@ -1596,7 +1827,7 @@
         ],
         [
           {
-            "node": "Loop Followup",
+            "node": "If Sigue Incidencia",
             "type": "main",
             "index": 0
           }
@@ -1662,7 +1893,7 @@
       "main": [
         [
           {
-            "node": "Loop Followup",
+            "node": "If Sigue Incidencia",
             "type": "main",
             "index": 0
           }
@@ -1830,14 +2061,159 @@
         [],
         [
           {
-            "node": "Call SubWf 0000",
+            "node": "Inc.CodeTiendas",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Call SubWf 0000": {
+    "Inc.CodeTiendas": {
+      "main": [
+        [
+          {
+            "node": "Inc.LoopTiendas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Inc.LoopTiendas": {
+      "main": [
+        [
+          {
+            "node": "Inc.DevolverAcumulado",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Inc.LeerPagina",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Inc.LeerPagina": {
+      "main": [
+        [
+          {
+            "node": "Inc.UltimaPagina",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Inc.UltimaPagina": {
+      "main": [
+        [
+          {
+            "node": "Inc.SepararPagina",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Inc.GenerarPagsExtra",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Inc.SepararPagina",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Inc.GenerarPagsExtra",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Inc.SepararPagina": {
+      "main": [
+        [
+          {
+            "node": "Inc.MergePedidos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Inc.GenerarPagsExtra": {
+      "main": [
+        [
+          {
+            "node": "Inc.LeerResto",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Inc.LeerResto": {
+      "main": [
+        [
+          {
+            "node": "Inc.SepararResto",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Inc.SepararResto": {
+      "main": [
+        [
+          {
+            "node": "Inc.MergePedidos",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Inc.MergePedidos": {
+      "main": [
+        [
+          {
+            "node": "Inc.AcumularPedidos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Inc.AcumularPedidos": {
+      "main": [
+        [
+          {
+            "node": "Inc.VolverLoop",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Inc.VolverLoop": {
+      "main": [
+        [
+          {
+            "node": "Inc.LoopTiendas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Inc.DevolverAcumulado": {
       "main": [
         [
           {
@@ -2019,11 +2395,6 @@
       "main": [
         [
           {
-            "node": "If Sigue Incidencia",
-            "type": "main",
-            "index": 0
-          },
-          {
             "node": "If Daño FW",
             "type": "main",
             "index": 0
@@ -2047,6 +2418,17 @@
         [
           {
             "node": "Marcar Cuadrado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parsear Firestore Docs": {
+      "main": [
+        [
+          {
+            "node": "Filtrar Incidencias Ayer",
             "type": "main",
             "index": 0
           }

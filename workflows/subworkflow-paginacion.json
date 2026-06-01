@@ -2,13 +2,13 @@
   "nodes": [
     {
       "parameters": {},
-      "id": "012a6b68-5ef8-4c60-9323-1e8083ad449a",
+      "id": "b16470e9-dc37-495a-868e-1cca72724f18",
       "name": "Execute Workflow Trigger",
       "type": "n8n-nodes-base.executeWorkflowTrigger",
       "typeVersion": 1,
       "position": [
-        6656,
-        -160
+        688,
+        -1144
       ]
     },
     {
@@ -18,23 +18,23 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        6880,
-        -176
+        912,
+        -1144
       ],
-      "id": "6307e37a-5cb1-4ef7-954c-138465061d8f",
+      "id": "01edc6f0-d4e2-4bf1-b08e-c2d88a8177f7",
       "name": "2.CodeTiendas_Sub"
     },
     {
       "parameters": {
         "options": {}
       },
-      "id": "58a122d3-6ea3-4481-81df-23f33d620d80",
+      "id": "e21f83c8-37a7-4262-b311-e396c00f3156",
       "name": "3.LoopTiendas_Sub",
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
       "position": [
-        7104,
-        -176
+        1136,
+        -1144
       ]
     },
     {
@@ -76,14 +76,18 @@
         },
         "options": {}
       },
-      "id": "26f459fc-3292-4e0e-8611-12dc961b4b6a",
+      "id": "70440f53-7da9-4eae-aa09-15093048e4f8",
       "name": "4.LeerPágina_Sub",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000,
       "position": [
-        7328,
-        -240
-      ]
+        1360,
+        -1216
+      ],
+      "onError": "continueRegularOutput"
     },
     {
       "parameters": {
@@ -112,37 +116,39 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        7552,
-        -240
+        1584,
+        -1216
       ],
-      "id": "ff9c642c-3cc6-4839-872c-048ff920da1f",
+      "id": "64b316df-0526-4ee9-a93a-5bdc79f17009",
       "name": "5.¿ÚltimaPágina?_Sub"
     },
     {
       "parameters": {
         "jsCode": "const items = $input.all();\nconst result = [];\nfor (const item of items) {\n  const data = item.json.data;\n  if (!data || !Array.isArray(data)) continue;\n  for (const shipping of data) {\n    if (shipping && shipping.shipping_code) {\n      result.push({ json: shipping });\n    }\n  }\n}\nreturn result;"
       },
-      "id": "65dcb0f4-88f6-4b88-987e-2466ad00f83d",
+      "id": "0f15ca43-6989-4e19-bc41-419138975148",
       "name": "6.SepararPágina_Sub",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        8224,
-        -336
-      ]
+        2256,
+        -1312
+      ],
+      "alwaysOutputData": true
     },
     {
       "parameters": {
         "jsCode": "const item = $input.first().json;\n// Forzamos que lastPage sea un número válido\nconst lastPage = Math.max(Number(item.pagination?.page_offsets?.last || 1), 1);\n\n// BUGFIX: Obtenemos el center_code directamente del nodo Loop.\n// Obtenerlo de item.data[0] es peligroso porque puede venir vacío\nlet centerCode = '';\ntry {\n  centerCode = $('3.LoopTiendas_Sub').first().json.center_code;\n} catch(e) {\n  centerCode = item.data?.[0]?.client_center_code || '';\n}\n\nconst pages = [];\nfor (let i = 2; i <= lastPage; i++) {\n  pages.push({ json: { page: i, center_code: centerCode } });\n}\nreturn pages;"
       },
-      "id": "e495f4a6-d6e1-4f1c-aec6-55de9443e00e",
+      "id": "bf2d51fc-78fc-492d-b3c1-8ae241149bf7",
       "name": "7.GenerarPáginasExtra_Sub",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        7776,
-        -144
-      ]
+        1808,
+        -1120
+      ],
+      "alwaysOutputData": true
     },
     {
       "parameters": {
@@ -184,54 +190,70 @@
         "options": {
           "batching": {
             "batch": {
-              "batchSize": 1,
-              "batchInterval": 500
+              "batchSize": 1
             }
           }
         }
       },
-      "id": "822814fe-cb86-41a6-9e41-c1c73b24e6be",
+      "id": "86d30eae-659b-40b3-8fbe-a303afca9444",
       "name": "8.LeerRestoPáginas_Sub",
       "type": "n8n-nodes-base.httpRequest",
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000,
       "typeVersion": 4.1,
       "position": [
-        8000,
-        -144
-      ]
+        2032,
+        -1120
+      ],
+      "onError": "continueRegularOutput"
     },
     {
       "parameters": {
         "jsCode": "const items = $input.all();\nconst result = [];\nfor (const item of items) {\n  const data = item.json.data;\n  if (!data || !Array.isArray(data)) continue;\n  for (const shipping of data) {\n    if (shipping && shipping.shipping_code) {\n      result.push({ json: shipping });\n    }\n  }\n}\nreturn result;"
       },
-      "id": "25e18d59-0073-4c07-83cb-672e8127609c",
+      "id": "e98bd064-c1d2-41cb-a98d-b310b0a33771",
       "name": "9.SepararResto_Sub",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        8224,
-        -144
+        2256,
+        -1120
       ]
     },
     {
       "parameters": {},
-      "id": "c28ca768-1a0a-4011-906f-39716c699d22",
+      "id": "7122ded8-2ffd-42e7-a80f-bbda92111aa0",
       "name": "0.MergePedidos_Sub",
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3,
       "position": [
-        8448,
-        -240
+        2480,
+        -1216
       ]
     },
     {
       "parameters": {},
-      "id": "b329c9b8-1005-4d86-92b8-82c5e9ba2ebb",
+      "id": "35f95a05-e13b-487a-9ea4-b1367714df68",
       "name": "11.VolverLoop_Sub",
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        8672,
-        -176
+        2928,
+        -1144
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Acumula por execution ID para evitar race con concurrent calls.\nconst execId = $execution.id;\nconst staticData = $getWorkflowStaticData('node');\nconst key = 'acc_' + execId;\nif (!Array.isArray(staticData[key])) staticData[key] = [];\nfor (const item of $input.all()) {\n  if (item && item.json) staticData[key].push(item.json);\n}\nreturn $input.all();"
+      },
+      "id": "d0a4752a-6b63-456a-ae8e-b2833bf71fd3",
+      "name": "12.AcumularPedidos_Sub",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2704,
+        -1216
       ]
     }
   ],
@@ -286,6 +308,11 @@
         [
           {
             "node": "6.SepararPágina_Sub",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "7.GenerarPáginasExtra_Sub",
             "type": "main",
             "index": 0
           }
@@ -352,7 +379,7 @@
       "main": [
         [
           {
-            "node": "11.VolverLoop_Sub",
+            "node": "12.AcumularPedidos_Sub",
             "type": "main",
             "index": 0
           }
@@ -369,13 +396,21 @@
           }
         ]
       ]
+    },
+    "12.AcumularPedidos_Sub": {
+      "main": [
+        [
+          {
+            "node": "11.VolverLoop_Sub",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "pinData": {},
   "meta": {
     "instanceId": "1c2aee663286167ca5973273ceb0c60aa2fcbae95195db0810f62f8c4797daff"
-  },
-  "settings": {
-    "errorWorkflow": "CTT Error Notifier"
   }
 }

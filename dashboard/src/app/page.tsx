@@ -6,8 +6,8 @@ import { collection, getDocs, query, limit, doc, getDoc, orderBy } from "firebas
 import { db } from "@/lib/firebase";
 import { useAuth } from "@/lib/auth-context";
 import { Ejecucion, Incidencia } from "@/lib/types";
-import { StatsCards } from "@/components/StatsCards";
 import { EjecucionesTable } from "@/components/EjecucionesTable";
+import { ConfigDialog } from "@/components/ConfigDialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -15,8 +15,8 @@ import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
-import { Calendar as CalendarIcon, FilterX, LogOut, Search, SlidersHorizontal, ArrowDownUp } from "lucide-react";
-import { SHOP_NAMES, getStatusLabel, getStatusTheme, STATUS_FILTER_OPTIONS } from "@/lib/status-map";
+import { Calendar as CalendarIcon, FilterX, LogOut, Search, SlidersHorizontal, ArrowDownUp, Plus, Loader2, Settings, ChevronDown } from "lucide-react";
+import { SHOP_NAMES, getStatusLabel, getStatusTheme, STATUS_FILTER_OPTIONS, getClientCode } from "@/lib/status-map";
 
 export default function Dashboard() {
   const { state, logout } = useAuth();
@@ -24,17 +24,33 @@ export default function Dashboard() {
   
   const [ejecuciones, setEjecuciones] = useState<Ejecucion[]>([]);
   const [incidencias, setIncidencias] = useState<Incidencia[]>([]);
+  const [trazabilidad, setTrazabilidad] = useState<any[]>([]);
   
   // Filters
   const [tiendaFiltro, setTiendaFiltro] = useState("TODAS");
   const [estadoFiltro, setEstadoFiltro] = useState("TODOS");
-  const [emailFiltro, setEmailFiltro] = useState("SÍ");
+  const [emailFiltro, setEmailFiltro] = useState("TODOS");
   const [tipoFiltro, setTipoFiltro] = useState("TODOS");
   const [busqueda, setBusqueda] = useState("");
   const [fechaInicio, setFechaInicio] = useState<Date | undefined>(undefined);
   const [sortOrder, setSortOrder] = useState<"desc" | "asc">("desc");
   const [mostrarSoloIncidencias, setMostrarSoloIncidencias] = useState(false);
   const [loading, setLoading] = useState(true);
+
+  // Onboard tracking state
+  const [nuevoEnvio, setNuevoEnvio] = useState("");
+  const [nuevaTienda, setNuevaTienda] = useState("");
+  const [addingEnvio, setAddingEnvio] = useState(false);
+
+  // Lectura manual (consultar un pedido que no está en la lista)
+  const [manualLoading, setManualLoading] = useState(false);
+  const [manualError, setManualError] = useState("");
+  const [manualItem, setManualItem] = useState<any>(null);
+
+  // Menú de usuario + diálogo de configuración
+  const [configOpen, setConfigOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+
 
   useEffect(() => {
     if (state.status === "unauthenticated" || state.status === "unauthorized") {
@@ -47,15 +63,20 @@ export default function Dashboard() {
     async function load() {
       setLoading(true);
       try {
-        const [ejSnap, incSnap] = await Promise.all([
-          getDocs(query(collection(db, "ejecuciones"), orderBy("fecha_procesado", "desc"), limit(1000))),
-          getDocs(query(collection(db, "incidencias"), orderBy("fecha_procesado", "desc"), limit(1000))),
+        const ejColl = "ejecuciones";
+        const incColl = "incidencias";
+        const trazColl = "trazabilidad_ejecuciones";
+        const [ejSnap, incSnap, trazSnap] = await Promise.all([
+          getDocs(query(collection(db, ejColl), orderBy("fecha_procesado", "desc"), limit(6000))),
+          getDocs(query(collection(db, incColl), orderBy("fecha_procesado", "desc"), limit(6000))),
+          getDocs(query(collection(db, trazColl), orderBy("fecha", "desc"), limit(6000))),
         ]);
         setEjecuciones(ejSnap.docs.map((d) => {
           const data = d.data();
           return {
             id: d.id,
             ...data,
+            numero_envio: data.numero_envio || data.shipping_code || d.id,
             fecha_procesado: data.fecha_procesado?.toDate?.() ? new Date(data.fecha_procesado.toDate()).toISOString().replace('T', ' ').substring(0, 19) : data.fecha_procesado
           } as Ejecucion;
         }));
@@ -64,8 +85,22 @@ export default function Dashboard() {
           return {
             id: d.id,
             ...data,
+            numero_envio: data.numero_envio || data.shipping_code || d.id,
             fecha_procesado: data.fecha_procesado?.toDate?.() ? new Date(data.fecha_procesado.toDate()).toISOString().replace('T', ' ').substring(0, 19) : data.fecha_procesado
           } as Incidencia;
+        }));
+        setTrazabilidad(trazSnap.docs.map((d) => {
+          const data = d.data();
+          const fechaStr = data.fecha?.toDate?.() 
+            ? new Date(data.fecha.toDate()).toISOString().replace('T', ' ').substring(0, 19) 
+            : (data.fecha ? new Date(data.fecha).toISOString().replace('T', ' ').substring(0, 19) : "");
+          return {
+            id: d.id,
+            ...data,
+            numero_envio: data.shipping_code || "",
+            numero_pedido: data.numero_pedido || "",
+            fecha_procesado: fechaStr,
+          };
         }));
       } catch (e) {
         console.error("Error loading Firestore data:", e);
@@ -79,15 +114,20 @@ export default function Dashboard() {
     if (state.status !== "authenticated") return;
     setLoading(true);
     try {
-      const [ejSnap, incSnap] = await Promise.all([
-        getDocs(query(collection(db, "ejecuciones"), orderBy("fecha_procesado", "desc"), limit(1000))),
-        getDocs(query(collection(db, "incidencias"), orderBy("fecha_procesado", "desc"), limit(1000))),
+      const ejColl = "ejecuciones";
+      const incColl = "incidencias";
+      const trazColl = "trazabilidad_ejecuciones";
+      const [ejSnap, incSnap, trazSnap] = await Promise.all([
+        getDocs(query(collection(db, ejColl), orderBy("fecha_procesado", "desc"), limit(6000))),
+        getDocs(query(collection(db, incColl), orderBy("fecha_procesado", "desc"), limit(6000))),
+        getDocs(query(collection(db, trazColl), orderBy("fecha", "desc"), limit(6000))),
       ]);
       setEjecuciones(ejSnap.docs.map((d) => {
         const data = d.data();
         return {
           id: d.id,
           ...data,
+          numero_envio: data.numero_envio || data.shipping_code || d.id,
           fecha_procesado: data.fecha_procesado?.toDate?.() ? new Date(data.fecha_procesado.toDate()).toISOString().replace('T', ' ').substring(0, 19) : data.fecha_procesado
         } as Ejecucion;
       }));
@@ -96,8 +136,22 @@ export default function Dashboard() {
         return {
           id: d.id,
           ...data,
+          numero_envio: data.numero_envio || data.shipping_code || d.id,
           fecha_procesado: data.fecha_procesado?.toDate?.() ? new Date(data.fecha_procesado.toDate()).toISOString().replace('T', ' ').substring(0, 19) : data.fecha_procesado
         } as Incidencia;
+      }));
+      setTrazabilidad(trazSnap.docs.map((d) => {
+        const data = d.data();
+        const fechaStr = data.fecha?.toDate?.() 
+          ? new Date(data.fecha.toDate()).toISOString().replace('T', ' ').substring(0, 19) 
+          : (data.fecha ? new Date(data.fecha).toISOString().replace('T', ' ').substring(0, 19) : "");
+        return {
+          id: d.id,
+          ...data,
+          numero_envio: data.shipping_code || "",
+          numero_pedido: data.numero_pedido || "",
+          fecha_procesado: fechaStr,
+        };
       }));
     } catch (e) {
       console.error("Error refreshing Firestore data:", e);
@@ -105,7 +159,7 @@ export default function Dashboard() {
     setLoading(false);
   };
 
-  const refreshSingleItem = async (itemId: string, collectionName: "ejecuciones" | "incidencias") => {
+  const refreshSingleItem = async (itemId: string, collectionName: string) => {
     try {
       const docRef = doc(db, collectionName, itemId);
       const docSnap = await getDoc(docRef);
@@ -115,9 +169,10 @@ export default function Dashboard() {
         const newData = {
           id: docSnap.id,
           ...data,
+          numero_envio: data.numero_envio || data.shipping_code || docSnap.id,
           fecha_procesado: data.fecha_procesado?.toDate?.() ? new Date(data.fecha_procesado.toDate()).toISOString().replace('T', ' ').substring(0, 19) : data.fecha_procesado
         } as any;
-        if (collectionName === "ejecuciones") {
+        if (collectionName.startsWith("ejecuciones")) {
           setEjecuciones(prev => prev.map(item => item.id === itemId ? newData : item));
         } else {
           setIncidencias(prev => prev.map(item => item.id === itemId ? newData : item));
@@ -127,6 +182,102 @@ export default function Dashboard() {
     } catch (e) {
       console.error("Error refreshing single item:", e);
     }
+  };
+
+  const handleAddTracking = async () => {
+    if (!nuevoEnvio.trim()) {
+      alert("Por favor, introduce un número de envío (tracking).");
+      return;
+    }
+    if (!nuevaTienda) {
+      alert("Por favor, selecciona una tienda.");
+      return;
+    }
+
+    setAddingEnvio(true);
+    try {
+      const tracking = nuevoEnvio.trim();
+      const clientCode = getClientCode(nuevaTienda);
+      const collectionName = 'ejecuciones';
+
+      const webhookUrl = process.env.NEXT_PUBLIC_N8N_WEBHOOK_URL || "https://n8n.ctt-lastmile.com/webhook/refresh-tracking";
+      const res = await fetch(webhookUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          shipping_code: tracking,
+          client_code: clientCode,
+          collection: collectionName,
+          doc_id: tracking
+        })
+      });
+
+      if (!res.ok) {
+        const errText = await res.text();
+        throw new Error(errText || `HTTP status ${res.status}`);
+      }
+
+      alert("✅ Envío añadido e historial sincronizado correctamente.");
+      setNuevoEnvio("");
+      setNuevaTienda("");
+      await refreshData();
+    } catch (error: any) {
+      console.error("Error onboarding tracking:", error);
+      alert(`Error al añadir el envío: ${error.message || error}`);
+    } finally {
+      setAddingEnvio(false);
+    }
+  };
+
+  // Lee un pedido on-demand desde la ruta API del propio dashboard y lo abre en el panel lateral.
+  const consultarManualmente = async () => {
+    const codigo = busqueda.trim();
+    if (!codigo) return;
+    setManualLoading(true); setManualError(""); setManualItem(null);
+    try {
+      const res = await fetch(`/api/shipment/read`, {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ shipping_code: codigo }),
+      });
+      const j = await res.json();
+      if (!j.success) { setManualError(j.error || "No se pudo leer el pedido."); }
+      else {
+        const r = j.result;
+        const d = r.decision;
+        // ¿El pedido existe? Si CTT no devolvió eventos ni estado, no hay datos reales.
+        const tieneDatos = (r.bultos || []).some((b: any) => (b.events?.length || 0) > 0) || !!d?.estado_actual;
+        if (!tieneDatos) {
+          setManualError(`El pedido "${codigo}" no existe o no tiene datos en CTT.`);
+          setManualLoading(false);
+          return;
+        }
+        // Mapear el resultado al formato que entiende el panel lateral (ejecución).
+        setManualItem({
+          id: r.shipping_code,
+          _collection: "ejecuciones",
+          numero_envio: r.shipping_code,
+          numero_pedido: String(r.meta?.client_reference || ""),
+          tienda: r.client_name,
+          credencial: r.client_name,
+          estado: d.estado_actual,
+          tipo_email: d.target_type,
+          forzado_interno: d.target_type === "internal",
+          destinatario: d.destinatario,
+          email_enviado: d.should_notify,
+          asunto: d.asunto,
+          cuerpo: d.cuerpo,
+          razon: d.ai_justification,
+          centro: String(r.meta?.client_center_code || ""),
+          dano: d.notification_type === "siniestro" || d.estado_actual === "1006",
+          numero_avisos: r.numero_avisos_previos,
+          bultos_historial_json: JSON.stringify(r.bultos || []),
+          fecha_procesado: new Date().toISOString().replace("T", " ").substring(0, 19) + " (Consulta manual)",
+        });
+      }
+    } catch (e: any) {
+      setManualError("No se pudo leer el pedido. Inténtalo de nuevo.");
+    }
+    setManualLoading(false);
   };
 
   const resetFilters = () => {
@@ -151,7 +302,7 @@ export default function Dashboard() {
   const filteredData = useMemo(() => {
     const term = busqueda.trim().toLowerCase();
     
-    const filterFn = (item: Ejecucion | Incidencia, isIncidencia: boolean) => {
+    const filterFn = (item: any, isIncidencia: boolean) => {
       // 1. Busqueda
       const searchMatch = !term || 
         (item.numero_envio || "").toLowerCase().includes(term) || 
@@ -163,25 +314,34 @@ export default function Dashboard() {
 
       // 3. Estado (Filtro por Nombre, no por codigo)
       if (estadoFiltro !== "TODOS") {
-        const itemEstado = isIncidencia ? (item as Incidencia).incidencia : (item as Ejecucion).estado;
-        const itemLabel = getStatusLabel(itemEstado);
-        if (itemLabel !== estadoFiltro) return false;
+        if (item._collection === 'trazabilidad_ejecuciones') {
+          return false;
+        } else {
+          const itemEstado = isIncidencia ? item.incidencia : item.estado;
+          const itemLabel = getStatusLabel(itemEstado);
+          if (itemLabel !== estadoFiltro) return false;
+        }
       }
 
       // 4. Email (bool)
       if (emailFiltro !== "TODOS" && !term) {
         const sent = emailFiltro === "SÍ";
-        const isNotified = isIncidencia 
-          ? (item as Incidencia).numero_avisos > 0 
-          : (item as Ejecucion).email_enviado;
+        const isNotified = item._collection === 'trazabilidad_ejecuciones'
+          ? item.fase_salida === 'notified'
+          : (isIncidencia ? item.numero_avisos > 0 : item.email_enviado);
         if (isNotified !== sent) return false;
       }
 
-      // 5. Tipo Notificacion (Draft vs Internal)
+      // 5. Tipo Notificacion (Draft vs Internal vs Trazabilidad)
       if (tipoFiltro !== "TODOS") {
-        const itemTipo = String(item.tipo_email || "").toLowerCase();
-        if (tipoFiltro === "DRAFT" && !itemTipo.includes("standard")) return false;
-        if (tipoFiltro === "INTERNO" && !itemTipo.includes("internal") && !item.forzado_interno) return false;
+        if (item._collection === 'trazabilidad_ejecuciones') {
+          if (tipoFiltro !== "TRAZABILIDAD") return false;
+        } else {
+          const itemTipo = String(item.tipo_email || "").toLowerCase();
+          if (tipoFiltro === "DRAFT" && !itemTipo.includes("standard")) return false;
+          if (tipoFiltro === "INTERNO" && !itemTipo.includes("internal") && !item.forzado_interno) return false;
+          if (tipoFiltro === "TRAZABILIDAD") return false;
+        }
       }
 
       // 6. Fecha
@@ -195,10 +355,8 @@ export default function Dashboard() {
 
     const parseFecha = (f: any): number => {
       if (!f) return 0;
-      // Handle Firestore Timestamp objects
       if (typeof f === 'object' && typeof f.toDate === 'function') return f.toDate().getTime();
-      const s = String(f);
-      // Support both "DD-MM-YYYY HH:mm:ss" (legacy) and "YYYY-MM-DD HH:mm:ss" (new)
+      const s = String(f).replace(/\s*\(manual\)/i, '').trim();
       const isoLike = /^\d{4}-\d{2}-\d{2}/.test(s);
       if (isoLike) return new Date(s.replace(' ', 'T')).getTime();
       const [datePart, timePart = ''] = s.split(' ');
@@ -219,16 +377,16 @@ export default function Dashboard() {
               .filter(i => !ejecucionIds.has(i.id))
               .map(i => ({
                 ...i,
-                // Use the CTT status code (estado) not the free-text notification label (incidencia)
                 estado: i.estado || i.incidencia,
                 h_en_estado: i.h_en_incidencia,
                 email_enviado: i.numero_avisos > 0,
                 _collection: 'incidencias'
-              } as any))
+              } as any)),
+            ...trazabilidad.map(t => ({ ...t, _collection: 'trazabilidad_ejecuciones' } as any))
           ].sort(sortByFecha)
-      ).filter(e => filterFn(e, false))
+      ).filter(e => filterFn(e, e._collection === 'incidencias'))
     };
-  }, [ejecuciones, incidencias, busqueda, tiendaFiltro, estadoFiltro, emailFiltro, tipoFiltro, fechaInicio, mostrarSoloIncidencias]);
+  }, [ejecuciones, incidencias, trazabilidad, busqueda, tiendaFiltro, estadoFiltro, emailFiltro, tipoFiltro, fechaInicio, mostrarSoloIncidencias]);
 
   if (state.status === "loading" || state.status !== "authenticated") {
     return (
@@ -245,27 +403,51 @@ export default function Dashboard() {
   return (
     <main className="min-h-screen bg-slate-50/50 p-2 md:p-6 space-y-6 w-full">
       {/* Header section */}
-      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 bg-white p-4 md:p-6 rounded-2xl shadow-sm border">
+      <div className="flex items-center justify-between gap-4">
         <div className="space-y-1">
-          <h1 className="text-3xl font-bold tracking-tight text-slate-900">Auditoría CTT <span className="text-primary">v2.1</span></h1>
-          <p className="text-slate-500 font-medium">Panel de respuesta IA y logística unificada</p>
+          <h1 className="text-2xl font-bold tracking-tight text-slate-900">Auditoría CTT <span className="text-primary">v2.1</span></h1>
+          <p className="text-sm text-slate-500 font-medium">Panel de respuesta IA y logística unificada</p>
         </div>
-        
+
         <div className="flex items-center gap-3">
-          <Button variant="outline" onClick={() => router.push('/trazabilidad')} className="font-semibold text-slate-600">
-            Trazabilidad
-          </Button>
-          <div className="bg-slate-100 p-1 rounded-lg flex gap-1">
-            <div className="px-3 py-1 bg-white rounded-md shadow-sm text-sm font-semibold text-primary">Admin</div>
-            <div className="px-3 py-1 text-sm text-slate-500 font-medium">
-              {state.status === "authenticated" ? state.user.displayName : ""}
-            </div>
-          </div>
-          <Button variant="ghost" size="icon" onClick={logout} className="text-slate-400 hover:text-destructive transition-colors">
-            <LogOut className="h-5 w-5" />
-          </Button>
+          <Popover open={menuOpen} onOpenChange={setMenuOpen}>
+            <PopoverTrigger asChild>
+              <Button variant="outline" className="gap-2 font-semibold text-slate-600">
+                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-primary/10 text-xs font-bold text-primary">
+                  {(state.status === "authenticated" ? state.user.displayName || state.user.email || "?" : "?").charAt(0).toUpperCase()}
+                </span>
+                <span className="hidden sm:inline">{state.status === "authenticated" ? state.user.displayName || state.user.email : ""}</span>
+                <ChevronDown className="h-4 w-4 text-slate-400" />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent align="end" className="w-56 p-1.5">
+              <div className="px-2.5 py-2 text-xs text-slate-400">
+                {state.status === "authenticated" ? state.user.email : ""}
+              </div>
+              <div className="my-1 h-px bg-slate-100" />
+              <button
+                onClick={() => { setMenuOpen(false); setConfigOpen(true); }}
+                className="flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100"
+              >
+                <Settings className="h-4 w-4 text-slate-500" /> Configuración
+              </button>
+              <button
+                onClick={() => { setMenuOpen(false); logout(); }}
+                className="flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2 text-sm font-medium text-red-600 hover:bg-red-50"
+              >
+                <LogOut className="h-4 w-4" /> Cerrar sesión
+              </button>
+            </PopoverContent>
+          </Popover>
         </div>
       </div>
+
+      {/* Diálogo de configuración (se abre desde el menú de usuario) */}
+      <ConfigDialog
+        open={configOpen}
+        onOpenChange={setConfigOpen}
+        userEmail={state.status === "authenticated" ? state.user.email ?? undefined : undefined}
+      />
 
       {loading ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 animate-pulse">
@@ -273,27 +455,39 @@ export default function Dashboard() {
         </div>
       ) : (
         <>
-          <StatsCards ejecuciones={ejecuciones} incidencias={incidencias} />
-
           {/* Filters Bar */}
-          <div className="bg-white p-4 rounded-2xl shadow-sm border space-y-4">
-            <div className="flex items-center justify-between border-b pb-3">
+          <div className="bg-white p-5 rounded-2xl shadow-sm border space-y-5">
+            {/* Buscador Destacado */}
+            <div className="space-y-2">
+              <label className="text-sm font-bold text-slate-800 uppercase tracking-wider ml-0.5">Buscar Envíos o Pedidos</label>
+              <div className="relative">
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
+                <Input
+                  placeholder="Introduce el número de envío (tracking) o de pedido para filtrar..."
+                  value={busqueda}
+                  onChange={(e) => setBusqueda(e.target.value)}
+                  className="pl-12 !h-12 bg-slate-50/50 border-slate-200 focus:bg-white focus:ring-2 focus:ring-primary/20 transition-all rounded-xl shadow-none text-sm font-medium placeholder:text-slate-400"
+                />
+              </div>
+            </div>
+
+            <div className="flex items-center justify-between border-t pt-4 pb-1">
               <div className="flex items-center gap-2 text-slate-900">
                 <SlidersHorizontal className="h-4 w-4 text-primary" />
-                <h2 className="text-sm font-bold uppercase tracking-wider">Filtros de Auditoría</h2>
+                <h2 className="text-xs font-bold uppercase tracking-wider text-slate-500">Filtros Avanzados</h2>
               </div>
               <Button 
                 variant="ghost" 
                 size="sm" 
                 onClick={resetFilters}
-                className="text-primary hover:bg-primary/10 gap-2 font-bold px-4"
+                className="text-primary hover:bg-primary/10 gap-2 font-bold px-4 h-8 text-xs"
               >
-                <FilterX className="h-4 w-4" />
+                <FilterX className="h-3.5 w-3.5" />
                 Limpiar filtros
               </Button>
             </div>
             
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-8 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-7 gap-4">
               <div className="space-y-1.5">
                 <label className="text-xs font-semibold text-slate-500 uppercase ml-1">Capa Visual</label>
                 <Button
@@ -312,23 +506,10 @@ export default function Dashboard() {
                 </Button>
               </div>
 
-              <div className="space-y-1.5 lg:col-span-1">
-                <label className="text-xs font-semibold text-slate-500 uppercase ml-1">Búsqueda</label>
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
-                  <Input
-                    placeholder="Envío o pedido..."
-                    value={busqueda}
-                    onChange={(e) => setBusqueda(e.target.value)}
-                    className="pl-9 !h-11 bg-slate-50/50 border-slate-200 focus:bg-white focus:ring-1 focus:ring-primary/20 transition-all rounded-xl shadow-none"
-                  />
-                </div>
-              </div>
-
               <div className="space-y-1.5">
                 <label className="text-xs font-semibold text-slate-500 uppercase ml-1">Tienda</label>
                 <Select value={tiendaFiltro} onValueChange={(val) => setTiendaFiltro(val || "")}>
-                  <SelectTrigger className="w-full !h-11 bg-slate-50/50 rounded-xl border-slate-200 shadow-none">
+                  <SelectTrigger className="w-full !h-11 bg-slate-50/50 rounded-xl border-slate-200 shadow-none font-medium text-slate-700">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -343,7 +524,7 @@ export default function Dashboard() {
               <div className="space-y-1.5">
                 <label className="text-xs font-semibold text-slate-500 uppercase ml-1">Estado</label>
                 <Select value={estadoFiltro} onValueChange={(val) => setEstadoFiltro(val || "")}>
-                  <SelectTrigger className="w-full !h-11 bg-slate-50/50 rounded-xl border-slate-200 shadow-none">
+                  <SelectTrigger className="w-full !h-11 bg-slate-50/50 rounded-xl border-slate-200 shadow-none font-medium text-slate-700">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -366,13 +547,14 @@ export default function Dashboard() {
               <div className="space-y-1.5">
                 <label className="text-xs font-semibold text-slate-500 uppercase ml-1">Origen Alerta</label>
                 <Select value={tipoFiltro} onValueChange={(val) => setTipoFiltro(val || "")}>
-                  <SelectTrigger className="w-full !h-11 bg-slate-50/50 rounded-xl border-slate-200 shadow-none">
+                  <SelectTrigger className="w-full !h-11 bg-slate-50/50 rounded-xl border-slate-200 shadow-none font-medium text-slate-700">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="TODOS">Todos</SelectItem>
                     <SelectItem value="DRAFT">Draft a CTT</SelectItem>
                     <SelectItem value="INTERNO">Alerta Interna</SelectItem>
+                    <SelectItem value="TRAZABILIDAD">Trazabilidad</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -380,7 +562,7 @@ export default function Dashboard() {
               <div className="space-y-1.5">
                 <label className="text-xs font-semibold text-slate-500 uppercase ml-1">Notificado</label>
                 <Select value={emailFiltro} onValueChange={(val) => setEmailFiltro(val || "")}>
-                  <SelectTrigger className="w-full !h-11 bg-slate-50/50 rounded-xl border-slate-200 shadow-none">
+                  <SelectTrigger className="w-full !h-11 bg-slate-50/50 rounded-xl border-slate-200 shadow-none font-medium text-slate-700">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -453,10 +635,28 @@ export default function Dashboard() {
                 Listado de Ejecuciones ({filteredData.ej.length})
               </h3>
             </div>
-            <EjecucionesTable 
-              ejecuciones={filteredData.ej} 
-              sortOrder={sortOrder} 
-              refreshSingleItem={refreshSingleItem} 
+
+            {/* Si buscas un código que no está en la lista → consultarlo en directo a CTT */}
+            {busqueda.trim() && filteredData.ej.length === 0 && (
+              <div className="flex flex-col items-center gap-3 rounded-2xl border border-dashed border-slate-300 bg-white p-8 text-center shadow-sm">
+                <Search className="h-8 w-8 text-slate-300" />
+                <div>
+                  <p className="font-semibold text-slate-700">No está en la lista</p>
+                  <p className="text-sm text-slate-500">El pedido <span className="font-mono">{busqueda.trim()}</span> no aparece. Puedes consultarlo en directo a CTT.</p>
+                </div>
+                <Button onClick={consultarManualmente} disabled={manualLoading} className="gap-2">
+                  {manualLoading ? <><Loader2 className="h-4 w-4 animate-spin" /> Leyendo datos…</> : <><Search className="h-4 w-4" /> Consultar manualmente</>}
+                </Button>
+                {manualError && <p className="text-sm text-red-600">{manualError}</p>}
+              </div>
+            )}
+
+            <EjecucionesTable
+              ejecuciones={filteredData.ej}
+              sortOrder={sortOrder}
+              refreshSingleItem={refreshSingleItem}
+              injected={manualItem}
+              onClearInjected={() => setManualItem(null)}
             />
           </div>
         </>

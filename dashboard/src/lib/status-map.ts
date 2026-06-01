@@ -197,3 +197,11 @@ export function cleanTracking(code: any): string {
   if (!code) return "";
   return String(code).replace(/^"+|"+$/g, '').trim();
 }
+
+export function getClientCode(shopName: string): string {
+  if (!shopName) return "45416";
+  const normalized = shopName.toUpperCase().trim();
+  const entry = Object.entries(SHOP_NAMES).find(([_, name]) => name.toUpperCase() === normalized);
+  return entry ? entry[0] : "45416";
+}
+

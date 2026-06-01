@@ -23,7 +23,12 @@ import { Ejecucion as BaseEjecucion } from "@/lib/types";
 
 // Unified type for merged display
 interface Ejecucion extends BaseEjecucion {
-  _collection?: 'ejecuciones' | 'incidencias';
+  _collection?: 'ejecuciones' | 'incidencias' | 'trazabilidad_ejecuciones';
+  fase_salida?: string;
+  ejecucion_id?: string;
+  ai_justification?: string;
+  estado_final?: string;
+  numero_avisos?: number;
 }
 import {
   ExternalLink,
@@ -56,6 +61,7 @@ import {
   getActiveHours,
   cleanTracking,
   getStatusTheme,
+  getClientCode,
 } from "@/lib/status-map";
 
 interface BultoHistorial {
@@ -68,10 +74,26 @@ interface Props {
   ejecuciones: Ejecucion[];
   sortOrder: "desc" | "asc";
   refreshSingleItem?: (id: string, col: "ejecuciones" | "incidencias") => Promise<any>;
+  /** Pedido leído manualmente para abrir el panel lateral desde fuera. */
+  injected?: Ejecucion | null;
+  onClearInjected?: () => void;
 }
 
 const TERMINAL_CODES = ["2500", "2300", "2310", "3000"];
 const PAGE_SIZE = 50;
+
+/** Devuelve { fecha: "dd-mm-yyyy", hora: "HH:mm" } a partir del string almacenado. */
+function splitFecha(f?: string): { fecha: string; hora: string } {
+  if (!f) return { fecha: "—", hora: "" };
+  const s = String(f).replace(/\(.*?\)/g, "").trim();
+  const [datePart, timePart = ""] = s.split(" ");
+  const seg = datePart.split("-");
+  let fecha = datePart;
+  if (seg.length === 3) {
+    fecha = seg[0].length === 4 ? `${seg[2]}-${seg[1]}-${seg[0]}` : datePart; // yyyy-mm-dd → dd-mm-yyyy
+  }
+  return { fecha, hora: timePart.substring(0, 5) };
+}
 
 function parseBultos(bultos_historial_json?: string, historial_formateado?: string): BultoHistorial[] {
   if (bultos_historial_json) {
@@ -242,38 +264,59 @@ function BultoHistorialView({ bultos }: { bultos: BultoHistorial[] }) {
   );
 }
 
-export function EjecucionesTable({ ejecuciones, sortOrder, refreshSingleItem }: Props) {
+export function EjecucionesTable({ ejecuciones, sortOrder, refreshSingleItem, injected, onClearInjected }: Props) {
   const [selectedEj, setSelectedEj] = useState<Ejecucion | null>(null);
   const [isRefreshing, setIsRefreshing] = useState(false);
+
+  // Abrir el Sheet cuando llega un pedido leído manualmente desde fuera.
+  useEffect(() => {
+    if (injected) setSelectedEj(injected);
+  }, [injected]);
 
   const handleRefresh = async (item: Ejecucion) => {
     try {
       setIsRefreshing(true);
-      const webhookUrl = process.env.NEXT_PUBLIC_N8N_WEBHOOK_URL || "https://n8n.ctt-lastmile.com/webhook/refresh-tracking";
-      const res = await fetch(webhookUrl, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          shipping_code: item.numero_envio,
-          client_code: item.credencial === 'HAMINOS' ? '48630' : 
-                       item.credencial === 'SNAPPY' ? '47352' : 
-                       item.credencial === 'MIESTERY' ? '47685' : '45416',
-          collection: item._collection || 'ejecuciones',
-          doc_id: item.id
-        })
-      });
+      const isTestCollection = item._collection && item._collection.includes('_test');
+
+      let res;
+      if (isTestCollection) {
+        res = await fetch("/api/test/refresh-tracking", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            shipping_code: item.numero_envio,
+            client_code: getClientCode(item.credencial)
+          })
+        });
+      } else {
+        const webhookUrl = process.env.NEXT_PUBLIC_N8N_WEBHOOK_URL || "https://n8n.ctt-lastmile.com/webhook/refresh-tracking";
+        res = await fetch(webhookUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            shipping_code: item.numero_envio,
+            client_code: getClientCode(item.credencial),
+            collection: item._collection || 'ejecuciones',
+            doc_id: item.id
+          })
+        });
+      }
       
+      if (!res.ok) {
+        const errText = await res.text();
+        throw new Error(errText || `HTTP status ${res.status}`);
+      }
       
-      if (refreshSingleItem) {
-        const updated = await refreshSingleItem(item.id, item._collection || "ejecuciones");
+      if (refreshSingleItem && item._collection !== 'trazabilidad_ejecuciones') {
+        const updated = await refreshSingleItem(item.id, item._collection as "ejecuciones" | "incidencias");
         if (updated) {
           setSelectedEj(updated);
         }
       }
       alert("✅ Historial actualizado");
-    } catch (error) {
+    } catch (error: any) {
       console.error("Manual refresh error:", error);
-      alert("Error al actualizar el historial.");
+      alert(`Error al actualizar el historial: ${error.message || error}`);
     } finally {
       setIsRefreshing(false);
     }
@@ -396,6 +439,24 @@ export function EjecucionesTable({ ejecuciones, sortOrder, refreshSingleItem }: 
     );
   }
 
+  function renderTrazabilidadBadge(fase: string) {
+    const f = String(fase || "").toLowerCase();
+    switch (f) {
+      case 'notified':
+        return <Badge variant="outline" className="bg-emerald-50 text-emerald-700 border-emerald-200 px-2.5 py-0.5 font-bold shadow-none text-xs">Notificado</Badge>;
+      case 'ai_no_notify':
+        return <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200 px-2.5 py-0.5 font-bold shadow-none text-xs">IA: No Notificar</Badge>;
+      case 'error':
+        return <Badge variant="outline" className="bg-red-50 text-red-700 border-red-200 px-2.5 py-0.5 font-bold shadow-none text-xs">Error</Badge>;
+      case 'skipped_processed_today':
+        return <Badge variant="outline" className="bg-slate-50 text-slate-700 border-slate-200 px-2.5 py-0.5 font-bold shadow-none text-xs">Ya Procesado (Hoy)</Badge>;
+      case 'skipped_all_terminal_bultos':
+        return <Badge variant="outline" className="bg-slate-50 text-slate-700 border-slate-200 px-2.5 py-0.5 font-bold shadow-none text-xs">Bultos Terminales</Badge>;
+      default:
+        return <Badge variant="outline" className="bg-slate-50 text-slate-600 border-slate-200 px-2.5 py-0.5 font-bold shadow-none text-xs">{fase}</Badge>;
+    }
+  }
+
   return (
     <>
       <div className="rounded-2xl border bg-white shadow-sm overflow-hidden">
@@ -411,14 +472,14 @@ export function EjecucionesTable({ ejecuciones, sortOrder, refreshSingleItem }: 
             <Table>
               <TableHeader className="bg-slate-50 border-b">
                 <TableRow className="hover:bg-transparent">
-                  <TableHead className="py-3 px-5 font-bold text-slate-500 uppercase tracking-wider text-[10px]">Envío / Tracking</TableHead>
+                  <TableHead className="py-3 px-5 font-bold text-slate-500 uppercase tracking-wider text-[10px]">Fecha</TableHead>
+                  <TableHead className="py-3 px-3 font-bold text-slate-500 uppercase tracking-wider text-[10px]">Envío / Tracking</TableHead>
                   <TableHead className="py-3 px-3 font-bold text-slate-500 uppercase tracking-wider text-[10px]">Pedido</TableHead>
                   <TableHead className="py-3 px-3 font-bold text-slate-500 uppercase tracking-wider text-[10px]">Tienda</TableHead>
                   <TableHead className="py-3 px-3 font-bold text-slate-500 uppercase tracking-wider text-[10px]">Estado</TableHead>
                   <TableHead className="py-3 px-3 font-bold text-slate-500 uppercase tracking-wider text-[10px]">Canal</TableHead>
                   <TableHead className="py-3 px-3 font-bold text-slate-500 uppercase tracking-wider text-[10px] text-right">T. Activo</TableHead>
                   <TableHead className="py-3 px-3 font-bold text-slate-500 uppercase tracking-wider text-[10px]">Notificado</TableHead>
-                  <TableHead className="py-3 px-5 font-bold text-slate-500 uppercase tracking-wider text-[10px] text-right">Fecha Revisión</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -433,24 +494,36 @@ export function EjecucionesTable({ ejecuciones, sortOrder, refreshSingleItem }: 
                   </TableRow>
                 )}
                 {visible.map((ej) => {
+                  const isTrace = ej._collection === 'trazabilidad_ejecuciones';
                   const cleanedCode = cleanTracking(ej.numero_envio);
                   const timing = getActiveHours(ej);
+                  const f = splitFecha(ej.fecha_procesado);
                   return (
                     <TableRow
                       key={`${ej._collection}-${ej.id}`}
                       className="group cursor-pointer hover:bg-slate-50/80 transition-colors border-b last:border-0"
                       onClick={() => setSelectedEj(ej)}
                     >
-                       <TableCell className="py-3.5 px-5">
+                      <TableCell className="py-3.5 px-5">
+                        <div className="flex flex-col">
+                          <span className="text-sm font-bold text-slate-800 tabular-nums">{f.fecha}</span>
+                          {f.hora && <span className="text-[10px] font-medium text-slate-400 tabular-nums">{f.hora}</span>}
+                        </div>
+                      </TableCell>
+                       <TableCell className="py-3.5 px-3">
                         <div className="flex items-center gap-2">
-                          {ej.isEjecucionOk === true && (
-                            <CheckCircle2 className="h-4 w-4 text-emerald-500 shrink-0" />
-                          )}
-                          {ej.isEjecucionOk === false && (
-                            <XCircle className="h-4 w-4 text-red-500 shrink-0" />
-                          )}
-                          {ej.isEjecucionOk === undefined && (
-                            <div className="h-4 w-4 rounded-full border border-slate-200 border-dashed shrink-0" />
+                          {!isTrace && (
+                            <>
+                              {ej.isEjecucionOk === true && (
+                                <CheckCircle2 className="h-4 w-4 text-emerald-500 shrink-0" />
+                              )}
+                              {ej.isEjecucionOk === false && (
+                                <XCircle className="h-4 w-4 text-red-500 shrink-0" />
+                              )}
+                              {ej.isEjecucionOk === undefined && (
+                                <div className="h-4 w-4 rounded-full border border-slate-200 border-dashed shrink-0" />
+                              )}
+                            </>
                           )}
                           <span className="text-sm font-bold text-slate-900">{cleanedCode}</span>
                           <a
@@ -465,7 +538,7 @@ export function EjecucionesTable({ ejecuciones, sortOrder, refreshSingleItem }: 
                         </div>
                       </TableCell>
                       <TableCell className="py-3.5 px-3">
-                        <span className="text-sm text-slate-700 font-medium">{ej.numero_pedido}</span>
+                        <span className="text-sm text-slate-700 font-medium">{ej.numero_pedido || "—"}</span>
                       </TableCell>
                       <TableCell className="py-3.5 px-3">
                         <div className="flex items-center gap-1.5">
@@ -473,10 +546,18 @@ export function EjecucionesTable({ ejecuciones, sortOrder, refreshSingleItem }: 
                           <span className="text-sm font-semibold text-slate-800">{ej.tienda}</span>
                         </div>
                       </TableCell>
-                      <TableCell className="py-3.5 px-3">{renderStatusBadge(ej.estado, ej.dano)}</TableCell>
-                      <TableCell className="py-3.5 px-3">{renderTypeBadge(ej.tipo_email, ej.forzado_interno)}</TableCell>
+                      <TableCell className="py-3.5 px-3">
+                        {isTrace ? renderTrazabilidadBadge(ej.fase_salida || "") : renderStatusBadge(ej.estado, ej.dano)}
+                      </TableCell>
+                      <TableCell className="py-3.5 px-3">
+                        {isTrace ? (
+                          <Badge variant="outline" className="text-purple-600 border-purple-200 bg-purple-50 gap-1.5 font-medium px-2 shadow-none text-xs font-bold">
+                            Trazabilidad
+                          </Badge>
+                        ) : renderTypeBadge(ej.tipo_email, ej.forzado_interno)}
+                      </TableCell>
                       <TableCell className="py-3.5 px-3 text-right">
-                        {timing.hours > 0 ? (
+                        {!isTrace && timing.hours > 0 ? (
                           <div className="flex flex-col items-end">
                             <span className={`text-sm font-bold ${timing.hours > 24 ? "text-red-600" : "text-slate-800"}`}>{timing.hours}h</span>
                             <span className="text-[9px] uppercase font-semibold text-slate-400 tracking-tight">{timing.label}</span>
@@ -484,7 +565,18 @@ export function EjecucionesTable({ ejecuciones, sortOrder, refreshSingleItem }: 
                         ) : <span className="text-slate-300">—</span>}
                       </TableCell>
                       <TableCell className="py-3.5 px-3">
-                        {ej.email_enviado ? (
+                        {isTrace ? (
+                          ej.fase_salida === 'notified' ? (
+                            <div className="flex flex-col gap-0.5">
+                              <div className="flex items-center gap-1.5 text-xs font-semibold text-slate-700">
+                                <Mail className="h-3 w-3 text-blue-500 shrink-0" />
+                                {ej.destinatario || "Sin nombre"}
+                              </div>
+                            </div>
+                          ) : (
+                            <span className="text-[11px] text-slate-500 truncate max-w-[150px] font-medium block" title={ej.razon}>{ej.razon}</span>
+                          )
+                        ) : ej.email_enviado ? (
                           <div className="flex flex-col gap-0.5">
                             <div className="flex items-center gap-1.5 text-xs font-semibold text-slate-700">
                               <Mail className="h-3 w-3 text-blue-500 shrink-0" />
@@ -495,9 +587,6 @@ export function EjecucionesTable({ ejecuciones, sortOrder, refreshSingleItem }: 
                             </span>
                           </div>
                         ) : <span className="text-slate-300 text-sm">—</span>}
-                      </TableCell>
-                      <TableCell className="py-3.5 px-5 text-right">
-                        <span className="text-[11px] font-semibold text-slate-500 tabular-nums">{ej.fecha_procesado}</span>
                       </TableCell>
                     </TableRow>
                   );
@@ -523,7 +612,7 @@ export function EjecucionesTable({ ejecuciones, sortOrder, refreshSingleItem }: 
         )}
       </div>
 
-      <Sheet open={!!selectedEj} onOpenChange={(open) => !open && setSelectedEj(null)}>
+      <Sheet open={!!selectedEj} onOpenChange={(open) => { if (!open) { setSelectedEj(null); onClearInjected?.(); } }}>
         <SheetContent className="w-full sm:!max-w-[90vw] overflow-hidden flex flex-col !transition-all p-0">
           {selectedEj && (() => {
             const bultos = parseBultos(selectedEj.bultos_historial_json, selectedEj.historial_formateado);
@@ -538,7 +627,7 @@ export function EjecucionesTable({ ejecuciones, sortOrder, refreshSingleItem }: 
                   <SheetHeader className="text-left">
                     <SheetTitle className="text-xl font-extrabold break-all leading-tight flex items-center gap-2">
                       <span className="text-slate-500 font-medium text-base">
-                        {selectedEj._collection === 'incidencias' ? 'Incidencia' : 'Envío'}
+                        {selectedEj._collection === 'incidencias' ? 'Incidencia' : (selectedEj._collection === 'trazabilidad_ejecuciones' ? 'Trazabilidad' : 'Envío')}
                       </span>
                       <span className="text-primary">{cleanedCode}</span>
                       <a href={`https://www.cttexpress.com/localizador-de-envios/?sc=${cleanedCode}`} target="_blank" rel="noopener noreferrer" className="text-primary hover:text-primary/80 transition-opacity">
@@ -546,16 +635,57 @@ export function EjecucionesTable({ ejecuciones, sortOrder, refreshSingleItem }: 
                       </a>
                     </SheetTitle>
                     <SheetDescription className="text-sm font-bold text-slate-600">
-                      {selectedEj.numero_pedido} &middot; {selectedEj.tienda}
+                      {selectedEj.numero_pedido || "—"} &middot; {selectedEj.tienda}
                     </SheetDescription>
                   </SheetHeader>
                 </div>
 
-                {/* Body: two columns */}
-                <div className="flex flex-col md:grid md:grid-cols-2 flex-1 min-h-0 overflow-hidden">
+                {/* Body */}
+                {selectedEj._collection === 'trazabilidad_ejecuciones' ? (
+                  <div className="flex-1 overflow-y-auto px-6 py-6 space-y-6 bg-slate-50/40">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-white p-6 rounded-2xl border shadow-sm">
+                      <div className="space-y-1.5">
+                        <p className="text-[10px] font-bold text-black uppercase tracking-wider">Fase de Salida</p>
+                        {renderTrazabilidadBadge(selectedEj.fase_salida || "")}
+                      </div>
 
-                  {/* LEFT — metadata */}
-                  <div className="md:border-r border-slate-100 px-5 py-5 space-y-5 overflow-y-auto md:overflow-y-auto custom-scrollbar shrink-0 md:shrink bg-slate-50/40">
+                      <div className="space-y-1.5">
+                        <p className="text-[10px] font-bold text-black uppercase tracking-wider">Run ID (Ejecución n8n)</p>
+                        <span className="text-xs font-mono bg-slate-100 px-2.5 py-1 rounded border text-slate-600 block w-fit font-medium">{selectedEj.ejecucion_id}</span>
+                      </div>
+
+                      <div className="space-y-1.5 col-span-2">
+                        <p className="text-[10px] font-bold text-black uppercase tracking-wider">Razón de Salida</p>
+                        <p className="text-xs text-slate-700 bg-slate-50/50 p-4 rounded-xl border font-medium leading-relaxed">
+                          {selectedEj.razon}
+                        </p>
+                      </div>
+
+                      {selectedEj.ai_justification && (
+                        <div className="space-y-1.5 col-span-2">
+                          <p className="text-[10px] font-bold text-black uppercase tracking-wider">Justificación de la IA</p>
+                          <p className="text-xs text-slate-700 bg-slate-50/50 p-4 rounded-xl border font-medium leading-relaxed">
+                            {selectedEj.ai_justification}
+                          </p>
+                        </div>
+                      )}
+
+                      <div className="space-y-1.5">
+                        <p className="text-[10px] font-bold text-black uppercase tracking-wider">Estado Final CTT</p>
+                        <span className="text-xs font-bold text-slate-800 bg-slate-100/70 px-2.5 py-1 rounded border block w-fit">{selectedEj.estado_final || "—"}</span>
+                      </div>
+
+                      <div className="space-y-1.5">
+                        <p className="text-[10px] font-bold text-black uppercase tracking-wider">Número de Avisos</p>
+                        <span className="text-xs font-bold text-slate-800 bg-slate-100/70 px-2.5 py-1 rounded border block w-fit">{selectedEj.numero_avisos ?? 0}</span>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="flex flex-col md:grid md:grid-cols-2 flex-1 min-h-0 overflow-hidden">
+
+                    {/* LEFT — metadata */}
+                    <div className="md:border-r border-slate-100 px-5 py-5 space-y-5 overflow-y-auto md:overflow-y-auto custom-scrollbar shrink-0 md:shrink bg-slate-50/40">
 
                     <div className="space-y-1.5">
                       <p className="text-[10px] font-bold text-black uppercase tracking-wider">Estado Actual</p>
@@ -747,11 +877,12 @@ export function EjecucionesTable({ ejecuciones, sortOrder, refreshSingleItem }: 
                     </div>
                     <div className="flex-1 min-h-0">
                       <BultoHistorialView bultos={bultos} />
-                    </div>
                   </div>
                 </div>
               </div>
-            );
+            )}
+          </div>
+        );
           })()}
         </SheetContent>
       </Sheet>
