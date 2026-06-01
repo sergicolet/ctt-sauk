@@ -3,38 +3,27 @@ import admin from 'firebase-admin';
 import fs from 'fs';
 import path from 'path';
 
-// --- 1. FIREBASE ADMIN CONFIGURATION ---
-if (admin.apps.length === 0) {
-  let serviceAccountKey;
-  if (process.env.FIREBASE_SERVICE_ACCOUNT) {
-    try {
-      serviceAccountKey = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
-    } catch (e: any) {
-      console.error("Error parseando FIREBASE_SERVICE_ACCOUNT env var:", e.message);
-    }
-  }
+export const dynamic = "force-dynamic";
 
-  if (!serviceAccountKey) {
-    const serviceAccountPath = path.resolve(process.cwd(), '../scripts/config/serviceAccountKey.json');
-    if (fs.existsSync(serviceAccountPath)) {
-      try {
-        serviceAccountKey = JSON.parse(fs.readFileSync(serviceAccountPath, 'utf8'));
-      } catch (e: any) {
-        console.error("Error leyendo local serviceAccountKey.json:", e.message);
+// --- 1. FIREBASE ADMIN (init perezoso: solo en runtime, no en build) ---
+function getDb() {
+  if (admin.apps.length === 0) {
+    let serviceAccountKey;
+    if (process.env.FIREBASE_SERVICE_ACCOUNT) {
+      try { serviceAccountKey = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT); }
+      catch (e: any) { console.error("Error parseando FIREBASE_SERVICE_ACCOUNT:", e.message); }
+    }
+    if (!serviceAccountKey) {
+      const p = path.resolve(process.cwd(), '../scripts/config/serviceAccountKey.json');
+      if (fs.existsSync(p)) {
+        try { serviceAccountKey = JSON.parse(fs.readFileSync(p, 'utf8')); } catch {}
       }
     }
+    if (serviceAccountKey) admin.initializeApp({ credential: admin.credential.cert(serviceAccountKey) });
+    else admin.initializeApp();
   }
-
-  if (serviceAccountKey) {
-    admin.initializeApp({
-      credential: admin.credential.cert(serviceAccountKey)
-    });
-  } else {
-    console.error("No se configuró FIREBASE_SERVICE_ACCOUNT ni serviceAccountKey.json para Firebase Admin");
-  }
+  return admin.firestore();
 }
-
-const db = admin.firestore();
 
 // --- 2. CLIENT CONFIGURATION ---
 const CLIENTS: Record<string, {
@@ -388,6 +377,7 @@ ${historyText}`;
 // --- API Route Handler ---
 export async function POST(req: Request) {
   try {
+    const db = getDb();
     const { shipping_code, client_code } = await req.json();
 
     if (!shipping_code || !client_code) {
